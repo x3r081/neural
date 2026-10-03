@@ -1,0 +1,1 @@
+{"status":"STOPPED_EXPLORATORY_SWEEP","reason":"PTX confirmed loss of vectorization in indirect descriptor pointers; improve alignment before continuing performance trials.","completed_sessions":2}

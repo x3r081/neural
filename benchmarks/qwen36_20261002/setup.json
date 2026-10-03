@@ -1,0 +1,29 @@
+{
+  "status": "IMPLEMENTED_NOT_YET_FULL_MODEL_VALIDATED",
+  "upstream_repository": "x3r081/NeuralServer",
+  "upstream_commit": "772399c380274eec4fe00ba081dba7549a1a8a7f",
+  "new_repository": "x3r081/NeuralQwen36",
+  "checkpoint": "Qwen/Qwen3.6-35B-A3B",
+  "revision": "995ad96eacd98c81ed38be0c5b274b04031597b0",
+  "download_directory": "F:\\Models\\Qwen3.6-35B-A3B",
+  "python": "3.12.10 (tags/v3.12.10:0cc8128, Apr  8 2025, 12:21:36) [MSC v.1943 64 bit (AMD64)]",
+  "dependencies": {
+    "torch": "2.10.0+cu130",
+    "transformers": "5.14.1",
+    "accelerate": "1.14.0",
+    "safetensors": "0.8.0",
+    "huggingface_hub": "1.27.0"
+  },
+  "cpu_tests": {
+    "passed": 12,
+    "command": "python -m pytest -q tests/test_qwen_store.py tests/test_qwen_protocol.py tests/test_qwen_cpu_experts.py",
+    "scope": "synthetic store/meta-loading, native expert components and chat protocol; not full-model correctness"
+  },
+  "cpu_kernel_sha256": "5e3cd4ff31292c31050cdeccb50fbb77b712379f9bcb3c21757f0642d3ffa521",
+  "cpu_dll_sha256": "11076a97409428a22765425e7bdeda05091114dec1256665a9d4b4b4e897b3bf",
+  "calculated_text_weight_memory_gib": {
+    "core": 4.5604,
+    "routed_experts": 60
+  },
+  "model_or_precision_changed": false
+}

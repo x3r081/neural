@@ -1,0 +1,2324 @@
+{
+  "inputs": [
+    {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\benchmarks\\codex_review_20261001\\masked_gemv_abba.json",
+      "config": {
+        "out": "benchmarks\\codex_review_20261001\\masked_gemv_abba.json",
+        "rounds": 2,
+        "schedule": "off,on,on,off",
+        "kinds": [
+          "off=--masked-gemv 0",
+          "on=--masked-gemv 1"
+        ],
+        "workload": "conversation",
+        "ctx_tokens": 13000,
+        "max_tokens": 512,
+        "effort": "low",
+        "llama_dir": "G:\\Tools\\llama-b10361",
+        "gguf": "G:\\Models\\gpt-oss-120b-gguf\\gpt-oss-120b-MXFP4.gguf",
+        "llama_args": "-ngl 99 -ncmoe 31 -t 8 -c 16384 -fa on --jinja",
+        "neural_args": "--pool 6.05 --smax 16384 --threads 8 --hotset hotset_code.json --refresh-every 8 --refresh-m 16 --capbufs 16 --prefill-m 64 --early-every 4 --early-tokens 32 --static 250 --skip-quality --kv-ring 256 --scratch 6 --kernel-fuse 1 --prefill-order layer --store-dir G:\\NeuralStores\\gptoss120b_ps4",
+        "python": "F:\\AI\\Neural\\.venv\\Scripts\\python.exe",
+        "log_dir": "logs\\codex_masked_abba",
+        "server_roots": [],
+        "ctx_root": "F:\\AI\\Neural\\experiments\\neuralserver-base",
+        "replay_prompts": null,
+        "replay_first_session": true,
+        "replay_session": 0
+      },
+      "provenance": {
+        "neural_repo": {
+          "root": "F:\\AI\\Neural\\experiments\\neuralserver-opt",
+          "commit": "06d05aecd430a3ddf88db53067806e30e7634feb",
+          "dirty": true,
+          "working_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "source_manifest": [
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\arena.py",
+              "size": 12355,
+              "mtime_ns": 1790804180716145500,
+              "sha256": "f9eb1278a01d482f6ab4b81a1b8a49b62a613cc552a8137ac63391c708cc1f0d"
+            },
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\chat_client.py",
+              "size": 4226,
+              "mtime_ns": 1790804180830713300,
+              "sha256": "5cf47802b4d5513b25219118468a65f8f40f39f694a0386c99fa66056a751471"
+            },
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\cpu_prefill.py",
+              "size": 19662,
+              "mtime_ns": 1790804180831819000,
+              "sha256": "dae214c95c871dae1d4ae068b30718e2ea55efe80bf1209d0b9dd7db3f23cb71"
+            },
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\doorbell.py",
+              "size": 17368,
+              "mtime_ns": 1790804180834991100,
+              "sha256": "0889846a08316695116b580e1d49e6701a676b702e03dc7d6bd03e2889ed673f"
+            },
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\fused_core.py",
+              "size": 43971,
+              "mtime_ns": 1790804180836016000,
+              "sha256": "3fb4f9d8ee41361611372478fb1a316277dd371defed710506bd1b59102add09"
+            },
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\harmony_render.py",
+              "size": 26950,
+              "mtime_ns": 1790804180844425000,
+              "sha256": "27fdce7bf26d36cee32049ca3ed046cb9baf6e4e8e25f10fc806ab0bb1c1fbbf"
+            },
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\kernels\\gptoss_cpu_cap2.c",
+              "size": 34462,
+              "mtime_ns": 1790804180846573400,
+              "sha256": "47996d9f586f315567b5f2ab8baa53539f891d05c15dffed2e8ca1f44c173120"
+            },
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\kernels\\gptoss_cpu_multi.c",
+              "size": 28545,
+              "mtime_ns": 1790804180846573400,
+              "sha256": "f4cb63e1459d9bed82a17ad1d1f17f817a42fa7e170026f448043dc51d5edf81"
+            },
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\kernels\\membw_probe.c",
+              "size": 8154,
+              "mtime_ns": 1790804180847580900,
+              "sha256": "db40f94d9a0115441209bd1a5bc843be00dd33d9fdff02031421acdfd80e00c6"
+            },
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\kernels\\memcpy_mt.c",
+              "size": 551,
+              "mtime_ns": 1790804180847580900,
+              "sha256": "841b94fba8589c03db935338e80606485e4d8197775b5d2a6eb2279e589e9b68"
+            },
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\kv_ring.py",
+              "size": 7508,
+              "mtime_ns": 1790804180848861000,
+              "sha256": "32a57c4ecd2fb2e761845ec0fe37f0b7935fc0f522725d3ed58bc41c57de5e14"
+            },
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\neural\\__init__.py",
+              "size": 93,
+              "mtime_ns": 1790804180855158500,
+              "sha256": "387f3ccf53983401f58532236abea74427398dbc474511cb06610d9318868532"
+            },
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\neural\\moe\\__init__.py",
+              "size": 257,
+              "mtime_ns": 1790804180856160500,
+              "sha256": "7c435c0ee4fc2e4c4b6687b5d8f22fe527940e22c189e9306a6623d0d3359dd7"
+            },
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\neural\\moe\\gptoss_adapter.py",
+              "size": 20164,
+              "mtime_ns": 1790804180857566800,
+              "sha256": "b567308e4b8b965ae731404ccea39556d4ea78a32c1ca021a544c4fb7a99d0ae"
+            },
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\neural\\moe\\gptoss_core_graphs.py",
+              "size": 9079,
+              "mtime_ns": 1790804180857566800,
+              "sha256": "0dd8093bf94add972f9a82c2ad24e45e202addd8ae1786a6dc15f827ccb7b650"
+            },
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\neural\\moe\\layout.py",
+              "size": 12452,
+              "mtime_ns": 1790804180858573700,
+              "sha256": "78ac59cdb284f6f1f0132eba1507e2585edf811873c87f5054e3343407eda61d"
+            },
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\neural\\paging\\__init__.py",
+              "size": 494,
+              "mtime_ns": 1790804180858573700,
+              "sha256": "3fd5a9b9ddc029d8a7935fcd193b9ccda0ca52c25a04a5c87bf5163e11efa555"
+            },
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\neural\\paging\\compressed_transport.py",
+              "size": 14567,
+              "mtime_ns": 1790804180859580100,
+              "sha256": "f05fc551160b37b10c96723c0ec8d54bb38d878e707974b065974224d70e9221"
+            },
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\neural\\paging\\quantized_compute.py",
+              "size": 25717,
+              "mtime_ns": 1790804180859580100,
+              "sha256": "a2f6c2f9b0566ca9658bb13ea5a12ec39f53169e19555a1c498fa561a0e65fb4"
+            },
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\neural\\paging\\residency.py",
+              "size": 9973,
+              "mtime_ns": 1790804180859580100,
+              "sha256": "8b41803483695fae4978bd5da673ef5bdf78ab0934f47489fd17803a73a911bc"
+            },
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\neural\\q80\\__init__.py",
+              "size": 154,
+              "mtime_ns": 1790804180860580500,
+              "sha256": "e50a2608f5e6a1ca645bda1060e40ad81aafc1a7d4bbae592c4a9e49baefe041"
+            },
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\neural\\q80\\bench_hygiene.py",
+              "size": 5724,
+              "mtime_ns": 1790804180860580500,
+              "sha256": "84feb69bf46db835604cf97aef5d4bff261033b949007a472015476000b3a11b"
+            },
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\neural\\q80\\expert_runtime.py",
+              "size": 74717,
+              "mtime_ns": 1790804180861592200,
+              "sha256": "7311357d3e2a919e878e986837673846722fa403d5c94c7adc62fa3e817b0d3d"
+            },
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\neural\\q80\\expert_store.py",
+              "size": 9159,
+              "mtime_ns": 1790804180862596500,
+              "sha256": "10f6aee849da60caa0be4d7c0e4c6a41f43f0a65d952b812b9d1f60d0e52d88f"
+            },
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\neural\\q80\\hot_path.py",
+              "size": 22688,
+              "mtime_ns": 1790804180862596500,
+              "sha256": "cd15e2c10987051001d24a87d0f956403d16a6680ae61dac1cb79519a4b40fc0"
+            },
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\neural\\q80\\intake.py",
+              "size": 46926,
+              "mtime_ns": 1790804180863614800,
+              "sha256": "ed110d6d2e92ffb979e96196df51f491f2ffa6d72137eeba9a98a8e88b4062e9"
+            },
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\neural\\q80\\mxfp4_kernels.py",
+              "size": 32273,
+              "mtime_ns": 1790841106984363700,
+              "sha256": "1dd2715f1489579efb93ac1108babf3386dc552f17885f5490def314e2f03900"
+            },
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\neural\\q80\\prepacked_store.py",
+              "size": 12281,
+              "mtime_ns": 1790804180865122800,
+              "sha256": "730b3f9f0b6fa4259017ede456587c89343d349885218b2f11f5da4f05d434b8"
+            },
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\neural\\q80\\quant_store.py",
+              "size": 11796,
+              "mtime_ns": 1790804180865122800,
+              "sha256": "189cfdade74dfa38637319e5f1276d3599f3ce9050df3711bcd4bd465aa3ffe0"
+            },
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\neural\\quality\\__init__.py",
+              "size": 0,
+              "mtime_ns": 1790804180865122800,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\neural\\quality\\harness.py",
+              "size": 4886,
+              "mtime_ns": 1790804180866130700,
+              "sha256": "6fe413f4e8585a654bfe16c7aa78c12da12b15fa4922785ba139b3bb6a63b9ff"
+            },
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\paths.py",
+              "size": 1017,
+              "mtime_ns": 1790804180866130700,
+              "sha256": "7482648479198a66a3edc5465dbeb7219a27a6a01e512e31d0dc3d4b97a1efde"
+            },
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\server.py",
+              "size": 195081,
+              "mtime_ns": 1790843129656900300,
+              "sha256": "f19f56df23d7203e64853858bcaa3cde7157ce054679a9c74a87ff05fd2c0261"
+            },
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\start_neural_chat.bat",
+              "size": 374,
+              "mtime_ns": 1790804180871600000,
+              "sha256": "d1aa540cdcf42b0745a0aafa78c78243998995a5d4f324f85a4f522719473f35"
+            },
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\start_neural_server.bat",
+              "size": 1652,
+              "mtime_ns": 1790804180871600000,
+              "sha256": "3fdedeffcfd2185e27a6355ae1147e6a1a40af4649840177569ac2cfc0e4b7ba"
+            },
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tests\\render_old.py",
+              "size": 4740,
+              "mtime_ns": 1790804180872774600,
+              "sha256": "e3baae402ef7b8d3268de00046dda1c542cd215566f5c709462543e7eac10d91"
+            },
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tests\\test_attention.py",
+              "size": 47557,
+              "mtime_ns": 1790804180873621500,
+              "sha256": "50f8812b1940c50bbebb5bede0b8cbfccb686a3f2f80bc914eae351cc72d3e2f"
+            },
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tests\\test_cpu_multi.py",
+              "size": 25661,
+              "mtime_ns": 1790804180873621500,
+              "sha256": "9761103643bdc958541760d23d07fcd62fc2745e8f1b3b861c71232dc2c0389e"
+            },
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tests\\test_doorbell_mock.py",
+              "size": 69396,
+              "mtime_ns": 1790804180874634600,
+              "sha256": "074fec1f8380b82c36ebc1573a82f1751f67c1bff2fc96999bc5767caf3d0ace"
+            },
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tests\\test_grouped_gemm_plan.py",
+              "size": 4476,
+              "mtime_ns": 1790840615554272500,
+              "sha256": "02a7425df31ff8aef46c4cd9f9e71857d04e58ba1a9245b50c0517395739488d"
+            },
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tests\\test_kv_ring.py",
+              "size": 8270,
+              "mtime_ns": 1790804180875639600,
+              "sha256": "eeaaba4c340c8f7aea4c864945c960e695bdbda1ff03c4f16869d10130d2f13c"
+            },
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tests\\test_protect.py",
+              "size": 4598,
+              "mtime_ns": 1790804180876192300,
+              "sha256": "ef7c720a5d301e4e7114fbf339506775acedde9f27649d32ac04ce6ee023bf3a"
+            },
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tests\\test_review_bench.py",
+              "size": 11026,
+              "mtime_ns": 1790841282407872400,
+              "sha256": "d32944164792aac115e6748c9ac80e3cd4391dfb5714db065e03f03e476766b5"
+            },
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tests\\test_scale_layout.py",
+              "size": 20458,
+              "mtime_ns": 1790804180876192300,
+              "sha256": "7786f6f66492b2440d373609e5b50c3d544899ae5d18e7c073a038994db7d50e"
+            },
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tests\\test_splice.py",
+              "size": 61607,
+              "mtime_ns": 1790804180876192300,
+              "sha256": "91d173864f036b5a518fd77dfb15a63c29f500cced36594a708b464db2e2c7e5"
+            },
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\admission_replay.py",
+              "size": 4561,
+              "mtime_ns": 1790804180877608000,
+              "sha256": "e4b2f0bf1f974b1a94d3aaf71e2339ce5a346cd0689109f49161a2a1d597bb02"
+            },
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\bench_agent.py",
+              "size": 10262,
+              "mtime_ns": 1790804180877608000,
+              "sha256": "00adcee869eb7860de93d4e7ac041e5936cabe78ed46fa5343e1e7b86382c2ce"
+            },
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\bench_prompt_warm.py",
+              "size": 3703,
+              "mtime_ns": 1790804180878622400,
+              "sha256": "fd623442ce361563289371786ccdd3abe5040668e1b379329ebf00fb2814a24d"
+            },
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\bench_vs_llama.py",
+              "size": 28494,
+              "mtime_ns": 1790841229344483300,
+              "sha256": "f99bee22d88ff247d692fb353fbbd39b2d10bee86b8aad2ffda70c62267e1110"
+            },
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\build_kernels.bat",
+              "size": 900,
+              "mtime_ns": 1790804180879865000,
+              "sha256": "4a6a014afefcccb889ec3d10569de283323c43499e80d176cbf17450e2141391"
+            },
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\build_store.py",
+              "size": 1381,
+              "mtime_ns": 1790804180879865000,
+              "sha256": "8fd94b47b542b902e9821f332fd37ae8e0ec82eb3309ce6adb3374299747fc3e"
+            },
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\cache_policy_sim.py",
+              "size": 6663,
+              "mtime_ns": 1790804180880922100,
+              "sha256": "5a1bca4d4fa7f19f0f8efbfcf856f53a2644f12b97e43bc6d302b621a1e75831"
+            },
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\calibrate_hotset.py",
+              "size": 5313,
+              "mtime_ns": 1790804180880922100,
+              "sha256": "938b845ae4e95c2197ae244b6b3ee667ff59bd4d718df538ec6607b551fae30d"
+            },
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\compile_check_kernels.py",
+              "size": 4626,
+              "mtime_ns": 1790804180880922100,
+              "sha256": "16b871b2bb1986fbdbda4062d0fe9eef9eaf84f2afeb824117f19f63035352d0"
+            },
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\decode_kernel_ab.py",
+              "size": 3394,
+              "mtime_ns": 1790804180882123700,
+              "sha256": "ef7a152de03b17877a206206a3026ab8865dde44756d695926dacdbf6f24ae2f"
+            },
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\doorbell_selftest.py",
+              "size": 12731,
+              "mtime_ns": 1790804180883130200,
+              "sha256": "ebead2cfaa94fd11adb98d1edf8bb32bed4af1b79e0735fc3ff73c4c29616405"
+            },
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\fit_demand_probe.py",
+              "size": 14147,
+              "mtime_ns": 1790804180883130200,
+              "sha256": "7edfde2384e1c2585212a1869a2432c379c524f628dc434ca30de7064e7901e7"
+            },
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\grouped_gemm_ab.py",
+              "size": 10697,
+              "mtime_ns": 1790840615553194900,
+              "sha256": "1358ba47c5e92eee4e29040ec6ec126bccabc331c7a0cc3ff845b6f0b65979f1"
+            },
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\kernel_tuning_ab.py",
+              "size": 8626,
+              "mtime_ns": 1790804180884144600,
+              "sha256": "85f6efe4bf9de470b8f3d398b0097f48e21d1017a83a9b21e4d91587819429c7"
+            },
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\lookup_spec_estimate.py",
+              "size": 3535,
+              "mtime_ns": 1790804180884144600,
+              "sha256": "d4ee8f945db10231f26c8ca7dc76d228eca77dbaaa2db027571772c3dce79a35"
+            },
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\lossless_entropy_probe.py",
+              "size": 16402,
+              "mtime_ns": 1790839954734899600,
+              "sha256": "b20fa1d821967221eff104924e91693deae7bff14d47a0e27f1639b447d17e6d"
+            },
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\masked_gemv_ab.py",
+              "size": 11936,
+              "mtime_ns": 1790840408160271500,
+              "sha256": "fe678db4978b1d909c80557158da0c145f682fa456bf7c8e1a1f410bac8475d7"
+            },
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\measure_host_dram.py",
+              "size": 15961,
+              "mtime_ns": 1790804180885234800,
+              "sha256": "05edf63dd76c1989ef71a96ac432ebe1f97bcb17d215dd5ced4b597a2d6fb9d2"
+            },
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\pack_store.py",
+              "size": 31602,
+              "mtime_ns": 1790804180885234800,
+              "sha256": "f946d91b236991e46ae59aed7deec18f6cd8b61afa405a1f776407dd37ea26cc"
+            },
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\review_bench.py",
+              "size": 15446,
+              "mtime_ns": 1790841267033062600,
+              "sha256": "60577e0ad59ab3f716278670d18f31e666afe24b38d5388c073b26c4cafe9b4b"
+            },
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\review_decode_check.py",
+              "size": 13142,
+              "mtime_ns": 1790840580653176400,
+              "sha256": "b44f463f5832e3e6c81482ed3862bb05b1279b188b79ab03068a6c0a992b770c"
+            },
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\review_prefill_check.py",
+              "size": 6092,
+              "mtime_ns": 1790843129656900300,
+              "sha256": "5d23bbb7a29d99a34c4d9ab4a5c79a9f39261927afedd3e9e2c63f772548e2b9"
+            },
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\review_warm_prefill.py",
+              "size": 21487,
+              "mtime_ns": 1790843165501415400,
+              "sha256": "af36f90af1bb4c53bf91413b4731be21491a5a13ae468975959628209a6e9161"
+            },
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\scale_pack.py",
+              "size": 11575,
+              "mtime_ns": 1790804180886240500,
+              "sha256": "5db4c7278b700d9bcf14dbd7bbc4a7c5abcc0a6778b65af863567cfba4a812cd"
+            },
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\scale_pack_ab.py",
+              "size": 14004,
+              "mtime_ns": 1790804180886240500,
+              "sha256": "dc07f10ebfd6a78ab2c34facb54f741232367a9b48c27ddcada35ab499d998be"
+            },
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\scale_pack_gpu_test.py",
+              "size": 14298,
+              "mtime_ns": 1790804180887257500,
+              "sha256": "e283aa217ca82ee0f60d82e69345a2e2dbd80fc9c67a735b7b18e379a1e82d64"
+            },
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\scale_pack_multi_ab.py",
+              "size": 13883,
+              "mtime_ns": 1790804180888254800,
+              "sha256": "e956bc2823389d3acd42e70bd339dff01c64f1fd19842ae3430ccef80040f2d9"
+            },
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\scale_pack_triton_interp.py",
+              "size": 5345,
+              "mtime_ns": 1790804180888254800,
+              "sha256": "fbd99fc6816b638d4480edb62d86745fffa6e9aa43226e6633678a623057126e"
+            },
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\tune_prefill.py",
+              "size": 1475,
+              "mtime_ns": 1790804180888254800,
+              "sha256": "0ebc76dd2af6f9ef7f7b2831fea2bf0d5006c83853f7c53a0d85e47d2d583846"
+            }
+          ]
+        },
+        "context_repo": {
+          "root": "F:\\AI\\Neural\\experiments\\neuralserver-base",
+          "commit": "a5d3c95e17323e9b78f83976da583e31f73f188e",
+          "dirty": true,
+          "working_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "source_manifest": [
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\arena.py",
+              "size": 12355,
+              "mtime_ns": 1790804603398612500,
+              "sha256": "f9eb1278a01d482f6ab4b81a1b8a49b62a613cc552a8137ac63391c708cc1f0d"
+            },
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\chat_client.py",
+              "size": 4226,
+              "mtime_ns": 1790804603512094800,
+              "sha256": "5cf47802b4d5513b25219118468a65f8f40f39f694a0386c99fa66056a751471"
+            },
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\cpu_prefill.py",
+              "size": 19662,
+              "mtime_ns": 1790804603512755400,
+              "sha256": "dae214c95c871dae1d4ae068b30718e2ea55efe80bf1209d0b9dd7db3f23cb71"
+            },
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\doorbell.py",
+              "size": 17368,
+              "mtime_ns": 1790804603516006700,
+              "sha256": "0889846a08316695116b580e1d49e6701a676b702e03dc7d6bd03e2889ed673f"
+            },
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\fused_core.py",
+              "size": 43971,
+              "mtime_ns": 1790804603516006700,
+              "sha256": "3fb4f9d8ee41361611372478fb1a316277dd371defed710506bd1b59102add09"
+            },
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\harmony_render.py",
+              "size": 26950,
+              "mtime_ns": 1790804603523713800,
+              "sha256": "27fdce7bf26d36cee32049ca3ed046cb9baf6e4e8e25f10fc806ab0bb1c1fbbf"
+            },
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\kernels\\gptoss_cpu_cap2.c",
+              "size": 34462,
+              "mtime_ns": 1790804603525976800,
+              "sha256": "47996d9f586f315567b5f2ab8baa53539f891d05c15dffed2e8ca1f44c173120"
+            },
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\kernels\\gptoss_cpu_multi.c",
+              "size": 28545,
+              "mtime_ns": 1790804603526571500,
+              "sha256": "f4cb63e1459d9bed82a17ad1d1f17f817a42fa7e170026f448043dc51d5edf81"
+            },
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\kernels\\membw_probe.c",
+              "size": 8154,
+              "mtime_ns": 1790804603526571500,
+              "sha256": "db40f94d9a0115441209bd1a5bc843be00dd33d9fdff02031421acdfd80e00c6"
+            },
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\kernels\\memcpy_mt.c",
+              "size": 551,
+              "mtime_ns": 1790804603527574500,
+              "sha256": "841b94fba8589c03db935338e80606485e4d8197775b5d2a6eb2279e589e9b68"
+            },
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\kv_ring.py",
+              "size": 7508,
+              "mtime_ns": 1790804603527574500,
+              "sha256": "32a57c4ecd2fb2e761845ec0fe37f0b7935fc0f522725d3ed58bc41c57de5e14"
+            },
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\neural\\__init__.py",
+              "size": 93,
+              "mtime_ns": 1790804603533414700,
+              "sha256": "387f3ccf53983401f58532236abea74427398dbc474511cb06610d9318868532"
+            },
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\neural\\moe\\__init__.py",
+              "size": 257,
+              "mtime_ns": 1790804603533414700,
+              "sha256": "7c435c0ee4fc2e4c4b6687b5d8f22fe527940e22c189e9306a6623d0d3359dd7"
+            },
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\neural\\moe\\gptoss_adapter.py",
+              "size": 20164,
+              "mtime_ns": 1790804603534581300,
+              "sha256": "b567308e4b8b965ae731404ccea39556d4ea78a32c1ca021a544c4fb7a99d0ae"
+            },
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\neural\\moe\\gptoss_core_graphs.py",
+              "size": 9079,
+              "mtime_ns": 1790804603534581300,
+              "sha256": "0dd8093bf94add972f9a82c2ad24e45e202addd8ae1786a6dc15f827ccb7b650"
+            },
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\neural\\moe\\layout.py",
+              "size": 12452,
+              "mtime_ns": 1790804603535591900,
+              "sha256": "78ac59cdb284f6f1f0132eba1507e2585edf811873c87f5054e3343407eda61d"
+            },
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\neural\\paging\\__init__.py",
+              "size": 494,
+              "mtime_ns": 1790804603535591900,
+              "sha256": "3fd5a9b9ddc029d8a7935fcd193b9ccda0ca52c25a04a5c87bf5163e11efa555"
+            },
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\neural\\paging\\compressed_transport.py",
+              "size": 14567,
+              "mtime_ns": 1790804603536603300,
+              "sha256": "f05fc551160b37b10c96723c0ec8d54bb38d878e707974b065974224d70e9221"
+            },
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\neural\\paging\\quantized_compute.py",
+              "size": 25717,
+              "mtime_ns": 1790804603537151300,
+              "sha256": "a2f6c2f9b0566ca9658bb13ea5a12ec39f53169e19555a1c498fa561a0e65fb4"
+            },
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\neural\\paging\\residency.py",
+              "size": 9973,
+              "mtime_ns": 1790804603537151300,
+              "sha256": "8b41803483695fae4978bd5da673ef5bdf78ab0934f47489fd17803a73a911bc"
+            },
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\neural\\q80\\__init__.py",
+              "size": 154,
+              "mtime_ns": 1790804603537806100,
+              "sha256": "e50a2608f5e6a1ca645bda1060e40ad81aafc1a7d4bbae592c4a9e49baefe041"
+            },
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\neural\\q80\\bench_hygiene.py",
+              "size": 5724,
+              "mtime_ns": 1790804603537806100,
+              "sha256": "84feb69bf46db835604cf97aef5d4bff261033b949007a472015476000b3a11b"
+            },
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\neural\\q80\\expert_runtime.py",
+              "size": 74717,
+              "mtime_ns": 1790804603538812000,
+              "sha256": "7311357d3e2a919e878e986837673846722fa403d5c94c7adc62fa3e817b0d3d"
+            },
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\neural\\q80\\expert_store.py",
+              "size": 9159,
+              "mtime_ns": 1790804603538812000,
+              "sha256": "10f6aee849da60caa0be4d7c0e4c6a41f43f0a65d952b812b9d1f60d0e52d88f"
+            },
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\neural\\q80\\hot_path.py",
+              "size": 22688,
+              "mtime_ns": 1790804603540085600,
+              "sha256": "cd15e2c10987051001d24a87d0f956403d16a6680ae61dac1cb79519a4b40fc0"
+            },
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\neural\\q80\\intake.py",
+              "size": 46926,
+              "mtime_ns": 1790804603540085600,
+              "sha256": "ed110d6d2e92ffb979e96196df51f491f2ffa6d72137eeba9a98a8e88b4062e9"
+            },
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\neural\\q80\\mxfp4_kernels.py",
+              "size": 17102,
+              "mtime_ns": 1790804603540085600,
+              "sha256": "d077c71970cb93f1beb16ab65d6590bd7db261441d4d237d8a6d141186a2dce6"
+            },
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\neural\\q80\\prepacked_store.py",
+              "size": 12281,
+              "mtime_ns": 1790804603541441000,
+              "sha256": "730b3f9f0b6fa4259017ede456587c89343d349885218b2f11f5da4f05d434b8"
+            },
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\neural\\q80\\quant_store.py",
+              "size": 11796,
+              "mtime_ns": 1790804603541441000,
+              "sha256": "189cfdade74dfa38637319e5f1276d3599f3ce9050df3711bcd4bd465aa3ffe0"
+            },
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\neural\\quality\\__init__.py",
+              "size": 0,
+              "mtime_ns": 1790804603542863400,
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+            },
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\neural\\quality\\harness.py",
+              "size": 4886,
+              "mtime_ns": 1790804603542863400,
+              "sha256": "6fe413f4e8585a654bfe16c7aa78c12da12b15fa4922785ba139b3bb6a63b9ff"
+            },
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\paths.py",
+              "size": 1017,
+              "mtime_ns": 1790804603542863400,
+              "sha256": "7482648479198a66a3edc5465dbeb7219a27a6a01e512e31d0dc3d4b97a1efde"
+            },
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\server.py",
+              "size": 188350,
+              "mtime_ns": 1790804603545382400,
+              "sha256": "6db0402857c81369147f4a15df9c1a3abecd603915a2c4c4ce44837e29126484"
+            },
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\start_neural_chat.bat",
+              "size": 374,
+              "mtime_ns": 1790804603547819800,
+              "sha256": "d1aa540cdcf42b0745a0aafa78c78243998995a5d4f324f85a4f522719473f35"
+            },
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\start_neural_server.bat",
+              "size": 1652,
+              "mtime_ns": 1790804603548982600,
+              "sha256": "3fdedeffcfd2185e27a6355ae1147e6a1a40af4649840177569ac2cfc0e4b7ba"
+            },
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\tests\\render_old.py",
+              "size": 4740,
+              "mtime_ns": 1790804603548982600,
+              "sha256": "e3baae402ef7b8d3268de00046dda1c542cd215566f5c709462543e7eac10d91"
+            },
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\tests\\test_attention.py",
+              "size": 47557,
+              "mtime_ns": 1790804603550312500,
+              "sha256": "50f8812b1940c50bbebb5bede0b8cbfccb686a3f2f80bc914eae351cc72d3e2f"
+            },
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\tests\\test_cpu_multi.py",
+              "size": 25661,
+              "mtime_ns": 1790804603550312500,
+              "sha256": "9761103643bdc958541760d23d07fcd62fc2745e8f1b3b861c71232dc2c0389e"
+            },
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\tests\\test_doorbell_mock.py",
+              "size": 69396,
+              "mtime_ns": 1790804603550312500,
+              "sha256": "074fec1f8380b82c36ebc1573a82f1751f67c1bff2fc96999bc5767caf3d0ace"
+            },
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\tests\\test_kv_ring.py",
+              "size": 8270,
+              "mtime_ns": 1790804603551817800,
+              "sha256": "eeaaba4c340c8f7aea4c864945c960e695bdbda1ff03c4f16869d10130d2f13c"
+            },
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\tests\\test_protect.py",
+              "size": 4598,
+              "mtime_ns": 1790804603551817800,
+              "sha256": "ef7c720a5d301e4e7114fbf339506775acedde9f27649d32ac04ce6ee023bf3a"
+            },
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\tests\\test_scale_layout.py",
+              "size": 20458,
+              "mtime_ns": 1790804603551817800,
+              "sha256": "7786f6f66492b2440d373609e5b50c3d544899ae5d18e7c073a038994db7d50e"
+            },
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\tests\\test_splice.py",
+              "size": 61607,
+              "mtime_ns": 1790804603553494400,
+              "sha256": "91d173864f036b5a518fd77dfb15a63c29f500cced36594a708b464db2e2c7e5"
+            },
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\tools\\admission_replay.py",
+              "size": 4561,
+              "mtime_ns": 1790804603553494400,
+              "sha256": "e4b2f0bf1f974b1a94d3aaf71e2339ce5a346cd0689109f49161a2a1d597bb02"
+            },
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\tools\\bench_agent.py",
+              "size": 10262,
+              "mtime_ns": 1790804603554803200,
+              "sha256": "00adcee869eb7860de93d4e7ac041e5936cabe78ed46fa5343e1e7b86382c2ce"
+            },
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\tools\\bench_prompt_warm.py",
+              "size": 3703,
+              "mtime_ns": 1790804603555328100,
+              "sha256": "fd623442ce361563289371786ccdd3abe5040668e1b379329ebf00fb2814a24d"
+            },
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\tools\\bench_vs_llama.py",
+              "size": 13083,
+              "mtime_ns": 1790804603555328100,
+              "sha256": "47b7a37698a9569445b5c00acf57e41aedee2ca34da29a23e542bd340b5c1ee5"
+            },
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\tools\\build_kernels.bat",
+              "size": 900,
+              "mtime_ns": 1790804603555328100,
+              "sha256": "4a6a014afefcccb889ec3d10569de283323c43499e80d176cbf17450e2141391"
+            },
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\tools\\build_store.py",
+              "size": 1381,
+              "mtime_ns": 1790804603556462400,
+              "sha256": "8fd94b47b542b902e9821f332fd37ae8e0ec82eb3309ce6adb3374299747fc3e"
+            },
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\tools\\cache_policy_sim.py",
+              "size": 6663,
+              "mtime_ns": 1790804603556462400,
+              "sha256": "5a1bca4d4fa7f19f0f8efbfcf856f53a2644f12b97e43bc6d302b621a1e75831"
+            },
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\tools\\calibrate_hotset.py",
+              "size": 5313,
+              "mtime_ns": 1790804603557601900,
+              "sha256": "938b845ae4e95c2197ae244b6b3ee667ff59bd4d718df538ec6607b551fae30d"
+            },
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\tools\\compile_check_kernels.py",
+              "size": 4626,
+              "mtime_ns": 1790804603557601900,
+              "sha256": "16b871b2bb1986fbdbda4062d0fe9eef9eaf84f2afeb824117f19f63035352d0"
+            },
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\tools\\decode_kernel_ab.py",
+              "size": 3394,
+              "mtime_ns": 1790804603558603300,
+              "sha256": "ef7a152de03b17877a206206a3026ab8865dde44756d695926dacdbf6f24ae2f"
+            },
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\tools\\doorbell_selftest.py",
+              "size": 12731,
+              "mtime_ns": 1790804603558603300,
+              "sha256": "ebead2cfaa94fd11adb98d1edf8bb32bed4af1b79e0735fc3ff73c4c29616405"
+            },
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\tools\\fit_demand_probe.py",
+              "size": 14147,
+              "mtime_ns": 1790804603559613200,
+              "sha256": "7edfde2384e1c2585212a1869a2432c379c524f628dc434ca30de7064e7901e7"
+            },
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\tools\\kernel_tuning_ab.py",
+              "size": 8626,
+              "mtime_ns": 1790804603559613200,
+              "sha256": "85f6efe4bf9de470b8f3d398b0097f48e21d1017a83a9b21e4d91587819429c7"
+            },
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\tools\\lookup_spec_estimate.py",
+              "size": 3535,
+              "mtime_ns": 1790804603560693600,
+              "sha256": "d4ee8f945db10231f26c8ca7dc76d228eca77dbaaa2db027571772c3dce79a35"
+            },
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\tools\\measure_host_dram.py",
+              "size": 15961,
+              "mtime_ns": 1790804603560693600,
+              "sha256": "05edf63dd76c1989ef71a96ac432ebe1f97bcb17d215dd5ced4b597a2d6fb9d2"
+            },
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\tools\\pack_store.py",
+              "size": 31602,
+              "mtime_ns": 1790804603561744300,
+              "sha256": "f946d91b236991e46ae59aed7deec18f6cd8b61afa405a1f776407dd37ea26cc"
+            },
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\tools\\scale_pack.py",
+              "size": 11575,
+              "mtime_ns": 1790804603561744300,
+              "sha256": "5db4c7278b700d9bcf14dbd7bbc4a7c5abcc0a6778b65af863567cfba4a812cd"
+            },
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\tools\\scale_pack_ab.py",
+              "size": 14004,
+              "mtime_ns": 1790804603562742700,
+              "sha256": "dc07f10ebfd6a78ab2c34facb54f741232367a9b48c27ddcada35ab499d998be"
+            },
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\tools\\scale_pack_gpu_test.py",
+              "size": 14298,
+              "mtime_ns": 1790804603562742700,
+              "sha256": "e283aa217ca82ee0f60d82e69345a2e2dbd80fc9c67a735b7b18e379a1e82d64"
+            },
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\tools\\scale_pack_multi_ab.py",
+              "size": 13883,
+              "mtime_ns": 1790804603563873500,
+              "sha256": "e956bc2823389d3acd42e70bd339dff01c64f1fd19842ae3430ccef80040f2d9"
+            },
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\tools\\scale_pack_triton_interp.py",
+              "size": 5345,
+              "mtime_ns": 1790804603563873500,
+              "sha256": "fbd99fc6816b638d4480edb62d86745fffa6e9aa43226e6633678a623057126e"
+            },
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\tools\\tune_prefill.py",
+              "size": 1475,
+              "mtime_ns": 1790804603564921900,
+              "sha256": "0ebc76dd2af6f9ef7f7b2831fea2bf0d5006c83853f7c53a0d85e47d2d583846"
+            }
+          ]
+        },
+        "context": {
+          "files": [
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\fused_core.py",
+              "sha256": "3fb4f9d8ee41361611372478fb1a316277dd371defed710506bd1b59102add09"
+            },
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\harmony_render.py",
+              "sha256": "27fdce7bf26d36cee32049ca3ed046cb9baf6e4e8e25f10fc806ab0bb1c1fbbf"
+            },
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\cpu_prefill.py",
+              "sha256": "dae214c95c871dae1d4ae068b30718e2ea55efe80bf1209d0b9dd7db3f23cb71"
+            },
+            {
+              "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\server.py",
+              "sha256": "6db0402857c81369147f4a15df9c1a3abecd603915a2c4c4ce44837e29126484"
+            }
+          ],
+          "tokenizer_dir": "G:\\Models\\gpt-oss-120b",
+          "ctx_tokens_requested": 13000,
+          "ctx_token_count": 13000,
+          "ctx_token_ids_sha256": "ed0eaa13cf3b4abe69a8dfb81b034593575369314e39f8df026251e806e0924a",
+          "decoded_context_sha256": "a12a7fc4555962261c6e9c599387f4ad3f825f50e44d3e2b0bd22afe7cd5f218"
+        },
+        "gguf": {
+          "path": "G:\\Models\\gpt-oss-120b-gguf\\gpt-oss-120b-MXFP4.gguf",
+          "size": 63387346208,
+          "mtime_ns": 1786479974139140600,
+          "identity_strength": "metadata_only_no_large_file_hash"
+        },
+        "llama_server": {
+          "path": "G:\\Tools\\llama-b10361\\llama-server.exe",
+          "size": 9216,
+          "mtime_ns": 1786478585144998600,
+          "sha256": "c65955724e82ae7c166c71dc448b6bf54637057eb1e677f2087fdac4adf32f11"
+        },
+        "neural_server_roots": {
+          "off": {
+            "root": "F:\\AI\\Neural\\experiments\\neuralserver-opt",
+            "commit": "06d05aecd430a3ddf88db53067806e30e7634feb",
+            "dirty": true,
+            "working_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "source_manifest": [
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\arena.py",
+                "size": 12355,
+                "mtime_ns": 1790804180716145500,
+                "sha256": "f9eb1278a01d482f6ab4b81a1b8a49b62a613cc552a8137ac63391c708cc1f0d"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\chat_client.py",
+                "size": 4226,
+                "mtime_ns": 1790804180830713300,
+                "sha256": "5cf47802b4d5513b25219118468a65f8f40f39f694a0386c99fa66056a751471"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\cpu_prefill.py",
+                "size": 19662,
+                "mtime_ns": 1790804180831819000,
+                "sha256": "dae214c95c871dae1d4ae068b30718e2ea55efe80bf1209d0b9dd7db3f23cb71"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\doorbell.py",
+                "size": 17368,
+                "mtime_ns": 1790804180834991100,
+                "sha256": "0889846a08316695116b580e1d49e6701a676b702e03dc7d6bd03e2889ed673f"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\fused_core.py",
+                "size": 43971,
+                "mtime_ns": 1790804180836016000,
+                "sha256": "3fb4f9d8ee41361611372478fb1a316277dd371defed710506bd1b59102add09"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\harmony_render.py",
+                "size": 26950,
+                "mtime_ns": 1790804180844425000,
+                "sha256": "27fdce7bf26d36cee32049ca3ed046cb9baf6e4e8e25f10fc806ab0bb1c1fbbf"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\kernels\\gptoss_cpu_cap2.c",
+                "size": 34462,
+                "mtime_ns": 1790804180846573400,
+                "sha256": "47996d9f586f315567b5f2ab8baa53539f891d05c15dffed2e8ca1f44c173120"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\kernels\\gptoss_cpu_multi.c",
+                "size": 28545,
+                "mtime_ns": 1790804180846573400,
+                "sha256": "f4cb63e1459d9bed82a17ad1d1f17f817a42fa7e170026f448043dc51d5edf81"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\kernels\\membw_probe.c",
+                "size": 8154,
+                "mtime_ns": 1790804180847580900,
+                "sha256": "db40f94d9a0115441209bd1a5bc843be00dd33d9fdff02031421acdfd80e00c6"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\kernels\\memcpy_mt.c",
+                "size": 551,
+                "mtime_ns": 1790804180847580900,
+                "sha256": "841b94fba8589c03db935338e80606485e4d8197775b5d2a6eb2279e589e9b68"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\kv_ring.py",
+                "size": 7508,
+                "mtime_ns": 1790804180848861000,
+                "sha256": "32a57c4ecd2fb2e761845ec0fe37f0b7935fc0f522725d3ed58bc41c57de5e14"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\neural\\__init__.py",
+                "size": 93,
+                "mtime_ns": 1790804180855158500,
+                "sha256": "387f3ccf53983401f58532236abea74427398dbc474511cb06610d9318868532"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\neural\\moe\\__init__.py",
+                "size": 257,
+                "mtime_ns": 1790804180856160500,
+                "sha256": "7c435c0ee4fc2e4c4b6687b5d8f22fe527940e22c189e9306a6623d0d3359dd7"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\neural\\moe\\gptoss_adapter.py",
+                "size": 20164,
+                "mtime_ns": 1790804180857566800,
+                "sha256": "b567308e4b8b965ae731404ccea39556d4ea78a32c1ca021a544c4fb7a99d0ae"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\neural\\moe\\gptoss_core_graphs.py",
+                "size": 9079,
+                "mtime_ns": 1790804180857566800,
+                "sha256": "0dd8093bf94add972f9a82c2ad24e45e202addd8ae1786a6dc15f827ccb7b650"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\neural\\moe\\layout.py",
+                "size": 12452,
+                "mtime_ns": 1790804180858573700,
+                "sha256": "78ac59cdb284f6f1f0132eba1507e2585edf811873c87f5054e3343407eda61d"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\neural\\paging\\__init__.py",
+                "size": 494,
+                "mtime_ns": 1790804180858573700,
+                "sha256": "3fd5a9b9ddc029d8a7935fcd193b9ccda0ca52c25a04a5c87bf5163e11efa555"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\neural\\paging\\compressed_transport.py",
+                "size": 14567,
+                "mtime_ns": 1790804180859580100,
+                "sha256": "f05fc551160b37b10c96723c0ec8d54bb38d878e707974b065974224d70e9221"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\neural\\paging\\quantized_compute.py",
+                "size": 25717,
+                "mtime_ns": 1790804180859580100,
+                "sha256": "a2f6c2f9b0566ca9658bb13ea5a12ec39f53169e19555a1c498fa561a0e65fb4"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\neural\\paging\\residency.py",
+                "size": 9973,
+                "mtime_ns": 1790804180859580100,
+                "sha256": "8b41803483695fae4978bd5da673ef5bdf78ab0934f47489fd17803a73a911bc"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\neural\\q80\\__init__.py",
+                "size": 154,
+                "mtime_ns": 1790804180860580500,
+                "sha256": "e50a2608f5e6a1ca645bda1060e40ad81aafc1a7d4bbae592c4a9e49baefe041"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\neural\\q80\\bench_hygiene.py",
+                "size": 5724,
+                "mtime_ns": 1790804180860580500,
+                "sha256": "84feb69bf46db835604cf97aef5d4bff261033b949007a472015476000b3a11b"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\neural\\q80\\expert_runtime.py",
+                "size": 74717,
+                "mtime_ns": 1790804180861592200,
+                "sha256": "7311357d3e2a919e878e986837673846722fa403d5c94c7adc62fa3e817b0d3d"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\neural\\q80\\expert_store.py",
+                "size": 9159,
+                "mtime_ns": 1790804180862596500,
+                "sha256": "10f6aee849da60caa0be4d7c0e4c6a41f43f0a65d952b812b9d1f60d0e52d88f"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\neural\\q80\\hot_path.py",
+                "size": 22688,
+                "mtime_ns": 1790804180862596500,
+                "sha256": "cd15e2c10987051001d24a87d0f956403d16a6680ae61dac1cb79519a4b40fc0"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\neural\\q80\\intake.py",
+                "size": 46926,
+                "mtime_ns": 1790804180863614800,
+                "sha256": "ed110d6d2e92ffb979e96196df51f491f2ffa6d72137eeba9a98a8e88b4062e9"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\neural\\q80\\mxfp4_kernels.py",
+                "size": 32273,
+                "mtime_ns": 1790841106984363700,
+                "sha256": "1dd2715f1489579efb93ac1108babf3386dc552f17885f5490def314e2f03900"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\neural\\q80\\prepacked_store.py",
+                "size": 12281,
+                "mtime_ns": 1790804180865122800,
+                "sha256": "730b3f9f0b6fa4259017ede456587c89343d349885218b2f11f5da4f05d434b8"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\neural\\q80\\quant_store.py",
+                "size": 11796,
+                "mtime_ns": 1790804180865122800,
+                "sha256": "189cfdade74dfa38637319e5f1276d3599f3ce9050df3711bcd4bd465aa3ffe0"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\neural\\quality\\__init__.py",
+                "size": 0,
+                "mtime_ns": 1790804180865122800,
+                "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\neural\\quality\\harness.py",
+                "size": 4886,
+                "mtime_ns": 1790804180866130700,
+                "sha256": "6fe413f4e8585a654bfe16c7aa78c12da12b15fa4922785ba139b3bb6a63b9ff"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\paths.py",
+                "size": 1017,
+                "mtime_ns": 1790804180866130700,
+                "sha256": "7482648479198a66a3edc5465dbeb7219a27a6a01e512e31d0dc3d4b97a1efde"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\server.py",
+                "size": 195081,
+                "mtime_ns": 1790843129656900300,
+                "sha256": "f19f56df23d7203e64853858bcaa3cde7157ce054679a9c74a87ff05fd2c0261"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\start_neural_chat.bat",
+                "size": 374,
+                "mtime_ns": 1790804180871600000,
+                "sha256": "d1aa540cdcf42b0745a0aafa78c78243998995a5d4f324f85a4f522719473f35"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\start_neural_server.bat",
+                "size": 1652,
+                "mtime_ns": 1790804180871600000,
+                "sha256": "3fdedeffcfd2185e27a6355ae1147e6a1a40af4649840177569ac2cfc0e4b7ba"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tests\\render_old.py",
+                "size": 4740,
+                "mtime_ns": 1790804180872774600,
+                "sha256": "e3baae402ef7b8d3268de00046dda1c542cd215566f5c709462543e7eac10d91"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tests\\test_attention.py",
+                "size": 47557,
+                "mtime_ns": 1790804180873621500,
+                "sha256": "50f8812b1940c50bbebb5bede0b8cbfccb686a3f2f80bc914eae351cc72d3e2f"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tests\\test_cpu_multi.py",
+                "size": 25661,
+                "mtime_ns": 1790804180873621500,
+                "sha256": "9761103643bdc958541760d23d07fcd62fc2745e8f1b3b861c71232dc2c0389e"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tests\\test_doorbell_mock.py",
+                "size": 69396,
+                "mtime_ns": 1790804180874634600,
+                "sha256": "074fec1f8380b82c36ebc1573a82f1751f67c1bff2fc96999bc5767caf3d0ace"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tests\\test_grouped_gemm_plan.py",
+                "size": 4476,
+                "mtime_ns": 1790840615554272500,
+                "sha256": "02a7425df31ff8aef46c4cd9f9e71857d04e58ba1a9245b50c0517395739488d"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tests\\test_kv_ring.py",
+                "size": 8270,
+                "mtime_ns": 1790804180875639600,
+                "sha256": "eeaaba4c340c8f7aea4c864945c960e695bdbda1ff03c4f16869d10130d2f13c"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tests\\test_protect.py",
+                "size": 4598,
+                "mtime_ns": 1790804180876192300,
+                "sha256": "ef7c720a5d301e4e7114fbf339506775acedde9f27649d32ac04ce6ee023bf3a"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tests\\test_review_bench.py",
+                "size": 11026,
+                "mtime_ns": 1790841282407872400,
+                "sha256": "d32944164792aac115e6748c9ac80e3cd4391dfb5714db065e03f03e476766b5"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tests\\test_scale_layout.py",
+                "size": 20458,
+                "mtime_ns": 1790804180876192300,
+                "sha256": "7786f6f66492b2440d373609e5b50c3d544899ae5d18e7c073a038994db7d50e"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tests\\test_splice.py",
+                "size": 61607,
+                "mtime_ns": 1790804180876192300,
+                "sha256": "91d173864f036b5a518fd77dfb15a63c29f500cced36594a708b464db2e2c7e5"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\admission_replay.py",
+                "size": 4561,
+                "mtime_ns": 1790804180877608000,
+                "sha256": "e4b2f0bf1f974b1a94d3aaf71e2339ce5a346cd0689109f49161a2a1d597bb02"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\bench_agent.py",
+                "size": 10262,
+                "mtime_ns": 1790804180877608000,
+                "sha256": "00adcee869eb7860de93d4e7ac041e5936cabe78ed46fa5343e1e7b86382c2ce"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\bench_prompt_warm.py",
+                "size": 3703,
+                "mtime_ns": 1790804180878622400,
+                "sha256": "fd623442ce361563289371786ccdd3abe5040668e1b379329ebf00fb2814a24d"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\bench_vs_llama.py",
+                "size": 28494,
+                "mtime_ns": 1790841229344483300,
+                "sha256": "f99bee22d88ff247d692fb353fbbd39b2d10bee86b8aad2ffda70c62267e1110"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\build_kernels.bat",
+                "size": 900,
+                "mtime_ns": 1790804180879865000,
+                "sha256": "4a6a014afefcccb889ec3d10569de283323c43499e80d176cbf17450e2141391"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\build_store.py",
+                "size": 1381,
+                "mtime_ns": 1790804180879865000,
+                "sha256": "8fd94b47b542b902e9821f332fd37ae8e0ec82eb3309ce6adb3374299747fc3e"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\cache_policy_sim.py",
+                "size": 6663,
+                "mtime_ns": 1790804180880922100,
+                "sha256": "5a1bca4d4fa7f19f0f8efbfcf856f53a2644f12b97e43bc6d302b621a1e75831"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\calibrate_hotset.py",
+                "size": 5313,
+                "mtime_ns": 1790804180880922100,
+                "sha256": "938b845ae4e95c2197ae244b6b3ee667ff59bd4d718df538ec6607b551fae30d"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\compile_check_kernels.py",
+                "size": 4626,
+                "mtime_ns": 1790804180880922100,
+                "sha256": "16b871b2bb1986fbdbda4062d0fe9eef9eaf84f2afeb824117f19f63035352d0"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\decode_kernel_ab.py",
+                "size": 3394,
+                "mtime_ns": 1790804180882123700,
+                "sha256": "ef7a152de03b17877a206206a3026ab8865dde44756d695926dacdbf6f24ae2f"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\doorbell_selftest.py",
+                "size": 12731,
+                "mtime_ns": 1790804180883130200,
+                "sha256": "ebead2cfaa94fd11adb98d1edf8bb32bed4af1b79e0735fc3ff73c4c29616405"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\fit_demand_probe.py",
+                "size": 14147,
+                "mtime_ns": 1790804180883130200,
+                "sha256": "7edfde2384e1c2585212a1869a2432c379c524f628dc434ca30de7064e7901e7"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\grouped_gemm_ab.py",
+                "size": 10697,
+                "mtime_ns": 1790840615553194900,
+                "sha256": "1358ba47c5e92eee4e29040ec6ec126bccabc331c7a0cc3ff845b6f0b65979f1"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\kernel_tuning_ab.py",
+                "size": 8626,
+                "mtime_ns": 1790804180884144600,
+                "sha256": "85f6efe4bf9de470b8f3d398b0097f48e21d1017a83a9b21e4d91587819429c7"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\lookup_spec_estimate.py",
+                "size": 3535,
+                "mtime_ns": 1790804180884144600,
+                "sha256": "d4ee8f945db10231f26c8ca7dc76d228eca77dbaaa2db027571772c3dce79a35"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\lossless_entropy_probe.py",
+                "size": 16402,
+                "mtime_ns": 1790839954734899600,
+                "sha256": "b20fa1d821967221eff104924e91693deae7bff14d47a0e27f1639b447d17e6d"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\masked_gemv_ab.py",
+                "size": 11936,
+                "mtime_ns": 1790840408160271500,
+                "sha256": "fe678db4978b1d909c80557158da0c145f682fa456bf7c8e1a1f410bac8475d7"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\measure_host_dram.py",
+                "size": 15961,
+                "mtime_ns": 1790804180885234800,
+                "sha256": "05edf63dd76c1989ef71a96ac432ebe1f97bcb17d215dd5ced4b597a2d6fb9d2"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\pack_store.py",
+                "size": 31602,
+                "mtime_ns": 1790804180885234800,
+                "sha256": "f946d91b236991e46ae59aed7deec18f6cd8b61afa405a1f776407dd37ea26cc"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\review_bench.py",
+                "size": 15446,
+                "mtime_ns": 1790841267033062600,
+                "sha256": "60577e0ad59ab3f716278670d18f31e666afe24b38d5388c073b26c4cafe9b4b"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\review_decode_check.py",
+                "size": 13142,
+                "mtime_ns": 1790840580653176400,
+                "sha256": "b44f463f5832e3e6c81482ed3862bb05b1279b188b79ab03068a6c0a992b770c"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\review_prefill_check.py",
+                "size": 6092,
+                "mtime_ns": 1790843129656900300,
+                "sha256": "5d23bbb7a29d99a34c4d9ab4a5c79a9f39261927afedd3e9e2c63f772548e2b9"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\review_warm_prefill.py",
+                "size": 21487,
+                "mtime_ns": 1790843165501415400,
+                "sha256": "af36f90af1bb4c53bf91413b4731be21491a5a13ae468975959628209a6e9161"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\scale_pack.py",
+                "size": 11575,
+                "mtime_ns": 1790804180886240500,
+                "sha256": "5db4c7278b700d9bcf14dbd7bbc4a7c5abcc0a6778b65af863567cfba4a812cd"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\scale_pack_ab.py",
+                "size": 14004,
+                "mtime_ns": 1790804180886240500,
+                "sha256": "dc07f10ebfd6a78ab2c34facb54f741232367a9b48c27ddcada35ab499d998be"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\scale_pack_gpu_test.py",
+                "size": 14298,
+                "mtime_ns": 1790804180887257500,
+                "sha256": "e283aa217ca82ee0f60d82e69345a2e2dbd80fc9c67a735b7b18e379a1e82d64"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\scale_pack_multi_ab.py",
+                "size": 13883,
+                "mtime_ns": 1790804180888254800,
+                "sha256": "e956bc2823389d3acd42e70bd339dff01c64f1fd19842ae3430ccef80040f2d9"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\scale_pack_triton_interp.py",
+                "size": 5345,
+                "mtime_ns": 1790804180888254800,
+                "sha256": "fbd99fc6816b638d4480edb62d86745fffa6e9aa43226e6633678a623057126e"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\tune_prefill.py",
+                "size": 1475,
+                "mtime_ns": 1790804180888254800,
+                "sha256": "0ebc76dd2af6f9ef7f7b2831fea2bf0d5006c83853f7c53a0d85e47d2d583846"
+              }
+            ],
+            "artifacts": {
+              "server": {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\server.py",
+                "size": 195081,
+                "mtime_ns": 1790843129656900300,
+                "sha256": "f19f56df23d7203e64853858bcaa3cde7157ce054679a9c74a87ff05fd2c0261"
+              },
+              "gptoss_cpu_cap2.dll": {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\gptoss_cpu_cap2.dll",
+                "size": 413085,
+                "mtime_ns": 1790804180839050200,
+                "sha256": "84a8c5af304e5f1c20b4ee12c8708f0494c7b580be31aff6df95481772b40b44"
+              },
+              "gptoss_cpu_multi.dll": {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\gptoss_cpu_multi.dll",
+                "size": 486449,
+                "mtime_ns": 1790804180843422300,
+                "sha256": "fd48ac7644c1a136f8635f89ecd0b1bf8f1be0caa38f3ffc16c3c778b1db9fbb"
+              },
+              "tokenizer/tokenizer_config.json": {
+                "path": "G:\\Models\\gpt-oss-120b\\tokenizer_config.json",
+                "size": 4200,
+                "mtime_ns": 1786476062771391700,
+                "sha256": "9279e942392b742d633c7adbb89ebe002c98399db8926a7af5125c726f404070"
+              },
+              "tokenizer/special_tokens_map.json": {
+                "path": "G:\\Models\\gpt-oss-120b\\special_tokens_map.json",
+                "size": 98,
+                "mtime_ns": 1786476056839926300,
+                "sha256": "dd5e191d20c12d2fee1da5bae14ca1db0f5f4215300af691f23cdee97120a293"
+              },
+              "tokenizer/chat_template.jinja": {
+                "path": "G:\\Models\\gpt-oss-120b\\chat_template.jinja",
+                "size": 16738,
+                "mtime_ns": 1786475297134244300,
+                "sha256": "a4c9919cbbd4acdd51ccffe22da049264b1b73e59055fa58811a99efbd7c8146"
+              },
+              "tokenizer/tokenizer.json": {
+                "path": "G:\\Models\\gpt-oss-120b\\tokenizer.json",
+                "size": 27868174,
+                "mtime_ns": 1786476062072340600,
+                "sha256": "0614fe83cadab421296e664e1f48f4261fa8fef6e03e63bb75c20f38e37d07d3"
+              },
+              "tokenizer/config.json": {
+                "path": "G:\\Models\\gpt-oss-120b\\config.json",
+                "size": 2089,
+                "mtime_ns": 1786475297078179900,
+                "sha256": "933aeb666a3fd851133ddd7686414f369bc564c4185fb5704416550879f10566"
+              },
+              "tools/bench_vs_llama.py": {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\bench_vs_llama.py",
+                "size": 28494,
+                "mtime_ns": 1790841229344483300,
+                "sha256": "f99bee22d88ff247d692fb353fbbd39b2d10bee86b8aad2ffda70c62267e1110"
+              },
+              "tools/review_bench.py": {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\review_bench.py",
+                "size": 15446,
+                "mtime_ns": 1790841267033062600,
+                "sha256": "60577e0ad59ab3f716278670d18f31e666afe24b38d5388c073b26c4cafe9b4b"
+              },
+              "store_dir": {
+                "path": "G:\\NeuralStores\\gptoss120b_ps4",
+                "size": 16384,
+                "mtime_ns": 1790720591409613800
+              },
+              "store/metadata.json": {
+                "path": "G:\\NeuralStores\\gptoss120b_ps4\\metadata.json",
+                "size": 7117,
+                "mtime_ns": 1790720591405515100,
+                "sha256": "3bb2848c2302ae37134de51807617a4626c0fad6fb6197fe3b5f31a77b1c7b69"
+              },
+              "store/pack_progress.json": {
+                "path": "G:\\NeuralStores\\gptoss120b_ps4\\pack_progress.json",
+                "size": 17311,
+                "mtime_ns": 1790720591042168500,
+                "sha256": "0a4002184e603dbeb09ff6ec727e5430d624f1e3c8f64334efe38fb82ce1df6c"
+              }
+            }
+          },
+          "on": {
+            "root": "F:\\AI\\Neural\\experiments\\neuralserver-opt",
+            "commit": "06d05aecd430a3ddf88db53067806e30e7634feb",
+            "dirty": true,
+            "working_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "source_manifest": [
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\arena.py",
+                "size": 12355,
+                "mtime_ns": 1790804180716145500,
+                "sha256": "f9eb1278a01d482f6ab4b81a1b8a49b62a613cc552a8137ac63391c708cc1f0d"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\chat_client.py",
+                "size": 4226,
+                "mtime_ns": 1790804180830713300,
+                "sha256": "5cf47802b4d5513b25219118468a65f8f40f39f694a0386c99fa66056a751471"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\cpu_prefill.py",
+                "size": 19662,
+                "mtime_ns": 1790804180831819000,
+                "sha256": "dae214c95c871dae1d4ae068b30718e2ea55efe80bf1209d0b9dd7db3f23cb71"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\doorbell.py",
+                "size": 17368,
+                "mtime_ns": 1790804180834991100,
+                "sha256": "0889846a08316695116b580e1d49e6701a676b702e03dc7d6bd03e2889ed673f"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\fused_core.py",
+                "size": 43971,
+                "mtime_ns": 1790804180836016000,
+                "sha256": "3fb4f9d8ee41361611372478fb1a316277dd371defed710506bd1b59102add09"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\harmony_render.py",
+                "size": 26950,
+                "mtime_ns": 1790804180844425000,
+                "sha256": "27fdce7bf26d36cee32049ca3ed046cb9baf6e4e8e25f10fc806ab0bb1c1fbbf"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\kernels\\gptoss_cpu_cap2.c",
+                "size": 34462,
+                "mtime_ns": 1790804180846573400,
+                "sha256": "47996d9f586f315567b5f2ab8baa53539f891d05c15dffed2e8ca1f44c173120"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\kernels\\gptoss_cpu_multi.c",
+                "size": 28545,
+                "mtime_ns": 1790804180846573400,
+                "sha256": "f4cb63e1459d9bed82a17ad1d1f17f817a42fa7e170026f448043dc51d5edf81"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\kernels\\membw_probe.c",
+                "size": 8154,
+                "mtime_ns": 1790804180847580900,
+                "sha256": "db40f94d9a0115441209bd1a5bc843be00dd33d9fdff02031421acdfd80e00c6"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\kernels\\memcpy_mt.c",
+                "size": 551,
+                "mtime_ns": 1790804180847580900,
+                "sha256": "841b94fba8589c03db935338e80606485e4d8197775b5d2a6eb2279e589e9b68"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\kv_ring.py",
+                "size": 7508,
+                "mtime_ns": 1790804180848861000,
+                "sha256": "32a57c4ecd2fb2e761845ec0fe37f0b7935fc0f522725d3ed58bc41c57de5e14"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\neural\\__init__.py",
+                "size": 93,
+                "mtime_ns": 1790804180855158500,
+                "sha256": "387f3ccf53983401f58532236abea74427398dbc474511cb06610d9318868532"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\neural\\moe\\__init__.py",
+                "size": 257,
+                "mtime_ns": 1790804180856160500,
+                "sha256": "7c435c0ee4fc2e4c4b6687b5d8f22fe527940e22c189e9306a6623d0d3359dd7"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\neural\\moe\\gptoss_adapter.py",
+                "size": 20164,
+                "mtime_ns": 1790804180857566800,
+                "sha256": "b567308e4b8b965ae731404ccea39556d4ea78a32c1ca021a544c4fb7a99d0ae"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\neural\\moe\\gptoss_core_graphs.py",
+                "size": 9079,
+                "mtime_ns": 1790804180857566800,
+                "sha256": "0dd8093bf94add972f9a82c2ad24e45e202addd8ae1786a6dc15f827ccb7b650"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\neural\\moe\\layout.py",
+                "size": 12452,
+                "mtime_ns": 1790804180858573700,
+                "sha256": "78ac59cdb284f6f1f0132eba1507e2585edf811873c87f5054e3343407eda61d"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\neural\\paging\\__init__.py",
+                "size": 494,
+                "mtime_ns": 1790804180858573700,
+                "sha256": "3fd5a9b9ddc029d8a7935fcd193b9ccda0ca52c25a04a5c87bf5163e11efa555"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\neural\\paging\\compressed_transport.py",
+                "size": 14567,
+                "mtime_ns": 1790804180859580100,
+                "sha256": "f05fc551160b37b10c96723c0ec8d54bb38d878e707974b065974224d70e9221"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\neural\\paging\\quantized_compute.py",
+                "size": 25717,
+                "mtime_ns": 1790804180859580100,
+                "sha256": "a2f6c2f9b0566ca9658bb13ea5a12ec39f53169e19555a1c498fa561a0e65fb4"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\neural\\paging\\residency.py",
+                "size": 9973,
+                "mtime_ns": 1790804180859580100,
+                "sha256": "8b41803483695fae4978bd5da673ef5bdf78ab0934f47489fd17803a73a911bc"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\neural\\q80\\__init__.py",
+                "size": 154,
+                "mtime_ns": 1790804180860580500,
+                "sha256": "e50a2608f5e6a1ca645bda1060e40ad81aafc1a7d4bbae592c4a9e49baefe041"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\neural\\q80\\bench_hygiene.py",
+                "size": 5724,
+                "mtime_ns": 1790804180860580500,
+                "sha256": "84feb69bf46db835604cf97aef5d4bff261033b949007a472015476000b3a11b"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\neural\\q80\\expert_runtime.py",
+                "size": 74717,
+                "mtime_ns": 1790804180861592200,
+                "sha256": "7311357d3e2a919e878e986837673846722fa403d5c94c7adc62fa3e817b0d3d"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\neural\\q80\\expert_store.py",
+                "size": 9159,
+                "mtime_ns": 1790804180862596500,
+                "sha256": "10f6aee849da60caa0be4d7c0e4c6a41f43f0a65d952b812b9d1f60d0e52d88f"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\neural\\q80\\hot_path.py",
+                "size": 22688,
+                "mtime_ns": 1790804180862596500,
+                "sha256": "cd15e2c10987051001d24a87d0f956403d16a6680ae61dac1cb79519a4b40fc0"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\neural\\q80\\intake.py",
+                "size": 46926,
+                "mtime_ns": 1790804180863614800,
+                "sha256": "ed110d6d2e92ffb979e96196df51f491f2ffa6d72137eeba9a98a8e88b4062e9"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\neural\\q80\\mxfp4_kernels.py",
+                "size": 32273,
+                "mtime_ns": 1790841106984363700,
+                "sha256": "1dd2715f1489579efb93ac1108babf3386dc552f17885f5490def314e2f03900"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\neural\\q80\\prepacked_store.py",
+                "size": 12281,
+                "mtime_ns": 1790804180865122800,
+                "sha256": "730b3f9f0b6fa4259017ede456587c89343d349885218b2f11f5da4f05d434b8"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\neural\\q80\\quant_store.py",
+                "size": 11796,
+                "mtime_ns": 1790804180865122800,
+                "sha256": "189cfdade74dfa38637319e5f1276d3599f3ce9050df3711bcd4bd465aa3ffe0"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\neural\\quality\\__init__.py",
+                "size": 0,
+                "mtime_ns": 1790804180865122800,
+                "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\neural\\quality\\harness.py",
+                "size": 4886,
+                "mtime_ns": 1790804180866130700,
+                "sha256": "6fe413f4e8585a654bfe16c7aa78c12da12b15fa4922785ba139b3bb6a63b9ff"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\paths.py",
+                "size": 1017,
+                "mtime_ns": 1790804180866130700,
+                "sha256": "7482648479198a66a3edc5465dbeb7219a27a6a01e512e31d0dc3d4b97a1efde"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\server.py",
+                "size": 195081,
+                "mtime_ns": 1790843129656900300,
+                "sha256": "f19f56df23d7203e64853858bcaa3cde7157ce054679a9c74a87ff05fd2c0261"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\start_neural_chat.bat",
+                "size": 374,
+                "mtime_ns": 1790804180871600000,
+                "sha256": "d1aa540cdcf42b0745a0aafa78c78243998995a5d4f324f85a4f522719473f35"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\start_neural_server.bat",
+                "size": 1652,
+                "mtime_ns": 1790804180871600000,
+                "sha256": "3fdedeffcfd2185e27a6355ae1147e6a1a40af4649840177569ac2cfc0e4b7ba"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tests\\render_old.py",
+                "size": 4740,
+                "mtime_ns": 1790804180872774600,
+                "sha256": "e3baae402ef7b8d3268de00046dda1c542cd215566f5c709462543e7eac10d91"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tests\\test_attention.py",
+                "size": 47557,
+                "mtime_ns": 1790804180873621500,
+                "sha256": "50f8812b1940c50bbebb5bede0b8cbfccb686a3f2f80bc914eae351cc72d3e2f"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tests\\test_cpu_multi.py",
+                "size": 25661,
+                "mtime_ns": 1790804180873621500,
+                "sha256": "9761103643bdc958541760d23d07fcd62fc2745e8f1b3b861c71232dc2c0389e"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tests\\test_doorbell_mock.py",
+                "size": 69396,
+                "mtime_ns": 1790804180874634600,
+                "sha256": "074fec1f8380b82c36ebc1573a82f1751f67c1bff2fc96999bc5767caf3d0ace"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tests\\test_grouped_gemm_plan.py",
+                "size": 4476,
+                "mtime_ns": 1790840615554272500,
+                "sha256": "02a7425df31ff8aef46c4cd9f9e71857d04e58ba1a9245b50c0517395739488d"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tests\\test_kv_ring.py",
+                "size": 8270,
+                "mtime_ns": 1790804180875639600,
+                "sha256": "eeaaba4c340c8f7aea4c864945c960e695bdbda1ff03c4f16869d10130d2f13c"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tests\\test_protect.py",
+                "size": 4598,
+                "mtime_ns": 1790804180876192300,
+                "sha256": "ef7c720a5d301e4e7114fbf339506775acedde9f27649d32ac04ce6ee023bf3a"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tests\\test_review_bench.py",
+                "size": 11026,
+                "mtime_ns": 1790841282407872400,
+                "sha256": "d32944164792aac115e6748c9ac80e3cd4391dfb5714db065e03f03e476766b5"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tests\\test_scale_layout.py",
+                "size": 20458,
+                "mtime_ns": 1790804180876192300,
+                "sha256": "7786f6f66492b2440d373609e5b50c3d544899ae5d18e7c073a038994db7d50e"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tests\\test_splice.py",
+                "size": 61607,
+                "mtime_ns": 1790804180876192300,
+                "sha256": "91d173864f036b5a518fd77dfb15a63c29f500cced36594a708b464db2e2c7e5"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\admission_replay.py",
+                "size": 4561,
+                "mtime_ns": 1790804180877608000,
+                "sha256": "e4b2f0bf1f974b1a94d3aaf71e2339ce5a346cd0689109f49161a2a1d597bb02"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\bench_agent.py",
+                "size": 10262,
+                "mtime_ns": 1790804180877608000,
+                "sha256": "00adcee869eb7860de93d4e7ac041e5936cabe78ed46fa5343e1e7b86382c2ce"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\bench_prompt_warm.py",
+                "size": 3703,
+                "mtime_ns": 1790804180878622400,
+                "sha256": "fd623442ce361563289371786ccdd3abe5040668e1b379329ebf00fb2814a24d"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\bench_vs_llama.py",
+                "size": 28494,
+                "mtime_ns": 1790841229344483300,
+                "sha256": "f99bee22d88ff247d692fb353fbbd39b2d10bee86b8aad2ffda70c62267e1110"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\build_kernels.bat",
+                "size": 900,
+                "mtime_ns": 1790804180879865000,
+                "sha256": "4a6a014afefcccb889ec3d10569de283323c43499e80d176cbf17450e2141391"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\build_store.py",
+                "size": 1381,
+                "mtime_ns": 1790804180879865000,
+                "sha256": "8fd94b47b542b902e9821f332fd37ae8e0ec82eb3309ce6adb3374299747fc3e"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\cache_policy_sim.py",
+                "size": 6663,
+                "mtime_ns": 1790804180880922100,
+                "sha256": "5a1bca4d4fa7f19f0f8efbfcf856f53a2644f12b97e43bc6d302b621a1e75831"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\calibrate_hotset.py",
+                "size": 5313,
+                "mtime_ns": 1790804180880922100,
+                "sha256": "938b845ae4e95c2197ae244b6b3ee667ff59bd4d718df538ec6607b551fae30d"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\compile_check_kernels.py",
+                "size": 4626,
+                "mtime_ns": 1790804180880922100,
+                "sha256": "16b871b2bb1986fbdbda4062d0fe9eef9eaf84f2afeb824117f19f63035352d0"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\decode_kernel_ab.py",
+                "size": 3394,
+                "mtime_ns": 1790804180882123700,
+                "sha256": "ef7a152de03b17877a206206a3026ab8865dde44756d695926dacdbf6f24ae2f"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\doorbell_selftest.py",
+                "size": 12731,
+                "mtime_ns": 1790804180883130200,
+                "sha256": "ebead2cfaa94fd11adb98d1edf8bb32bed4af1b79e0735fc3ff73c4c29616405"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\fit_demand_probe.py",
+                "size": 14147,
+                "mtime_ns": 1790804180883130200,
+                "sha256": "7edfde2384e1c2585212a1869a2432c379c524f628dc434ca30de7064e7901e7"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\grouped_gemm_ab.py",
+                "size": 10697,
+                "mtime_ns": 1790840615553194900,
+                "sha256": "1358ba47c5e92eee4e29040ec6ec126bccabc331c7a0cc3ff845b6f0b65979f1"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\kernel_tuning_ab.py",
+                "size": 8626,
+                "mtime_ns": 1790804180884144600,
+                "sha256": "85f6efe4bf9de470b8f3d398b0097f48e21d1017a83a9b21e4d91587819429c7"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\lookup_spec_estimate.py",
+                "size": 3535,
+                "mtime_ns": 1790804180884144600,
+                "sha256": "d4ee8f945db10231f26c8ca7dc76d228eca77dbaaa2db027571772c3dce79a35"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\lossless_entropy_probe.py",
+                "size": 16402,
+                "mtime_ns": 1790839954734899600,
+                "sha256": "b20fa1d821967221eff104924e91693deae7bff14d47a0e27f1639b447d17e6d"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\masked_gemv_ab.py",
+                "size": 11936,
+                "mtime_ns": 1790840408160271500,
+                "sha256": "fe678db4978b1d909c80557158da0c145f682fa456bf7c8e1a1f410bac8475d7"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\measure_host_dram.py",
+                "size": 15961,
+                "mtime_ns": 1790804180885234800,
+                "sha256": "05edf63dd76c1989ef71a96ac432ebe1f97bcb17d215dd5ced4b597a2d6fb9d2"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\pack_store.py",
+                "size": 31602,
+                "mtime_ns": 1790804180885234800,
+                "sha256": "f946d91b236991e46ae59aed7deec18f6cd8b61afa405a1f776407dd37ea26cc"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\review_bench.py",
+                "size": 15446,
+                "mtime_ns": 1790841267033062600,
+                "sha256": "60577e0ad59ab3f716278670d18f31e666afe24b38d5388c073b26c4cafe9b4b"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\review_decode_check.py",
+                "size": 13142,
+                "mtime_ns": 1790840580653176400,
+                "sha256": "b44f463f5832e3e6c81482ed3862bb05b1279b188b79ab03068a6c0a992b770c"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\review_prefill_check.py",
+                "size": 6092,
+                "mtime_ns": 1790843129656900300,
+                "sha256": "5d23bbb7a29d99a34c4d9ab4a5c79a9f39261927afedd3e9e2c63f772548e2b9"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\review_warm_prefill.py",
+                "size": 21487,
+                "mtime_ns": 1790843165501415400,
+                "sha256": "af36f90af1bb4c53bf91413b4731be21491a5a13ae468975959628209a6e9161"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\scale_pack.py",
+                "size": 11575,
+                "mtime_ns": 1790804180886240500,
+                "sha256": "5db4c7278b700d9bcf14dbd7bbc4a7c5abcc0a6778b65af863567cfba4a812cd"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\scale_pack_ab.py",
+                "size": 14004,
+                "mtime_ns": 1790804180886240500,
+                "sha256": "dc07f10ebfd6a78ab2c34facb54f741232367a9b48c27ddcada35ab499d998be"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\scale_pack_gpu_test.py",
+                "size": 14298,
+                "mtime_ns": 1790804180887257500,
+                "sha256": "e283aa217ca82ee0f60d82e69345a2e2dbd80fc9c67a735b7b18e379a1e82d64"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\scale_pack_multi_ab.py",
+                "size": 13883,
+                "mtime_ns": 1790804180888254800,
+                "sha256": "e956bc2823389d3acd42e70bd339dff01c64f1fd19842ae3430ccef80040f2d9"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\scale_pack_triton_interp.py",
+                "size": 5345,
+                "mtime_ns": 1790804180888254800,
+                "sha256": "fbd99fc6816b638d4480edb62d86745fffa6e9aa43226e6633678a623057126e"
+              },
+              {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\tune_prefill.py",
+                "size": 1475,
+                "mtime_ns": 1790804180888254800,
+                "sha256": "0ebc76dd2af6f9ef7f7b2831fea2bf0d5006c83853f7c53a0d85e47d2d583846"
+              }
+            ],
+            "artifacts": {
+              "server": {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\server.py",
+                "size": 195081,
+                "mtime_ns": 1790843129656900300,
+                "sha256": "f19f56df23d7203e64853858bcaa3cde7157ce054679a9c74a87ff05fd2c0261"
+              },
+              "gptoss_cpu_cap2.dll": {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\gptoss_cpu_cap2.dll",
+                "size": 413085,
+                "mtime_ns": 1790804180839050200,
+                "sha256": "84a8c5af304e5f1c20b4ee12c8708f0494c7b580be31aff6df95481772b40b44"
+              },
+              "gptoss_cpu_multi.dll": {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\gptoss_cpu_multi.dll",
+                "size": 486449,
+                "mtime_ns": 1790804180843422300,
+                "sha256": "fd48ac7644c1a136f8635f89ecd0b1bf8f1be0caa38f3ffc16c3c778b1db9fbb"
+              },
+              "tokenizer/tokenizer_config.json": {
+                "path": "G:\\Models\\gpt-oss-120b\\tokenizer_config.json",
+                "size": 4200,
+                "mtime_ns": 1786476062771391700,
+                "sha256": "9279e942392b742d633c7adbb89ebe002c98399db8926a7af5125c726f404070"
+              },
+              "tokenizer/special_tokens_map.json": {
+                "path": "G:\\Models\\gpt-oss-120b\\special_tokens_map.json",
+                "size": 98,
+                "mtime_ns": 1786476056839926300,
+                "sha256": "dd5e191d20c12d2fee1da5bae14ca1db0f5f4215300af691f23cdee97120a293"
+              },
+              "tokenizer/chat_template.jinja": {
+                "path": "G:\\Models\\gpt-oss-120b\\chat_template.jinja",
+                "size": 16738,
+                "mtime_ns": 1786475297134244300,
+                "sha256": "a4c9919cbbd4acdd51ccffe22da049264b1b73e59055fa58811a99efbd7c8146"
+              },
+              "tokenizer/tokenizer.json": {
+                "path": "G:\\Models\\gpt-oss-120b\\tokenizer.json",
+                "size": 27868174,
+                "mtime_ns": 1786476062072340600,
+                "sha256": "0614fe83cadab421296e664e1f48f4261fa8fef6e03e63bb75c20f38e37d07d3"
+              },
+              "tokenizer/config.json": {
+                "path": "G:\\Models\\gpt-oss-120b\\config.json",
+                "size": 2089,
+                "mtime_ns": 1786475297078179900,
+                "sha256": "933aeb666a3fd851133ddd7686414f369bc564c4185fb5704416550879f10566"
+              },
+              "tools/bench_vs_llama.py": {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\bench_vs_llama.py",
+                "size": 28494,
+                "mtime_ns": 1790841229344483300,
+                "sha256": "f99bee22d88ff247d692fb353fbbd39b2d10bee86b8aad2ffda70c62267e1110"
+              },
+              "tools/review_bench.py": {
+                "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\review_bench.py",
+                "size": 15446,
+                "mtime_ns": 1790841267033062600,
+                "sha256": "60577e0ad59ab3f716278670d18f31e666afe24b38d5388c073b26c4cafe9b4b"
+              },
+              "store_dir": {
+                "path": "G:\\NeuralStores\\gptoss120b_ps4",
+                "size": 16384,
+                "mtime_ns": 1790720591409613800
+              },
+              "store/metadata.json": {
+                "path": "G:\\NeuralStores\\gptoss120b_ps4\\metadata.json",
+                "size": 7117,
+                "mtime_ns": 1790720591405515100,
+                "sha256": "3bb2848c2302ae37134de51807617a4626c0fad6fb6197fe3b5f31a77b1c7b69"
+              },
+              "store/pack_progress.json": {
+                "path": "G:\\NeuralStores\\gptoss120b_ps4\\pack_progress.json",
+                "size": 17311,
+                "mtime_ns": 1790720591042168500,
+                "sha256": "0a4002184e603dbeb09ff6ec727e5430d624f1e3c8f64334efe38fb82ce1df6c"
+              }
+            }
+          }
+        },
+        "runner_artifacts": {
+          "server": {
+            "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\server.py",
+            "size": 195081,
+            "mtime_ns": 1790843129656900300,
+            "sha256": "f19f56df23d7203e64853858bcaa3cde7157ce054679a9c74a87ff05fd2c0261"
+          },
+          "gptoss_cpu_cap2.dll": {
+            "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\gptoss_cpu_cap2.dll",
+            "size": 413085,
+            "mtime_ns": 1790804180839050200,
+            "sha256": "84a8c5af304e5f1c20b4ee12c8708f0494c7b580be31aff6df95481772b40b44"
+          },
+          "gptoss_cpu_multi.dll": {
+            "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\gptoss_cpu_multi.dll",
+            "size": 486449,
+            "mtime_ns": 1790804180843422300,
+            "sha256": "fd48ac7644c1a136f8635f89ecd0b1bf8f1be0caa38f3ffc16c3c778b1db9fbb"
+          },
+          "tokenizer/tokenizer_config.json": {
+            "path": "G:\\Models\\gpt-oss-120b\\tokenizer_config.json",
+            "size": 4200,
+            "mtime_ns": 1786476062771391700,
+            "sha256": "9279e942392b742d633c7adbb89ebe002c98399db8926a7af5125c726f404070"
+          },
+          "tokenizer/special_tokens_map.json": {
+            "path": "G:\\Models\\gpt-oss-120b\\special_tokens_map.json",
+            "size": 98,
+            "mtime_ns": 1786476056839926300,
+            "sha256": "dd5e191d20c12d2fee1da5bae14ca1db0f5f4215300af691f23cdee97120a293"
+          },
+          "tokenizer/chat_template.jinja": {
+            "path": "G:\\Models\\gpt-oss-120b\\chat_template.jinja",
+            "size": 16738,
+            "mtime_ns": 1786475297134244300,
+            "sha256": "a4c9919cbbd4acdd51ccffe22da049264b1b73e59055fa58811a99efbd7c8146"
+          },
+          "tokenizer/tokenizer.json": {
+            "path": "G:\\Models\\gpt-oss-120b\\tokenizer.json",
+            "size": 27868174,
+            "mtime_ns": 1786476062072340600,
+            "sha256": "0614fe83cadab421296e664e1f48f4261fa8fef6e03e63bb75c20f38e37d07d3"
+          },
+          "tokenizer/config.json": {
+            "path": "G:\\Models\\gpt-oss-120b\\config.json",
+            "size": 2089,
+            "mtime_ns": 1786475297078179900,
+            "sha256": "933aeb666a3fd851133ddd7686414f369bc564c4185fb5704416550879f10566"
+          },
+          "tools/bench_vs_llama.py": {
+            "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\bench_vs_llama.py",
+            "size": 28494,
+            "mtime_ns": 1790841229344483300,
+            "sha256": "f99bee22d88ff247d692fb353fbbd39b2d10bee86b8aad2ffda70c62267e1110"
+          },
+          "tools/review_bench.py": {
+            "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\review_bench.py",
+            "size": 15446,
+            "mtime_ns": 1790841267033062600,
+            "sha256": "60577e0ad59ab3f716278670d18f31e666afe24b38d5388c073b26c4cafe9b4b"
+          },
+          "store_dir": {
+            "path": "G:\\NeuralStores\\gptoss120b_ps4",
+            "size": 16384,
+            "mtime_ns": 1790720591409613800
+          },
+          "store/metadata.json": {
+            "path": "G:\\NeuralStores\\gptoss120b_ps4\\metadata.json",
+            "size": 7117,
+            "mtime_ns": 1790720591405515100,
+            "sha256": "3bb2848c2302ae37134de51807617a4626c0fad6fb6197fe3b5f31a77b1c7b69"
+          },
+          "store/pack_progress.json": {
+            "path": "G:\\NeuralStores\\gptoss120b_ps4\\pack_progress.json",
+            "size": 17311,
+            "mtime_ns": 1790720591042168500,
+            "sha256": "0a4002184e603dbeb09ff6ec727e5430d624f1e3c8f64334efe38fb82ce1df6c"
+          }
+        }
+      },
+      "has_replay_archive": true,
+      "checks": {
+        "request_archive_integrity": true,
+        "response_archive_integrity": true,
+        "result_archive_link_integrity": true,
+        "archive_capture_state": {
+          "complete": 16,
+          "failed": 0,
+          "pending": 0,
+          "legacy_unknown": 0
+        },
+        "request_match_across_sessions_by_turn": [
+          {
+            "turn": 0,
+            "distinct_hashes": 1,
+            "matched": true
+          },
+          {
+            "turn": 1,
+            "distinct_hashes": 1,
+            "matched": true
+          },
+          {
+            "turn": 2,
+            "distinct_hashes": 1,
+            "matched": true
+          },
+          {
+            "turn": 3,
+            "distinct_hashes": 1,
+            "matched": true
+          }
+        ],
+        "prompt_token_ids_match_by_turn": [
+          {
+            "turn": 0,
+            "samples": 4,
+            "hashes_present": 4,
+            "missing_hash_count": 0,
+            "distinct_hashes": 1,
+            "matched": true,
+            "matched_among_known": true
+          },
+          {
+            "turn": 1,
+            "samples": 4,
+            "hashes_present": 4,
+            "missing_hash_count": 0,
+            "distinct_hashes": 1,
+            "matched": true,
+            "matched_among_known": true
+          },
+          {
+            "turn": 2,
+            "samples": 4,
+            "hashes_present": 4,
+            "missing_hash_count": 0,
+            "distinct_hashes": 1,
+            "matched": true,
+            "matched_among_known": true
+          },
+          {
+            "turn": 3,
+            "samples": 4,
+            "hashes_present": 4,
+            "missing_hash_count": 0,
+            "distinct_hashes": 1,
+            "matched": true,
+            "matched_among_known": true
+          }
+        ]
+      },
+      "aggregate": {
+        "off": {
+          "sessions": 2,
+          "turns": 8,
+          "session_status_counts": {
+            "complete": 2,
+            "failed": 0,
+            "running": 0,
+            "legacy_unknown": 0
+          },
+          "all_sessions_complete": true,
+          "first_prompt_s_median": 8.605,
+          "first_decode_tok_s_median": 22.6894,
+          "followup_decode_tok_s_median": 24.0232,
+          "all_turns_weighted_decode_tok_s": 23.8298,
+          "all_turns_weighted_decode": {
+            "tokens": 4088,
+            "seconds": 171.5502,
+            "tok_s": 23.8298
+          },
+          "first_weighted_decode": {
+            "tokens": 1022,
+            "seconds": 45.0439,
+            "tok_s": 22.689
+          },
+          "followup_weighted_decode": {
+            "tokens": 3066,
+            "seconds": 126.5063,
+            "tok_s": 24.2359
+          },
+          "finish_reasons": [
+            "length"
+          ],
+          "output_identity_by_turn": [
+            {
+              "turn": 0,
+              "samples": 2,
+              "hashes_present": 2,
+              "missing_identity_count": 0,
+              "distinct_output_hashes": 1,
+              "identical": true,
+              "verification": "verified"
+            },
+            {
+              "turn": 1,
+              "samples": 2,
+              "hashes_present": 2,
+              "missing_identity_count": 0,
+              "distinct_output_hashes": 1,
+              "identical": true,
+              "verification": "verified"
+            },
+            {
+              "turn": 2,
+              "samples": 2,
+              "hashes_present": 2,
+              "missing_identity_count": 0,
+              "distinct_output_hashes": 2,
+              "identical": false,
+              "verification": "verified"
+            },
+            {
+              "turn": 3,
+              "samples": 2,
+              "hashes_present": 2,
+              "missing_identity_count": 0,
+              "distinct_output_hashes": 2,
+              "identical": false,
+              "verification": "verified"
+            }
+          ],
+          "request_hashes_by_turn": [
+            {
+              "turn": 0,
+              "distinct_hashes": 1,
+              "matched": true
+            },
+            {
+              "turn": 1,
+              "distinct_hashes": 1,
+              "matched": true
+            },
+            {
+              "turn": 2,
+              "distinct_hashes": 1,
+              "matched": true
+            },
+            {
+              "turn": 3,
+              "distinct_hashes": 1,
+              "matched": true
+            }
+          ]
+        },
+        "on": {
+          "sessions": 2,
+          "turns": 8,
+          "session_status_counts": {
+            "complete": 2,
+            "failed": 0,
+            "running": 0,
+            "legacy_unknown": 0
+          },
+          "all_sessions_complete": true,
+          "first_prompt_s_median": 8.2863,
+          "first_decode_tok_s_median": 21.373,
+          "followup_decode_tok_s_median": 23.4691,
+          "all_turns_weighted_decode_tok_s": 23.0605,
+          "all_turns_weighted_decode": {
+            "tokens": 4088,
+            "seconds": 177.2732,
+            "tok_s": 23.0605
+          },
+          "first_weighted_decode": {
+            "tokens": 1022,
+            "seconds": 47.8666,
+            "tok_s": 21.351
+          },
+          "followup_weighted_decode": {
+            "tokens": 3066,
+            "seconds": 129.4066,
+            "tok_s": 23.6928
+          },
+          "finish_reasons": [
+            "length"
+          ],
+          "output_identity_by_turn": [
+            {
+              "turn": 0,
+              "samples": 2,
+              "hashes_present": 2,
+              "missing_identity_count": 0,
+              "distinct_output_hashes": 1,
+              "identical": true,
+              "verification": "verified"
+            },
+            {
+              "turn": 1,
+              "samples": 2,
+              "hashes_present": 2,
+              "missing_identity_count": 0,
+              "distinct_output_hashes": 1,
+              "identical": true,
+              "verification": "verified"
+            },
+            {
+              "turn": 2,
+              "samples": 2,
+              "hashes_present": 2,
+              "missing_identity_count": 0,
+              "distinct_output_hashes": 1,
+              "identical": true,
+              "verification": "verified"
+            },
+            {
+              "turn": 3,
+              "samples": 2,
+              "hashes_present": 2,
+              "missing_identity_count": 0,
+              "distinct_output_hashes": 1,
+              "identical": true,
+              "verification": "verified"
+            }
+          ],
+          "request_hashes_by_turn": [
+            {
+              "turn": 0,
+              "distinct_hashes": 1,
+              "matched": true
+            },
+            {
+              "turn": 1,
+              "distinct_hashes": 1,
+              "matched": true
+            },
+            {
+              "turn": 2,
+              "distinct_hashes": 1,
+              "matched": true
+            },
+            {
+              "turn": 3,
+              "distinct_hashes": 1,
+              "matched": true
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "cross_input_checks": []
+}

@@ -1,0 +1,654 @@
+{
+  "validator": "tools/validate_qwen_http.py",
+  "server_url": "http://127.0.0.1:8001",
+  "model": "qwen3.6-35b-a3b-neural",
+  "started_at": "2026-10-02T18:17:10.090133+00:00",
+  "timeout_seconds": 7200,
+  "functional_request_settings": {
+    "temperature": 0,
+    "enable_thinking": false,
+    "note": "These short functional checks intentionally do not use the benchmark default thinking mode."
+  },
+  "checks": [
+    {
+      "name": "health",
+      "passed": true,
+      "detail": "GET /health returns status=ok",
+      "timing_seconds": 0.06108499999754713,
+      "request": {
+        "method": "GET",
+        "url": "http://127.0.0.1:8001/health",
+        "request_body": null,
+        "timeout_seconds": 7200,
+        "streaming": false,
+        "status": 200,
+        "response_headers": {
+          "Server": "BaseHTTP/0.6 Python/3.12.10",
+          "Date": "Fri, 02 Oct 2026 18:17:10 GMT",
+          "Content-Type": "application/json; charset=utf-8",
+          "Content-Length": "150"
+        },
+        "response_raw": "{\"status\": \"ok\", \"model\": \"qwen3.6-35b-a3b-neural\", \"precision\": \"original BF16\", \"context\": 4096, \"expert_backend\": \"native\", \"gdn_backend\": \"torch\"}",
+        "response_json": {
+          "status": "ok",
+          "model": "qwen3.6-35b-a3b-neural",
+          "precision": "original BF16",
+          "context": 4096,
+          "expert_backend": "native",
+          "gdn_backend": "torch"
+        },
+        "elapsed_seconds": 0.06108499999754713
+      }
+    },
+    {
+      "name": "models",
+      "passed": true,
+      "detail": "model list includes the configured Qwen ID",
+      "timing_seconds": 0.01248430000123335,
+      "request": {
+        "method": "GET",
+        "url": "http://127.0.0.1:8001/v1/models",
+        "request_body": null,
+        "timeout_seconds": 7200,
+        "streaming": false,
+        "status": 200,
+        "response_headers": {
+          "Server": "BaseHTTP/0.6 Python/3.12.10",
+          "Date": "Fri, 02 Oct 2026 18:17:10 GMT",
+          "Content-Type": "application/json; charset=utf-8",
+          "Content-Length": "102"
+        },
+        "response_raw": "{\"object\": \"list\", \"data\": [{\"id\": \"qwen3.6-35b-a3b-neural\", \"object\": \"model\", \"owned_by\": \"local\"}]}",
+        "response_json": {
+          "object": "list",
+          "data": [
+            {
+              "id": "qwen3.6-35b-a3b-neural",
+              "object": "model",
+              "owned_by": "local"
+            }
+          ]
+        },
+        "elapsed_seconds": 0.01248430000123335
+      }
+    },
+    {
+      "name": "reject_top_level_array",
+      "passed": true,
+      "detail": "malformed request rejected with HTTP 400",
+      "timing_seconds": 0.016536399998585694,
+      "request": {
+        "method": "POST",
+        "url": "http://127.0.0.1:8001/v1/chat/completions",
+        "request_body": [],
+        "timeout_seconds": 7200,
+        "streaming": false,
+        "status": 400,
+        "response_headers": {
+          "Server": "BaseHTTP/0.6 Python/3.12.10",
+          "Date": "Fri, 02 Oct 2026 18:17:10 GMT",
+          "Content-Type": "application/json; charset=utf-8",
+          "Content-Length": "78"
+        },
+        "response_raw": "{\"error\": {\"message\": \"request body must be an object\", \"type\": \"ValueError\"}}",
+        "response_json": {
+          "error": {
+            "message": "request body must be an object",
+            "type": "ValueError"
+          }
+        },
+        "elapsed_seconds": 0.016536399998585694
+      }
+    },
+    {
+      "name": "reject_null_message",
+      "passed": true,
+      "detail": "malformed request rejected with HTTP 400",
+      "timing_seconds": 0.013227799998276168,
+      "request": {
+        "method": "POST",
+        "url": "http://127.0.0.1:8001/v1/chat/completions",
+        "request_body": {
+          "model": "qwen3.6-35b-a3b-neural",
+          "messages": [
+            null
+          ],
+          "max_tokens": 1
+        },
+        "timeout_seconds": 7200,
+        "streaming": false,
+        "status": 400,
+        "response_headers": {
+          "Server": "BaseHTTP/0.6 Python/3.12.10",
+          "Date": "Fri, 02 Oct 2026 18:17:10 GMT",
+          "Content-Type": "application/json; charset=utf-8",
+          "Content-Length": "78"
+        },
+        "response_raw": "{\"error\": {\"message\": \"each message must be an object\", \"type\": \"ValueError\"}}",
+        "response_json": {
+          "error": {
+            "message": "each message must be an object",
+            "type": "ValueError"
+          }
+        },
+        "elapsed_seconds": 0.013227799998276168
+      }
+    },
+    {
+      "name": "reject_string_false_stream",
+      "passed": true,
+      "detail": "malformed request rejected with HTTP 400",
+      "timing_seconds": 0.013296799999807263,
+      "request": {
+        "method": "POST",
+        "url": "http://127.0.0.1:8001/v1/chat/completions",
+        "request_body": {
+          "model": "qwen3.6-35b-a3b-neural",
+          "messages": [
+            {
+              "role": "user",
+              "content": "validation only"
+            }
+          ],
+          "temperature": 0,
+          "max_tokens": 1,
+          "stream": "false",
+          "chat_template_kwargs": {
+            "enable_thinking": false,
+            "preserve_thinking": false
+          }
+        },
+        "timeout_seconds": 7200,
+        "streaming": false,
+        "status": 400,
+        "response_headers": {
+          "Server": "BaseHTTP/0.6 Python/3.12.10",
+          "Date": "Fri, 02 Oct 2026 18:17:10 GMT",
+          "Content-Type": "application/json; charset=utf-8",
+          "Content-Length": "72"
+        },
+        "response_raw": "{\"error\": {\"message\": \"stream must be a boolean\", \"type\": \"ValueError\"}}",
+        "response_json": {
+          "error": {
+            "message": "stream must be a boolean",
+            "type": "ValueError"
+          }
+        },
+        "elapsed_seconds": 0.013296799999807263
+      }
+    },
+    {
+      "name": "plain_greedy_math",
+      "passed": true,
+      "detail": "answer contains 42: '42'",
+      "timing_seconds": 3.094299399999727,
+      "request": {
+        "method": "POST",
+        "url": "http://127.0.0.1:8001/v1/chat/completions",
+        "request_body": {
+          "model": "qwen3.6-35b-a3b-neural",
+          "messages": [
+            {
+              "role": "user",
+              "content": "What is 6 times 7? Reply with only the integer."
+            }
+          ],
+          "temperature": 0,
+          "max_tokens": 16,
+          "stream": false,
+          "chat_template_kwargs": {
+            "enable_thinking": false,
+            "preserve_thinking": false
+          }
+        },
+        "timeout_seconds": 7200,
+        "streaming": false,
+        "status": 200,
+        "response_headers": {
+          "Server": "BaseHTTP/0.6 Python/3.12.10",
+          "Date": "Fri, 02 Oct 2026 18:17:13 GMT",
+          "Content-Type": "application/json; charset=utf-8",
+          "Content-Length": "866"
+        },
+        "response_raw": "{\"id\": \"chatcmpl-62ddf89912c04a6d883e8c63f4deaa10\", \"object\": \"chat.completion\", \"created\": 1790965030, \"model\": \"qwen3.6-35b-a3b-neural\", \"choices\": [{\"index\": 0, \"message\": {\"role\": \"assistant\", \"content\": \"42\", \"reasoning_content\": \"\"}, \"finish_reason\": \"stop\"}], \"usage\": {\"prompt_tokens\": 26, \"completion_tokens\": 3, \"total_tokens\": 29}, \"neural\": {\"prompt_n\": 26, \"prompt_ms\": 2527.20550000231, \"prompt_per_second\": 10.288043453520592, \"predicted_n\": 3, \"decode_calls\": 2, \"predicted_ms\": 515.026900000521, \"predicted_per_second\": 3.8832923095822314, \"first_token_s\": 2.5274533000010706, \"wall_s\": 3.042232400002831, \"generation_tokens_per_wall_s\": 0.9861179573254194, \"clock\": \"request prefill through generation, including sampling, detokenization and streaming callback; excludes startup\", \"decode_tok_s\": 3.8832923095822314, \"prefill_s\": 2.52720550000231}}",
+        "response_json": {
+          "id": "chatcmpl-62ddf89912c04a6d883e8c63f4deaa10",
+          "object": "chat.completion",
+          "created": 1790965030,
+          "model": "qwen3.6-35b-a3b-neural",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "42",
+                "reasoning_content": ""
+              },
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 26,
+            "completion_tokens": 3,
+            "total_tokens": 29
+          },
+          "neural": {
+            "prompt_n": 26,
+            "prompt_ms": 2527.20550000231,
+            "prompt_per_second": 10.288043453520592,
+            "predicted_n": 3,
+            "decode_calls": 2,
+            "predicted_ms": 515.026900000521,
+            "predicted_per_second": 3.8832923095822314,
+            "first_token_s": 2.5274533000010706,
+            "wall_s": 3.042232400002831,
+            "generation_tokens_per_wall_s": 0.9861179573254194,
+            "clock": "request prefill through generation, including sampling, detokenization and streaming callback; excludes startup",
+            "decode_tok_s": 3.8832923095822314,
+            "prefill_s": 2.52720550000231
+          }
+        },
+        "elapsed_seconds": 3.094299399999727
+      }
+    },
+    {
+      "name": "streamed_greedy_math",
+      "passed": true,
+      "detail": "SSE ended with [DONE], had no errors, and answer contains 42: '42'",
+      "timing_seconds": 2.557694500002981,
+      "request": {
+        "method": "POST",
+        "url": "http://127.0.0.1:8001/v1/chat/completions",
+        "request_body": {
+          "model": "qwen3.6-35b-a3b-neural",
+          "messages": [
+            {
+              "role": "user",
+              "content": "What is 6 times 7? Reply with only the integer."
+            }
+          ],
+          "temperature": 0,
+          "max_tokens": 16,
+          "stream": true,
+          "chat_template_kwargs": {
+            "enable_thinking": false,
+            "preserve_thinking": false
+          }
+        },
+        "timeout_seconds": 7200,
+        "streaming": true,
+        "status": 200,
+        "response_headers": {
+          "Server": "BaseHTTP/0.6 Python/3.12.10",
+          "Date": "Fri, 02 Oct 2026 18:17:13 GMT",
+          "Content-Type": "text/event-stream; charset=utf-8",
+          "Cache-Control": "no-cache"
+        },
+        "response_raw": "data: {\"id\": \"chatcmpl-7052dcfaa9d94bce8403f906f9cf904d\", \"object\": \"chat.completion.chunk\", \"created\": 1790965033, \"model\": \"qwen3.6-35b-a3b-neural\", \"choices\": [{\"index\": 0, \"delta\": {\"role\": \"assistant\"}, \"finish_reason\": null}]}\n\ndata: {\"id\": \"chatcmpl-7052dcfaa9d94bce8403f906f9cf904d\", \"object\": \"chat.completion.chunk\", \"created\": 1790965033, \"model\": \"qwen3.6-35b-a3b-neural\", \"choices\": [{\"index\": 0, \"delta\": {\"content\": \"4\"}, \"finish_reason\": null}]}\n\ndata: {\"id\": \"chatcmpl-7052dcfaa9d94bce8403f906f9cf904d\", \"object\": \"chat.completion.chunk\", \"created\": 1790965033, \"model\": \"qwen3.6-35b-a3b-neural\", \"choices\": [{\"index\": 0, \"delta\": {\"content\": \"2\"}, \"finish_reason\": null}]}\n\ndata: {\"id\": \"chatcmpl-7052dcfaa9d94bce8403f906f9cf904d\", \"object\": \"chat.completion.chunk\", \"created\": 1790965033, \"model\": \"qwen3.6-35b-a3b-neural\", \"choices\": [{\"index\": 0, \"delta\": {}, \"finish_reason\": \"stop\"}], \"usage\": {\"prompt_tokens\": 26, \"completion_tokens\": 3, \"total_tokens\": 29}, \"neural\": {\"prompt_n\": 26, \"prompt_ms\": 2120.7729000016116, \"prompt_per_second\": 12.259681364270659, \"predicted_n\": 3, \"decode_calls\": 2, \"predicted_ms\": 434.768899998744, \"predicted_per_second\": 4.600145042586481, \"first_token_s\": 2.120903200000612, \"wall_s\": 2.5555418000003556, \"generation_tokens_per_wall_s\": 1.1739193622266646, \"clock\": \"request prefill through generation, including sampling, detokenization and streaming callback; excludes startup\", \"decode_tok_s\": 4.600145042586481, \"prefill_s\": 2.1207729000016116}}\n\ndata: [DONE]\n",
+        "response_events": [
+          {
+            "id": "chatcmpl-7052dcfaa9d94bce8403f906f9cf904d",
+            "object": "chat.completion.chunk",
+            "created": 1790965033,
+            "model": "qwen3.6-35b-a3b-neural",
+            "choices": [
+              {
+                "index": 0,
+                "delta": {
+                  "role": "assistant"
+                },
+                "finish_reason": null
+              }
+            ]
+          },
+          {
+            "id": "chatcmpl-7052dcfaa9d94bce8403f906f9cf904d",
+            "object": "chat.completion.chunk",
+            "created": 1790965033,
+            "model": "qwen3.6-35b-a3b-neural",
+            "choices": [
+              {
+                "index": 0,
+                "delta": {
+                  "content": "4"
+                },
+                "finish_reason": null
+              }
+            ]
+          },
+          {
+            "id": "chatcmpl-7052dcfaa9d94bce8403f906f9cf904d",
+            "object": "chat.completion.chunk",
+            "created": 1790965033,
+            "model": "qwen3.6-35b-a3b-neural",
+            "choices": [
+              {
+                "index": 0,
+                "delta": {
+                  "content": "2"
+                },
+                "finish_reason": null
+              }
+            ]
+          },
+          {
+            "id": "chatcmpl-7052dcfaa9d94bce8403f906f9cf904d",
+            "object": "chat.completion.chunk",
+            "created": 1790965033,
+            "model": "qwen3.6-35b-a3b-neural",
+            "choices": [
+              {
+                "index": 0,
+                "delta": {},
+                "finish_reason": "stop"
+              }
+            ],
+            "usage": {
+              "prompt_tokens": 26,
+              "completion_tokens": 3,
+              "total_tokens": 29
+            },
+            "neural": {
+              "prompt_n": 26,
+              "prompt_ms": 2120.7729000016116,
+              "prompt_per_second": 12.259681364270659,
+              "predicted_n": 3,
+              "decode_calls": 2,
+              "predicted_ms": 434.768899998744,
+              "predicted_per_second": 4.600145042586481,
+              "first_token_s": 2.120903200000612,
+              "wall_s": 2.5555418000003556,
+              "generation_tokens_per_wall_s": 1.1739193622266646,
+              "clock": "request prefill through generation, including sampling, detokenization and streaming callback; excludes startup",
+              "decode_tok_s": 4.600145042586481,
+              "prefill_s": 2.1207729000016116
+            }
+          }
+        ],
+        "response_text": "42",
+        "saw_done": true,
+        "stream_errors": [],
+        "elapsed_seconds": 2.557694500002981
+      }
+    },
+    {
+      "name": "weather_function_call",
+      "passed": true,
+      "detail": "one valid get_weather(location=Stockholm) call returned",
+      "timing_seconds": 43.42235459999938,
+      "request": {
+        "method": "POST",
+        "url": "http://127.0.0.1:8001/v1/chat/completions",
+        "request_body": {
+          "model": "qwen3.6-35b-a3b-neural",
+          "messages": [
+            {
+              "role": "user",
+              "content": "Use get_weather for Stockholm. Do not guess the weather."
+            }
+          ],
+          "temperature": 0,
+          "max_tokens": 128,
+          "stream": true,
+          "chat_template_kwargs": {
+            "enable_thinking": false,
+            "preserve_thinking": false
+          },
+          "tools": [
+            {
+              "type": "function",
+              "function": {
+                "name": "get_weather",
+                "description": "Return the current weather for the requested location.",
+                "parameters": {
+                  "type": "object",
+                  "properties": {
+                    "location": {
+                      "type": "string",
+                      "enum": [
+                        "Stockholm"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "location"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          ]
+        },
+        "timeout_seconds": 7200,
+        "streaming": true,
+        "status": 200,
+        "response_headers": {
+          "Server": "BaseHTTP/0.6 Python/3.12.10",
+          "Date": "Fri, 02 Oct 2026 18:17:15 GMT",
+          "Content-Type": "text/event-stream; charset=utf-8",
+          "Cache-Control": "no-cache"
+        },
+        "response_raw": "data: {\"id\": \"chatcmpl-cb95b33e23ae459881f446f93b6dee91\", \"object\": \"chat.completion.chunk\", \"created\": 1790965035, \"model\": \"qwen3.6-35b-a3b-neural\", \"choices\": [{\"index\": 0, \"delta\": {\"role\": \"assistant\"}, \"finish_reason\": null}]}\n\ndata: {\"id\": \"chatcmpl-cb95b33e23ae459881f446f93b6dee91\", \"object\": \"chat.completion.chunk\", \"created\": 1790965035, \"model\": \"qwen3.6-35b-a3b-neural\", \"choices\": [{\"index\": 0, \"delta\": {\"tool_calls\": [{\"id\": \"call_5c296a61898a481fb267\", \"type\": \"function\", \"function\": {\"name\": \"get_weather\", \"arguments\": \"{\\\"location\\\": \\\"Stockholm\\\"}\"}, \"index\": 0}]}, \"finish_reason\": null}]}\n\ndata: {\"id\": \"chatcmpl-cb95b33e23ae459881f446f93b6dee91\", \"object\": \"chat.completion.chunk\", \"created\": 1790965035, \"model\": \"qwen3.6-35b-a3b-neural\", \"choices\": [{\"index\": 0, \"delta\": {}, \"finish_reason\": \"tool_calls\"}], \"usage\": {\"prompt_tokens\": 296, \"completion_tokens\": 27, \"total_tokens\": 323}, \"neural\": {\"prompt_n\": 296, \"prompt_ms\": 36583.79270000296, \"prompt_per_second\": 8.091014576516995, \"predicted_n\": 27, \"decode_calls\": 26, \"predicted_ms\": 6825.535399999353, \"predicted_per_second\": 3.809224987684111, \"first_token_s\": 36.58614170000146, \"wall_s\": 43.40932810000231, \"generation_tokens_per_wall_s\": 0.6219861302114593, \"clock\": \"request prefill through generation, including sampling, detokenization and streaming callback; excludes startup\", \"decode_tok_s\": 3.809224987684111, \"prefill_s\": 36.58379270000296}}\n\ndata: [DONE]\n",
+        "response_events": [
+          {
+            "id": "chatcmpl-cb95b33e23ae459881f446f93b6dee91",
+            "object": "chat.completion.chunk",
+            "created": 1790965035,
+            "model": "qwen3.6-35b-a3b-neural",
+            "choices": [
+              {
+                "index": 0,
+                "delta": {
+                  "role": "assistant"
+                },
+                "finish_reason": null
+              }
+            ]
+          },
+          {
+            "id": "chatcmpl-cb95b33e23ae459881f446f93b6dee91",
+            "object": "chat.completion.chunk",
+            "created": 1790965035,
+            "model": "qwen3.6-35b-a3b-neural",
+            "choices": [
+              {
+                "index": 0,
+                "delta": {
+                  "tool_calls": [
+                    {
+                      "id": "call_5c296a61898a481fb267",
+                      "type": "function",
+                      "function": {
+                        "name": "get_weather",
+                        "arguments": "{\"location\": \"Stockholm\"}"
+                      },
+                      "index": 0
+                    }
+                  ]
+                },
+                "finish_reason": null
+              }
+            ]
+          },
+          {
+            "id": "chatcmpl-cb95b33e23ae459881f446f93b6dee91",
+            "object": "chat.completion.chunk",
+            "created": 1790965035,
+            "model": "qwen3.6-35b-a3b-neural",
+            "choices": [
+              {
+                "index": 0,
+                "delta": {},
+                "finish_reason": "tool_calls"
+              }
+            ],
+            "usage": {
+              "prompt_tokens": 296,
+              "completion_tokens": 27,
+              "total_tokens": 323
+            },
+            "neural": {
+              "prompt_n": 296,
+              "prompt_ms": 36583.79270000296,
+              "prompt_per_second": 8.091014576516995,
+              "predicted_n": 27,
+              "decode_calls": 26,
+              "predicted_ms": 6825.535399999353,
+              "predicted_per_second": 3.809224987684111,
+              "first_token_s": 36.58614170000146,
+              "wall_s": 43.40932810000231,
+              "generation_tokens_per_wall_s": 0.6219861302114593,
+              "clock": "request prefill through generation, including sampling, detokenization and streaming callback; excludes startup",
+              "decode_tok_s": 3.809224987684111,
+              "prefill_s": 36.58379270000296
+            }
+          }
+        ],
+        "response_text": "",
+        "saw_done": true,
+        "stream_errors": [],
+        "elapsed_seconds": 43.42235459999938
+      }
+    },
+    {
+      "name": "tool_result_consumed",
+      "passed": true,
+      "detail": "assistant used the local fixture without another tool call: 'The weather in Stockholm is currently 18°C and sunny.'",
+      "timing_seconds": 12.745311700000457,
+      "request": {
+        "method": "POST",
+        "url": "http://127.0.0.1:8001/v1/chat/completions",
+        "request_body": {
+          "model": "qwen3.6-35b-a3b-neural",
+          "messages": [
+            {
+              "role": "user",
+              "content": "Use get_weather for Stockholm. Do not guess the weather."
+            },
+            {
+              "role": "assistant",
+              "content": "",
+              "tool_calls": [
+                {
+                  "type": "function",
+                  "function": {
+                    "name": "get_weather",
+                    "arguments": "{\"location\": \"Stockholm\"}"
+                  },
+                  "id": "call_5c296a61898a481fb267"
+                }
+              ]
+            },
+            {
+              "role": "tool",
+              "tool_call_id": "call_5c296a61898a481fb267",
+              "content": "18 C and sunny"
+            },
+            {
+              "role": "user",
+              "content": "Summarize the weather from the tool result."
+            }
+          ],
+          "temperature": 0,
+          "max_tokens": 128,
+          "stream": false,
+          "chat_template_kwargs": {
+            "enable_thinking": false,
+            "preserve_thinking": false
+          },
+          "tools": [
+            {
+              "type": "function",
+              "function": {
+                "name": "get_weather",
+                "description": "Return the current weather for the requested location.",
+                "parameters": {
+                  "type": "object",
+                  "properties": {
+                    "location": {
+                      "type": "string",
+                      "enum": [
+                        "Stockholm"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "location"
+                  ],
+                  "additionalProperties": false
+                }
+              }
+            }
+          ],
+          "tool_choice": "none"
+        },
+        "timeout_seconds": 7200,
+        "streaming": false,
+        "status": 200,
+        "response_headers": {
+          "Server": "BaseHTTP/0.6 Python/3.12.10",
+          "Date": "Fri, 02 Oct 2026 18:18:12 GMT",
+          "Content-Type": "application/json; charset=utf-8",
+          "Content-Length": "923"
+        },
+        "response_raw": "{\"id\": \"chatcmpl-40277fea492e49b19f3d441c2d60d0a1\", \"object\": \"chat.completion\", \"created\": 1790965079, \"model\": \"qwen3.6-35b-a3b-neural\", \"choices\": [{\"index\": 0, \"message\": {\"role\": \"assistant\", \"content\": \"The weather in Stockholm is currently 18°C and sunny.\", \"reasoning_content\": \"\"}, \"finish_reason\": \"stop\"}], \"usage\": {\"prompt_tokens\": 84, \"completion_tokens\": 14, \"total_tokens\": 98}, \"neural\": {\"prompt_n\": 84, \"prompt_ms\": 8355.693000001338, \"prompt_per_second\": 10.053026122427733, \"predicted_n\": 14, \"decode_calls\": 13, \"predicted_ms\": 4332.513699999254, \"predicted_per_second\": 3.0005675458111627, \"first_token_s\": 8.35777340000277, \"wall_s\": 12.688206700000592, \"generation_tokens_per_wall_s\": 1.1033868166727885, \"clock\": \"request prefill through generation, including sampling, detokenization and streaming callback; excludes startup\", \"decode_tok_s\": 3.0005675458111627, \"prefill_s\": 8.355693000001338}}",
+        "response_json": {
+          "id": "chatcmpl-40277fea492e49b19f3d441c2d60d0a1",
+          "object": "chat.completion",
+          "created": 1790965079,
+          "model": "qwen3.6-35b-a3b-neural",
+          "choices": [
+            {
+              "index": 0,
+              "message": {
+                "role": "assistant",
+                "content": "The weather in Stockholm is currently 18°C and sunny.",
+                "reasoning_content": ""
+              },
+              "finish_reason": "stop"
+            }
+          ],
+          "usage": {
+            "prompt_tokens": 84,
+            "completion_tokens": 14,
+            "total_tokens": 98
+          },
+          "neural": {
+            "prompt_n": 84,
+            "prompt_ms": 8355.693000001338,
+            "prompt_per_second": 10.053026122427733,
+            "predicted_n": 14,
+            "decode_calls": 13,
+            "predicted_ms": 4332.513699999254,
+            "predicted_per_second": 3.0005675458111627,
+            "first_token_s": 8.35777340000277,
+            "wall_s": 12.688206700000592,
+            "generation_tokens_per_wall_s": 1.1033868166727885,
+            "clock": "request prefill through generation, including sampling, detokenization and streaming callback; excludes startup",
+            "decode_tok_s": 3.0005675458111627,
+            "prefill_s": 8.355693000001338
+          }
+        },
+        "elapsed_seconds": 12.745311700000457
+      }
+    },
+    {
+      "name": "generated_python_function",
+      "passed": true,
+      "detail": "generated function passed five behavior/input-preservation cases",
+      "timing_seconds": 52.95072609999988,
+      "request": {
+        "report_path": "F:\\AI\\NeuralQwen36\\benchmarks\\qwen36_20261002\\neural_torch_final02\\http_validation_coding.json",
+        "elapsed_seconds": 52.95072609999988,
+        "validator_returncode": 0
+      }
+    }
+  ],
+  "scope_note": "Local HTTP protocol smoke checks only; no external tools are run and this does not establish broad agent quality.",
+  "updated_at": "2026-10-02T18:19:04.997989+00:00",
+  "finished_at": "2026-10-02T18:19:04.997989+00:00",
+  "final_status": "passed",
+  "checks_passed": 10,
+  "checks_total": 10,
+  "output_path": "F:\\AI\\NeuralQwen36\\benchmarks\\qwen36_20261002\\neural_torch_final02\\http_validation.json"
+}

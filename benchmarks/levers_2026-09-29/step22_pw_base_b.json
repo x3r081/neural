@@ -1,0 +1,32 @@
+{
+ "sessions": [
+  {
+   "kind": "neural=--kv-ring 256 --scratch 6 --pool 6.05 --kernel-fuse 1 --prefill-order layer --store-dir G:\\NeuralStores\\gptoss120b_ps4",
+   "round": 0,
+   "prompts": [
+    {
+     "prompt": "warmup_13k",
+     "prompt_tokens": 13077,
+     "cached_tokens": 0,
+     "prompt_s": 12.2886,
+     "wall_s": 12.35
+    },
+    {
+     "prompt": "code_13k",
+     "prompt_tokens": 13078,
+     "cached_tokens": 0,
+     "prompt_s": 12.2239,
+     "wall_s": 12.56
+    },
+    {
+     "prompt": "file_3k",
+     "prompt_tokens": 3077,
+     "cached_tokens": 0,
+     "prompt_s": 4.0185,
+     "wall_s": 4.19
+    }
+   ],
+   "startup_s": 41.2
+  }
+ ]
+}

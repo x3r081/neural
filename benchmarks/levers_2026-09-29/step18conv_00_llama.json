@@ -1,0 +1,115 @@
+{
+ "config": {
+  "out": "C:\\Users\\USER\\AppData\\Local\\Temp\\claude\\F--AI-Neural\\b3f9f8cf-b808-46cf-83f0-90f1f3fbd384\\scratchpad\\bench\\step18conv_00_llama.json",
+  "rounds": 2,
+  "schedule": "llama",
+  "kinds": [
+   "llama",
+   "neural=--kv-ring 256 --scratch 6 --pool 6.05 --kernel-fuse 1 --prefill-order layer --store-dir G:\\NeuralStores\\gptoss120b_ps4"
+  ],
+  "workload": "conversation",
+  "ctx_tokens": 13000,
+  "max_tokens": 512,
+  "effort": "low",
+  "llama_dir": "G:\\Tools\\llama-b10361",
+  "gguf": "G:\\Models\\gpt-oss-120b-gguf\\gpt-oss-120b-MXFP4.gguf",
+  "llama_args": "-ngl 99 -ncmoe 31 -t 8 -c 16384 -fa on --jinja",
+  "neural_args": "--pool 5.5 --smax 16384 --threads 8 --hotset hotset_code.json --refresh-every 8 --refresh-m 32 --capbufs 16 --prefill-m 64 --early-every 4 --early-tokens 32 --static 250 --skip-quality",
+  "python": null,
+  "log_dir": "C:\\Users\\USER\\AppData\\Local\\Temp\\claude\\F--AI-Neural\\b3f9f8cf-b808-46cf-83f0-90f1f3fbd384\\scratchpad\\bench\\logs\\step18conv_00_llama",
+  "server_roots": [
+   "main=F:\\AI\\NeuralServer_main"
+  ],
+  "ctx_root": "F:\\AI\\NeuralServer_decode-levers"
+ },
+ "sessions": [
+  {
+   "kind": "llama",
+   "args": "",
+   "tag": "s0",
+   "free_ram_gib_at_start": 55.19,
+   "turns": [
+    {
+     "prompt_tokens": 13107,
+     "cached_tokens": 0,
+     "prompt_s": 142.07663399999998,
+     "completion_tokens": 512,
+     "decode_tok_s": 12.71674884989798,
+     "wall_s": 182.38,
+     "turn": 0,
+     "content_sha1": "6a9cb6c63f1d6e14ad31e8322b5b96421d27cd97",
+     "content": "## 1.  What \u201csplit\u2011K decode attention\u201d is trying to solve  \n\nDuring **decode** the model attends to all previously generated tokens (the *key* sequence).  \nIf the sequence length is `S = smax` (e.g. 16384) a na\u00efve attention kernel has to\n\n* read **S** keys for every query head,\n* compute the dot\u2011product, the soft\u2011max denominator and the weighted sum of the values.\n\nThe cost is `O(NQ\u00b7NKV\u00b7S)` memory\u2011traffic and the kernel quickly becomes bandwidth\u2011bound.  \n\nThe original (single\u2011program\u2011per\u2011kv\u2011head) kernel `k_attn` does exactly that: a single Triton program per KV\u2011head walks the whole key range in a loop (`for s0 in range(lo_b, pos+1, BN)`).  \n\n**Split\u2011K** (also called *column\u2011wise* or *block\u2011wise* split) breaks the key dimension into `NS` *chunks* (the \u201csplit\u2011K dimension\u201d).  \nEach chunk is processed by a **different Triton program** (grid `(NKV, NS)`).  \nAll chunks compute the same three quantities that are needed for a soft\u2011max:\n\n1. **partial max** \u2013 the maximum score inside the chunk (`m_chunk`);\n2. **partial sum of `exp(score\u2011global_max)`** \u2013 the denominator contribution of the chunk (`s_chunk`);\n3. **partial `P @ V`** \u2013 the weighted\u2011sum contribution of the chunk (`pacc_chunk`).\n\nAfter the three per\u2011chunk passes the four kernels (`k_attn_s1 \u2026 k_attn_s4`) combine the partial results into the final attention output.  \nBecause the *max* and the *soft\u2011max denominator* are reduced **exactly** (the same rounding points as the eager reference) the final result is mathematically identical to the monolithic kernel, up to the unavoidable fp32\u2011accumulation\u2011order differences that the authors already accept.\n\nThe split\u2011K implementation is deliberately **graph\u2011capture\u2011friendly**:\n\n* All buffers (`pm`, `ps`, `pacc`, `sbuf`) are pre\u2011allocated once in the `SplitAttn` object.\n* The kernels never read the host\u2011side `pos` variable; they load it from a device scalar (`pos_ptr`), so",
+     "free_ram_gib": 0.28
+    },
+    {
+     "prompt_tokens": 13629,
+     "cached_tokens": 13108,
+     "prompt_s": 4.962568,
+     "completion_tokens": 512,
+     "decode_tok_s": 14.676157822012316,
+     "wall_s": 39.94,
+     "turn": 1,
+     "content_sha1": "1c0a827352fe30630b429733085904820f5597b5",
+     "content": "Below is a **self\u2011contained** Python script that\n\n1. builds a tiny toy model (the same shapes that the Triton kernels expect),\n2. implements a **reference \u201cprompt\u2011attention\u201d** in pure PyTorch \u2013 i.e. the exact algorithm that\n   `prefill_attention` (the Triton kernel `k_prefill_attn`) implements,\n3. runs the Triton implementation on the same data,\n4. checks that the two results are **bit\u2011identical** (`torch.equal`) and prints a short report,\n5. contains many inline comments that explain every step of the reference code and how it mirrors the Triton version.\n\nYou can drop the file into a fresh environment that has **PyTorch\u202f\u2265\u202f2.2** and **Triton\u202f\u2265\u202f3.0** installed and run it directly:\n\n```bash\npython test_prefill_splitk.py\n```\n\n```python\n#!/usr/bin/env python\n# -*- coding: utf-8 -*-\n\n\"\"\"\ntest_prefill_splitk.py\n\nA minimal reproducible test that validates the Triton \u201cprefill_attention\u201d kernel\nagainst a straightforward PyTorch reference implementation.\n\nThe test exercises the *full\u2011attention* path (no sliding window, no ring cache) but\nthe same code works for the sliding\u2011window case \u2013 you only have to pass the\nappropriate `sliding` and `ring` arguments.\n\nAuthor:  (generated by ChatGPT)\n\"\"\"\n\nimport torch\nimport triton\nimport triton.language as tl\nfrom triton.language.extra import libdevice\n\n# ----------------------------------------------------------------------\n# 1.  Constants that match the values used in fused_core.py\n# ----------------------------------------------------------------------\nH, HP, NQ, NKV, HD, NE, K = 2880, 4096, 64, 8, 64, 128, 4\nREP = NQ // NKV          # 8\nSMAX = 16384            # typical maximum sequence length used in the paper\nATTN_BN = 64            # block\u2011size used by the original kernel\n# ----------------------------------------------------------------------\n\n\n# ----------------------------------------------------------------------\n# 2.  Triton kernels (copied verbatim from fused_core.py)\n# ----------------------------------------------------------------------\n@triton.jit\ndef k_prefill_attn(Q, Kc, Vc, Kn, Vn, sk_t, sk_h,",
+     "free_ram_gib": 0.27
+    },
+    {
+     "prompt_tokens": 14146,
+     "cached_tokens": 13630,
+     "prompt_s": 5.094997,
+     "completion_tokens": 512,
+     "decode_tok_s": 14.514923722941857,
+     "wall_s": 40.4,
+     "turn": 2,
+     "content_sha1": "2c5a74fa5015d6b1036abbb73c418ce11ec8b62a",
+     "content": "Below is a **self\u2011contained, type\u2011annotated** implementation of the \u201cCPU\u2011multi\u2011token\u2011expert\u201d wrapper that appears in the original repository (the part that lives in `cpu_expert_wrapper.py`).  \nThe wrapper\u2019s job is to:\n\n* hold a **list of expert modules** (each expert is a `torch.nn.Module`);\n* expose a **single `forward` method** that can be called with a *batch of token\u2011ids* and a *tensor of token embeddings*;\n* dispatch each token to the **correct expert** (the mapping `token_id \u2192 expert_index` is supplied by the caller);\n* optionally **run the experts in parallel** on the CPU using Python\u2019s `concurrent.futures.ThreadPoolExecutor` (the original code used a simple loop, but the refactor makes the parallelism explicit and configurable);\n* return a **single tensor** that contains the concatenated outputs of all experts, **preserving the original order of the input tokens**.\n\nThe refactor is deliberately tiny \u2013 it does **not** try to be a full\u2011blown \u201cMixture\u2011of\u2011Experts\u201d implementation, it only mirrors the behaviour that the rest of the code\u2011base expects.  \nAll public attributes are annotated, the constructor validates its arguments, and the `forward` method is fully documented.\n\n```python\n# ----------------------------------------------------------------------\n#  cpu_expert_wrapper.py\n# ----------------------------------------------------------------------\n\"\"\"\nCPU\u2011multi\u2011token\u2011expert wrapper.\n\nThe wrapper is used by the decoder when the model is executed on the CPU.\nIt receives a *token\u2011to\u2011expert* map (a 1\u2011D ``torch.LongTensor``) and a\nbatch of token embeddings (``torch.Tensor`` of shape ``[B, D]``) and\ndispatches each token to the appropriate expert module.\n\nThe implementation is deliberately lightweight \u2013 it does **not** perform any\nload\u2011balancing, gating or routing logic.  All that logic lives in the\ncaller; the wrapper only needs to:\n\n* split the input tensor into per\u2011expert sub\u2011tensors,\n* run each expert (optionally in parallel),\n* stitch the results back together in the original order.\n\nThe class is fully type\u2011annotated and documented so that static type\ncheckers (``mypy``, ``pyright",
+     "free_ram_gib": 0.28
+    },
+    {
+     "prompt_tokens": 14646,
+     "cached_tokens": 14147,
+     "prompt_s": 4.642901,
+     "completion_tokens": 512,
+     "decode_tok_s": 14.3106113154954,
+     "wall_s": 40.45,
+     "turn": 3,
+     "content_sha1": "9ff57ba367619581828c4113fd8d67228d3223a1",
+     "content": "Below are **five realistic problems** that can appear in the `CpuMultiTokenExpert` implementation together with a **minimal, self\u2011contained fix** for each one.  \nThe fixes are written as *patches* that you can copy\u2011paste into the original file (or apply with `git apply`).  \nAll changes keep the public API unchanged and preserve the type\u2011hints that were added in the refactor.\n\n---\n\n## 1\ufe0f\u20e3  Bug \u2013 Empty input (batch size\u202f=\u202f0) crashes the executor\n\n### Symptom\n```python\n>>> wrapper = CpuMultiTokenExpert([nn.Linear(4, 4)])\n>>> wrapper(torch.empty(0, 4), torch.empty(0, dtype=torch.long))\nTraceback (most recent call last):\n  ...\nIndexError: index out of range in self._expert_for_token\n```\nWhen the batch is empty the code still builds a `defaultdict(list)` and later tries to index the first element of `expert_indices` (which is an empty list).  \n\n### Fix\nGuard the whole forward path early and return an empty tensor of the correct shape.\n\n```diff\n@@\n     def forward(\n         self,\n         token_embeddings: torch.Tensor,\n         token_ids: torch.Tensor,\n     ) -> torch.Tensor:\n         \"\"\"\n@@\n         \"\"\"\n-        # ------------------------------------------------------------------\n-        # 1.  Build per\u2011expert index lists\n-        # ------------------------------------------------------------------\n-        expert_to_token_idx: Dict[int, List[int]] = defaultdict(list)\n-        for i, token_id in enumerate(token_ids.tolist()):\n-            expert_idx = self._expert_for_token(token_id)\n-            expert_to_token_idx[expert_idx].append(i)\n-\n-        # ------------------------------------------------------------------\n-        # 2.  Run each expert (optionally in parallel)\n-        # ------------------------------------------------------------------\n-        results: List[torch.Tensor] = [None] * token_embeddings.shape[0]  # placeholder\n-\n-        def _run_one_expert(expert_idx: int, token_idx_list: List[int]) -> None:\n-            \"\"\"Run a single expert on the subset of tokens that belong to it.\"\"\"\n-            if not token_idx_list:\n-                return\n-            # Gather the embeddings that belong to this expert\n-            sub_embeddings = token_embeddings[torch.tensor(token_idx_list, device=token_embeddings.device)]\n-            # Run the expert (",
+     "free_ram_gib": 0.3
+    }
+   ],
+   "startup_s": 28.7,
+   "free_ram_gib_ready": 41.15
+  }
+ ],
+ "summary": {
+  "llama": {
+   "prompt_s_median": 142.07663399999998,
+   "first_decode_median": 12.71674884989798,
+   "first_decode_all": [
+    12.71674884989798
+   ],
+   "followup_decode_median": 14.514923722941857,
+   "followup_decode_all": [
+    14.676157822012316,
+    14.514923722941857,
+    14.3106113154954
+   ],
+   "first_vram_hit_median": null,
+   "followup_vram_hit_median": null,
+   "first_cpu_ms_median": null,
+   "followup_prompt_s_median": 4.962568
+  },
+  "neural": {
+   "prompt_s_median": null,
+   "first_decode_median": null,
+   "first_decode_all": [],
+   "followup_decode_median": null,
+   "followup_decode_all": [],
+   "first_vram_hit_median": null,
+   "followup_vram_hit_median": null,
+   "first_cpu_ms_median": null,
+   "followup_prompt_s_median": null
+  }
+ }
+}

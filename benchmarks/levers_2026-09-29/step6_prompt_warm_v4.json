@@ -1,0 +1,32 @@
+{
+ "sessions": [
+  {
+   "kind": "neural",
+   "round": 0,
+   "prompts": [
+    {
+     "prompt": "warmup_13k",
+     "prompt_tokens": 13120,
+     "cached_tokens": 0,
+     "prompt_s": 16.6889,
+     "wall_s": 16.75
+    },
+    {
+     "prompt": "code_13k",
+     "prompt_tokens": 13119,
+     "cached_tokens": 75,
+     "prompt_s": 15.5937,
+     "wall_s": 17.06
+    },
+    {
+     "prompt": "file_3k",
+     "prompt_tokens": 3077,
+     "cached_tokens": 75,
+     "prompt_s": 4.1406,
+     "wall_s": 4.41
+    }
+   ],
+   "startup_s": 55.3
+  }
+ ]
+}

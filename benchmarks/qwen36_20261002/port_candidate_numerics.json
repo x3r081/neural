@@ -1,0 +1,5742 @@
+{
+  "source_root": "F:\\AI\\NeuralQwen36",
+  "ported": true,
+  "recurrent_graph": true,
+  "tokens_per_case": 24,
+  "checkpoint_revision": "995ad96eacd98c81ed38be0c5b274b04031597b0",
+  "runtime_file_sha256": {
+    "qwen_neural\\__init__.py": "3d1ebce3a8cacd551b890f5410197775f8013eaab9c64b44c6dd60139a8810bd",
+    "qwen_neural\\backend.py": "b7f0b13ba0a83253d760e017f2e1eed2c558afaf4f26cd0b91c5bf4321abad72",
+    "qwen_neural\\cpu_experts.py": "29a0005c5cec100e5faee177432a1723e71eca7ab30e0e12a8f4519e574bdf9e",
+    "qwen_neural\\fast_delta.py": "3fa7ca371d52d35405c4a14fa94abea5c64c76a96144c02af24ca45142ffa69b",
+    "qwen_neural\\generation.py": "0888f74f3291f64b014fe3ecf7451c5d50f5005d08d1c4bd84ccfe6f643503cf",
+    "qwen_neural\\native_dispatch.py": "f8df37179e13cfc3e15581009d6f3567df28d8feb844c7d5d311e5200933c600",
+    "qwen_neural\\recurrent_graph.py": "20dc3cd706b30c32c80d0defbddfa1e954d30fe1f2cb508d3d1672a4647cadc6",
+    "qwen_neural\\store.py": "b0e0981c154e7595ff99b63e97b16d18bc9e378edfee79448917372973b1ddb4"
+  },
+  "requests_sha256": "038850162ce207e048d35c29d6c5ea6fe8226e28038d60981f6ae5eb1e168d3e",
+  "continuations_sha256": "3ca402b70a558ea74386bd138c1b6f6005d3a013a75322797a08807c5cccb809",
+  "scope": "Teacher-forced full-vocabulary logits and exact cache-state hashes; not throughput or a general quality score.",
+  "cases": {
+    "reasoning_short": {
+      "prompt_ids": [
+        248045,
+        8678,
+        198,
+        2523,
+        513,
+        264,
+        16097,
+        10505,
+        321,
+        31626,
+        17313,
+        13,
+        10789,
+        279,
+        10897,
+        2468,
+        3443,
+        13,
+        248046,
+        198,
+        248045,
+        846,
+        198,
+        32,
+        7808,
+        47866,
+        220,
+        17,
+        19,
+        75842,
+        364,
+        220,
+        22,
+        17,
+        10867,
+        321,
+        29772,
+        220,
+        16,
+        23,
+        314,
+        1070,
+        364,
+        220,
+        20,
+        10867,
+        1754,
+        13,
+        561,
+        9376,
+        75842,
+        513,
+        5898,
+        364,
+        220,
+        17,
+        10867,
+        1754,
+        13,
+        3437,
+        369,
+        279,
+        2702,
+        11044,
+        30,
+        79091,
+        279,
+        21261,
+        25899,
+        13,
+        248046,
+        198,
+        248045,
+        74455,
+        198,
+        248068,
+        198
+      ],
+      "continuation_ids": [
+        8160,
+        579,
+        264,
+        7047,
+        1817,
+        25,
+        271,
+        16,
+        13,
+        220,
+        2972,
+        2014,
+        53983,
+        2570,
+        5396,
+        64700,
+        198,
+        256,
+        471,
+        2972,
+        14508,
+        64700,
+        26349,
+        1012
+      ],
+      "logit_positions": 25,
+      "cache_state": {
+        "prefill": {
+          "layers.0.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "e9e9d3e0438e0380efec3de775bc5630369791517df2b1f6a70194cbe417c9fa",
+            "finite": true
+          },
+          "layers.0.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "d8c7ac31f2488957314bb06a5735f755d81a5d9169be4d68a458db54e4f94009",
+            "finite": true
+          },
+          "layers.1.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "c1694dc4fdddfabbc2b8ef3300beee6784b13aaa8eb29a3d5cf8fe4dcc9e2e21",
+            "finite": true
+          },
+          "layers.1.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "3f3c6700e20b704133dcf33f13ca4f352fd29fa68aae5500a609ec28f9acbbea",
+            "finite": true
+          },
+          "layers.2.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "fc66c3a2ec82856f14f26f8cc75af88105778e3094ba74e035d7a52788afc6ee",
+            "finite": true
+          },
+          "layers.2.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "682e79d26b09fd5a92bdce2c4b982ea7aa069cb783f26c6380b8c8fa7a36618b",
+            "finite": true
+          },
+          "layers.3.keys": {
+            "shape": [
+              1,
+              2,
+              77,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "4cb5b3ea6a8481e3f99cede6de27b116c5b92d959c6e7b549291bbf55a04904a",
+            "finite": true
+          },
+          "layers.3.values": {
+            "shape": [
+              1,
+              2,
+              77,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "7c7ef7cf6a011581ece5d0fef99aed8f37e406ec18f24adcd817b3357cc10c8d",
+            "finite": true
+          },
+          "layers.4.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "e94ba48ad35c14fb851c5acb0bcfd6f46467d7087e944e71412dc829bf928c39",
+            "finite": true
+          },
+          "layers.4.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "a86b3d75f24d2d1711e801eb8fbca3565a2f44d66dbcccfb2d04a5325466a29b",
+            "finite": true
+          },
+          "layers.5.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "da970824296297292c010969f7d81fa75f354118fe4a99aa83020728585fe909",
+            "finite": true
+          },
+          "layers.5.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "c12b1992feb8d871bf55731f6b213593b15d354e6a901c6f0ee288a01401a3b9",
+            "finite": true
+          },
+          "layers.6.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "89acded84259eda4c0529ff82287e7dbf2cda9754db800da69cf49ed3c2a683d",
+            "finite": true
+          },
+          "layers.6.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "9fe363fe85a0e879b917f9ef1b6dd0f5d2e1458c2629563c8aa747b92ca04840",
+            "finite": true
+          },
+          "layers.7.keys": {
+            "shape": [
+              1,
+              2,
+              77,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "7d3ed7980adfdec49449471d1980c27b596df7eebb28dce89953f6110da7d9e4",
+            "finite": true
+          },
+          "layers.7.values": {
+            "shape": [
+              1,
+              2,
+              77,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "af6d0e37dd840286a391991764a39b703359ae345bab8887d6e127188c4ae90d",
+            "finite": true
+          },
+          "layers.8.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "2f861a5f0b722cdedcbfc293ea0fb71903263377941a2a45c0ea483bcc2802d3",
+            "finite": true
+          },
+          "layers.8.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "d0a4a7e1892754d68cf287a099971cf571c5a977d1d49b9320697d853d30e018",
+            "finite": true
+          },
+          "layers.9.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "81e855df0b97bc7f1fb860c8ebb6ba4f1055c3b0dbd1f7205c0240a45722f4b4",
+            "finite": true
+          },
+          "layers.9.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "13f9bdacc50be640d370ebd2b5d22c591f851db0aefa9f6983bbcd60441e0b9f",
+            "finite": true
+          },
+          "layers.10.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "57418bcfae325cc249c2b896341e9463d5929720ef09913b5e0343a40eb726f6",
+            "finite": true
+          },
+          "layers.10.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "b58e7af91c70f418d0c52eacda3d567b9c4f8943f3cb03a490d99f4145bdf4e2",
+            "finite": true
+          },
+          "layers.11.keys": {
+            "shape": [
+              1,
+              2,
+              77,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "9fb374ee892e69e1f74612f846c580988120e00f519e2b0ddec834cf27d4531e",
+            "finite": true
+          },
+          "layers.11.values": {
+            "shape": [
+              1,
+              2,
+              77,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "e2f885af1fbfce6e459f4479082e52cb782d90463d4c13c158a4228915c0d5f3",
+            "finite": true
+          },
+          "layers.12.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "6fdba514837e0aa91c48379eb07425c90366dab2f2222f551ca12e2126e4c2fc",
+            "finite": true
+          },
+          "layers.12.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "1870ab7654544156e7cdf294942a706e82c6736e098c70b83abf94e1a7c67a10",
+            "finite": true
+          },
+          "layers.13.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "5944fada9acc2093a0ffda15d0a2597a18ab72526da94ff00e43bb0b057adb3c",
+            "finite": true
+          },
+          "layers.13.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "4d81fda047cd1bc8a25fb8d1c623f57519d768b3f1f9d67d09ee880d306d95b6",
+            "finite": true
+          },
+          "layers.14.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "d2f28672298d3bbc362edffefb67184c7f8e01570cb80d5242d5cc5c7b2b46ca",
+            "finite": true
+          },
+          "layers.14.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "a421a7a83c522c37186151e15f17b9624d15b71e391f52e65f1e47b378ea8ed4",
+            "finite": true
+          },
+          "layers.15.keys": {
+            "shape": [
+              1,
+              2,
+              77,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "426ac8b59e4c10d63c488f669239befd2c1f2f00003069ebd1890946e0439721",
+            "finite": true
+          },
+          "layers.15.values": {
+            "shape": [
+              1,
+              2,
+              77,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "8f227d3f386343999afbb6a2b024c03e78f25506f5dbeaf9830a67a77782f6a3",
+            "finite": true
+          },
+          "layers.16.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "b9906cbb098290f3048e6c61b8b93fa8bc9ee4c6b863c8a5c788292c9c9760dc",
+            "finite": true
+          },
+          "layers.16.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "c6daf7256e259ed774f49893c84bb8773939978ecb4139e491d281f356f1941b",
+            "finite": true
+          },
+          "layers.17.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "32c76c0055920f25c1648232515bf0efd0aa38facd736a0187736f8bd4e11837",
+            "finite": true
+          },
+          "layers.17.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "03264d54b7ca01d407275b574596f3def0e207569a0395d5e8059e1b7dde37b9",
+            "finite": true
+          },
+          "layers.18.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "29ab5c9a770456feda876df60fff496c3489556e4714e9a49d45c88f1a029fb4",
+            "finite": true
+          },
+          "layers.18.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "8d3fcff595572819b19d2c563a4e34a0321303a81eb7553fb8f5a8e82a9b4d2e",
+            "finite": true
+          },
+          "layers.19.keys": {
+            "shape": [
+              1,
+              2,
+              77,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "6ce8c270387248659a59e3b48f891102541720fb399bb189a03eb6ee7ef3a677",
+            "finite": true
+          },
+          "layers.19.values": {
+            "shape": [
+              1,
+              2,
+              77,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "c394ea388b8a99f467e9b82289d2a80ec358abdf1091924a1e2eb645a99ca5c6",
+            "finite": true
+          },
+          "layers.20.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "c907122cdebae292885954f624bb349649225b7fe1b22c741b87a34b612724c8",
+            "finite": true
+          },
+          "layers.20.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "60277a945f68dda5a470f48875ae5a27a1f9e025da281594d4787be050f2c622",
+            "finite": true
+          },
+          "layers.21.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "30788e16a76513b3ae64b85802cea8a415cd478e5e360e6dd7abde05b1cac421",
+            "finite": true
+          },
+          "layers.21.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "754e447e66ed4946232ff42860d3d731213c91d5375d9f790dc485844da2a203",
+            "finite": true
+          },
+          "layers.22.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "98622afc28b3bfc95a41413b37103754ae3aaff256a060334dd7d058457b4df3",
+            "finite": true
+          },
+          "layers.22.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "3073c62a0787fbfd03eabd68f77c83b77c869b7274a86329a485a5c04a8d9f87",
+            "finite": true
+          },
+          "layers.23.keys": {
+            "shape": [
+              1,
+              2,
+              77,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "46b8f7ece80da15f9f1c80c99b4ad3f56f6e3123aa79a55fda1a3602c001322a",
+            "finite": true
+          },
+          "layers.23.values": {
+            "shape": [
+              1,
+              2,
+              77,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "3a16a43750d2ed59fb60fd78db72e3c736ee320f3393e334296141234b112cd0",
+            "finite": true
+          },
+          "layers.24.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "ce27c00b050df3e01124077ea821e78dd21a40365b8a2c9a47913b91eee9c778",
+            "finite": true
+          },
+          "layers.24.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "96ab32e71a864a81eae010b1df435d1af69c4f5a0f46df0632d9b314bd35337d",
+            "finite": true
+          },
+          "layers.25.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "2377da52eddd6578581967e7d4deb8559cb71e175a04606acbd2baa98f410ead",
+            "finite": true
+          },
+          "layers.25.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "ce9b94b33a078e4e2fe6381c84db0e72273196468bac78a01df4e72b6128d08b",
+            "finite": true
+          },
+          "layers.26.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "00b44ad8d72410fae3b6176a8576bdaa290d4c9affe45782d130728e6b73cb5d",
+            "finite": true
+          },
+          "layers.26.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "644c8d928cab698f4bf75c3cb381b7a4e8473c4f16fbdaa9bef56f3dbfcf4173",
+            "finite": true
+          },
+          "layers.27.keys": {
+            "shape": [
+              1,
+              2,
+              77,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "544bac289e73d861fbcb231d99a5a7089a9f3299a90e10c1186cfd3c94fc03f9",
+            "finite": true
+          },
+          "layers.27.values": {
+            "shape": [
+              1,
+              2,
+              77,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "85f47ef8f7724ce82f21dd3e6e82fbfb6fc1cbdb912ab57514952dfca9b663b0",
+            "finite": true
+          },
+          "layers.28.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "43f467e95bd76d758a2302668ad60686420a561d4e88cc521caae372456e7cc3",
+            "finite": true
+          },
+          "layers.28.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "7d205cee4341cf40ee107e27b5161d264a6d490450e08ba7f71baf7c6a3dff19",
+            "finite": true
+          },
+          "layers.29.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "0806e9d1d7762a3446ae8f8d661ccaf8808c00cc77b15ad3a512d916998615d2",
+            "finite": true
+          },
+          "layers.29.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "6237710b23ee35fd19395a7745ceadbb494f988a422b5817c8557d78ea918d25",
+            "finite": true
+          },
+          "layers.30.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "73eaaf21dfdc5d58c558fbd3db4a60a007bbb21743d07389c56d3b25e103787c",
+            "finite": true
+          },
+          "layers.30.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "20fda370d89976c74b7ded9bcdc13c5cf0c9fc0721dba058a8e48d3cd0dd6b22",
+            "finite": true
+          },
+          "layers.31.keys": {
+            "shape": [
+              1,
+              2,
+              77,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "71c65a3b5d2948efd86c4add3733018046440bd969099aacd854ebcf99a959c3",
+            "finite": true
+          },
+          "layers.31.values": {
+            "shape": [
+              1,
+              2,
+              77,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "d5ebdd795b59cb9e4ab9dc6d7b46852a658198df192946cd421925f2b08d5a26",
+            "finite": true
+          },
+          "layers.32.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "e7da05f167d0924816124bf76bf7ec37a1e4fa61e1850edae1fa6494abbefd8a",
+            "finite": true
+          },
+          "layers.32.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "96cc9e30a09ad0408f40c7688306f5642b9684e20c5aca8b854085e2e4f9235f",
+            "finite": true
+          },
+          "layers.33.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "74ca1def7cf0d3c80be094b8f4ac812b60ed55d9b18dd3d61c0dcde72f5ee1ca",
+            "finite": true
+          },
+          "layers.33.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "3c80312e5a26e213793f7b6efec40b480ec785fb551912d5781b10a6a6d4a2c4",
+            "finite": true
+          },
+          "layers.34.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "5ea8ff64f236cce9f3bab85e2e393617c33e44685ef9a7d18f85848e7ba05e5f",
+            "finite": true
+          },
+          "layers.34.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "2e711f8b7bdb6b39c371aee6c12c1fdec933f6b3edb698145f1d9a6e3c5545a0",
+            "finite": true
+          },
+          "layers.35.keys": {
+            "shape": [
+              1,
+              2,
+              77,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "6f67188a153ba40583a3c8aa3735a84e788141c60180a94d6e09d70117d6c884",
+            "finite": true
+          },
+          "layers.35.values": {
+            "shape": [
+              1,
+              2,
+              77,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "8bf3798d1d760ed086c347f5506266fb89e387fbc7d86a7e0f43a48a31b07d47",
+            "finite": true
+          },
+          "layers.36.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "832ac21e5b9117bf123d5e2a8680906bf55794fad157f78144a36eb1bb3025da",
+            "finite": true
+          },
+          "layers.36.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "f25a2ad1812bf7a85c801f008a4426fc4ca17d3e8016090d455827d8b39c73d9",
+            "finite": true
+          },
+          "layers.37.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "d0cd51fa094a0fc93bb662084f86f1380da279ebdbb646ea8d34c5d6e7811d37",
+            "finite": true
+          },
+          "layers.37.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "875cd75c39c9fc3d71fe7f330912498abe20907305a37b013dc1e4d6a1dcbb48",
+            "finite": true
+          },
+          "layers.38.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "487367d00c2539d4141ba4719e8a91fcd2451bc3c4309f7b31e6541bd1ce5a47",
+            "finite": true
+          },
+          "layers.38.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "43482abb73db80c3e1d2b9792797aaf66c2e98e2edc6d0741df44bb0c31872c4",
+            "finite": true
+          },
+          "layers.39.keys": {
+            "shape": [
+              1,
+              2,
+              77,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "3b654ad0b0b8c6e98f4778ada1a8c1019028bfd166c5fc17a5215bf48d1e6413",
+            "finite": true
+          },
+          "layers.39.values": {
+            "shape": [
+              1,
+              2,
+              77,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "4939c79c79ed628d01e6f4f81696d2c564dd0814fc83cc11ad2993a91349291f",
+            "finite": true
+          }
+        },
+        "final": {
+          "layers.0.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "fc917318d77ef64d73f5cc1b36c5e4c883580947c26cd7905cfbf9fa0411e014",
+            "finite": true
+          },
+          "layers.0.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "9c64e06012e6ece9e92200ba64377abe3248b1eec4412bfeb58c816f5376d6d3",
+            "finite": true
+          },
+          "layers.1.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "38663161aaca2d53a4414f958137e7ee6b0c7787821aaa9d4f4e802be3d9a3d1",
+            "finite": true
+          },
+          "layers.1.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "cfb6537cf1779c011f3d370add209e173ea8915366c7d51318c1f3864f66e15a",
+            "finite": true
+          },
+          "layers.2.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "9c4d2d3d0ea272ce5bb9afb54ac13ec7513771caa9ad3b9b1f1543f56811affe",
+            "finite": true
+          },
+          "layers.2.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "e9d5a67b13eb0630143b533f3803b63fbf4d2e5684e3401b8b1a9a9601836631",
+            "finite": true
+          },
+          "layers.3.keys": {
+            "shape": [
+              1,
+              2,
+              101,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "6591acc64427ea953cce429e624a2c24f30146d425f8decb9bfeca34b2642792",
+            "finite": true
+          },
+          "layers.3.values": {
+            "shape": [
+              1,
+              2,
+              101,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "be0b16f420a21ad48042a000989b7108d460be1a0fe2ebb7826df31adc341782",
+            "finite": true
+          },
+          "layers.4.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "533fc8be3ee6974812302eea3c42b6cc6ca0633b72f7c1ca5d55c37d84b6c169",
+            "finite": true
+          },
+          "layers.4.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "f225071991a6c6a588489de928d9f8bc2d211077aa5a96cea656335d5bb13abd",
+            "finite": true
+          },
+          "layers.5.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "f267a5bc137eab91fe58e832801f221829b3339c94bb0534337013d0c5298845",
+            "finite": true
+          },
+          "layers.5.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "51eaa2333683f8939f205d2c7a7b5061518ec30c8ef4e495dafbf4db1a918bd7",
+            "finite": true
+          },
+          "layers.6.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "7d819b1884f3cecd53360a8860f6f8086f7a7d951a408ee27f7bb8ed4026defe",
+            "finite": true
+          },
+          "layers.6.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "11d2274d13d5c41b656da1f9618a2ca9f8886b5da68b7f324d0b65ab134021f5",
+            "finite": true
+          },
+          "layers.7.keys": {
+            "shape": [
+              1,
+              2,
+              101,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "f97a79399ac0d6fc0c3a2e2367c3498d870343811f39f6a704e40d2b00f5acc3",
+            "finite": true
+          },
+          "layers.7.values": {
+            "shape": [
+              1,
+              2,
+              101,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "16ba88135d895db09cc9611f663ff900c431ef47694c04c6e61f9e8f981911c1",
+            "finite": true
+          },
+          "layers.8.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "d8f3c30609053db809aee1e533e6de5e9d385d493777cc6542258eeb70cd7a31",
+            "finite": true
+          },
+          "layers.8.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "a91e2caa19d1c13914831d56893e8d2938e191bcdfa58d448bc6c13dafebf84d",
+            "finite": true
+          },
+          "layers.9.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "ce69630f63c833968c3dd63ddc51df9f76bccd956e488889cf4655b55d477178",
+            "finite": true
+          },
+          "layers.9.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "ae4cffe57f7c310447bc5aca2c1bebf12e0d0cca1b021e903d9bcb412ae92afc",
+            "finite": true
+          },
+          "layers.10.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "fc91e341f39f66868287c3004aad0d9f581cc4dc676dd735ce3235db89d41494",
+            "finite": true
+          },
+          "layers.10.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "6e620349689145c137b16ec22fe70efc601558f1194592edd39b06dc95a51fc9",
+            "finite": true
+          },
+          "layers.11.keys": {
+            "shape": [
+              1,
+              2,
+              101,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "f7b203dcb5bb2de0aed82db75f4131054fbccb8fa1e59a312038b83cea0d05b5",
+            "finite": true
+          },
+          "layers.11.values": {
+            "shape": [
+              1,
+              2,
+              101,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "a9dee899cc36c8b0a480d98cd613b4ea969dccda492d815cd1ee5026a229eab8",
+            "finite": true
+          },
+          "layers.12.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "2dfb1cecff458283954123f93a42c55174a9d22f3f76f1b98fbac59e73f0934a",
+            "finite": true
+          },
+          "layers.12.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "a7f6ef0692c720043fc964148123136720205cb020d5501f0a8024ce1e8d7eb4",
+            "finite": true
+          },
+          "layers.13.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "3a8afa99852cccf7ef8383313cf1c6259203a13b45ec760715b937e8961b65ad",
+            "finite": true
+          },
+          "layers.13.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "6de0b824b968176822360820656427ee486825387bf767efeae50cc5d4a636ab",
+            "finite": true
+          },
+          "layers.14.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "6409c4df1f17ba951d46383b9231e3d0050b31ae034c848d39073a6697719232",
+            "finite": true
+          },
+          "layers.14.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "3cadc9911bded703f43a76c6f9c6033e9415178d5767dc7ac8bcf4e674ee13e4",
+            "finite": true
+          },
+          "layers.15.keys": {
+            "shape": [
+              1,
+              2,
+              101,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "23615710f5b151ce4853661c0ee8a22177f7bf5ecb13cbf26dae7cb95c850406",
+            "finite": true
+          },
+          "layers.15.values": {
+            "shape": [
+              1,
+              2,
+              101,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "7b339f441c32c87dfc5df03b02f260b31483d22447593876b8474f4f9d32c4f8",
+            "finite": true
+          },
+          "layers.16.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "303148f7d493c70fef36bc53e1487f9dd5bc774ce9d737d259668a662f3c4b74",
+            "finite": true
+          },
+          "layers.16.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "346933f221101efa000889a5c56678e7bf7a61681474fddd0323e96effcdc4f2",
+            "finite": true
+          },
+          "layers.17.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "d5671a3774a3aa9bd06d2ec0784091df6538d7c4dcfd47ccd887dedb0299b725",
+            "finite": true
+          },
+          "layers.17.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "e0e922bdef212b366d067b952dd227346e89708fa7860969f9117abc72c2472a",
+            "finite": true
+          },
+          "layers.18.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "fedb698ae20d31078ccfb455455daa8f55e55cbaf4330e4e81c2d11a6462d3e2",
+            "finite": true
+          },
+          "layers.18.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "8247ce0cc9c461a4d9d82d8cf721420ad1ff769136954cee46d59d2ec6757c98",
+            "finite": true
+          },
+          "layers.19.keys": {
+            "shape": [
+              1,
+              2,
+              101,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "d1e9c84b71ae8576528278f0d53dab024c2456a032d93d4838924b6976aacc64",
+            "finite": true
+          },
+          "layers.19.values": {
+            "shape": [
+              1,
+              2,
+              101,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "60ba81b243fa6a5240a10150030f184f5b2cf4600048c0e5a859115fae5d63d2",
+            "finite": true
+          },
+          "layers.20.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "5e7ed054318ef3e9e6e641eb41cc41b0161013348212c277a439ebeae1cacb4b",
+            "finite": true
+          },
+          "layers.20.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "d56997aeb989f1837ed2bda56a56feddd301164135565ca81d050458486891b4",
+            "finite": true
+          },
+          "layers.21.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "3cd1376148e02840a903a81c76196d81327a00e37e5e071f2e4d316d65dc7dc0",
+            "finite": true
+          },
+          "layers.21.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "398319d6d4d9d6526e685cf175890a4c1d68754c21c09a7c52c5e15d3b6db2e8",
+            "finite": true
+          },
+          "layers.22.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "dc83deda6d97fa0b09dfbb06255baed66a13604467e4185c2750f6031596a671",
+            "finite": true
+          },
+          "layers.22.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "6cff20ce9dac6397f0f8ac1e1f68a5e884278dfeb0f4c2ed1ca3f9c4e43a9e4c",
+            "finite": true
+          },
+          "layers.23.keys": {
+            "shape": [
+              1,
+              2,
+              101,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "079969bd984e610664ccf10e522b53fe4ebc88e001a599ece92fe6087e37ebac",
+            "finite": true
+          },
+          "layers.23.values": {
+            "shape": [
+              1,
+              2,
+              101,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "f7ec2ae19bb3cc3a380da3227c2bae416105bd99d41ba4644b2e1ad0825ef8cb",
+            "finite": true
+          },
+          "layers.24.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "4946a41535fbfe7603e0eebf34c38c77340396b3d8a15c26156fb838f101ba8c",
+            "finite": true
+          },
+          "layers.24.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "de8377fdfda8d63d532d39f52e0b86651f89a59f605914c4e640db3c84850f96",
+            "finite": true
+          },
+          "layers.25.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "75a778fe9df25bc3da61b5bddb36c3827bb1b5ee694046be0d3db2689d0aa14b",
+            "finite": true
+          },
+          "layers.25.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "a51553da82643122fd4d26be68d3e0e1c3de8c1566d75b4032a304988f5b374b",
+            "finite": true
+          },
+          "layers.26.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "30abaa3dd97dabe9d4b57536d23869d2e0119fe7246ebb11b7f18f97563f418c",
+            "finite": true
+          },
+          "layers.26.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "19f14963889e1d580525d9613caad8cf454648990585acdba9c2fc74de33f47c",
+            "finite": true
+          },
+          "layers.27.keys": {
+            "shape": [
+              1,
+              2,
+              101,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "d37ce3f46e745e9c0b0161b6c3684e6a2194b14c2195b76547ebb7c594ecbeb0",
+            "finite": true
+          },
+          "layers.27.values": {
+            "shape": [
+              1,
+              2,
+              101,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "ac2c12d4de8f7667b4ad6b04cc83d93f7c8ad8e23af0a78bd34ba49754f819e0",
+            "finite": true
+          },
+          "layers.28.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "49b641405f2dcf28aab820bed16f177a8333db1088a9f4f566867b0b8dbad85e",
+            "finite": true
+          },
+          "layers.28.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "bc44fb8fdd6e88f47b2efa161e85b402e25b12ae445b1151d32e12fa8c926a0d",
+            "finite": true
+          },
+          "layers.29.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "e7b820cfe5462cbd79bd4bb8c29f11dc607531a4737bb1717fd452b540a47976",
+            "finite": true
+          },
+          "layers.29.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "7e993afe3904ac213ae66ca8e2b0096ca39e520c75cf52c67307ab05414ee5a0",
+            "finite": true
+          },
+          "layers.30.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "5f37a32acf6a42e465cb6a9daa3761e5b14d06f1be14dd356b19717c7978d939",
+            "finite": true
+          },
+          "layers.30.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "771fed2090c511894bc84fd39c36ec163ebc2b8d3fb300159f7fdde2bf9c4c22",
+            "finite": true
+          },
+          "layers.31.keys": {
+            "shape": [
+              1,
+              2,
+              101,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "7c071b04be37b38936b076b336903b9ef04f7b8029ae72b0224b209b50b6250f",
+            "finite": true
+          },
+          "layers.31.values": {
+            "shape": [
+              1,
+              2,
+              101,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "4ed42e8e83f0b8771850df689444002a507c09b6c6352988179c0c5a12f1c6df",
+            "finite": true
+          },
+          "layers.32.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "158350c7fb902db787a80816f88e405828e438c6d9dfb97a9c0615c737861f2c",
+            "finite": true
+          },
+          "layers.32.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "279f8e7f5fd15dc8500d0ced6933a477f35d45b301c77fee0f05f1cfb5eb2aa4",
+            "finite": true
+          },
+          "layers.33.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "eff0d54b20eaef5cdc23627e81b97f40f48e1450b3d70b9a2f4097d1374ca419",
+            "finite": true
+          },
+          "layers.33.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "ca435ec4e78fd6316e59a8ddca81a7d59bf3b361d1a5d01f0e066bb00030586b",
+            "finite": true
+          },
+          "layers.34.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "eeb031c6eba90f279529d3af3f194004c84840a01822cd8c4dbc2ace9cff5c9e",
+            "finite": true
+          },
+          "layers.34.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "518a03e972a16fc8fe348a9ca18e580a8ff5ae628869038d0ed39088db76f191",
+            "finite": true
+          },
+          "layers.35.keys": {
+            "shape": [
+              1,
+              2,
+              101,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "3b126f4c9a7d7555e3d5112a924f349fa7511bbcb6ae3c8a86437b2a2383ba27",
+            "finite": true
+          },
+          "layers.35.values": {
+            "shape": [
+              1,
+              2,
+              101,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "23f528ec4716cf0a5ae355a1cac62c70a2d8519cf9598ab4a03a0d8072b09c50",
+            "finite": true
+          },
+          "layers.36.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "85ad306ef2c5edfb37f79343c28074db174bb435bee50b4a68acbf35e08246c0",
+            "finite": true
+          },
+          "layers.36.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "82bf4e58708b14763785299207d3aa68fa965c69143eb1709a484b8f6a3ca3f8",
+            "finite": true
+          },
+          "layers.37.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "2b010cceac76c4ca30a77f3bf71f3b50989fbf6b687101d26b80c0228b177237",
+            "finite": true
+          },
+          "layers.37.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "12642441d97f93b3d3f7d6588bb9cf149a247d47375d973da51540d1fb19c80b",
+            "finite": true
+          },
+          "layers.38.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "792d57e31eb7317ab158cc49794349762e663b62365dedd8b967cf8fc0b4df3b",
+            "finite": true
+          },
+          "layers.38.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "5b3f53ffe97b211e94f7c8c673300945aa9e595e268e30bdace2aa02736b4095",
+            "finite": true
+          },
+          "layers.39.keys": {
+            "shape": [
+              1,
+              2,
+              101,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "8dcb2e20c51d7babc57ec1cf5a46680a6ee880b2a56fb9b3ec4f09dd8e41ac82",
+            "finite": true
+          },
+          "layers.39.values": {
+            "shape": [
+              1,
+              2,
+              101,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "ac84848f7b50096b5ab88be115f42bda2e0a5813aedc609ca797b05978de9df1",
+            "finite": true
+          }
+        }
+      }
+    },
+    "coding_short": {
+      "prompt_ids": [
+        248045,
+        8678,
+        198,
+        2523,
+        513,
+        264,
+        16097,
+        10505,
+        321,
+        31626,
+        17313,
+        13,
+        10789,
+        279,
+        10897,
+        2468,
+        3443,
+        13,
+        248046,
+        198,
+        248045,
+        846,
+        198,
+        7734,
+        264,
+        12654,
+        709,
+        10562,
+        87682,
+        1494,
+        40798,
+        8,
+        421,
+        78161,
+        48142,
+        7629,
+        7308,
+        26126,
+        13,
+        3054,
+        524,
+        64914,
+        279,
+        1879,
+        13,
+        3301,
+        10300,
+        13139,
+        430,
+        11140,
+        13,
+        21539,
+        1879,
+        4523,
+        69918,
+        28763,
+        2250,
+        2716,
+        1992,
+        6813,
+        13,
+        13262,
+        279,
+        4087,
+        61446,
+        13,
+        248046,
+        198,
+        248045,
+        74455,
+        198,
+        248068,
+        198
+      ],
+      "continuation_ids": [
+        8160,
+        579,
+        264,
+        7047,
+        1817,
+        25,
+        271,
+        16,
+        13,
+        220,
+        2972,
+        15771,
+        2598,
+        279,
+        2570,
+        5952,
+        64700,
+        198,
+        256,
+        471,
+        2972,
+        4987,
+        3855,
+        64700
+      ],
+      "logit_positions": 25,
+      "cache_state": {
+        "prefill": {
+          "layers.0.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "e9e9d3e0438e0380efec3de775bc5630369791517df2b1f6a70194cbe417c9fa",
+            "finite": true
+          },
+          "layers.0.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "764ddd10c401b8af664afb09926ed15c1ece3e348b70a8adff150c1e01456fe8",
+            "finite": true
+          },
+          "layers.1.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "676b03d5538fbb69bfa947610001bf48a3983dfa4ad133b7f53030cb66260a5f",
+            "finite": true
+          },
+          "layers.1.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "a9caeea00ba777582bd1c2b8ed6cc4504483387116e464f52e21d9178d83d964",
+            "finite": true
+          },
+          "layers.2.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "7c1cfc718f0f173d8749d0add7afcff2869b1c1604b5de88a94806c526446240",
+            "finite": true
+          },
+          "layers.2.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "84133065f8d63e5b6641c9bc30a43bfdcea0273e44ca587f9d2537c2079d33ad",
+            "finite": true
+          },
+          "layers.3.keys": {
+            "shape": [
+              1,
+              2,
+              73,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "0abe48fcf4dcc03e52aa3afedc218ef944697a80fbe2409e65441e165fa214bf",
+            "finite": true
+          },
+          "layers.3.values": {
+            "shape": [
+              1,
+              2,
+              73,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "efe8f8724109a5e05d120b9ca343ab869ac32306a540990e28c1aff49399fb28",
+            "finite": true
+          },
+          "layers.4.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "01bf1279e1891712228288aea4563ed10525fad68facfc9d3f33bdceb43d7a73",
+            "finite": true
+          },
+          "layers.4.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "305d159ae5f12fd19c7379a06084d384f3b0496e4cb993a1e7548c9a95ecc560",
+            "finite": true
+          },
+          "layers.5.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "9bcd1e0fdf101272fb61f66e2ec75509793014643a4d71eeffd1168525c05d13",
+            "finite": true
+          },
+          "layers.5.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "38199562084b6ffe9bc42a20b4bbe6c6b0e81a593be4434577445b6f272f680c",
+            "finite": true
+          },
+          "layers.6.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "2e20f3a9dd75d44bcc28196322d6302bc624208eb4d7d96f466d3f0e144ba8c2",
+            "finite": true
+          },
+          "layers.6.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "d9c4a764fa088a3e1c8a34eec74008f1c8b3b36f6556a975b6f8c1e4a3c77b0a",
+            "finite": true
+          },
+          "layers.7.keys": {
+            "shape": [
+              1,
+              2,
+              73,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "b60ccdea6ec0ed9a700b985838c8343537666194dcc5f501283c71919ac9542d",
+            "finite": true
+          },
+          "layers.7.values": {
+            "shape": [
+              1,
+              2,
+              73,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "82e99214c356c11594327b095f9b6aa40d82891cd9c6df17d56c9ce9ecb2885e",
+            "finite": true
+          },
+          "layers.8.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "1c053a61e68b906d2dd3f010ce2a7d948e42b2a4ff2207fd882a7442ced34f5e",
+            "finite": true
+          },
+          "layers.8.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "05cf0688ea485edc8619938a6874a87b896413413c8f61486965eecad668fdb7",
+            "finite": true
+          },
+          "layers.9.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "ac7986f1038305681c1edaced0351839650988bbecf27ba2c933d403be69b353",
+            "finite": true
+          },
+          "layers.9.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "e5d066f689d48f3c0f953f8824eedf678930f866c6d5f7eb8fa26fd235b86cef",
+            "finite": true
+          },
+          "layers.10.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "d9cf18f8c43dc39a9400e01b7c5cb53b7177431380f6c4c5b887aafe54850fa8",
+            "finite": true
+          },
+          "layers.10.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "305e4b33841a740ba97f70f7fb52e79d3410e7472a5c8d166c1b3ea887b77e70",
+            "finite": true
+          },
+          "layers.11.keys": {
+            "shape": [
+              1,
+              2,
+              73,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "f804999eb68b2d8a5fa2bd0e52cd369f1916194239aac32847b4cde20ddba7cd",
+            "finite": true
+          },
+          "layers.11.values": {
+            "shape": [
+              1,
+              2,
+              73,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "e5df6f687498a39c100effa4e2fe87c785b2e007852ac5a5fba399629d8ef44f",
+            "finite": true
+          },
+          "layers.12.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "d52d0a196ab6fe5580137c0070525a5131e878d55d74c547660ed608926dfa03",
+            "finite": true
+          },
+          "layers.12.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "ee1e7260dc329908af3532d8b13c0db710e6fca1b6ad6be8f14383ec1fb033c0",
+            "finite": true
+          },
+          "layers.13.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "2771402153256b68dbab52e3327aab6f0616b5a02f00e5b4f90419be9f764bc3",
+            "finite": true
+          },
+          "layers.13.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "a577041f2a5ec94efb9f5035e4b55138ccde72bf011c1d002bc9f0919d933a35",
+            "finite": true
+          },
+          "layers.14.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "6c91578c8a2d5ce70a88196aea2cc9b7589bf4ddbe36f35f1e38361485519c64",
+            "finite": true
+          },
+          "layers.14.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "38d3803c917d765e12c9a93a389a3a5297ba1c9b63fa460fa700efb866e2d1a2",
+            "finite": true
+          },
+          "layers.15.keys": {
+            "shape": [
+              1,
+              2,
+              73,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "7ce09b419c81839ce3a6b35d93338aa430fa9bfaee6b5d5ca05f34358885206c",
+            "finite": true
+          },
+          "layers.15.values": {
+            "shape": [
+              1,
+              2,
+              73,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "38666621de4caa0d5df41384ba83de901fe0d3ce2b28f21ceaa4bbd2f0d665d9",
+            "finite": true
+          },
+          "layers.16.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "0f10973884fd3ee4b04877cd89d8d12ae8cf665b41557e4d79e04f9a9c95c190",
+            "finite": true
+          },
+          "layers.16.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "40780edf61bb85a4a42354dfaf4385cf1e728ab7d0f0ad733714739c9a43b756",
+            "finite": true
+          },
+          "layers.17.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "83642369ef613909e1ec78e98390e599ec8df07742aa7759a9c8eb2e2c57e2e5",
+            "finite": true
+          },
+          "layers.17.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "f6a548691bdc102c0fbd17deca5254b27b89793eb18f362c437c1012e9996673",
+            "finite": true
+          },
+          "layers.18.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "a1fe7335b8d2923881a42dabcf6594d00dd17b57953374a115237c136ea85170",
+            "finite": true
+          },
+          "layers.18.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "41089fed4b8b101518d9653b937d12f956e760f5b26021d2e6d53cbb23e67735",
+            "finite": true
+          },
+          "layers.19.keys": {
+            "shape": [
+              1,
+              2,
+              73,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "074f36628d95c4aac61ea33c1fdcd13aaea19c7d9b956f126849e48f94fdf606",
+            "finite": true
+          },
+          "layers.19.values": {
+            "shape": [
+              1,
+              2,
+              73,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "43bc91e21e2fcdc833ef35d90eb465a4e1e61093a56c769e42343ba18e5d6a23",
+            "finite": true
+          },
+          "layers.20.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "9e3efb0f924895ab2e2a88fe95bc43b172eeb5152a03137c4912f45159089ee4",
+            "finite": true
+          },
+          "layers.20.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "3fa25ca8984a5bef686de4d07f445cb00633e8f26615cfdfc518f6a08f858c1f",
+            "finite": true
+          },
+          "layers.21.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "c886622081926226d23a00af7fab051bebd1094c70339fa14dc1afc275771465",
+            "finite": true
+          },
+          "layers.21.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "c8e2321c29726215fdb4e5aeac66e605b4a1db7cb12de56c2bafbac0b5caf33d",
+            "finite": true
+          },
+          "layers.22.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "bc79a5c0cbb87446d310117299f52d7ee43a4456ff58cbdc65394cc4dd4e2186",
+            "finite": true
+          },
+          "layers.22.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "677be813a0c62c379da9c705c44c4511bd4dede5577b5d4dd93c853de27b056c",
+            "finite": true
+          },
+          "layers.23.keys": {
+            "shape": [
+              1,
+              2,
+              73,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "dc8647e6a17ee45765f1a36277046addfecd79b618eaf2b10cc0afe602f8b5dd",
+            "finite": true
+          },
+          "layers.23.values": {
+            "shape": [
+              1,
+              2,
+              73,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "faff9ec706a759d4d85d9683e8aebc7db3fab0efa4465ef51ebe51d30c00d844",
+            "finite": true
+          },
+          "layers.24.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "c841eddaaae94e026313a6f6a28884448aedc476b64dcecdc02a44f79e7ee266",
+            "finite": true
+          },
+          "layers.24.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "adbb193384e8eb1c9b8e143fa0494e0a6792c7fd54af77b355259d5bfe921524",
+            "finite": true
+          },
+          "layers.25.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "cadc2a0e69bbbf23d1a08b967dd208617495d9b6547f8637b7908741e5a33284",
+            "finite": true
+          },
+          "layers.25.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "727e49d87967ee1cb27a183f3698963ec40e30845ec96d342853db440a029da2",
+            "finite": true
+          },
+          "layers.26.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "c1dafbe44c26fbedadb612c0ac24823c11d0f656ddabc6cbc417f02aa24e546e",
+            "finite": true
+          },
+          "layers.26.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "d357f566f3d73aa31c694ebd887116d0c5c8bc81c5cb8b11e10b648c5a5e351b",
+            "finite": true
+          },
+          "layers.27.keys": {
+            "shape": [
+              1,
+              2,
+              73,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "a48ebb7d2b075fb4cd7e02aeb8c61b9228bb672d3c2f5e3a753e9e836ed111a0",
+            "finite": true
+          },
+          "layers.27.values": {
+            "shape": [
+              1,
+              2,
+              73,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "a9114c31ccf87686a188b823254f2822124b7ed85c1b78d56de8b775dded0df3",
+            "finite": true
+          },
+          "layers.28.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "55543290a8581b008ef6ae7e9dadac7eb9ac0d4219ddda9c6ceb74814e24a475",
+            "finite": true
+          },
+          "layers.28.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "cde99fca5cd7ccd6c8dafb26c016b260d8ded783d617e4e0f524b990920e9a0a",
+            "finite": true
+          },
+          "layers.29.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "eef611c6057401a98565e65c93a4104ffe816d39a0a2f87bd3c2cc64ade0d00a",
+            "finite": true
+          },
+          "layers.29.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "4609d44e32574701d4383a65b4acf4a81696d21489a451a5c53ff9fabb00ae8d",
+            "finite": true
+          },
+          "layers.30.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "3038d12b7f0f7adda0c639da7965aff00cd460aad7c8555f1bd4de198279d674",
+            "finite": true
+          },
+          "layers.30.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "8c3d20fa4d464e054bda3b06418e923fcd376a45595b416f8325e6d4374f0efe",
+            "finite": true
+          },
+          "layers.31.keys": {
+            "shape": [
+              1,
+              2,
+              73,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "cff1557ecc7591646b611d8392cb008a54782630a2ea7427d046c386fed860ee",
+            "finite": true
+          },
+          "layers.31.values": {
+            "shape": [
+              1,
+              2,
+              73,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "e4c90843a00772a72403d686a6948d4a28410830f65b348583482bf6b4045d87",
+            "finite": true
+          },
+          "layers.32.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "373c1f15fb680cb09baad75a6ac80fcfc6f037314b01fd77aaf50a8b320497ab",
+            "finite": true
+          },
+          "layers.32.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "d93ec1efa54451411b5411f9fc43aefdd27ac6c81894aa8937d4b2b4a36cac38",
+            "finite": true
+          },
+          "layers.33.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "22f34a368c22ed3c54c0b2dc20c3eb348cc7595372a7ca20d4f1de37f28503f2",
+            "finite": true
+          },
+          "layers.33.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "4ba0bb5471cb2808305d126d917e4372afe8cd6d8adcfcce2a631fc6655329ec",
+            "finite": true
+          },
+          "layers.34.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "f1ff3610123b745c6d63a06ffb386f28626b251da57f7993037bb07da9cc0822",
+            "finite": true
+          },
+          "layers.34.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "923bceeae248cebfe9893e3430fd587a12b024756e70f5f337a538b8673c2b55",
+            "finite": true
+          },
+          "layers.35.keys": {
+            "shape": [
+              1,
+              2,
+              73,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "e6a7e6860777be97a05790d127573ef67d6b978fd7597bbb21f104f38f5880ff",
+            "finite": true
+          },
+          "layers.35.values": {
+            "shape": [
+              1,
+              2,
+              73,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "e88fc76fe4fe7dcc03fb69145317e2a5dac27c5db018c9f3e12d274028ae04af",
+            "finite": true
+          },
+          "layers.36.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "46f15fe67a1b58b8f89840c22e444d81afbf85ef55d5236cf68b3ec35dbebe7f",
+            "finite": true
+          },
+          "layers.36.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "2ef2eef3f3c1392d874654760c509c7c6e76a2392566efa55ad6cd3e0dcdb76d",
+            "finite": true
+          },
+          "layers.37.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "bd179fbda6e6de36068a159ea68a807590819181d36081020c04cc29cab92d40",
+            "finite": true
+          },
+          "layers.37.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "a4fc9b574a9c29cea029b47780564983460721be80bdfe38c4fafafa29570d3f",
+            "finite": true
+          },
+          "layers.38.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "bc62743be220d559f7f71f383e15f6ae575b95f3a512acc9adf06a18765669f9",
+            "finite": true
+          },
+          "layers.38.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "f273f5add73282413705ebebaec2583887f0edcc935b47a5678f6b6b9965d279",
+            "finite": true
+          },
+          "layers.39.keys": {
+            "shape": [
+              1,
+              2,
+              73,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "068997d01c0a4d59f9508d9f8ae30a8ca3471044a6a673f912aabf4586d9b759",
+            "finite": true
+          },
+          "layers.39.values": {
+            "shape": [
+              1,
+              2,
+              73,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "52349a451a3e03949b2ef7d124834cae0e8c69cb0fe427156792fd74457fb886",
+            "finite": true
+          }
+        },
+        "final": {
+          "layers.0.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "f1cb5ef321281194ced3d97e87a40cc2508b0d76330397a2534d8bdd1c962c9e",
+            "finite": true
+          },
+          "layers.0.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "d609a98dc6e17d912558558cb366e3bffd17db6bd638d335b8ea2b6384f36b8f",
+            "finite": true
+          },
+          "layers.1.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "2e741c6be79de8152f314c6bad1c8eaf0d69cf03ee939c565d3bd0b200f7adf2",
+            "finite": true
+          },
+          "layers.1.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "0fb5430594c26a75a8f431077214e4fdb63fcea4955dbd9f86cf65e832e9be8d",
+            "finite": true
+          },
+          "layers.2.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "cdd032670d6dc45a63c40163edec4ca2e3b5b0b044ba4c6a9bfa3696403fe4c9",
+            "finite": true
+          },
+          "layers.2.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "49489bc0292e5b9e6b558dba46d8c2121839c765fa629c8f6acbbc2e8db10f51",
+            "finite": true
+          },
+          "layers.3.keys": {
+            "shape": [
+              1,
+              2,
+              97,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "88b0df80c1a18555fe74a9a96e9ee429aca602f84cb1200d407cda7220046a8f",
+            "finite": true
+          },
+          "layers.3.values": {
+            "shape": [
+              1,
+              2,
+              97,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "b180808aa2db54ba37b66be74f7e7386d79403d2142fa52fe10a35d22ed2a63e",
+            "finite": true
+          },
+          "layers.4.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "f412c81bd02a3990c67c325468572c0a47b40d59c666731fd0a57a71eadd1da9",
+            "finite": true
+          },
+          "layers.4.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "7d0354246b3982844e9073402881176c62fa77e852c03c4154ae5f4474b064f6",
+            "finite": true
+          },
+          "layers.5.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "860e10b92a0a21103c05e672ffb0db55a883a4eea0520ed34c8e3f1e48833ad6",
+            "finite": true
+          },
+          "layers.5.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "7cb5503781518d53485029d1bd06c46aba2ffde095a23586bba84f58b5d0116f",
+            "finite": true
+          },
+          "layers.6.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "abc489d3fee4a1ce1369f965958b762061136aaca8a3be53b33dc92267a17295",
+            "finite": true
+          },
+          "layers.6.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "d757ea08e0a70909dd0c46b1c95760665f8b94651145837336a94a7a9b346f3c",
+            "finite": true
+          },
+          "layers.7.keys": {
+            "shape": [
+              1,
+              2,
+              97,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "1a83e311e2d2bd19bb8e8201d71d25a159c09b58f0638bf612a24c10b3f359b8",
+            "finite": true
+          },
+          "layers.7.values": {
+            "shape": [
+              1,
+              2,
+              97,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "7d2565627e8a326d9e02b152833b59c9aef1aef1e7438aa33cd8234573355288",
+            "finite": true
+          },
+          "layers.8.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "e87ca895063d2304ff84b41798a29188c63ce0162122e8a05fd0e16bebba27cd",
+            "finite": true
+          },
+          "layers.8.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "652278192f2a7d1c4a9d1f1914f14aa266550297a83f5969d7f955f24c42bde0",
+            "finite": true
+          },
+          "layers.9.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "17a11a319798a7302fc4a60bc6230947cbbed5b550bc6d89a79fe307809ad3e4",
+            "finite": true
+          },
+          "layers.9.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "125638664d07345f6f68963ff9414b5dc4c1388d6b8c901683a7955e01390ef9",
+            "finite": true
+          },
+          "layers.10.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "39aa33de01fba64675fb38a9063da4e0969fa06bddfdcf64a873594f1c98be4e",
+            "finite": true
+          },
+          "layers.10.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "5ccdb33f73bd944d0ddf6cfac37dc9b211c65f0c527c96b8df867fd8d6f9954c",
+            "finite": true
+          },
+          "layers.11.keys": {
+            "shape": [
+              1,
+              2,
+              97,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "0cc13598abd156fe8d66320f8556381b37763d781c2f6c9941c033e7c6432dc7",
+            "finite": true
+          },
+          "layers.11.values": {
+            "shape": [
+              1,
+              2,
+              97,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "c0bba59b0f78742d19c461af520a766cf7e7a385988d1bcb14696a8684df2100",
+            "finite": true
+          },
+          "layers.12.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "4b8946d154dfd4251468a0437f06b94316a63eeb34f8fa231c40595465b1e9d2",
+            "finite": true
+          },
+          "layers.12.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "54da5becad1cd205ec577b92c96f6893018c9b4e2e0e09a0fb749e41cbd3e431",
+            "finite": true
+          },
+          "layers.13.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "0e0f68edce640e05c058fb055ea9b12fd1aff5f7b4b1586660c4112124fe1f1f",
+            "finite": true
+          },
+          "layers.13.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "e3ba7321f339cf4d8949f3fc1ec13d73d04958c72c5ec550348f6f5444516c74",
+            "finite": true
+          },
+          "layers.14.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "f5cd7d9dd52f4706c0d8fa5acfa8ea938e5bedb84a1501418e6ec99ff39bfd61",
+            "finite": true
+          },
+          "layers.14.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "8e789fa6ca070c759352b5f12a051b1e2f20088d5e90ba206e4ceb857c53effa",
+            "finite": true
+          },
+          "layers.15.keys": {
+            "shape": [
+              1,
+              2,
+              97,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "b778b5622912a0e34f4687ee32fa9363423d79401de0e361ab6bc2b29c37c228",
+            "finite": true
+          },
+          "layers.15.values": {
+            "shape": [
+              1,
+              2,
+              97,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "04ae85a749594a7c8eaa13de99081aa9355d5a742e17d9b1f97cddc106218b46",
+            "finite": true
+          },
+          "layers.16.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "46c4ac4c879e04363792de5d6fea9d26bcba27f2d77ff55617674c51ffaada85",
+            "finite": true
+          },
+          "layers.16.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "b546c71c779e78a859ecd53929ce95d5c9b067389986fc1c12727688e698d7ff",
+            "finite": true
+          },
+          "layers.17.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "1f38cfca6b62444e6976c433688ec4d27c6f1f79ea606a12e5600419cb40267b",
+            "finite": true
+          },
+          "layers.17.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "6f8087b566040b40f4f7ee7c41e565c925f0026c9fc2811d4037942c8ff95a6d",
+            "finite": true
+          },
+          "layers.18.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "6e5e43526413501297e1156e37d65492f9cd233670ff21404206775851434a04",
+            "finite": true
+          },
+          "layers.18.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "697947cd6f78bad06c473d4dc484fbf268c60e14825969ff36cd57f53e60a9dd",
+            "finite": true
+          },
+          "layers.19.keys": {
+            "shape": [
+              1,
+              2,
+              97,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "377e150df781ce3be5704ce42704fe8b26dc926407b224bdd517bb3459daf28a",
+            "finite": true
+          },
+          "layers.19.values": {
+            "shape": [
+              1,
+              2,
+              97,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "c9a6a8deedc4a392f088145b32dd5e591b2a933e85c3811f2703a8176e143c1c",
+            "finite": true
+          },
+          "layers.20.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "5a60331705463188d09fe7161672d151710d167ecc46a27855eae849062646cc",
+            "finite": true
+          },
+          "layers.20.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "d85f63ef43702244fb169b2853b8012ee898e1872d545d45ccf1dac709ac130b",
+            "finite": true
+          },
+          "layers.21.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "a0ac564c0cd21fb3a417512ecd23908e9014d3832f9bcc3a5683324151efbce1",
+            "finite": true
+          },
+          "layers.21.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "dcbdb1e44ec79647555ad5c7d4ea9ab24691370da95f3eaf29d5a2f992bf42db",
+            "finite": true
+          },
+          "layers.22.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "fdca0c0e8033a367ac52059b329ebba47ba13c53a9278d2e45f39269781d7e87",
+            "finite": true
+          },
+          "layers.22.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "e618232e42b777b38e52b98b05f6f3e5ed302f59c1e0f2b1e4cac2fde5c6c518",
+            "finite": true
+          },
+          "layers.23.keys": {
+            "shape": [
+              1,
+              2,
+              97,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "9795da8322f246f3eb0b7041dd7417cbab770697bbd3fac3e0dd0d5e52a79617",
+            "finite": true
+          },
+          "layers.23.values": {
+            "shape": [
+              1,
+              2,
+              97,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "e9463e0315b59715d0462cd1dd0832696f5070cfb437d52d07a5472f51144a74",
+            "finite": true
+          },
+          "layers.24.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "732ce3173de5ce33b240cdfac92fb585bede07782638b834abb9af83c646ff1f",
+            "finite": true
+          },
+          "layers.24.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "5d0c5c163913cc87a20edfa085a7af1002993102e62f05aa5fb14aff3e02dd8e",
+            "finite": true
+          },
+          "layers.25.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "3f4fdb281aaa02e7238143049a63575bc2f93adf8fdf8ebb8459c847081d046d",
+            "finite": true
+          },
+          "layers.25.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "2322668585584f42b51bacb3a0680f79a0bcd22dc79931e74e5a0d042559cde5",
+            "finite": true
+          },
+          "layers.26.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "c4ac17dc81a17c6e09ada7ac5ac7bf06166fe58846a9672b400f7f19da82021c",
+            "finite": true
+          },
+          "layers.26.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "1d774cccccb25cd6737bbeef574cbaeaa8fcf70ae3ddc2e91b5a0703d7be1119",
+            "finite": true
+          },
+          "layers.27.keys": {
+            "shape": [
+              1,
+              2,
+              97,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "cf7bfd921110faebc1093263b6d28373436acd0c2a6b963ad4f5edee823e20a9",
+            "finite": true
+          },
+          "layers.27.values": {
+            "shape": [
+              1,
+              2,
+              97,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "ef5048cc1699c7c4524695b95a9ef7b9880183aa766ef76076c4da0fd68b8f4b",
+            "finite": true
+          },
+          "layers.28.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "6bf8eebeb719c0b3e175829a5861f4e23f0a07eda1e3cbf25e226c7406da1791",
+            "finite": true
+          },
+          "layers.28.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "448500f851bcf8d416b31c1336541079e01d07aab47cf5d0a3a6ca54c8e5fa5f",
+            "finite": true
+          },
+          "layers.29.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "1a4c867f153c8bcef6d958f185e828f64b09c8760ecceafc5b7be5ae611864fa",
+            "finite": true
+          },
+          "layers.29.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "2ff3e50c27d1122b0d1e2116ac287f2336d9f17e57cb39a1b061eec195215997",
+            "finite": true
+          },
+          "layers.30.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "4bc62acaf227dca81746b89b9fa999fa9114ffd9a46e0abd7668b7ae409af9a0",
+            "finite": true
+          },
+          "layers.30.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "e88a65a14aaa8898455fafd173db1b7cc0a2d72d9a1b424ee1547585962a741f",
+            "finite": true
+          },
+          "layers.31.keys": {
+            "shape": [
+              1,
+              2,
+              97,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "fd4c7e3f977b55b66ef537d39734a26b03af09125bebac8a24d541c472e598f2",
+            "finite": true
+          },
+          "layers.31.values": {
+            "shape": [
+              1,
+              2,
+              97,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "fe46a99bcf4e8e47b6eccb3a84d1fee7687d28503af4fe14582539892d28a74e",
+            "finite": true
+          },
+          "layers.32.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "f2479c0ad538209bab296a0b3178c34d6f08277b57b7ccf8deee02dc73bc7498",
+            "finite": true
+          },
+          "layers.32.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "f096a3b3d3c888e366b474c234159f1c345d63e108012178013ae2aee4fd1cae",
+            "finite": true
+          },
+          "layers.33.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "79a354c7eea3921cf02b3a5baf47a18e77312c0d4dd12d112e988de6bed0a736",
+            "finite": true
+          },
+          "layers.33.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "413fa4775d94516620a867cf5c2df91253b68c9fbd20d4374506e1f104ec2040",
+            "finite": true
+          },
+          "layers.34.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "f1c1aa064fddf3644456241b63da83551aa0747c14224853a51e9429ce57d87a",
+            "finite": true
+          },
+          "layers.34.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "28a7f3e3a05df724455351e330d7af801c26514861024cdb6b03dd21356dc365",
+            "finite": true
+          },
+          "layers.35.keys": {
+            "shape": [
+              1,
+              2,
+              97,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "d2cc34ddea5d669b017c26be2af8cf2225f8035f1f6bf79e7d363609bfeac7da",
+            "finite": true
+          },
+          "layers.35.values": {
+            "shape": [
+              1,
+              2,
+              97,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "ac3331105ca66e6ef227c482bbdb8a3bea268cf7b2aab856396a8bf5e5f1ed4b",
+            "finite": true
+          },
+          "layers.36.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "242cf0e0438868c1357f481f64313b90289340e0edf08213945e344f02cb09da",
+            "finite": true
+          },
+          "layers.36.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "8a3073f11205929fd8a629b25f54c3a191682a9cda76abadd1ae39e4b6f0f2f6",
+            "finite": true
+          },
+          "layers.37.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "8e65655e4cb3a773e1cbbb491f356d44fe1ceb504efe0adf4dfe0ee2d5653f4c",
+            "finite": true
+          },
+          "layers.37.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "77b2d08fd33fe4af233d9cf300af8b1dfc5e87f3206e21cb92e4a15b70c67567",
+            "finite": true
+          },
+          "layers.38.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "a8c4db9875b757ba03ae78979f495f098dd5d17f166797a6f829bfad8b751115",
+            "finite": true
+          },
+          "layers.38.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "1a2f7d7c8e77dc2a4e6a48e03fd3c7f3a3c6e4899aa02270ddcc347f74bd8744",
+            "finite": true
+          },
+          "layers.39.keys": {
+            "shape": [
+              1,
+              2,
+              97,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "241d5e43a53163aa54bf88c4989db59ec14aaf3cb8a37bb09fd5ec6ea020b5f0",
+            "finite": true
+          },
+          "layers.39.values": {
+            "shape": [
+              1,
+              2,
+              97,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "4815a28a4235b51efe6b7135e61f09107045126adf0b495df759ab0c8a0a9305",
+            "finite": true
+          }
+        }
+      }
+    },
+    "coding_context": {
+      "prompt_ids": [
+        248045,
+        8678,
+        198,
+        2523,
+        513,
+        264,
+        16097,
+        10505,
+        321,
+        31626,
+        17313,
+        13,
+        10789,
+        279,
+        10897,
+        2468,
+        3443,
+        13,
+        248046,
+        198,
+        248045,
+        846,
+        198,
+        18842,
+        279,
+        12654,
+        1970,
+        3559,
+        13,
+        62366,
+        279,
+        9584,
+        421,
+        3520,
+        19954,
+        30882,
+        88,
+        2663,
+        311,
+        26808,
+        11,
+        321,
+        1420,
+        1132,
+        279,
+        34773,
+        615,
+        8469,
+        55120,
+        1654,
+        7854,
+        539,
+        264,
+        9522,
+        15673,
+        13,
+        271,
+        1005,
+        18887,
+        25,
+        198,
+        262,
+        687,
+        1259,
+        2251,
+        3676,
+        701,
+        1590,
+        198,
+        285,
+        638,
+        10341,
+        283,
+        4535,
+        271,
+        262,
+        687,
+        615,
+        8469,
+        55120,
+        1153,
+        11,
+        1328,
+        11,
+        12204,
+        1590,
+        198,
+        285,
+        19954,
+        283,
+        638,
+        10341,
+        652,
+        4702,
+        8,
+        198,
+        285,
+        413,
+        19954,
+        25,
+        198,
+        309,
+        460,
+        19954,
+        198,
+        285,
+        869,
+        283,
+        12204,
+        363,
+        198,
+        285,
+        638,
+        10341,
+        7900,
+        60,
+        283,
+        869,
+        198,
+        285,
+        460,
+        869,
+        271,
+        2,
+        24188,
+        1189,
+        84243,
+        381,
+        220,
+        15,
+        11,
+        3439,
+        11,
+        2168,
+        11,
+        9774,
+        466,
+        449,
+        4147,
+        886,
+        13,
+        198,
+        2,
+        12204,
+        363,
+        1189,
+        4673,
+        11,
+        321,
+        4490,
+        2961,
+        1902,
+        524,
+        381,
+        9476,
+        13,
+        248046,
+        198,
+        248045,
+        74455,
+        198,
+        248068,
+        198
+      ],
+      "continuation_ids": [
+        8160,
+        579,
+        264,
+        7047,
+        1817,
+        25,
+        271,
+        16,
+        13,
+        220,
+        2972,
+        2014,
+        53983,
+        2570,
+        5396,
+        64700,
+        198,
+        256,
+        471,
+        2972,
+        2010,
+        52068,
+        64700,
+        357
+      ],
+      "logit_positions": 25,
+      "cache_state": {
+        "prefill": {
+          "layers.0.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "367b384e157938aa5e94ef7b9369c761e2657493fda80397c2d4b4f73549796b",
+            "finite": true
+          },
+          "layers.0.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "1dfc0d75dcb4a222937192748f8fdcb86db1b3e21c8f12be856a7509a54dbf17",
+            "finite": true
+          },
+          "layers.1.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "3309cb5b00c07892f990fc2a099d385837b8593bd3f3be35416932d2f9348421",
+            "finite": true
+          },
+          "layers.1.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "442c2db998e92d2f2762ef50fbd72558ccae82f7eee033d95fd1d9e34700e31f",
+            "finite": true
+          },
+          "layers.2.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "2939fae85f0065d12904f68ca6a747ef4af1f2203273abfb638196a05f59e49e",
+            "finite": true
+          },
+          "layers.2.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "6e564234de2cc2d3c448ca4a212f815602e35f1b9b06be8ce864a07588f7ba91",
+            "finite": true
+          },
+          "layers.3.keys": {
+            "shape": [
+              1,
+              2,
+              163,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "8992fc62a8e0b874e2092703aaab4715197a8184b77f79a2cb0542232cbbd807",
+            "finite": true
+          },
+          "layers.3.values": {
+            "shape": [
+              1,
+              2,
+              163,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "ea06ff1f8e185a326f66ba6561b740ee1992b711d43a3acd74b23a81f25dbe6f",
+            "finite": true
+          },
+          "layers.4.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "dabe40ff32c2fdacea59ea665e3c09c028030fb053af601034974c2f1219005b",
+            "finite": true
+          },
+          "layers.4.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "fc8b1ef7fc8a7aad3fac92d5c4940d927c8d89d203cb5a30f2196cd8db4f5936",
+            "finite": true
+          },
+          "layers.5.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "a337fddf117203ccb7cd461a9c38c6a741171b43cbe86d7b3f302475a30a970d",
+            "finite": true
+          },
+          "layers.5.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "9fb84d5aa9fa0e844df5623b280d3899a42bcf96111d03361a8dd06fbf69e9c3",
+            "finite": true
+          },
+          "layers.6.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "a3ceccdb75e273707bc51ea4e6e04e5b6fe32995ec8e5927b86aef3cf05b1bd2",
+            "finite": true
+          },
+          "layers.6.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "9621efc6f281c675a5f8aa9d8ce04f0c2181ecdb1b6bf7c21601a2c24f17c6f7",
+            "finite": true
+          },
+          "layers.7.keys": {
+            "shape": [
+              1,
+              2,
+              163,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "686a0e0bc5fe8bb59b0d08013ae6d8851a09f24af01fc59560cf72c2835f3adf",
+            "finite": true
+          },
+          "layers.7.values": {
+            "shape": [
+              1,
+              2,
+              163,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "717d09856f1a3f75007363d0f069f118f6b49dd0d52ddd8682166930b77f4f29",
+            "finite": true
+          },
+          "layers.8.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "1c01c7bee8bf2ad779b67631de5e04b10c9a160bb719688aea5a2b2d937e24a8",
+            "finite": true
+          },
+          "layers.8.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "8c3d264eda55fc0db671a34493cb5dd6229b143c0f14e4312c262aacdc5ab9d1",
+            "finite": true
+          },
+          "layers.9.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "3beebff8b6c73ff8ac69652b896a1a22bd684be33485bde27ad79915b4191d60",
+            "finite": true
+          },
+          "layers.9.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "2f7fdf4e5fdf97de4d0eb23ddb2ccb2e57bef50adf3a325ae1c700a5381ff548",
+            "finite": true
+          },
+          "layers.10.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "7a0f7b0de755f23757510beed9980ac1c2eae8da60242c4373fd409648d48a26",
+            "finite": true
+          },
+          "layers.10.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "cf8b43caac293dd2962dfefbf94f1d23cd179a7e0019e4d8e6b768ec091d1c95",
+            "finite": true
+          },
+          "layers.11.keys": {
+            "shape": [
+              1,
+              2,
+              163,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "854b28e61827f2ac418fdc8c608aefc1e26b459485612850410824e9a8885f63",
+            "finite": true
+          },
+          "layers.11.values": {
+            "shape": [
+              1,
+              2,
+              163,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "bfbb37fd5c28a458f7035554941eae38a9a1e6544eda5139432948b0c3548833",
+            "finite": true
+          },
+          "layers.12.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "b60c5b458f7041735cc7b21272b6b50c337d55007bf4529eaa289bac21c55931",
+            "finite": true
+          },
+          "layers.12.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "e2b56d41077d8a76072d49a803c9650d157945105e229739ae3e741029c18cb9",
+            "finite": true
+          },
+          "layers.13.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "ba43b663da17c2d36803f520ce29dce4a3991303ca8a0310f603ad7906b92ac2",
+            "finite": true
+          },
+          "layers.13.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "22059878d9ea4ad9394240058d397cb7657158ce485b16804879965f6baddb63",
+            "finite": true
+          },
+          "layers.14.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "3cb1f67f92c2446ea716749f2a5f6678292486ca08a26873c399bc313bdc6f24",
+            "finite": true
+          },
+          "layers.14.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "747220e40a770fa09070708a8e671b33a08df959cd28ca08c8880f6178b9fc78",
+            "finite": true
+          },
+          "layers.15.keys": {
+            "shape": [
+              1,
+              2,
+              163,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "da5059d833194a7161dc970108da1149b6ad7e7b222a259fb4d3946ed45b2d4f",
+            "finite": true
+          },
+          "layers.15.values": {
+            "shape": [
+              1,
+              2,
+              163,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "c6f55305a6e19e5e08b736d67e84e748d2fed182685d95f187d370b7c8c31cd0",
+            "finite": true
+          },
+          "layers.16.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "daab43eb776b5a910b160469ddd5c08049071a05f736b22490ed5a724ae2bd53",
+            "finite": true
+          },
+          "layers.16.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "146f681a6db3473b545227410c54d3c2f303d9e9fd28e00bd4c3f37c70df4da1",
+            "finite": true
+          },
+          "layers.17.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "1b4ffb3f469a7213916d33bd568323b258937cac5d1acbc484f300d1fef68bed",
+            "finite": true
+          },
+          "layers.17.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "84af5c19ca972711cc1359aa3e0f3da06b7d1cca293784760255b5315f0244ea",
+            "finite": true
+          },
+          "layers.18.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "2584255e0aad22fbeeeabebd8dd3ced5c8153e6957d074fdbaccf6d2f3d8820d",
+            "finite": true
+          },
+          "layers.18.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "5dad7602a1820264a6429bdd6e6b9b0f614e7e93c43f6a1f9a9ccf6e952b7a6d",
+            "finite": true
+          },
+          "layers.19.keys": {
+            "shape": [
+              1,
+              2,
+              163,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "3c515066a6e2a31c3032d77cf5d5c6040db898c9c147dbf487e4d5aac7997e73",
+            "finite": true
+          },
+          "layers.19.values": {
+            "shape": [
+              1,
+              2,
+              163,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "f999a9b1f97c879b75feb9a2405a7ca5c9d3b3f389d3eee1f5e9bec949c17740",
+            "finite": true
+          },
+          "layers.20.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "3bb2f21515f175e6d1ea3e9ec780c404cf7db5365d557c1855a35b132368b355",
+            "finite": true
+          },
+          "layers.20.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "6ab1a86d692715c5a61c7700743fb53204219a5f52e3918a49d8126dc97f4da2",
+            "finite": true
+          },
+          "layers.21.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "cee2e479e29c94e4ad6e2886fae996bfb176569f41d360502b352c0897f4cb18",
+            "finite": true
+          },
+          "layers.21.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "c5f411bb88e266900b5f4b58c13cf43782291f0f3607b4a95493780364917628",
+            "finite": true
+          },
+          "layers.22.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "ec9c1887b4b2c140a99810aeab6abdc0edabad679fe858347072396b495501f8",
+            "finite": true
+          },
+          "layers.22.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "e41427213bd2b34f1e2166350de7c576426ab9e631c2ebd008594dce5636dd0a",
+            "finite": true
+          },
+          "layers.23.keys": {
+            "shape": [
+              1,
+              2,
+              163,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "4fbe97f68510c25020a7d080c976e1ae9f95cbb1a75cd7582e02fee114e92100",
+            "finite": true
+          },
+          "layers.23.values": {
+            "shape": [
+              1,
+              2,
+              163,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "9a82f1146fd05d5169bae04f66df75a544163dc7861c0803f64ee5352a2f4ce7",
+            "finite": true
+          },
+          "layers.24.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "93dc72769b38388ea980bb99667af0ac7bfd74260d576521fc38aec34df2ee1e",
+            "finite": true
+          },
+          "layers.24.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "429dfe71146409068fad050dbe2e18578e82e2a25b2e7edde33cc68a9490b33c",
+            "finite": true
+          },
+          "layers.25.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "430c1741d8bb0b710af68a84e5a21bfce015728e8eca40a379cb70d745660956",
+            "finite": true
+          },
+          "layers.25.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "c533bde52f71f9666767df2ee393f9b152b8f1bc873ae18df812c2ca1444146a",
+            "finite": true
+          },
+          "layers.26.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "9cf3de7cfb924f781e161cea8bbc1d557eb8bdc6976cd1e77e8f2d4888af4016",
+            "finite": true
+          },
+          "layers.26.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "806b21cbf0d2b457b8f88e4dea0bdf50c094f6830f0b5bbbda3cfeac6bf3a507",
+            "finite": true
+          },
+          "layers.27.keys": {
+            "shape": [
+              1,
+              2,
+              163,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "b90d0a08b16dea1c9cad389488e73a93b5f176dd949de88ba21bea74ba2fb3a9",
+            "finite": true
+          },
+          "layers.27.values": {
+            "shape": [
+              1,
+              2,
+              163,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "f945473e7e79c3d1c69559f6f64e9a703c99f27e210f97aceaf9a5ab5f24e9e5",
+            "finite": true
+          },
+          "layers.28.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "604b2fefde50ec1d8674a6c873e7edf2871462ae66e2c5f1e20ddcee890d0570",
+            "finite": true
+          },
+          "layers.28.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "fe9f33797358513a8328c8d25d68e75a177efc56c551eb4fb1441b2ed1bd5f26",
+            "finite": true
+          },
+          "layers.29.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "e009dd1d50d60cfea202bb9c0ba427838d9e220eff6d15af97f50d50980aa209",
+            "finite": true
+          },
+          "layers.29.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "2d73a22d8a1851787ee44f6987c22678454470846895c802807cb5ea9700327b",
+            "finite": true
+          },
+          "layers.30.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "6c526dd81712b873502208bab7ceb6404bf0379039626f5341e1e670c24476d3",
+            "finite": true
+          },
+          "layers.30.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "fb3b629fe6df0edd397c3432ef715f50610c7a7497840f5800733c69e4114ac7",
+            "finite": true
+          },
+          "layers.31.keys": {
+            "shape": [
+              1,
+              2,
+              163,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "a6da40d728ebe95944802df67b2bee4dafec419ee6fc60b8bdf619dcff4cad02",
+            "finite": true
+          },
+          "layers.31.values": {
+            "shape": [
+              1,
+              2,
+              163,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "89f6e1274b24ea1bfe6d9a1eca78e0b17622712f97b06d1f56b410cdef65054b",
+            "finite": true
+          },
+          "layers.32.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "d27729f91a04b3a157e1dd6ff9eac3d4eef86c9950ebe358a268428977cc59bc",
+            "finite": true
+          },
+          "layers.32.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "26fb9f055eee24fcc60b0e0c4b635a61fce2d65ad916e8e21bd8449f0043049e",
+            "finite": true
+          },
+          "layers.33.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "4bc805a85c0c825bc684484801ddc85760e3ac830bb265c317a636f5a61e0d12",
+            "finite": true
+          },
+          "layers.33.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "62738ed41e681a64c8599688d2a30421218c2d7ace7a81314edbee2dc6c56a85",
+            "finite": true
+          },
+          "layers.34.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "a2a5422be54897f5db52eca2e85a7ea57e549b4c95ab2662e7b4e81d635eb6eb",
+            "finite": true
+          },
+          "layers.34.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "b474077e835cf85c667f924fc0eb9171f6fce805a7b5cd30027c549319b4f1e4",
+            "finite": true
+          },
+          "layers.35.keys": {
+            "shape": [
+              1,
+              2,
+              163,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "737e2387969431e40739e7981d32439e3846c62975b87c139c34218459519c9b",
+            "finite": true
+          },
+          "layers.35.values": {
+            "shape": [
+              1,
+              2,
+              163,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "4e35d5883c885e92c518e4d6ff6709b6f4dee256a92209d6762b44078aa8d15b",
+            "finite": true
+          },
+          "layers.36.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "09d95bba523885a2751ee52b5d3c6dd2f8ac2c2a09fc73ea29d7f1cd6bfacbff",
+            "finite": true
+          },
+          "layers.36.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "b8353313b7290584e48abdff76ae59c0c5542700b5643ef8accad6cb9b0fd3e0",
+            "finite": true
+          },
+          "layers.37.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "4940748a904104284dc0238e9ad7b784d14bb2fc87ce3b2a031399a2f4ddac75",
+            "finite": true
+          },
+          "layers.37.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "6144ea6793581b45fc68b0cdd617ad11f97169013006f8b33b72b696b94964ab",
+            "finite": true
+          },
+          "layers.38.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "e16c4a391cc4416ad6b62b9f7071b469719df0febe64e6c6a6e8b3882bebc86c",
+            "finite": true
+          },
+          "layers.38.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "2de862ecd7fd4db37785e77e72581e6d61c01bbf54b41a4f966bcdd8a6471435",
+            "finite": true
+          },
+          "layers.39.keys": {
+            "shape": [
+              1,
+              2,
+              163,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "03198aa0a6dfa2c5f223072ddd1b8f8dcd35046ba805f7757b5ed13a86ffcd25",
+            "finite": true
+          },
+          "layers.39.values": {
+            "shape": [
+              1,
+              2,
+              163,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "81d96d40e3708b89e28a1573c6dec1bf569a4d324e0397a0fe6902693a14ef72",
+            "finite": true
+          }
+        },
+        "final": {
+          "layers.0.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "5348822ac786a81aa7ede53a923b6319d9390776e5802cbfb0e3cfe4a59fc0a0",
+            "finite": true
+          },
+          "layers.0.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "2350543cdfcb22c18a1b102b2c5cf4abc1888ceaad2aac132a807c324022d96f",
+            "finite": true
+          },
+          "layers.1.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "a346d17aaaae2114e582d1597635d255310a9feb34cdacb41d692a5beab3499d",
+            "finite": true
+          },
+          "layers.1.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "0606553829411dade0cdec3f845b02be099b7aad3f735881bfc2cef9431f4c33",
+            "finite": true
+          },
+          "layers.2.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "200fbffdd08110d9a5725dbefcb9258c1b4070a1356c205a4ad1f34317175335",
+            "finite": true
+          },
+          "layers.2.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "bd194f80581418a8ffa9024c590771b79f5739884a3ca1753221bb2d2151e439",
+            "finite": true
+          },
+          "layers.3.keys": {
+            "shape": [
+              1,
+              2,
+              187,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "a3440a64a71d1f6247c2c072ec3c0b9ca2e0cfecdddffeb916f69a6799164bb3",
+            "finite": true
+          },
+          "layers.3.values": {
+            "shape": [
+              1,
+              2,
+              187,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "ab8b3868ab37426f9ed88f530b456799d07fbad1e6247eb6f535e3aef7768c8c",
+            "finite": true
+          },
+          "layers.4.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "213244f0bc249e3c7599f93cba9ff51c5728fc3ea8e556dc6f7a3028ba6bf797",
+            "finite": true
+          },
+          "layers.4.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "6c3bcc7e1e2dabdbca85692a6494f2d15ea19f99bb23f8ee4592b8e1e8e53f48",
+            "finite": true
+          },
+          "layers.5.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "44587e91e237cc90eb2fc009f607d7b27b2c9c054f9f5bde99371ffe4958eed0",
+            "finite": true
+          },
+          "layers.5.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "306656da8f765a3092bdd2dd0e55ffadcb634dccbcc7397ba5d1b45b39724336",
+            "finite": true
+          },
+          "layers.6.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "17495f416aa4a4a57e4d4c5ce3ad0865ae3beb3431b8065c91e68c96f5baed73",
+            "finite": true
+          },
+          "layers.6.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "3444d35232948b76524655461e581d435eaa144009a6193a5d5296636b7310ef",
+            "finite": true
+          },
+          "layers.7.keys": {
+            "shape": [
+              1,
+              2,
+              187,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "34b36ebf55eb288a379aeeba5f781f520d8cd8f4c30a64af7d6c0a31df841ef4",
+            "finite": true
+          },
+          "layers.7.values": {
+            "shape": [
+              1,
+              2,
+              187,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "ffe5b8d42ef68005d884e60777133f79c758feafa5ce0b60c992f016aa12e2fd",
+            "finite": true
+          },
+          "layers.8.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "05e6470616369b6e02227f427e15e64297263538bb15917089418585f094c39a",
+            "finite": true
+          },
+          "layers.8.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "b7ba6209ec85c3839dbe4791398a52d881952169aa3921138526ba258e616a8c",
+            "finite": true
+          },
+          "layers.9.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "afb855b588046c0c9aacb92cce41ed4aedca037243b576ae37c6b466d2e3f171",
+            "finite": true
+          },
+          "layers.9.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "455a86543efe33ba711d2a9693a3245da7b16808ab838d55438d4a575674afa0",
+            "finite": true
+          },
+          "layers.10.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "a485e7a81a330b810722304cdde9bc6042a403a8c26146d5d1aee333ad11307f",
+            "finite": true
+          },
+          "layers.10.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "5fceefb78b9d2b8d268641d732fc73aee395579b2884d8f4fcca550f405aad12",
+            "finite": true
+          },
+          "layers.11.keys": {
+            "shape": [
+              1,
+              2,
+              187,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "51d33d596fa04f42f8d262279146fb578eba904b670153603ecb6531f606ae3d",
+            "finite": true
+          },
+          "layers.11.values": {
+            "shape": [
+              1,
+              2,
+              187,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "d62154022b7b7d07bd0d7908446c7a8bf770d38e858118497d1e7eaf672f0eb6",
+            "finite": true
+          },
+          "layers.12.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "33ef951fc6f42c44c2087cf0a95f774bb844d6659cd09a4710ec6d1919310933",
+            "finite": true
+          },
+          "layers.12.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "cecf26ae335737448697fc1fc8f55d6be885d43a935094219e7b49d744df6dff",
+            "finite": true
+          },
+          "layers.13.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "655ebf5d4572364189d950c549ca558225b14c2b682a9a13e8ca4d47ba47ebaf",
+            "finite": true
+          },
+          "layers.13.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "63ac752380675f1d781c16699972d64dc3497f5e0af206bb8e75fc7873978848",
+            "finite": true
+          },
+          "layers.14.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "56812d3cbb2a63d3c820a92e74cd2f90915bae46d0b4d58bbb87fcd9911e7ade",
+            "finite": true
+          },
+          "layers.14.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "8d3ddf98283e4094ed970751ee56888d90668e5c2f1b7c784d9f7646dc8ac85a",
+            "finite": true
+          },
+          "layers.15.keys": {
+            "shape": [
+              1,
+              2,
+              187,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "9107098093215450eb213096b3b8187de2b1eee3c77ddd72e331d4fff00005ca",
+            "finite": true
+          },
+          "layers.15.values": {
+            "shape": [
+              1,
+              2,
+              187,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "667547cabe75e56ff2b35042af4cee7e179096d8f6eea84e4e38a61f56e70690",
+            "finite": true
+          },
+          "layers.16.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "64fb79d64ef998ffe24111a84751953f900fe73e54b0facee974c2a26c43bbc6",
+            "finite": true
+          },
+          "layers.16.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "28c98b2b04ff8091d1d294b0d0975c0c27074fbd2cb41c3ce90a498c7c5b21f0",
+            "finite": true
+          },
+          "layers.17.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "8f433b82646b18e33120685b6ba762ff25ebb3172b3cb42292da9237f3dc6346",
+            "finite": true
+          },
+          "layers.17.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "1ce57d8139c219b80595f45479aa5c77b39b709529a0a70d9053e46bbcf08228",
+            "finite": true
+          },
+          "layers.18.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "7cdf5cbd3053d057846afeb75701ebaaad153296e0300f17ecd3e39fd08dd74a",
+            "finite": true
+          },
+          "layers.18.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "73523e0565b9ffd1ebde1d7583c89ec6d34e244ea20134786fad89a3b9190443",
+            "finite": true
+          },
+          "layers.19.keys": {
+            "shape": [
+              1,
+              2,
+              187,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "fb8930f5cf5d51874b1e0f0f9d40f183d7a7e2aa55908095bd1e55f70fb86f98",
+            "finite": true
+          },
+          "layers.19.values": {
+            "shape": [
+              1,
+              2,
+              187,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "385b6eb6acda8090d0851daeb1a7b5210812c3dd500a3006eeb5fdfcc0b9fb39",
+            "finite": true
+          },
+          "layers.20.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "f898afc54ca789965b647e9d07815b305632c733826a90c78ccafce8c749850d",
+            "finite": true
+          },
+          "layers.20.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "7936dc60435dee9d03c144e0b87131618a4fa14b9001e1b9f20ef01cd7ec0875",
+            "finite": true
+          },
+          "layers.21.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "78ec23b691272f201acf1b8451d40f530bc24b1cce1242b19dde73a5f07c853a",
+            "finite": true
+          },
+          "layers.21.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "8911e7f6783e54e83c857fb0650b22efcef1f7b8442ba64c95ea98613af2b51b",
+            "finite": true
+          },
+          "layers.22.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "bf0037a0fcc6c9b4164946180f36f5fe9d0a6d37e06d95eb074988caddf5f52a",
+            "finite": true
+          },
+          "layers.22.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "2351e88c66465eeb14b3482a499ac244afa8748f161d3bcc0947589eeea1ed0e",
+            "finite": true
+          },
+          "layers.23.keys": {
+            "shape": [
+              1,
+              2,
+              187,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "456e4a1b04829a9424c2ac2d7f0ce86958817414f44454c8ed26117ac4b33259",
+            "finite": true
+          },
+          "layers.23.values": {
+            "shape": [
+              1,
+              2,
+              187,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "cafe9324fef1e101603f1541760b414cb365fc94446d086c434e1106d326f648",
+            "finite": true
+          },
+          "layers.24.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "2110dbf95dea432c4a85360b73bcdddffc26a74a4630d26c463d6fcb419cb373",
+            "finite": true
+          },
+          "layers.24.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "431a9343068baffa67c31434b54cca31ec8ec9824196134b6f6054ac7b59a014",
+            "finite": true
+          },
+          "layers.25.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "486ab853e30af3f58b0c0b566a5d5ee8b0ced44d87390be64b68bcdf0195235d",
+            "finite": true
+          },
+          "layers.25.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "2b32df67d66bd74a08d9da4f26d466a984228920d2132e3b6a760f69e7a26853",
+            "finite": true
+          },
+          "layers.26.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "9ff69a2e9121e80606fc845fe6ccaec7f530e5c04dc422922215430ac83ff69b",
+            "finite": true
+          },
+          "layers.26.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "38059e685337e2858ac7e12caf0121424c338955841286eeabad3e0e96f4afa4",
+            "finite": true
+          },
+          "layers.27.keys": {
+            "shape": [
+              1,
+              2,
+              187,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "877a8074bbe69304f24ec9afb683e1dbc8b828401709b236fac430d6a8bfc696",
+            "finite": true
+          },
+          "layers.27.values": {
+            "shape": [
+              1,
+              2,
+              187,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "9bdb513b9dcdffa47a6b3ea56ecdf14da284cae8d5d88a0cfbe49b30f4e12654",
+            "finite": true
+          },
+          "layers.28.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "1b73722e75cb324686358a20ffff6571998556466bb883bf7de81ea22f0996ea",
+            "finite": true
+          },
+          "layers.28.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "9912c0ece823327f01b09b36e19d6776c2c5205cce57a299b9d1bc30bed1b9d4",
+            "finite": true
+          },
+          "layers.29.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "807d1b6e67cfc0987312968a0166b8096018fc7a2fa649eec062af8e59401435",
+            "finite": true
+          },
+          "layers.29.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "480b18461084b8415e96c0dfa2c83903ab2fbe20fbae63f4b722332dc862e22d",
+            "finite": true
+          },
+          "layers.30.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "3f21cee9598589025f49045c0528654124b32157b134c01791505b5e3cd634c4",
+            "finite": true
+          },
+          "layers.30.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "690bbf39b11baed8055d3ddfcad1e051ef39fb08e9b6f13e1e60e0ff53dbac9c",
+            "finite": true
+          },
+          "layers.31.keys": {
+            "shape": [
+              1,
+              2,
+              187,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "d88abe05bd45fabc6ac33acf94e14fb92907be241554661c4a203417b7840761",
+            "finite": true
+          },
+          "layers.31.values": {
+            "shape": [
+              1,
+              2,
+              187,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "d1d82d2d0a99789e0428701ef434cd140556d7144ef1f3ae257c0d593b628e0d",
+            "finite": true
+          },
+          "layers.32.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "d3e0fe0609c042b08b2c37c4fe5d8f2a0c05dfdd911dfc5f4d21b5e875976177",
+            "finite": true
+          },
+          "layers.32.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "edcee95b3aa18b66d18b68a9817d595790fce1ef7cb79250d5bfc26c122778b8",
+            "finite": true
+          },
+          "layers.33.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "ebb0f545f32483341eaac7795928d813cd29591e4bd91a75f0bd3c9074df1a42",
+            "finite": true
+          },
+          "layers.33.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "432681266d904c474064a7999019a299cbef2c9bb4f61721e0fd964ddd0ea57f",
+            "finite": true
+          },
+          "layers.34.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "e4da0110a296192be8cead9390173502c28cd5dff14f600d96e78425776a4db2",
+            "finite": true
+          },
+          "layers.34.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "786ba27b1b4fb970126fb6146e52cfb3b016834fcbe2e5e92c65ea12be06c9fb",
+            "finite": true
+          },
+          "layers.35.keys": {
+            "shape": [
+              1,
+              2,
+              187,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "99fd2de988360057f7ea0eb3fd9094de8e8e4d264d1d34797d3d1d22dad91eaf",
+            "finite": true
+          },
+          "layers.35.values": {
+            "shape": [
+              1,
+              2,
+              187,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "482a63fd4b059ec10c76b4fb4bd1fc9ddc61770401f5f786f1b65425b2c38cca",
+            "finite": true
+          },
+          "layers.36.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "b6ea71a13eb32afd68afad3f1ea5f576e640678c5652f48c64ea0b55140b7381",
+            "finite": true
+          },
+          "layers.36.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "be813b68b34f8cc634d33f3dbeecf9ef5221ec8f499d7220629fe430f94a663e",
+            "finite": true
+          },
+          "layers.37.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "fccfd7817e434825466224e43097d716e99baacc59f115639a0025abfb9d1466",
+            "finite": true
+          },
+          "layers.37.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "8800e6a626737f63e608f1308f0e9ce217a59315a96983de81f16ee2d89e28db",
+            "finite": true
+          },
+          "layers.38.conv_states.0": {
+            "shape": [
+              1,
+              8192,
+              4
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "ef8f6d19a5ce78842a7dd5615219c22ef7d74e010e968fb30ea38ddd8dfb6445",
+            "finite": true
+          },
+          "layers.38.recurrent_states.0": {
+            "shape": [
+              1,
+              32,
+              128,
+              128
+            ],
+            "dtype": "torch.float32",
+            "sha256": "6187fa3f19466864f3b0ec3544f4f8635e75e9e5df496caf80788ca957494709",
+            "finite": true
+          },
+          "layers.39.keys": {
+            "shape": [
+              1,
+              2,
+              187,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "98ac9a15d9071a6924b79b11bbf05f69590fb6f6b96772622d01bbaeaeb833a0",
+            "finite": true
+          },
+          "layers.39.values": {
+            "shape": [
+              1,
+              2,
+              187,
+              256
+            ],
+            "dtype": "torch.bfloat16",
+            "sha256": "3b80b64892df13d740ed13ea89bdc2932f7ae0b49de1dbf504e2abe327f00fc3",
+            "finite": true
+          }
+        }
+      }
+    }
+  },
+  "native_dll_path": "F:\\AI\\NeuralQwen36\\qwen_bf16_experts.dll",
+  "native_dll_sha256": "9ef19adae539cd02d3bd25bacb3c297aa10aa4ba41c7c905375524fbbecbfcd9",
+  "execution": {
+    "device": "cuda:0",
+    "core_bytes_loaded": 4896711936,
+    "gpu_expert_cache_bytes": 2415919104,
+    "gpu_expert_cache_entries": 384,
+    "gpu_expert_cache_hits": 2049,
+    "gpu_expert_cache_misses": 384,
+    "native_gpu_layers": 2,
+    "native_workspace": {
+      "cached_expert_view_entries": 7273,
+      "expert_view_entry_limit": 10240,
+      "cached_expert_view_logical_bytes": 45757759488,
+      "cached_expert_view_workspace_copy_bytes": 0,
+      "cached_expert_view_source": "qwen_neural.store.BF16ExpertStore",
+      "cached_expert_view_provenance": "fetch_expert tensors retained by reference; workspace does not copy or mutate weights",
+      "expert_cache_hits": 37251,
+      "expert_cache_misses": 7273,
+      "expert_cache_evictions": 0,
+      "dispatch_scratch_bytes": 529408,
+      "dispatch_scratch_limit_bytes": 134217728,
+      "dispatch_scratch_reallocations": 1,
+      "kernel_workspace": {
+        "scratch_bytes": 3612672,
+        "scratch_limit_bytes": 67108864,
+        "scratch_reallocations": 10,
+        "closed": false
+      },
+      "closed": false
+    },
+    "recurrent_graph": {
+      "status": "captured",
+      "capture_count": 1,
+      "replay_count": 2160,
+      "fallback_count": 0,
+      "fallback_reasons": {},
+      "layers_seen": [
+        0,
+        1,
+        2,
+        4,
+        5,
+        6,
+        8,
+        9,
+        10,
+        12,
+        13,
+        14,
+        16,
+        17,
+        18,
+        20,
+        21,
+        22,
+        24,
+        25,
+        26,
+        28,
+        29,
+        30,
+        32,
+        33,
+        34,
+        36,
+        37,
+        38
+      ],
+      "signature": [
+        2083534841280,
+        [
+          [
+            [
+              1,
+              1,
+              32,
+              128
+            ],
+            [
+              4096,
+              4096,
+              128,
+              1
+            ],
+            "torch.bfloat16",
+            "cuda:0"
+          ],
+          [
+            [
+              1,
+              1,
+              32,
+              128
+            ],
+            [
+              4096,
+              4096,
+              128,
+              1
+            ],
+            "torch.bfloat16",
+            "cuda:0"
+          ],
+          [
+            [
+              1,
+              1,
+              32,
+              128
+            ],
+            [
+              4096,
+              4096,
+              128,
+              1
+            ],
+            "torch.bfloat16",
+            "cuda:0"
+          ],
+          [
+            [
+              1,
+              1,
+              32
+            ],
+            [
+              32,
+              32,
+              1
+            ],
+            "torch.float32",
+            "cuda:0"
+          ],
+          [
+            [
+              1,
+              1,
+              32
+            ],
+            [
+              32,
+              32,
+              1
+            ],
+            "torch.bfloat16",
+            "cuda:0"
+          ],
+          [
+            [
+              1,
+              32,
+              128,
+              128
+            ],
+            [
+              524288,
+              16384,
+              128,
+              1
+            ],
+            "torch.float32",
+            "cuda:0"
+          ]
+        ],
+        true,
+        true,
+        []
+      ],
+      "static_tensor_bytes": 4227264,
+      "capture_pool_reserved_delta_bytes": 0,
+      "capture_error": null,
+      "module_count": 30
+    },
+    "native_gpu_layer_start": 38,
+    "native_gpu_layer_bytes": {
+      "38": 1610612736,
+      "39": 1610612736
+    },
+    "native_gpu_required_bytes": 3221225472,
+    "native_gpu_budget_sufficient": true,
+    "forward_calls": 79,
+    "input_tokens": 385,
+    "gpu_free_bytes": 4081057792,
+    "gpu_total_bytes": 12884377600,
+    "store": {
+      "source": "F:\\Models\\Qwen3.6-35B-A3B",
+      "expert_reads": 7657,
+      "projection_bytes_sliced": 48173678592,
+      "host_expert_cache_bytes": 0,
+      "access": "safetensors mmap slice; transient per-expert CPU tensors",
+      "evidence_class": "MEASURED_RUNTIME_COUNTERS"
+    }
+  },
+  "tensor_sha256": "c09c62d8f27384c7a72e4399cbf2d4880e09509b41308fc3932f3bf589f59a92",
+  "status": "CAPTURED_FOR_COMPARISON"
+}

@@ -1,0 +1,546 @@
+{
+  "schema_version": 1,
+  "verified_date": "2026-10-03",
+  "models": [
+    {
+      "id": "Qwen3-30B-A3B-Instruct-2507",
+      "display_name": "Qwen3-30B-A3B-Instruct-2507",
+      "hf_repo": "Qwen/Qwen3-30B-A3B-Instruct-2507",
+      "revision": "0d7cf23991f47feeb3a57ecb4c9cee8ea4a17bfe",
+      "official": true,
+      "registry_key": "qwen3_moe",
+      "support_tier": "reference",
+      "validation": "architecture-fixtures",
+      "original_format": true,
+      "native_profile": "hf-reference",
+      "original_dtype": "BF16",
+      "quantization": "none",
+      "task_tags": [
+        "general",
+        "coding",
+        "reasoning"
+      ],
+      "geometry": {
+        "total_experts": 128,
+        "experts_per_token": 8,
+        "expert_layers": 48,
+        "hidden_size": 2048,
+        "intermediate_size": 768,
+        "shared_expert_intermediate_size": 0,
+        "num_attention_heads": 32,
+        "num_kv_heads": 4,
+        "head_dim": 128,
+        "vocab_size": 151936,
+        "checkpoint_context_tokens": 262144,
+        "runtime_context_tokens": 16384,
+        "expert_parameters_per_token": 1811939328
+      },
+      "storage_bytes": {
+        "total_model": 61064245248,
+        "core_non_expert": 3082186752,
+        "expert_all": 57982058496,
+        "active_experts_per_token": 3623878656
+      },
+      "inference_state": {
+        "attention_kv_bytes_per_token": 98304,
+        "recurrent_state_bytes": 0
+      },
+      "byte_derivation": [
+        {
+          "field": "storage_bytes.total_model",
+          "label": "CALCULATED",
+          "formula": "safetensors index metadata.total_size",
+          "notes": "Exact repository checkpoint byte count from official shard index metadata; no tensor payload downloaded."
+        },
+        {
+          "field": "storage_bytes.expert_all",
+          "label": "CALCULATED",
+          "formula": "expert tensor geometry \u00d7 source storage bytes per parameter",
+          "notes": "48 \u00d7 128 experts \u00d7 (gate + up + down) \u00d7 2048 \u00d7 768 parameters \u00d7 2 bytes (BF16). Active bytes scale by top-k 8/128. Source index total_size gives exact full checkpoint bytes."
+        },
+        {
+          "field": "storage_bytes.core_non_expert",
+          "label": "CALCULATED",
+          "formula": "total_model \u2212 expert_all",
+          "notes": "Residual includes embeddings, attention, norms, routers, output head, and any vision or auxiliary tensors in the checkpoint."
+        },
+        {
+          "field": "storage_bytes.active_experts_per_token",
+          "label": "CALCULATED",
+          "formula": "expert weights selected by configured top-k plus any shared expert",
+          "notes": "Uniform-expert byte estimate. For GPT-OSS and reference MoEs this excludes attention/core bytes."
+        },
+        {
+          "field": "inference_state.attention_kv_bytes_per_token",
+          "label": "CALCULATED",
+          "formula": "2 \u00d7 KV heads \u00d7 head dimension \u00d7 bytes per element \u00d7 full-attention layers",
+          "notes": "BF16 KV tensors, batch size one; sliding-window layers are split out when present."
+        }
+      ],
+      "sources": [
+        {
+          "kind": "config",
+          "url": "https://huggingface.co/Qwen/Qwen3-30B-A3B-Instruct-2507/resolve/0d7cf23991f47feeb3a57ecb4c9cee8ea4a17bfe/config.json",
+          "revision": "0d7cf23991f47feeb3a57ecb4c9cee8ea4a17bfe",
+          "verified_date": "2026-10-03",
+          "facts": {
+            "model_type": "qwen3_moe",
+            "torch_dtype": "bfloat16",
+            "hidden_size": 2048,
+            "moe_intermediate_size": 768,
+            "num_hidden_layers": 48,
+            "num_experts": 128,
+            "num_experts_per_tok": 8,
+            "num_attention_heads": 32,
+            "num_key_value_heads": 4,
+            "head_dim": 128,
+            "vocab_size": 151936,
+            "max_position_embeddings": 262144
+          }
+        },
+        {
+          "kind": "safetensors-index",
+          "url": "https://huggingface.co/Qwen/Qwen3-30B-A3B-Instruct-2507/resolve/0d7cf23991f47feeb3a57ecb4c9cee8ea4a17bfe/model.safetensors.index.json",
+          "revision": "0d7cf23991f47feeb3a57ecb4c9cee8ea4a17bfe",
+          "verified_date": "2026-10-03",
+          "facts": {
+            "metadata.total_size": 61064245248,
+            "total_size_is_index_source_metadata": true
+          }
+        },
+        {
+          "kind": "model-card",
+          "url": "https://huggingface.co/Qwen/Qwen3-30B-A3B-Instruct-2507/resolve/0d7cf23991f47feeb3a57ecb4c9cee8ea4a17bfe/README.md",
+          "revision": "0d7cf23991f47feeb3a57ecb4c9cee8ea4a17bfe",
+          "verified_date": "2026-10-03",
+          "facts": {
+            "claims": [
+              "Causal language model",
+              "30.5B total and 3.3B activated parameters",
+              "instruction following, reasoning, coding, tool use",
+              "262,144 native context tokens"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "Qwen3.6-35B-A3B",
+      "display_name": "Qwen3.6-35B-A3B",
+      "hf_repo": "Qwen/Qwen3.6-35B-A3B",
+      "revision": "995ad96eacd98c81ed38be0c5b274b04031597b0",
+      "official": true,
+      "registry_key": "qwen3_5_moe",
+      "support_tier": "reference",
+      "validation": "architecture-fixtures",
+      "original_format": true,
+      "native_profile": "hf-reference",
+      "original_dtype": "BF16",
+      "quantization": "none",
+      "task_tags": [
+        "general",
+        "coding",
+        "reasoning"
+      ],
+      "geometry": {
+        "total_experts": 256,
+        "experts_per_token": 8,
+        "expert_layers": 40,
+        "hidden_size": 2048,
+        "intermediate_size": 512,
+        "shared_expert_intermediate_size": 512,
+        "num_attention_heads": 16,
+        "num_kv_heads": 2,
+        "head_dim": 256,
+        "vocab_size": 248320,
+        "checkpoint_context_tokens": 262144,
+        "runtime_context_tokens": 16384,
+        "expert_parameters_per_token": 1132462080
+      },
+      "storage_bytes": {
+        "total_model": 71903645408,
+        "core_non_expert": 7479135968,
+        "expert_all": 64424509440,
+        "active_experts_per_token": 2013265920
+      },
+      "inference_state": {
+        "attention_kv_bytes_per_token": 20480,
+        "recurrent_state_bytes": 64757760
+      },
+      "byte_derivation": [
+        {
+          "field": "storage_bytes.total_model",
+          "label": "CALCULATED",
+          "formula": "safetensors index metadata.total_size",
+          "notes": "Exact repository checkpoint byte count from official shard index metadata; no tensor payload downloaded."
+        },
+        {
+          "field": "storage_bytes.expert_all",
+          "label": "CALCULATED",
+          "formula": "40 routed expert layers \u00d7 256 experts \u00d7 (gate + up + down) \u00d7 2048 \u00d7 512 \u00d7 2 BF16 bytes",
+          "notes": "Counts only model.language_model.layers routed expert tensors, which the reference backend matches. Shared experts are retained as GPU core; MTP expert tensors are outside the backend sparse-layer matcher and stay in the conservative core residual along with vision and other auxiliary tensors."
+        },
+        {
+          "field": "storage_bytes.core_non_expert",
+          "label": "CALCULATED",
+          "formula": "total_model \u2212 expert_all",
+          "notes": "Conservative residual includes embeddings, attention, norms, routers, output head, shared experts, the MTP layer (including its experts), vision encoder, and other auxiliary tensors."
+        },
+        {
+          "field": "storage_bytes.active_experts_per_token",
+          "label": "CALCULATED",
+          "formula": "expert weights selected by configured top-k plus any shared expert",
+          "notes": "40 regular language layers \u00d7 top-k 8 of 256 routed experts \u00d7 (gate + up + down) BF16 weights. Shared experts are counted in core_non_expert because the reference backend does not page them."
+        },
+        {
+          "field": "inference_state.attention_kv_bytes_per_token",
+          "label": "CALCULATED",
+          "formula": "2 \u00d7 KV heads \u00d7 head dimension \u00d7 bytes per element \u00d7 full-attention layers",
+          "notes": "BF16 KV tensors, batch size one; sliding-window layers are split out when present."
+        },
+        {
+          "field": "inference_state.recurrent_state_bytes",
+          "label": "CALCULATED",
+          "formula": "linear-attention layers \u00d7 float32 recurrent matrix state + BF16 convolution state",
+          "notes": "Per sequence, batch size one; estimate uses the source config state dimensions and dtypes."
+        }
+      ],
+      "sources": [
+        {
+          "kind": "config",
+          "url": "https://huggingface.co/Qwen/Qwen3.6-35B-A3B/resolve/995ad96eacd98c81ed38be0c5b274b04031597b0/config.json",
+          "revision": "995ad96eacd98c81ed38be0c5b274b04031597b0",
+          "verified_date": "2026-10-03",
+          "facts": {
+            "model_type": "qwen3_5_moe",
+            "text_config.model_type": "qwen3_5_moe_text",
+            "text_config.dtype": "bfloat16",
+            "text_config.hidden_size": 2048,
+            "text_config.moe_intermediate_size": 512,
+            "text_config.shared_expert_intermediate_size": 512,
+            "text_config.num_hidden_layers": 40,
+            "text_config.num_experts": 256,
+            "text_config.num_experts_per_tok": 8,
+            "text_config.num_attention_heads": 16,
+            "text_config.num_key_value_heads": 2,
+            "text_config.head_dim": 256,
+            "text_config.vocab_size": 248320,
+            "text_config.max_position_embeddings": 262144,
+            "text_config.full_attention_interval": 4,
+            "text_config.linear_num_key_heads": 16,
+            "text_config.linear_num_value_heads": 32,
+            "text_config.linear_key_head_dim": 128,
+            "text_config.linear_value_head_dim": 128,
+            "text_config.linear_conv_kernel_dim": 4,
+            "vision_config": "present"
+          }
+        },
+        {
+          "kind": "safetensors-index",
+          "url": "https://huggingface.co/Qwen/Qwen3.6-35B-A3B/resolve/995ad96eacd98c81ed38be0c5b274b04031597b0/model.safetensors.index.json",
+          "revision": "995ad96eacd98c81ed38be0c5b274b04031597b0",
+          "verified_date": "2026-10-03",
+          "facts": {
+            "metadata.total_size": 71903645408,
+            "total_size_is_index_source_metadata": true
+          }
+        },
+        {
+          "kind": "model-card",
+          "url": "https://huggingface.co/Qwen/Qwen3.6-35B-A3B/resolve/995ad96eacd98c81ed38be0c5b274b04031597b0/README.md",
+          "revision": "995ad96eacd98c81ed38be0c5b274b04031597b0",
+          "verified_date": "2026-10-03",
+          "facts": {
+            "claims": [
+              "Causal language model with vision encoder",
+              "35B total and 3B activated parameters",
+              "8 routed + 1 shared experts",
+              "agentic coding and reasoning",
+              "262,144 native context tokens"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "Mixtral-8x7B-Instruct-v0.1",
+      "display_name": "Mixtral-8x7B-Instruct-v0.1",
+      "hf_repo": "mistralai/Mixtral-8x7B-Instruct-v0.1",
+      "revision": "eba92302a2861cdc0098cc54bc9f17cb2c47eb61",
+      "official": true,
+      "registry_key": "mixtral",
+      "support_tier": "reference",
+      "validation": "architecture-fixtures",
+      "original_format": true,
+      "native_profile": "hf-reference",
+      "original_dtype": "BF16",
+      "quantization": "none",
+      "task_tags": [
+        "general"
+      ],
+      "geometry": {
+        "total_experts": 8,
+        "experts_per_token": 2,
+        "expert_layers": 32,
+        "hidden_size": 4096,
+        "intermediate_size": 14336,
+        "shared_expert_intermediate_size": 0,
+        "num_attention_heads": 32,
+        "num_kv_heads": 8,
+        "head_dim": 128,
+        "vocab_size": 32000,
+        "checkpoint_context_tokens": 32768,
+        "runtime_context_tokens": 16384,
+        "expert_parameters_per_token": 11274289152
+      },
+      "storage_bytes": {
+        "total_model": 93405585408,
+        "core_non_expert": 3211272192,
+        "expert_all": 90194313216,
+        "active_experts_per_token": 22548578304
+      },
+      "inference_state": {
+        "attention_kv_bytes_per_token": 131072,
+        "recurrent_state_bytes": 0
+      },
+      "byte_derivation": [
+        {
+          "field": "storage_bytes.total_model",
+          "label": "CALCULATED",
+          "formula": "safetensors index metadata.total_size",
+          "notes": "Exact repository checkpoint byte count from official shard index metadata; no tensor payload downloaded."
+        },
+        {
+          "field": "storage_bytes.expert_all",
+          "label": "CALCULATED",
+          "formula": "expert tensor geometry \u00d7 source storage bytes per parameter",
+          "notes": "32 \u00d7 8 experts \u00d7 three MLP projections \u00d7 4096 \u00d7 14336 parameters \u00d7 2 bytes (BF16). Active bytes scale by top-k 2/8."
+        },
+        {
+          "field": "storage_bytes.core_non_expert",
+          "label": "CALCULATED",
+          "formula": "total_model \u2212 expert_all",
+          "notes": "Residual includes embeddings, attention, norms, routers, output head, and any vision or auxiliary tensors in the checkpoint."
+        },
+        {
+          "field": "storage_bytes.active_experts_per_token",
+          "label": "CALCULATED",
+          "formula": "expert weights selected by configured top-k plus any shared expert",
+          "notes": "Uniform-expert byte estimate. For GPT-OSS and reference MoEs this excludes attention/core bytes."
+        },
+        {
+          "field": "inference_state.attention_kv_bytes_per_token",
+          "label": "CALCULATED",
+          "formula": "2 \u00d7 KV heads \u00d7 head dimension \u00d7 bytes per element \u00d7 full-attention layers",
+          "notes": "BF16 KV tensors, batch size one; sliding-window layers are split out when present."
+        }
+      ],
+      "sources": [
+        {
+          "kind": "config",
+          "url": "https://huggingface.co/mistralai/Mixtral-8x7B-Instruct-v0.1/resolve/eba92302a2861cdc0098cc54bc9f17cb2c47eb61/config.json",
+          "revision": "eba92302a2861cdc0098cc54bc9f17cb2c47eb61",
+          "verified_date": "2026-10-03",
+          "facts": {
+            "model_type": "mixtral",
+            "torch_dtype": "bfloat16",
+            "hidden_size": 4096,
+            "intermediate_size": 14336,
+            "num_hidden_layers": 32,
+            "num_local_experts": 8,
+            "num_experts_per_tok": 2,
+            "num_attention_heads": 32,
+            "num_key_value_heads": 8,
+            "vocab_size": 32000,
+            "max_position_embeddings": 32768
+          }
+        },
+        {
+          "kind": "safetensors-index",
+          "url": "https://huggingface.co/mistralai/Mixtral-8x7B-Instruct-v0.1/resolve/eba92302a2861cdc0098cc54bc9f17cb2c47eb61/model.safetensors.index.json",
+          "revision": "eba92302a2861cdc0098cc54bc9f17cb2c47eb61",
+          "verified_date": "2026-10-03",
+          "facts": {
+            "metadata.total_size": 93405585408,
+            "total_size_is_index_source_metadata": true
+          }
+        },
+        {
+          "kind": "model-card",
+          "url": "https://huggingface.co/mistralai/Mixtral-8x7B-Instruct-v0.1/resolve/eba92302a2861cdc0098cc54bc9f17cb2c47eb61/README.md",
+          "revision": "eba92302a2861cdc0098cc54bc9f17cb2c47eb61",
+          "verified_date": "2026-10-03",
+          "facts": {
+            "claims": [
+              "Instruction-tuned causal language model",
+              "8 experts with top-2 routing",
+              "32,768 context tokens"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "gpt-oss-120b",
+      "display_name": "gpt-oss-120b",
+      "hf_repo": "openai/gpt-oss-120b",
+      "revision": "b5c939de8f754692c1647ca79fbf85e8c1e70f8a",
+      "official": true,
+      "registry_key": "gpt_oss",
+      "support_tier": "optimized",
+      "validation": "full-model",
+      "original_format": true,
+      "native_profile": "gptoss-120b-mxfp4",
+      "original_dtype": "BF16 core and bias; MXFP4 (U8 packed payload with scales) expert weights",
+      "quantization": "mxfp4",
+      "task_tags": [
+        "general",
+        "coding",
+        "reasoning"
+      ],
+      "geometry": {
+        "total_experts": 128,
+        "experts_per_token": 4,
+        "expert_layers": 36,
+        "hidden_size": 2880,
+        "intermediate_size": 2880,
+        "shared_expert_intermediate_size": 0,
+        "num_attention_heads": 64,
+        "num_kv_heads": 8,
+        "head_dim": 64,
+        "vocab_size": 201088,
+        "checkpoint_context_tokens": 131072,
+        "runtime_context_tokens": 16384,
+        "expert_parameters_per_token": 3583180800
+      },
+      "storage_bytes": {
+        "total_model": 65248815744,
+        "core_non_expert": 4334742144,
+        "expert_all": 60914073600,
+        "active_experts_per_token": 1903564800,
+        "gpu_core": 3176475264,
+        "cpu_core": 1158266880
+      },
+      "inference_state": {
+        "attention_kv_bytes_per_token": 36864,
+        "recurrent_state_bytes": 0,
+        "sliding_layers": 18,
+        "sliding_window": 128,
+        "sliding_kv_bytes_per_token": 36864
+      },
+      "byte_derivation": [
+        {
+          "field": "storage_bytes.total_model",
+          "label": "CALCULATED",
+          "formula": "safetensors index metadata.total_size",
+          "notes": "Exact repository checkpoint byte count from official shard index metadata; no tensor payload downloaded."
+        },
+        {
+          "field": "storage_bytes.expert_all",
+          "label": "CALCULATED",
+          "formula": "safetensors index total_size \u2212 native non-expert core bytes",
+          "notes": "Expert storage is the exact safetensors index total minus native profile core bytes: 3,176,475,264 GPU bytes plus 1,158,266,880 CPU embedding bytes. GPT-OSS MXFP4 packing, scales, and expert biases remain in the residual."
+        },
+        {
+          "field": "storage_bytes.core_non_expert",
+          "label": "CALCULATED",
+          "formula": "total_model \u2212 expert_all",
+          "notes": "Residual includes embeddings, attention, norms, routers, output head, and any vision or auxiliary tensors in the checkpoint."
+        },
+        {
+          "field": "storage_bytes.active_experts_per_token",
+          "label": "CALCULATED",
+          "formula": "expert weights selected by configured top-k plus any shared expert",
+          "notes": "Uniform-expert byte estimate. For GPT-OSS and reference MoEs this excludes attention/core bytes."
+        },
+        {
+          "field": "inference_state.attention_kv_bytes_per_token",
+          "label": "CALCULATED",
+          "formula": "2 \u00d7 KV heads \u00d7 head dimension \u00d7 bytes per element \u00d7 full-attention layers",
+          "notes": "BF16 KV tensors, batch size one; sliding-window layers are split out when present."
+        }
+      ],
+      "sources": [
+        {
+          "kind": "config",
+          "url": "https://huggingface.co/openai/gpt-oss-120b/resolve/b5c939de8f754692c1647ca79fbf85e8c1e70f8a/config.json",
+          "revision": "b5c939de8f754692c1647ca79fbf85e8c1e70f8a",
+          "verified_date": "2026-10-03",
+          "facts": {
+            "model_type": "gpt_oss",
+            "hidden_size": 2880,
+            "intermediate_size": 2880,
+            "num_hidden_layers": 36,
+            "num_local_experts": 128,
+            "experts_per_token": 4,
+            "num_attention_heads": 64,
+            "num_key_value_heads": 8,
+            "head_dim": 64,
+            "vocab_size": 201088,
+            "max_position_embeddings": 131072,
+            "sliding_window": 128,
+            "quantization_config.quant_method": "mxfp4"
+          }
+        },
+        {
+          "kind": "safetensors-index",
+          "url": "https://huggingface.co/openai/gpt-oss-120b/resolve/b5c939de8f754692c1647ca79fbf85e8c1e70f8a/model.safetensors.index.json",
+          "revision": "b5c939de8f754692c1647ca79fbf85e8c1e70f8a",
+          "verified_date": "2026-10-03",
+          "facts": {
+            "metadata.total_size": 65248815744,
+            "total_size_is_index_source_metadata": true
+          }
+        },
+        {
+          "kind": "model-card",
+          "url": "https://huggingface.co/openai/gpt-oss-120b/resolve/b5c939de8f754692c1647ca79fbf85e8c1e70f8a/README.md",
+          "revision": "b5c939de8f754692c1647ca79fbf85e8c1e70f8a",
+          "verified_date": "2026-10-03",
+          "facts": {
+            "claims": [
+              "117B total and 5.1B active parameters",
+              "production general-purpose and high-reasoning use cases",
+              "configurable low/medium/high reasoning effort",
+              "Harmony format required"
+            ]
+          }
+        },
+        {
+          "kind": "original-format-config",
+          "url": "https://huggingface.co/openai/gpt-oss-120b/resolve/b5c939de8f754692c1647ca79fbf85e8c1e70f8a/original/config.json",
+          "revision": "b5c939de8f754692c1647ca79fbf85e8c1e70f8a",
+          "verified_date": "2026-10-03",
+          "facts": {
+            "official_original_checkpoint_metadata": true,
+            "num_hidden_layers": 36,
+            "num_experts": 128,
+            "experts_per_token": 4,
+            "hidden_size": 2880,
+            "intermediate_size": 2880
+          }
+        },
+        {
+          "kind": "original-format-index",
+          "url": "https://huggingface.co/openai/gpt-oss-120b/resolve/b5c939de8f754692c1647ca79fbf85e8c1e70f8a/original/model.safetensors.index.json",
+          "revision": "b5c939de8f754692c1647ca79fbf85e8c1e70f8a",
+          "verified_date": "2026-10-03",
+          "facts": {
+            "metadata.total_size": 65248815744
+          }
+        },
+        {
+          "kind": "runtime-profile",
+          "url": "https://huggingface.co/openai/gpt-oss-120b/resolve/b5c939de8f754692c1647ca79fbf85e8c1e70f8a/config.json",
+          "revision": "b5c939de8f754692c1647ca79fbf85e8c1e70f8a",
+          "verified_date": "2026-10-03",
+          "facts": {
+            "gpu_core_bytes": 3176475264,
+            "cpu_embedding_bytes": 1158266880,
+            "source": "neural_runtime GPT-OSS native model profile; exact arithmetic and pinned checkpoint"
+          }
+        }
+      ]
+    }
+  ]
+}

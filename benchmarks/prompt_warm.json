@@ -1,0 +1,116 @@
+{
+ "sessions": [
+  {
+   "kind": "llama",
+   "round": 0,
+   "prompts": [
+    {
+     "prompt": "warmup_13k",
+     "prompt_tokens": 13078,
+     "cached_tokens": 0,
+     "prompt_s": 140.00846299999998,
+     "wall_s": 140.05
+    },
+    {
+     "prompt": "code_13k",
+     "prompt_tokens": 13078,
+     "cached_tokens": 0,
+     "prompt_s": 94.84291999999999,
+     "wall_s": 95.13
+    },
+    {
+     "prompt": "file_3k",
+     "prompt_tokens": 3077,
+     "cached_tokens": 0,
+     "prompt_s": 24.512427,
+     "wall_s": 24.76
+    }
+   ],
+   "startup_s": 27.7
+  },
+  {
+   "kind": "neural",
+   "round": 0,
+   "prompts": [
+    {
+     "prompt": "warmup_13k",
+     "prompt_tokens": 13120,
+     "cached_tokens": 0,
+     "prompt_s": 31.0183,
+     "wall_s": 31.08
+    },
+    {
+     "prompt": "code_13k",
+     "prompt_tokens": 13119,
+     "cached_tokens": 75,
+     "prompt_s": 29.8311,
+     "wall_s": 30.64
+    },
+    {
+     "prompt": "file_3k",
+     "prompt_tokens": 3077,
+     "cached_tokens": 75,
+     "prompt_s": 8.0309,
+     "wall_s": 8.27
+    }
+   ],
+   "startup_s": 41.4
+  },
+  {
+   "kind": "neural",
+   "round": 1,
+   "prompts": [
+    {
+     "prompt": "warmup_13k",
+     "prompt_tokens": 13120,
+     "cached_tokens": 0,
+     "prompt_s": 30.9605,
+     "wall_s": 31.03
+    },
+    {
+     "prompt": "code_13k",
+     "prompt_tokens": 13119,
+     "cached_tokens": 75,
+     "prompt_s": 29.7936,
+     "wall_s": 30.67
+    },
+    {
+     "prompt": "file_3k",
+     "prompt_tokens": 3077,
+     "cached_tokens": 75,
+     "prompt_s": 8.2302,
+     "wall_s": 8.5
+    }
+   ],
+   "startup_s": 46.4
+  },
+  {
+   "kind": "llama",
+   "round": 1,
+   "prompts": [
+    {
+     "prompt": "warmup_13k",
+     "prompt_tokens": 13078,
+     "cached_tokens": 0,
+     "prompt_s": 131.502731,
+     "wall_s": 131.56
+    },
+    {
+     "prompt": "code_13k",
+     "prompt_tokens": 13078,
+     "cached_tokens": 0,
+     "prompt_s": 91.554364,
+     "wall_s": 91.85
+    },
+    {
+     "prompt": "file_3k",
+     "prompt_tokens": 3077,
+     "cached_tokens": 0,
+     "prompt_s": 23.762062,
+     "wall_s": 24.04
+    }
+   ],
+   "startup_s": 27.7
+  }
+ ]
+}

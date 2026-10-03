@@ -1,0 +1,4 @@
+{
+  "model_dir": "./data/models/gpt-oss-120b",
+  "store_dir": "./data/stores/gptoss120b_ps4"
+}

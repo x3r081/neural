@@ -1,0 +1,35 @@
+{
+ "calib": [
+  "Name three planets in the Solar System closer to the Sun than Earth, and state one fact about each.",
+  "Write a Python function that checks whether a string is a palindrome, ignoring spaces and case. Include a short docstring.",
+  "Solve step by step: expand (x+3)^3 and then evaluate at x=2.",
+  "There are five houses in a row. The green house is immediately to the right of the white house. Someone in the green house drinks coffee. Who drinks coffee? State assumptions if underdetermined.",
+  "Summarize in three sentences:\nMixture-of-experts models activate a subset of experts per token. This reduces compute but increases memory traffic when experts are paged. Routing locality therefore dominates system design on memory-limited GPUs.",
+  "From the text, extract the company, year founded, and HQ city as JSON:\n\"Acme Robotics was founded in 2011 in Austin and builds warehouse automation.\"",
+  "Reply with exactly three lines. Line 1: a fruit. Line 2: a color. Line 3: a prime number under 20. No other text.",
+  "Repeat the word beta exactly 60 times separated by single spaces, then stop.",
+  "Continue this story for several paragraphs without repeating sentences:\nThe lighthouse keeper found a sealed bottle under the stairs. Inside was a map drawn on oilcloth, with a red X just beyond the reef.",
+  "Explain how bicycle gears work in plain language.\n\nHow does cadence interact with gear choice on a climb?\n\nWhat mistake do beginners make most often when shifting under load?",
+  "Prove that sqrt(2) is irrational in a short argument. Immediately after, write a Python one-liner that flattens a list of lists. Then name two spices common in garam masala.",
+  "Responde en español: ¿Cuáles son tres consejos para dormir mejor? Luego resume la idea en una frase en inglés."
+ ],
+ "test_extra": {
+  "code_t03": "Write a small Python class LRUCache with get/put methods and O(1) average operations. Keep it under 40 lines.",
+  "math_t03": "Differentiate f(x)=x^2 * sin(x). Show the product rule steps clearly.",
+  "long_t03": "Write a detailed technical blog-post style explanation of how a hash map handles collisions, with examples, spanning multiple sections."
+ },
+ "selftest_first12": [
+  "Name three planets in the Solar System closer to the Sun than Earth, and state one fact about each.",
+  "In what year did the Berlin Wall fall, and which German chancellor was in office in West Germany at the time?",
+  "List the chemical symbols for sodium, potassium, iron, and copper, with one everyday use each.",
+  "Explain briefly what the Gulf Stream is and why it matters for Western European climate.",
+  "Write a Python function that checks whether a string is a palindrome, ignoring spaces and case. Include a short docstring.",
+  "Implement binary search in Python over a sorted list of ints. Return the index or -1. Add type hints.",
+  "Write a small Python class LRUCache with get/put methods and O(1) average operations. Keep it under 40 lines.",
+  "Find and fix the bug, then explain it:\n```python\ndef mean(xs):\n    return sum(xs)/len(xs)\nprint(mean([]))\n```",
+  "Write a Python generator that yields Fibonacci numbers up to n inclusive, with a tiny usage example.",
+  "Solve step by step: expand (x+3)^3 and then evaluate at x=2.",
+  "A bag has 4 red and 6 blue marbles. Draw two without replacement. What is P(both blue)? Reduce the fraction.",
+  "Differentiate f(x)=x^2 * sin(x). Show the product rule steps clearly."
+ ]
+}

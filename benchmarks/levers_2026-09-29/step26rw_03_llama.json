@@ -1,0 +1,88 @@
+{
+ "config": {
+  "out": "C:\\Users\\USER\\AppData\\Local\\Temp\\claude\\F--AI-Neural\\b3f9f8cf-b808-46cf-83f0-90f1f3fbd384\\scratchpad\\bench\\step26rw_03_llama.json",
+  "rounds": 2,
+  "schedule": "llama",
+  "kinds": [
+   "llama",
+   "off=--kv-ring 256 --scratch 6 --pool 6.05 --kernel-fuse 1 --prefill-order layer --refresh-m 16 --store-dir G:\\NeuralStores\\gptoss120b_ps4",
+   "on=--kv-ring 256 --scratch 6 --pool 6.05 --kernel-fuse 1 --prefill-order layer --refresh-m 16 --store-dir G:\\NeuralStores\\gptoss120b_ps4 --kernel-cold-prefetch 1"
+  ],
+  "workload": "rewrite",
+  "ctx_tokens": 3000,
+  "max_tokens": 1536,
+  "effort": "low",
+  "llama_dir": "G:\\Tools\\llama-b10361",
+  "gguf": "G:\\Models\\gpt-oss-120b-gguf\\gpt-oss-120b-MXFP4.gguf",
+  "llama_args": "-ngl 99 -ncmoe 31 -t 8 -c 16384 -fa on --jinja",
+  "neural_args": "--pool 5.5 --smax 16384 --threads 8 --hotset hotset_code.json --refresh-every 8 --refresh-m 32 --capbufs 16 --prefill-m 64 --early-every 4 --early-tokens 32 --static 250 --skip-quality",
+  "python": null,
+  "log_dir": "C:\\Users\\USER\\AppData\\Local\\Temp\\claude\\F--AI-Neural\\b3f9f8cf-b808-46cf-83f0-90f1f3fbd384\\scratchpad\\bench\\logs\\step26rw_03_llama",
+  "server_roots": [
+   "off=F:\\AI\\NeuralServer_work_lm",
+   "on=F:\\AI\\NeuralServer_work_lm"
+  ],
+  "ctx_root": "F:\\AI\\NeuralServer_decode-levers"
+ },
+ "sessions": [
+  {
+   "kind": "llama",
+   "args": "",
+   "tag": "s0",
+   "free_ram_gib_at_start": 56.35,
+   "turns": [
+    {
+     "prompt_tokens": 3111,
+     "cached_tokens": 0,
+     "prompt_s": 61.011588,
+     "completion_tokens": 291,
+     "decode_tok_s": 14.60243955079283,
+     "wall_s": 80.97,
+     "turn": 0,
+     "content_sha1": "e58423201f77f19bce3e0780ebefd7c9f9f82d73",
+     "content": "```python\n# ===== harmony_render.py =====\n\"\"\"Harmony prompt rendering for the gpt-oss OpenAI-compatible server (pure: no model,\nno torch; every function takes the tokenizer as a parameter).\n\nrender() turns OpenAI chat messages into prompt token ids exactly as server.py always\nhas (HF chat template, _defang on every text field, tool results rendered raw, one\ntool call per assistant message) with one addition: EXACT TOKEN SPLICING of the\nmodel's own tool-call turns.\n\nWhy. When the model calls a tool it generates\n\n     __analysis to=functions.NAME <|constrain|>json\nARGS\n\nbut the harness echoes back only the call (no reasoning), and the template re-renders\nit as \"<|start|>assistant to=functions.NAME__commentary json\nARGS_TOJSON\". The model loses its reasoning across consecutive tool calls\n(harmony keeps the analysis of tool-call turns until the next final answer; so does\nthe HF template when a 'thinking' field is given) and the prefix KV cache stops\nmatching at that turn, so every agent step re-processes the previous assistant turn.\n\nSplicing. The server remembers, per returned tool_call id, the exact generated token\nids of that response (first token after the prompt through ",
+     "free_ram_gib": 0.76
+    }
+   ],
+   "startup_s": 27.7,
+   "free_ram_gib_ready": 41.98
+  }
+ ],
+ "summary": {
+  "llama": {
+   "prompt_s_median": 61.011588,
+   "first_decode_median": 14.60243955079283,
+   "first_decode_all": [
+    14.60243955079283
+   ],
+   "followup_decode_median": null,
+   "followup_decode_all": [],
+   "first_vram_hit_median": null,
+   "followup_vram_hit_median": null,
+   "first_cpu_ms_median": null,
+   "followup_prompt_s_median": null
+  },
+  "off": {
+   "prompt_s_median": null,
+   "first_decode_median": null,
+   "first_decode_all": [],
+   "followup_decode_median": null,
+   "followup_decode_all": [],
+   "first_vram_hit_median": null,
+   "followup_vram_hit_median": null,
+   "first_cpu_ms_median": null,
+   "followup_prompt_s_median": null
+  },
+  "on": {
+   "prompt_s_median": null,
+   "first_decode_median": null,
+   "first_decode_all": [],
+   "followup_decode_median": null,
+   "followup_decode_all": [],
+   "first_vram_hit_median": null,
+   "followup_vram_hit_median": null,
+   "first_cpu_ms_median": null,
+   "followup_prompt_s_median": null
+  }
+ }
+}

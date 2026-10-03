@@ -1,0 +1,23 @@
+{"id": "reasoning_short", "client_wall_s": 148.881801800002, "timings": {"prompt_n": 77, "prompt_ms": 5050.229299999046, "prompt_per_second": 15.246832455709397, "predicted_n": 512, "decode_calls": 511, "predicted_ms": 139652.44760000132, "predicted_per_second": 3.6590837381069656, "first_token_s": 5.050337699998636, "wall_s": 144.70267690000037, "generation_tokens_per_wall_s": 3.5382897605538264, "clock": "request prefill through generation, including sampling, detokenization and streaming callback; excludes startup"}}
+{"id": "coding_short", "client_wall_s": 172.68361540000114, "timings": {"prompt_n": 73, "prompt_ms": 16116.836199998943, "prompt_per_second": 4.52942495004105, "predicted_n": 512, "decode_calls": 511, "predicted_ms": 152854.50330000094, "predicted_per_second": 3.3430483824024626, "first_token_s": 16.11712919999991, "wall_s": 168.97133949999989, "generation_tokens_per_wall_s": 3.030099669654334, "clock": "request prefill through generation, including sampling, detokenization and streaming callback; excludes startup"}}
+{"id": "coding_context", "client_wall_s": 146.16292310000063, "timings": {"prompt_n": 163, "prompt_ms": 11758.06190000003, "prompt_per_second": 13.862828873183563, "predicted_n": 512, "decode_calls": 511, "predicted_ms": 126742.72800000108, "predicted_per_second": 4.031789500380611, "first_token_s": 11.758322599998792, "wall_s": 138.5007899000011, "generation_tokens_per_wall_s": 3.6967298191560416, "clock": "request prefill through generation, including sampling, detokenization and streaming callback; excludes startup"}}
+PASS health: GET /health returns status=ok (0.063s)
+PASS models: model list includes the configured Qwen ID (0.013s)
+PASS reject_top_level_array: malformed request rejected with HTTP 400 (0.018s)
+PASS reject_null_message: malformed request rejected with HTTP 400 (0.018s)
+PASS reject_string_false_stream: malformed request rejected with HTTP 400 (0.002s)
+PASS plain_greedy_math: answer contains 42: '42' (4.938s)
+PASS streamed_greedy_math: SSE ended with [DONE], had no errors, and answer contains 42: '42' (4.318s)
+PASS weather_function_call: one valid get_weather(location=Stockholm) call returned (56.262s)
+PASS tool_result_consumed: assistant used the local fixture without another tool call: 'The weather in Stockholm is currently 18�C and sunny.' (14.909s)
+{"status": "failed", "output": "F:\\AI\\NeuralQwen36\\benchmarks\\qwen36_20261002\\neural_torch_01\\http_validation_coding.json"}
+FAIL generated_python_function: coding validator failed; see linked report (0.326s)
+Report: F:\AI\NeuralQwen36\benchmarks\qwen36_20261002\neural_torch_01\http_validation.json
+Traceback (most recent call last):
+  File "F:\AI\NeuralQwen36\tools\run_qwen_benchmark.py", line 151, in <module>
+    main()
+  File "F:\AI\NeuralQwen36\tools\run_qwen_benchmark.py", line 130, in main
+    subprocess.run([sys.executable, '-u', str(ROOT/'tools/validate_qwen_http.py'),
+  File "C:\Users\USER\AppData\Local\Programs\Python\Python312\Lib\subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['F:\\AI\\NeuralQwen36\\.venv\\Scripts\\python.exe', '-u', 'F:\\AI\\NeuralQwen36\\tools\\validate_qwen_http.py', '--url', 'http://127.0.0.1:8001', '--output', 'F:\\AI\\NeuralQwen36\\benchmarks\\qwen36_20261002\\neural_torch_01\\http_validation.json']' returned non-zero exit status 1.

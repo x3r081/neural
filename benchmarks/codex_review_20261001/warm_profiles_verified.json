@@ -1,0 +1,1005 @@
+{
+  "evidence": "MEASURED",
+  "studies": {
+    "warm_prefill_bounded_abba": {
+      "source": "warm_prefill_bounded_abba.json",
+      "source_sha256": "d96d8d84f6d689d096be122a563286273be9d5c280c38d282e94d6eb1dc06a79",
+      "sessions": 6,
+      "all_request_response_hashes_verified": true,
+      "all_corresponding_request_prompt_output_identities_match": true,
+      "all_cached_tokens_zero": true,
+      "config": {
+        "schedule": [
+          "off",
+          "g1",
+          "g3",
+          "g3",
+          "g1",
+          "off"
+        ],
+        "group_size_env_fallback": 0,
+        "group_size_by_kind": {
+          "g1": 1,
+          "g3": 3,
+          "g6": 6,
+          "group": 0
+        },
+        "group_rows_env_override": 1024,
+        "group_rows_default_if_unset": 16384,
+        "quick": false,
+        "neural_args": "--pool 6.05 --kv-ring 256 --scratch 6 --kernel-fuse 1 --prefill-order layer --smax 16384 --threads 8 --hotset hotset_code.json --refresh-every 8 --refresh-m 16 --capbufs 16 --prefill-m 64 --early-every 4 --early-tokens 32 --static 250 --skip-quality --store-dir G:\\NeuralStores\\gptoss120b_ps4",
+        "llama_args": "-ngl 99 -ncmoe 31 -t 8 -c 16384 -fa on --jinja",
+        "ctx_root": "F:\\AI\\Neural\\experiments\\neuralserver-base",
+        "server_root": "F:\\AI\\Neural\\experiments\\neuralserver-opt",
+        "max_tokens": 1,
+        "temperature": 0,
+        "effort": "low",
+        "max_cached_prefix_tokens": 64,
+        "measured_prompts": [
+          "code_13k",
+          "file_3k",
+          "unique_13k"
+        ]
+      },
+      "rows": [
+        {
+          "prompt": "warmup_13k",
+          "measured": false,
+          "rendered_tokens": 13098,
+          "variants": {
+            "off": {
+              "samples_s": [
+                8.4253,
+                8.4998
+              ],
+              "median_s": 8.46255,
+              "wall_samples_s": [
+                8.49,
+                8.64
+              ],
+              "median_wall_s": 8.565000000000001,
+              "group_counts": [
+                0,
+                0
+              ],
+              "reserved_gib": [
+                10.824,
+                10.824
+              ]
+            },
+            "g1": {
+              "samples_s": [
+                8.9802,
+                8.3617
+              ],
+              "median_s": 8.670950000000001,
+              "wall_samples_s": [
+                9.04,
+                8.43
+              ],
+              "median_wall_s": 8.735,
+              "group_counts": [
+                3949,
+                3949
+              ],
+              "reserved_gib": [
+                10.826,
+                10.826
+              ]
+            },
+            "g3": {
+              "samples_s": [
+                8.0871,
+                8.4803
+              ],
+              "median_s": 8.2837,
+              "wall_samples_s": [
+                8.15,
+                8.54
+              ],
+              "median_wall_s": 8.344999999999999,
+              "group_counts": [
+                2412,
+                2412
+              ],
+              "reserved_gib": [
+                10.826,
+                10.826
+              ]
+            }
+          },
+          "group3_latency_reduction_pct": 2.113429167331371
+        },
+        {
+          "prompt": "code_13k",
+          "measured": true,
+          "rendered_tokens": 13098,
+          "variants": {
+            "off": {
+              "samples_s": [
+                7.2179,
+                7.4378
+              ],
+              "median_s": 7.32785,
+              "wall_samples_s": [
+                7.55,
+                7.76
+              ],
+              "median_wall_s": 7.654999999999999,
+              "group_counts": [
+                0,
+                0
+              ],
+              "reserved_gib": [
+                10.824,
+                10.824
+              ]
+            },
+            "g1": {
+              "samples_s": [
+                8.1499,
+                7.7997
+              ],
+              "median_s": 7.9748,
+              "wall_samples_s": [
+                8.49,
+                8.11
+              ],
+              "median_wall_s": 8.3,
+              "group_counts": [
+                3991,
+                3991
+              ],
+              "reserved_gib": [
+                10.826,
+                10.826
+              ]
+            },
+            "g3": {
+              "samples_s": [
+                7.5085,
+                7.4812
+              ],
+              "median_s": 7.49485,
+              "wall_samples_s": [
+                7.85,
+                7.79
+              ],
+              "median_wall_s": 7.82,
+              "group_counts": [
+                2444,
+                2444
+              ],
+              "reserved_gib": [
+                10.826,
+                10.826
+              ]
+            }
+          },
+          "group3_latency_reduction_pct": -2.278976780365327
+        },
+        {
+          "prompt": "file_3k",
+          "measured": true,
+          "rendered_tokens": 3099,
+          "variants": {
+            "off": {
+              "samples_s": [
+                3.8591,
+                3.7402
+              ],
+              "median_s": 3.79965,
+              "wall_samples_s": [
+                3.99,
+                3.9
+              ],
+              "median_wall_s": 3.9450000000000003,
+              "group_counts": [
+                0,
+                0
+              ],
+              "reserved_gib": [
+                10.83,
+                10.83
+              ]
+            },
+            "g1": {
+              "samples_s": [
+                3.7727,
+                3.7061
+              ],
+              "median_s": 3.7394,
+              "wall_samples_s": [
+                3.9,
+                3.84
+              ],
+              "median_wall_s": 3.87,
+              "group_counts": [
+                2658,
+                2658
+              ],
+              "reserved_gib": [
+                10.826,
+                10.826
+              ]
+            },
+            "g3": {
+              "samples_s": [
+                3.5209,
+                3.5437
+              ],
+              "median_s": 3.5323,
+              "wall_samples_s": [
+                3.69,
+                3.65
+              ],
+              "median_wall_s": 3.67,
+              "group_counts": [
+                1032,
+                1032
+              ],
+              "reserved_gib": [
+                10.826,
+                10.826
+              ]
+            }
+          },
+          "group3_latency_reduction_pct": 7.036174384482785
+        },
+        {
+          "prompt": "unique_13k",
+          "measured": true,
+          "rendered_tokens": 13101,
+          "variants": {
+            "off": {
+              "samples_s": [
+                7.1783,
+                7.3152
+              ],
+              "median_s": 7.2467500000000005,
+              "wall_samples_s": [
+                7.58,
+                7.65
+              ],
+              "median_wall_s": 7.615,
+              "group_counts": [
+                0,
+                0
+              ],
+              "reserved_gib": [
+                10.83,
+                10.83
+              ]
+            },
+            "g1": {
+              "samples_s": [
+                7.8443,
+                7.5922
+              ],
+              "median_s": 7.718249999999999,
+              "wall_samples_s": [
+                8.2,
+                7.95
+              ],
+              "median_wall_s": 8.075,
+              "group_counts": [
+                3946,
+                3946
+              ],
+              "reserved_gib": [
+                10.826,
+                10.826
+              ]
+            },
+            "g3": {
+              "samples_s": [
+                7.461,
+                7.3589
+              ],
+              "median_s": 7.40995,
+              "wall_samples_s": [
+                7.77,
+                7.71
+              ],
+              "median_wall_s": 7.74,
+              "group_counts": [
+                2422,
+                2422
+              ],
+              "reserved_gib": [
+                10.826,
+                10.826
+              ]
+            }
+          },
+          "group3_latency_reduction_pct": -2.2520440197329794
+        }
+      ]
+    },
+    "warm_prefill_short_abba": {
+      "source": "warm_prefill_short_abba.json",
+      "source_sha256": "f9f3e7a5779e27006507c07e969e18f709f1d26d5ed7335b6db45461c86c7b60",
+      "sessions": 4,
+      "all_request_response_hashes_verified": true,
+      "all_corresponding_request_prompt_output_identities_match": true,
+      "all_cached_tokens_zero": true,
+      "config": {
+        "schedule": [
+          "off",
+          "g3",
+          "g3",
+          "off"
+        ],
+        "group_size_env_fallback": 0,
+        "group_size_by_kind": {
+          "g1": 1,
+          "g3": 3,
+          "g6": 6,
+          "group": 0
+        },
+        "group_rows_env_override": 1024,
+        "group_rows_default_if_unset": 16384,
+        "short_sweep": true,
+        "short_sweep_context_tokens": [
+          128,
+          512,
+          1024,
+          3000
+        ],
+        "warmup_prompts": [
+          "warmup_13k",
+          "warmup_short_3k"
+        ],
+        "quick": false,
+        "neural_args": "--pool 6.05 --kv-ring 256 --scratch 6 --kernel-fuse 1 --prefill-order layer --smax 16384 --threads 8 --hotset hotset_code.json --refresh-every 8 --refresh-m 16 --capbufs 16 --prefill-m 64 --early-every 4 --early-tokens 32 --static 250 --skip-quality --store-dir G:\\NeuralStores\\gptoss120b_ps4",
+        "llama_args": "-ngl 99 -ncmoe 31 -t 8 -c 16384 -fa on --jinja",
+        "ctx_root": "F:\\AI\\Neural\\experiments\\neuralserver-base",
+        "server_root": "F:\\AI\\Neural\\experiments\\neuralserver-opt",
+        "max_tokens": 1,
+        "temperature": 0,
+        "effort": "low",
+        "max_cached_prefix_tokens": 64,
+        "measured_prompts": [
+          "short_128",
+          "short_512",
+          "short_1024",
+          "short_3000"
+        ]
+      },
+      "rows": [
+        {
+          "prompt": "warmup_13k",
+          "measured": false,
+          "rendered_tokens": 13098,
+          "variants": {
+            "off": {
+              "samples_s": [
+                8.6128,
+                8.1249
+              ],
+              "median_s": 8.36885,
+              "wall_samples_s": [
+                8.67,
+                8.19
+              ],
+              "median_wall_s": 8.43,
+              "group_counts": [
+                0,
+                0
+              ],
+              "reserved_gib": [
+                10.824,
+                10.824
+              ]
+            },
+            "g3": {
+              "samples_s": [
+                8.8118,
+                8.22
+              ],
+              "median_s": 8.5159,
+              "wall_samples_s": [
+                8.87,
+                8.27
+              ],
+              "median_wall_s": 8.57,
+              "group_counts": [
+                0,
+                0
+              ],
+              "reserved_gib": [
+                10.824,
+                10.824
+              ]
+            }
+          },
+          "group3_latency_reduction_pct": -1.75711119209927
+        },
+        {
+          "prompt": "warmup_short_3k",
+          "measured": false,
+          "rendered_tokens": 3130,
+          "variants": {
+            "off": {
+              "samples_s": [
+                3.9337,
+                3.665
+              ],
+              "median_s": 3.79935,
+              "wall_samples_s": [
+                4.06,
+                3.77
+              ],
+              "median_wall_s": 3.915,
+              "group_counts": [
+                0,
+                0
+              ],
+              "reserved_gib": [
+                10.83,
+                10.83
+              ]
+            },
+            "g3": {
+              "samples_s": [
+                3.4676,
+                3.4564
+              ],
+              "median_s": 3.4619999999999997,
+              "wall_samples_s": [
+                3.61,
+                3.56
+              ],
+              "median_wall_s": 3.585,
+              "group_counts": [
+                1019,
+                1019
+              ],
+              "reserved_gib": [
+                10.824,
+                10.824
+              ]
+            }
+          },
+          "group3_latency_reduction_pct": 8.879150380986223
+        },
+        {
+          "prompt": "short_128",
+          "measured": true,
+          "rendered_tokens": 239,
+          "variants": {
+            "off": {
+              "samples_s": [
+                1.8333,
+                1.8464
+              ],
+              "median_s": 1.83985,
+              "wall_samples_s": [
+                1.87,
+                1.88
+              ],
+              "median_wall_s": 1.875,
+              "group_counts": [
+                0,
+                0
+              ],
+              "reserved_gib": [
+                10.83,
+                10.83
+              ]
+            },
+            "g3": {
+              "samples_s": [
+                1.8467,
+                1.8699
+              ],
+              "median_s": 1.8582999999999998,
+              "wall_samples_s": [
+                1.87,
+                1.9
+              ],
+              "median_wall_s": 1.885,
+              "group_counts": [
+                183,
+                183
+              ],
+              "reserved_gib": [
+                10.826,
+                10.826
+              ]
+            }
+          },
+          "group3_latency_reduction_pct": -1.002799141234334
+        },
+        {
+          "prompt": "short_512",
+          "measured": true,
+          "rendered_tokens": 686,
+          "variants": {
+            "off": {
+              "samples_s": [
+                2.308,
+                2.3049
+              ],
+              "median_s": 2.30645,
+              "wall_samples_s": [
+                2.34,
+                2.33
+              ],
+              "median_wall_s": 2.335,
+              "group_counts": [
+                0,
+                0
+              ],
+              "reserved_gib": [
+                10.83,
+                10.83
+              ]
+            },
+            "g3": {
+              "samples_s": [
+                2.2929,
+                2.3277
+              ],
+              "median_s": 2.3103,
+              "wall_samples_s": [
+                2.33,
+                2.37
+              ],
+              "median_wall_s": 2.35,
+              "group_counts": [
+                460,
+                460
+              ],
+              "reserved_gib": [
+                10.826,
+                10.826
+              ]
+            }
+          },
+          "group3_latency_reduction_pct": -0.16692319365256836
+        },
+        {
+          "prompt": "short_1024",
+          "measured": true,
+          "rendered_tokens": 1138,
+          "variants": {
+            "off": {
+              "samples_s": [
+                2.6791,
+                2.5764
+              ],
+              "median_s": 2.62775,
+              "wall_samples_s": [
+                2.73,
+                2.61
+              ],
+              "median_wall_s": 2.67,
+              "group_counts": [
+                0,
+                0
+              ],
+              "reserved_gib": [
+                10.83,
+                10.83
+              ]
+            },
+            "g3": {
+              "samples_s": [
+                2.5582,
+                2.5673
+              ],
+              "median_s": 2.56275,
+              "wall_samples_s": [
+                2.59,
+                2.6
+              ],
+              "median_wall_s": 2.5949999999999998,
+              "group_counts": [
+                636,
+                636
+              ],
+              "reserved_gib": [
+                10.826,
+                10.826
+              ]
+            }
+          },
+          "group3_latency_reduction_pct": 2.4735990866711077
+        },
+        {
+          "prompt": "short_3000",
+          "measured": true,
+          "rendered_tokens": 3122,
+          "variants": {
+            "off": {
+              "samples_s": [
+                3.9775,
+                3.6533
+              ],
+              "median_s": 3.8154000000000003,
+              "wall_samples_s": [
+                4.04,
+                3.72
+              ],
+              "median_wall_s": 3.88,
+              "group_counts": [
+                0,
+                0
+              ],
+              "reserved_gib": [
+                10.83,
+                10.83
+              ]
+            },
+            "g3": {
+              "samples_s": [
+                3.5312,
+                3.5325
+              ],
+              "median_s": 3.5318500000000004,
+              "wall_samples_s": [
+                3.6,
+                3.6
+              ],
+              "median_wall_s": 3.6,
+              "group_counts": [
+                1012,
+                1012
+              ],
+              "reserved_gib": [
+                10.826,
+                10.826
+              ]
+            }
+          },
+          "group3_latency_reduction_pct": 7.431724065628764
+        }
+      ]
+    },
+    "warm_profile_abba": {
+      "source": "warm_profile_abba.json",
+      "source_sha256": "c6b38bdf0493bcbacd42ea7856001d5380669b1dd1d6dd63676db90a7a9cae77",
+      "sessions": 4,
+      "all_request_response_hashes_verified": true,
+      "all_corresponding_request_prompt_output_identities_match": true,
+      "all_cached_tokens_zero": true,
+      "config": {
+        "schedule": [
+          "off",
+          "g3",
+          "g3",
+          "off"
+        ],
+        "group_size_env_fallback": 0,
+        "group_size_by_kind": {
+          "g1": 1,
+          "g3": 3,
+          "g6": 6,
+          "group": 0
+        },
+        "group_rows_env_override": 1024,
+        "group_rows_default_if_unset": 16384,
+        "group_min_tokens": 1024,
+        "group_max_tokens": 4096,
+        "group_trim_cache": 1,
+        "short_sweep": true,
+        "short_sweep_context_tokens": [
+          128,
+          512,
+          1024,
+          3000
+        ],
+        "warmup_prompts": [
+          "warmup_13k",
+          "warmup_short_3k"
+        ],
+        "quick": false,
+        "neural_args": "--pool 6.05 --kv-ring 256 --scratch 6 --kernel-fuse 1 --prefill-order layer --smax 16384 --threads 8 --hotset hotset_code.json --refresh-every 8 --refresh-m 16 --capbufs 16 --prefill-m 64 --early-every 4 --early-tokens 32 --static 250 --skip-quality --store-dir G:\\NeuralStores\\gptoss120b_ps4 --grouped-prefill-min-tokens 1024 --grouped-prefill-max-tokens 4096",
+        "llama_args": "-ngl 99 -ncmoe 31 -t 8 -c 16384 -fa on --jinja",
+        "ctx_root": "F:\\AI\\Neural\\experiments\\neuralserver-base",
+        "server_root": "F:\\AI\\Neural\\experiments\\neuralserver-opt",
+        "max_tokens": 1,
+        "temperature": 0,
+        "effort": "low",
+        "max_cached_prefix_tokens": 64,
+        "measured_prompts": [
+          "short_128",
+          "short_512",
+          "short_1024",
+          "short_3000"
+        ]
+      },
+      "rows": [
+        {
+          "prompt": "warmup_13k",
+          "measured": false,
+          "rendered_tokens": 13098,
+          "variants": {
+            "off": {
+              "samples_s": [
+                8.199,
+                8.2146
+              ],
+              "median_s": 8.206800000000001,
+              "wall_samples_s": [
+                8.25,
+                8.27
+              ],
+              "median_wall_s": 8.26,
+              "group_counts": [
+                0,
+                0
+              ],
+              "reserved_gib": [
+                10.824,
+                10.824
+              ]
+            },
+            "g3": {
+              "samples_s": [
+                8.2165,
+                8.6744
+              ],
+              "median_s": 8.445450000000001,
+              "wall_samples_s": [
+                8.29,
+                8.74
+              ],
+              "median_wall_s": 8.515,
+              "group_counts": [
+                0,
+                0
+              ],
+              "reserved_gib": [
+                9.715,
+                9.715
+              ]
+            }
+          },
+          "group3_latency_reduction_pct": -2.907954379295208
+        },
+        {
+          "prompt": "warmup_short_3k",
+          "measured": false,
+          "rendered_tokens": 3130,
+          "variants": {
+            "off": {
+              "samples_s": [
+                3.6278,
+                3.697
+              ],
+              "median_s": 3.6624,
+              "wall_samples_s": [
+                3.74,
+                3.79
+              ],
+              "median_wall_s": 3.765,
+              "group_counts": [
+                0,
+                0
+              ],
+              "reserved_gib": [
+                10.83,
+                10.83
+              ]
+            },
+            "g3": {
+              "samples_s": [
+                3.3631,
+                3.4401
+              ],
+              "median_s": 3.4016,
+              "wall_samples_s": [
+                3.46,
+                3.54
+              ],
+              "median_wall_s": 3.5,
+              "group_counts": [
+                1019,
+                1019
+              ],
+              "reserved_gib": [
+                9.715,
+                9.715
+              ]
+            }
+          },
+          "group3_latency_reduction_pct": 7.121013543031884
+        },
+        {
+          "prompt": "short_128",
+          "measured": true,
+          "rendered_tokens": 239,
+          "variants": {
+            "off": {
+              "samples_s": [
+                1.8707,
+                1.859
+              ],
+              "median_s": 1.8648500000000001,
+              "wall_samples_s": [
+                1.91,
+                1.9
+              ],
+              "median_wall_s": 1.9049999999999998,
+              "group_counts": [
+                0,
+                0
+              ],
+              "reserved_gib": [
+                10.83,
+                10.83
+              ]
+            },
+            "g3": {
+              "samples_s": [
+                1.8562,
+                1.8617
+              ],
+              "median_s": 1.85895,
+              "wall_samples_s": [
+                1.89,
+                1.89
+              ],
+              "median_wall_s": 1.89,
+              "group_counts": [
+                0,
+                0
+              ],
+              "reserved_gib": [
+                9.715,
+                9.715
+              ]
+            }
+          },
+          "group3_latency_reduction_pct": 0.3163793334584608
+        },
+        {
+          "prompt": "short_512",
+          "measured": true,
+          "rendered_tokens": 686,
+          "variants": {
+            "off": {
+              "samples_s": [
+                2.3024,
+                2.2984
+              ],
+              "median_s": 2.3004,
+              "wall_samples_s": [
+                2.33,
+                2.33
+              ],
+              "median_wall_s": 2.33,
+              "group_counts": [
+                0,
+                0
+              ],
+              "reserved_gib": [
+                10.83,
+                10.83
+              ]
+            },
+            "g3": {
+              "samples_s": [
+                2.2915,
+                2.3159
+              ],
+              "median_s": 2.3037,
+              "wall_samples_s": [
+                2.33,
+                2.36
+              ],
+              "median_wall_s": 2.3449999999999998,
+              "group_counts": [
+                0,
+                0
+              ],
+              "reserved_gib": [
+                9.715,
+                9.715
+              ]
+            }
+          },
+          "group3_latency_reduction_pct": -0.143453312467412
+        },
+        {
+          "prompt": "short_1024",
+          "measured": true,
+          "rendered_tokens": 1138,
+          "variants": {
+            "off": {
+              "samples_s": [
+                2.5723,
+                2.6218
+              ],
+              "median_s": 2.59705,
+              "wall_samples_s": [
+                2.62,
+                2.66
+              ],
+              "median_wall_s": 2.64,
+              "group_counts": [
+                0,
+                0
+              ],
+              "reserved_gib": [
+                10.83,
+                10.83
+              ]
+            },
+            "g3": {
+              "samples_s": [
+                2.5511,
+                2.5724
+              ],
+              "median_s": 2.56175,
+              "wall_samples_s": [
+                2.6,
+                2.61
+              ],
+              "median_wall_s": 2.605,
+              "group_counts": [
+                636,
+                636
+              ],
+              "reserved_gib": [
+                9.715,
+                9.715
+              ]
+            }
+          },
+          "group3_latency_reduction_pct": 1.3592345160855501
+        },
+        {
+          "prompt": "short_3000",
+          "measured": true,
+          "rendered_tokens": 3122,
+          "variants": {
+            "off": {
+              "samples_s": [
+                3.6834,
+                3.7097
+              ],
+              "median_s": 3.6965500000000002,
+              "wall_samples_s": [
+                3.75,
+                3.77
+              ],
+              "median_wall_s": 3.76,
+              "group_counts": [
+                0,
+                0
+              ],
+              "reserved_gib": [
+                10.83,
+                10.83
+              ]
+            },
+            "g3": {
+              "samples_s": [
+                3.4203,
+                3.453
+              ],
+              "median_s": 3.43665,
+              "wall_samples_s": [
+                3.49,
+                3.53
+              ],
+              "median_wall_s": 3.51,
+              "group_counts": [
+                1012,
+                1012
+              ],
+              "reserved_gib": [
+                9.715,
+                9.715
+              ]
+            }
+          },
+          "group3_latency_reduction_pct": 7.030880145000062
+        }
+      ]
+    }
+  }
+}

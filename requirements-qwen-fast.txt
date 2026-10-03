@@ -1,0 +1,5 @@
+# Optional Gated DeltaNet accelerator. Keep this separate from the default
+# Torch reference runtime; platform-specific Triton compatibility must be
+# checked before installation.
+fla-core==0.5.2
+einops>=0.6

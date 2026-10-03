@@ -1,0 +1,31 @@
+{
+  "kernel_kind": "avx512-persistent",
+  "library": "gptoss_cpu_persistent.dll",
+  "sha256": "c1221ecfacbeb56ccf14b54ba2f0b3a7c1e95ddec15d971a9f53b733dfb8d2ca",
+  "prefill_library": "gptoss_cpu_multi.dll",
+  "prefill_sha256": "fd48ac7644c1a136f8635f89ecd0b1bf8f1be0caa38f3ffc16c3c778b1db9fbb",
+  "cpu_features": [
+    "AVX2",
+    "FMA3",
+    "AVX512F",
+    "AVX512BW",
+    "AVX512VL",
+    "AVX512DQ"
+  ],
+  "cpu_signature": "Windows|AMD64|Intel64 Family 6 Model 167 Stepping 1, GenuineIntel",
+  "model_id": "gpt-oss-120b-b5c939de",
+  "symbols": [
+    "gptoss_experts_cap",
+    "gptoss_set_scale_layout",
+    "gptoss_set_persistent"
+  ],
+  "prefill_symbols": [
+    "gptoss_experts_multi"
+  ],
+  "provenance": {
+    "production_commit": "772399c380274eec4fe00ba081dba7549a1a8a7f",
+    "files_identical_to_production": true,
+    "validation": "docs/CODEX_DECODE_FOLLOWUP_2026-10-01.md",
+    "note": "Host-specific inherited build. Rebuild or use validated portable fallback on another CPU."
+  }
+}

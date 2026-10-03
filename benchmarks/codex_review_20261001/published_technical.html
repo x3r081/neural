@@ -1,0 +1,502 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Neural Server: technical documentation</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 22 22'%3E%3Crect x='1' y='1' width='9' height='9' rx='1.5' fill='%23DB8A16'/%3E%3Crect x='12' y='1' width='9' height='9' rx='1.5' fill='%23E2E6EC'/%3E%3Crect x='1' y='12' width='9' height='9' rx='1.5' fill='%23E2E6EC'/%3E%3Crect x='12' y='12' width='9' height='9' rx='1.5' fill='%232E6AB0'/%3E%3C/svg%3E">
+<meta name="description" content="How the Neural server runs gpt-oss-120B on one 12 GB graphics card and 64 GB of RAM, what was changed step by step, how it was measured, and how it differs from llama.cpp.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+:root {
+  --ground: #F3F5F8; --surface: #FFFFFF; --ink: #10141B; --ink-2: #2B3240; --muted: #5A6373;
+  --line: #D6DBE3; --line-2: #E6E9EF;
+  --gpu: #DB8A16; --gpu-ink: #95550A; --gpu-soft: #F8E2BF;
+  --cpu: #2E6AB0; --cpu-ink: #24568F; --cpu-soft: #D9E5F4;
+  --cell: #E2E6EC; --code-bg: #10141B; --code-ink: #E3E7EE; --code-dim: #8D97A8;
+  --on-gpu: #1B1204; --on-cpu: #FFFFFF;
+  --display: "Archivo", "Arial Narrow", "Helvetica Neue", Arial, sans-serif;
+  --body: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --ground: #0D1015; --surface: #151A22; --ink: #E8EBF1; --ink-2: #C7CDD8; --muted: #939CAC;
+    --line: #29313E; --line-2: #1D232D;
+    --gpu: #F0A534; --gpu-ink: #F4B85C; --gpu-soft: #4A3413;
+    --cpu: #6AA3E8; --cpu-ink: #8DBAEF; --cpu-soft: #172A42;
+    --cell: #1C222C; --code-bg: #080A0E; --code-ink: #E3E7EE; --code-dim: #7F899A; --on-cpu: #0D1015;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --ground: #0D1015; --surface: #151A22; --ink: #E8EBF1; --ink-2: #C7CDD8; --muted: #939CAC;
+  --line: #29313E; --line-2: #1D232D;
+  --gpu: #F0A534; --gpu-ink: #F4B85C; --gpu-soft: #4A3413;
+  --cpu: #6AA3E8; --cpu-ink: #8DBAEF; --cpu-soft: #172A42;
+  --cell: #1C222C; --code-bg: #080A0E; --code-ink: #E3E7EE; --code-dim: #7F899A; --on-cpu: #0D1015;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0; background: var(--ground); color: var(--ink);
+  font-family: var(--body); font-size: 17px; line-height: 1.6; font-stretch: 100%;
+}
+img, canvas, svg { max-width: 100%; }
+a { color: var(--cpu-ink); text-underline-offset: 3px; }
+a:hover { text-decoration-thickness: 2px; }
+:focus-visible { outline: 2px solid var(--cpu); outline-offset: 3px; border-radius: 2px; }
+.wrap { max-width: 1120px; margin: 0 auto; padding-inline: clamp(16px, 4vw, 40px); }
+.mono { font-family: var(--mono); }
+.tag {
+  font-family: var(--mono); font-size: 12px; font-weight: 600; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--muted); margin: 0;
+}
+h1, h2, h3 { font-family: var(--display); font-stretch: 118%; text-wrap: balance; margin: 0; }
+h1 { font-size: clamp(34px, 6vw, 68px); line-height: 1.02; font-weight: 800; letter-spacing: -0.015em; }
+h2 { font-size: clamp(26px, 3.4vw, 38px); line-height: 1.1; font-weight: 800; letter-spacing: -0.01em; }
+h3 { font-size: 19px; line-height: 1.25; font-weight: 700; font-stretch: 110%; }
+p { margin: 0; max-width: 64ch; }
+.gpu-t { color: var(--gpu-ink); font-weight: 600; }
+.cpu-t { color: var(--cpu-ink); font-weight: 600; }
+
+/* top bar */
+.bar { border-bottom: 1px solid var(--line); background: var(--ground); }
+.bar .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 14px; flex-wrap: wrap; }
+.brand { display: flex; align-items: center; gap: 10px; font-family: var(--display); font-stretch: 125%; font-weight: 800; font-size: 20px; color: var(--ink); text-decoration: none; letter-spacing: 0.01em; }
+.brand svg { width: 22px; height: 22px; }
+.nav { display: flex; gap: 20px; flex-wrap: wrap; font-size: 15px; }
+.nav a { color: var(--ink-2); text-decoration: none; }
+.nav a:hover { color: var(--ink); text-decoration: underline; }
+
+/* hero */
+.hero { padding-block: clamp(40px, 7vw, 84px) 28px; display: grid; grid-template-columns: minmax(0, 1fr); gap: 22px; }
+.lede { font-size: clamp(18px, 2vw, 21px); line-height: 1.5; color: var(--ink-2); max-width: 60ch; }
+.facts { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0; margin: 14px 0 0; border-top: 1px solid var(--line); }
+.facts div { padding: 14px 18px 4px 0; border-right: 1px solid var(--line-2); margin-right: 18px; }
+.facts div:last-child { border-right: 0; margin-right: 0; }
+.facts dt { font-family: var(--mono); font-weight: 600; font-size: clamp(24px, 3vw, 32px); line-height: 1.1; font-variant-numeric: tabular-nums; }
+.facts dd { margin: 4px 0 0; color: var(--muted); font-size: 14px; line-height: 1.4; }
+
+/* expert strip */
+.strip { margin: 10px 0 0; background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 16px; display: grid; gap: 12px; }
+.strip-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+.strip-head h3 { font-size: 17px; }
+.strip-controls { display: flex; gap: 14px; align-items: center; flex-wrap: wrap; }
+.stats { font-family: var(--mono); font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.stats b { font-weight: 600; }
+.btn-ghost { font: 600 13px var(--mono); color: var(--ink-2); background: transparent; border: 1px solid var(--line); border-radius: 4px; padding: 5px 10px; cursor: pointer; }
+.btn-ghost:hover { border-color: var(--muted); color: var(--ink); }
+.grid-wrap { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 8px; align-items: stretch; }
+.axis-y { writing-mode: vertical-rl; transform: rotate(180deg); font: 11px var(--mono); color: var(--muted); text-align: center; letter-spacing: 0.08em; }
+#experts { width: 100%; aspect-ratio: 128 / 36; display: block; }
+.axis-x { font: 11px var(--mono); color: var(--muted); letter-spacing: 0.08em; text-align: center; margin-top: -4px; }
+.legend { display: flex; gap: 18px; flex-wrap: wrap; font-size: 14px; color: var(--ink-2); }
+.legend span { display: inline-flex; align-items: center; gap: 7px; }
+.sw { width: 12px; height: 12px; border-radius: 2px; display: inline-block; flex: none; }
+.sw.gpu { background: var(--gpu); } .sw.gpu-soft { background: var(--gpu-soft); } .sw.cpu { background: var(--cpu); } .sw.cell { background: var(--cell); border: 1px solid var(--line); }
+.strip-note { font-size: 14px; color: var(--muted); max-width: none; }
+
+/* sections: datasheet rows */
+.sec { border-top: 1px solid var(--line); padding-block: clamp(40px, 6vw, 72px); display: grid; grid-template-columns: 200px minmax(0, 1fr); gap: 24px 40px; }
+.sec > .tag { padding-top: 10px; }
+.sec-body { display: grid; grid-template-columns: minmax(0, 1fr); gap: 20px; align-content: start; min-width: 0; }
+.sec-body > * { min-width: 0; }
+.sec-body > p { color: var(--ink-2); }
+
+/* problem: size bars */
+.sizes { display: grid; gap: 14px; margin-top: 4px; }
+.size-row { display: grid; grid-template-columns: 250px minmax(0, 1fr); gap: 16px; align-items: center; }
+.size-row .lbl { font-size: 15px; line-height: 1.3; }
+.size-row .lbl small { display: block; color: var(--muted); font-size: 13px; }
+.track { position: relative; height: 30px; }
+.fill { height: 100%; border-radius: 3px; display: flex; align-items: center; justify-content: flex-end; padding-right: 8px; font: 600 13px var(--mono); min-width: 64px; }
+.fill.model { background: var(--ink); color: var(--ground); }
+.fill.vram { background: var(--gpu); color: var(--on-gpu); }
+.fill.ram { background: var(--cpu); color: var(--on-cpu); }
+.caption { font-size: 13px; color: var(--muted); font-family: var(--mono); }
+
+/* trick: one layer of experts */
+.layer { display: grid; grid-template-columns: repeat(32, minmax(0, 1fr)); gap: 3px; max-width: 640px; }
+.layer i { aspect-ratio: 1; background: var(--cell); border-radius: 2px; display: block; }
+.layer i.on-gpu { background: var(--gpu); }
+.layer i.on-cpu { background: var(--cpu); }
+.bigstat { display: flex; gap: 28px; flex-wrap: wrap; }
+.bigstat div { display: grid; gap: 2px; }
+.bigstat b { font: 600 clamp(26px, 3vw, 34px) var(--mono); font-variant-numeric: tabular-nums; }
+.bigstat span { font-size: 14px; color: var(--muted); }
+
+/* split: where the work happens */
+.split { display: grid; grid-template-columns: minmax(0, 1fr) 150px minmax(0, 1fr); align-items: stretch; gap: 0; }
+.place { background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 18px; display: grid; gap: 10px; align-content: start; }
+.place.gpu { border-top: 4px solid var(--gpu); }
+.place.cpu { border-top: 4px solid var(--cpu); }
+.place p { font-size: 15.5px; color: var(--ink-2); }
+.place .spec { font: 13px var(--mono); color: var(--muted); }
+.link { display: grid; place-items: center; text-align: center; padding: 10px 12px; position: relative; }
+.link::before { content: ""; position: absolute; left: 0; right: 0; top: 50%; border-top: 2px dashed var(--line); }
+.link div { position: relative; background: var(--ground); padding: 6px 4px; font-size: 13px; line-height: 1.35; color: var(--ink-2); }
+.link b { display: block; font: 600 20px var(--mono); color: var(--ink); }
+
+/* steps */
+.steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; counter-reset: s; }
+.steps li { counter-increment: s; border-top: 2px solid var(--ink); padding-top: 12px; font-size: 15.5px; color: var(--ink-2); line-height: 1.5; }
+.steps li::before { content: counter(s); display: block; font: 600 13px var(--mono); color: var(--muted); margin-bottom: 6px; }
+.steps li.g { border-top-color: var(--gpu); } .steps li.c { border-top-color: var(--cpu); }
+
+/* results chart */
+.chart { background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 20px 20px 14px; display: grid; gap: 16px; }
+.crow { display: grid; grid-template-columns: 230px minmax(0, 1fr); gap: 16px; align-items: center; }
+.crow .lbl { font-size: 15px; line-height: 1.3; }
+.ctrack { position: relative; height: 26px; }
+.ctrack .base { position: absolute; inset: 0 auto 0 0; background: var(--cpu); border-radius: 3px 0 0 3px; opacity: 0.9; }
+.ctrack .range { position: absolute; top: 0; bottom: 0; background: var(--gpu); border-radius: 0 3px 3px 0; }
+.ctrack .range.tail { opacity: 0.45; }
+.ctrack .val { position: absolute; top: 50%; transform: translateY(-50%); font: 600 13px var(--mono); white-space: nowrap; padding-left: 8px; color: var(--ink); }
+.one { position: absolute; top: -6px; bottom: -6px; border-left: 2px solid var(--ink); }
+.ticks { display: grid; grid-template-columns: 230px minmax(0, 1fr); gap: 16px; }
+.ticks .scale { position: relative; height: 18px; font: 11px var(--mono); color: var(--muted); }
+.ticks .scale span { position: absolute; transform: translateX(-50%); }
+.chart-key { display: flex; gap: 18px; flex-wrap: wrap; font-size: 13px; color: var(--muted); }
+.tiles { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.tile { border-top: 1px solid var(--line); padding-top: 12px; display: grid; gap: 4px; align-content: start; }
+.tile b { font: 600 clamp(24px, 2.6vw, 30px) var(--mono); font-variant-numeric: tabular-nums; }
+.tile span { font-size: 14.5px; color: var(--muted); line-height: 1.4; }
+.fine { font-size: 13.5px; color: var(--muted); max-width: 80ch; }
+/* results by version + over time */
+.vtabs { display: flex; flex-wrap: wrap; gap: 8px; }
+.vtabs button { font: 600 14px var(--body); color: var(--ink-2); background: var(--surface); border: 1px solid var(--line); border-radius: 999px; padding: 7px 14px; cursor: pointer; display: inline-flex; gap: 8px; align-items: baseline; }
+.vtabs button span { font: 400 12px var(--mono); color: var(--muted); }
+.vtabs button:hover { border-color: var(--muted); }
+.vtabs button[aria-selected="true"] { background: var(--ink); border-color: var(--ink); color: var(--surface); }
+.vtabs button[aria-selected="true"] span { color: var(--line); }
+.vtabs button:focus-visible, .ctrack:focus-visible, .tpt:focus-visible { outline: 2px solid var(--cpu); outline-offset: 3px; }
+.chart { position: relative; }
+.chart[hidden] { display: none; }
+#bars { display: grid; gap: 16px; }
+.ctrack { cursor: default; }
+.ctrack.none { display: flex; align-items: center; font: 12.5px var(--mono); color: var(--muted); border-left: 2px solid var(--line); padding-left: 10px; }
+.ctrack .was { position: absolute; top: 50%; width: 12px; height: 12px; margin: -6px 0 0 -6px; border-radius: 50%; background: var(--surface); border: 2px solid var(--ink-2); box-shadow: 0 0 0 2px var(--surface); }
+.ctrack .val small { font: 400 12px var(--mono); color: var(--muted); margin-left: 6px; }
+.ctrack .val.in { color: var(--on-gpu); }
+.ctrack .val.in small { color: var(--on-gpu); opacity: 0.8; }
+.ctrack .brk { position: absolute; top: -3px; bottom: -3px; right: 14px; width: 5px; background: var(--surface); transform: skewX(-20deg); }
+.was-key { display: inline-block; width: 11px; height: 11px; border-radius: 50%; border: 2px solid var(--ink-2); vertical-align: -1px; }
+.tip { position: absolute; z-index: 5; pointer-events: none; max-width: 300px; background: var(--ink); color: var(--surface); font: 12.5px/1.5 var(--mono); padding: 8px 10px; border-radius: 4px; }
+.tip b { display: block; font: 600 14px var(--mono); }
+.tip[hidden] { display: none; }
+.tgrid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px 28px; }
+.tpanel h3 { font: 600 15px var(--body); margin: 0; }
+.tpanel .caption { display: block; margin-top: 2px; }
+.tpanel svg { display: block; width: 100%; max-width: 440px; height: auto; margin-top: 8px; overflow: visible; }
+.tsvg .grid { stroke: var(--line-2); stroke-width: 1; }
+.tsvg .ref { stroke: var(--ink); stroke-width: 1.5; }
+.tsvg .wh { stroke: var(--muted); stroke-width: 1.5; stroke-linecap: round; }
+.tsvg .ln { fill: none; stroke: var(--ink-2); stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; }
+.tsvg .pt { stroke: var(--surface); stroke-width: 2; }
+.tsvg .pt.up { fill: var(--gpu); } .tsvg .pt.dn { fill: var(--cpu); }
+.tsvg .pt.alt { fill: var(--surface); stroke: var(--ink-2); }
+.tsvg text { fill: var(--muted); font: 11px var(--mono); }
+.tsvg text.v { fill: var(--ink); font-weight: 600; font-size: 12.5px; }
+.tsvg .tpt { fill: transparent; cursor: default; }
+.ctable summary { cursor: pointer; font-size: 14.5px; color: var(--ink-2); }
+.fine code { font: 12.5px var(--mono); color: var(--ink-2); }
+.sec-body > p code { font: 0.88em var(--mono); }
+#ctable { overflow-x: auto; }   /* five version columns: the table scrolls in its box on a phone, not the page */
+.ctable table { margin-top: 10px; }
+.ctable td { font-size: 13px; }
+@media (max-width: 860px) { .tgrid { grid-template-columns: minmax(0, 1fr); } }
+
+/* coding */
+.spec-table { width: 100%; border-collapse: collapse; font-size: 15px; background: var(--surface); border: 1px solid var(--line); border-radius: 6px; overflow: hidden; }
+.spec-table th, .spec-table td { text-align: left; padding: 10px 14px; border-bottom: 1px solid var(--line-2); vertical-align: top; }
+.spec-table tr:last-child th, .spec-table tr:last-child td { border-bottom: 0; }
+.spec-table th { font-weight: 500; color: var(--muted); width: 34%; }
+.spec-table td { font-family: var(--mono); font-size: 14px; overflow-wrap: anywhere; }
+.checks { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px 28px; }
+.checks li { padding-left: 22px; position: relative; font-size: 15.5px; color: var(--ink-2); }
+.checks li::before { content: ""; position: absolute; left: 0; top: 0.55em; width: 10px; height: 10px; border-radius: 2px; background: var(--gpu); }
+
+/* limits */
+.two { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px; }
+.two ul { margin: 10px 0 0; padding-left: 18px; display: grid; gap: 8px; color: var(--ink-2); font-size: 15.5px; }
+
+/* start */
+.code { position: relative; background: var(--code-bg); color: var(--code-ink); border-radius: 6px; font: 13.5px/1.65 var(--mono); }
+.code pre { margin: 0; padding: 16px 18px; overflow-x: auto; }
+.code .c { color: var(--code-dim); }
+.copy { position: absolute; top: 8px; right: 8px; font: 600 12px var(--mono); color: var(--code-ink); background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.18); border-radius: 4px; padding: 4px 9px; cursor: pointer; }
+.copy:hover { background: rgba(255,255,255,0.16); }
+.step-t { font-weight: 600; font-size: 16px; }
+
+/* faq */
+.faq { display: grid; gap: 0; border-top: 1px solid var(--line); }
+.faq details { border-bottom: 1px solid var(--line); padding-block: 14px; }
+.faq summary { cursor: pointer; font-weight: 600; font-size: 16.5px; list-style: none; display: flex; justify-content: space-between; gap: 16px; }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after { content: "+"; font: 600 18px var(--mono); color: var(--muted); }
+.faq details[open] summary::after { content: "\2212"; }
+.faq details p { margin-top: 10px; color: var(--ink-2); font-size: 15.5px; }
+
+footer { border-top: 1px solid var(--line); padding-block: 28px 44px; font-size: 14px; color: var(--muted); }
+footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+
+@media (max-width: 860px) {
+  .sec { grid-template-columns: minmax(0, 1fr); gap: 16px; }
+  .sec > .tag { padding-top: 0; }
+  .facts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .facts div:nth-child(2) { border-right: 0; margin-right: 0; }
+  .split { grid-template-columns: minmax(0, 1fr); }
+  .link { padding: 14px 0; }
+  .link::before { left: 50%; right: auto; top: 0; bottom: 0; border-top: 0; border-left: 2px dashed var(--line); }
+  .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .tiles { grid-template-columns: minmax(0, 1fr); }
+  .checks, .two { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 600px) {
+  body { font-size: 16px; }
+  .size-row, .crow, .ticks { grid-template-columns: minmax(0, 1fr); gap: 6px; }
+  .ticks > div:first-child { display: none; }
+  .steps { grid-template-columns: minmax(0, 1fr); }
+  .axis-y { display: none; }
+  .grid-wrap { grid-template-columns: minmax(0, 1fr); }
+}
+@media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; } }
+
+/* documentation pages */
+.hero-doc { padding-block: clamp(36px, 6vw, 64px) clamp(20px, 4vw, 40px); display: grid; gap: 14px; }
+.hero-doc h1 { font-size: clamp(30px, 4.6vw, 52px); line-height: 1.05; font-weight: 800; letter-spacing: -0.015em; max-width: 24ch; }
+.hero-doc .meta { font-family: var(--mono); font-size: 13px; color: var(--muted); display: flex; gap: 18px; flex-wrap: wrap; }
+.hero-doc .meta a { color: var(--ink-2); }
+.sec-body h3 { margin-top: 6px; }
+.sec-body ul, .sec-body ol:not(.steps) { margin: 0; padding-left: 20px; display: grid; gap: 8px; color: var(--ink-2); font-size: 15.5px; }
+.sec-body li > p { margin: 0; }
+.sec-body p code, .sec-body li code, .doc code { font: 0.88em var(--mono); }
+.sec-body blockquote { margin: 0; padding-left: 16px; border-left: 3px solid var(--line); color: var(--ink-2); font-size: 15.5px; }
+.tblwrap { overflow-x: auto; }
+.doc { width: 100%; border-collapse: collapse; font-size: 14.5px; background: var(--surface); border: 1px solid var(--line); border-radius: 6px; overflow: hidden; }
+.doc th, .doc td { text-align: left; padding: 9px 12px; border-bottom: 1px solid var(--line-2); vertical-align: top; }
+.doc thead th { font: 600 12px var(--mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); background: var(--ground); }
+.doc tbody th { font-weight: 500; color: var(--ink); }
+.doc tbody td { color: var(--ink-2); font-variant-numeric: tabular-nums; }
+.doc tr:last-child th, .doc tr:last-child td { border-bottom: 0; }
+.nav a[aria-current="page"] { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; }
+@media (max-width: 860px) { .hero-doc h1 { max-width: none; } }
+</style>
+<header class="bar" id="top">
+  <div class="wrap">
+    <a class="brand" href="index.html" aria-label="Neural, back to top">
+      <svg viewBox="0 0 22 22" aria-hidden="true"><rect x="1" y="1" width="9" height="9" rx="1.5" fill="var(--gpu)"/><rect x="12" y="1" width="9" height="9" rx="1.5" fill="var(--cell)"/><rect x="1" y="12" width="9" height="9" rx="1.5" fill="var(--cell)"/><rect x="12" y="12" width="9" height="9" rx="1.5" fill="var(--cpu)"/></svg>
+      Neural
+    </a>
+    <nav class="nav" aria-label="Sections">
+      <a href="index.html#how">How it works</a>
+      <a href="index.html#results">Results</a>
+      <a href="technical.html" aria-current="page">Technical</a>
+      <a href="overview.html">For decision makers</a>
+    </nav>
+  </div>
+</header>
+<main>
+  <section class="wrap hero-doc" aria-labelledby="doc-title">
+    <p class="tag">Technical documentation</p>
+    <h1 id="doc-title">How Neural runs a 120-billion-parameter model on one gaming PC, and what was done to make it fast.</h1>
+    <p class="lede">For engineers who know LLM inference. Every figure carries its label: MEASURED on the development PC, SIMULATED, CALCULATED or ASSUMED.</p>
+    <p class="meta"><span>Neural Server &middot; September 30, 2026</span><a href="index.html">Back to the main page</a><a href="overview.html">The version for decision makers</a></p>
+  </section>
+<section class="wrap sec" id="summary">
+<p class="tag">Summary</p>
+    <div class="sec-body">
+      <h2>A 117B-parameter model on one gaming PC</h2>
+<p>Neural Server runs OpenAI's gpt-oss-120B on one RTX 3080 Ti with 12 GiB of VRAM and 64 GB of system RAM. It exposes an OpenAI-compatible API. It is a new design, built after the Neural research project closed in August 2026 at 0.98&times; llama.cpp: the CPU computes the missing experts where they sit instead of shipping them over PCIe. The August verdict on the original runtime still stands; this page is about what replaced it.</p>
+<p>The core idea is to keep the dense core and about 430 expert slots in VRAM (250 static and 180 adaptive from the documented 5.5 GiB pool; about 500 with the launcher defaults now in use, <code>--kv-ring 256 --scratch 6 --pool 6.05</code> and the packed store, which add about 45, 10 and 14 slots, CALCULATED). Every other expert is computed on the CPU directly from RAM, at the same time as the GPU computes the resident ones. Missing experts are therefore not copied over PCIe at 13.2 MB each.</p>
+<p>On the latest published version (Sep 30 (4)), with both servers warm and against llama.cpp b10361, it read a 13k-token prompt in 6.8 s against 95.2 s, a 13.9&times; ratio computed from unrounded medians (MEASURED, one run each; the same prompt took 7.8&ndash;8.5 s inside the conversation). The llama.cpp configuration is decode-tuned (<code>-ncmoe 31</code>), and no prompt-tuned llama.cpp run was measured, so read the prompt ratio with that in mind. In a 13k-token coding conversation with the packed store, follow-up answers ran at 24.13 tok/s against 15.33, a 1.57&times; ratio (MEASURED, medians of 9 turns). The first answer after the long prompt was 1.96&times; (MEASURED), but that ratio is the least steady one: llama.cpp's first answers ran low in that run, and against its earlier 13.3&ndash;13.6 tok/s the ratio would be about 1.67&ndash;1.71&times; (CALCULATED). Use the follow-up figure.</p>
+<p>Correctness has several parts. The raw expert store is a byte-exact repack of the checkpoint's MXFP4 tensors. The optional packed store, used for the Sep 30 numbers, keeps the code bytes and re-encodes the scale rows so that outputs are bit-identical. The fuse, packed store, kernel scheduling, layer-order prefill, 64-row tiles and staging thread were checked as bit-identical at frozen residency (<code>--refresh-every 0</code>). The larger pool and <code>--refresh-m 16</code> (admission rate) are device-class: they change which experts the GPU computes and can change answers. Under adaptive residency, which depends on timing, runs do not reproduce byte for byte, even on v4. The fused Triton core is not bit-exact against eager PyTorch, so its quality was judged against a fp32-order null envelope (4 sigma, 3 nulls; router agreement 861/864 layers) and accepted (ARCHITECTURE.md section 8).</p>
+</div>
+</section>
+
+<section class="wrap sec" id="machine">
+<p class="tag">The machine and the model</p>
+    <div class="sec-body">
+      <h2>What it runs on and what it runs</h2>
+<p>The development machine has an RTX 3080 Ti with 12 GiB, an i7-11700K with AVX-512, 64 GB of DDR4 at 3001 MT/s (XMP; nominal DDR4-3000) in four DIMMs, and an NVMe drive. The server needs Windows 10 or 11, an NVIDIA card with at least 12 GiB, CUDA 13, an AVX-512 CPU, 64 GB of RAM and Python 3.12.</p>
+<p>gpt-oss-120B is a 117B-parameter MoE in MXFP4 with 36 layers and 128 experts per layer. Four experts are active per token. One token therefore touches at most 144 of 4,608 experts, which is 3% (CALCULATED).</p>
+<ul>
+<li>Attention: hidden size 2880, 64 query heads, 8 K/V heads, head dimension 64. Layers alternate between sliding-window (128 tokens, 18 layers) and full attention, with attention sinks.</li>
+<li>One expert is 13,219,200 B raw and 12,839,040 B in the packed-scale store (MEASURED).</li>
+<li>The expert store is 57 GiB raw or 55.1 GiB packed (CALCULATED from the per-expert bytes). The checkpoint on disk is about 61 GB.</li>
+<li>Expert bytes touched per token are at most about 1.9 GB (CALCULATED as 144 &times; 13.2 MB). The budget section uses 88 experts, which is the per-token count of CPU-read experts, meaning the misses; the rest of the 144 are VRAM hits.</li>
+<li>Context length is 16,384 tokens.</li>
+</ul>
+<p>VRAM holds the dense core in bf16 (about 2.9 GiB, CALCULATED), the K/V cache (1.1 GiB at 16,384 tokens, CALCULATED) and an expert slot pool. The original pool was configured at 5.5 GiB, giving 430 usable slots (250 static, 180 adaptive) plus 16 scratch. The launcher defaults later became <code>--kv-ring 256 --scratch 6 --pool 6.05</code>. <code>--kv-ring 256</code> frees about 0.55 GiB, about 45 slots; <code>--scratch 6</code> frees about 10 more, and the packed store adds about 14 at <code>--pool 6.05</code> (CALCULATED).</p>
+<p>Under the original 5.5 GiB pool and the raw store, the CPU-side store in RAM holds 4,178 experts in 51.4 GiB (CALCULATED from 4,178 &times; 13.2 MB). The packed store and larger pool reduce this. That is at the edge of what 64 GB has free next to other programs; the later runs cite 54&ndash;57 GiB free. Pinned buffers take about 0.3 GiB.</p>
+</div>
+</section>
+
+<section class="wrap sec" id="architecture">
+<p class="tag">Architecture</p>
+    <div class="sec-body">
+      <h2>How one token and one prompt are processed</h2>
+<p>Memory topology: NVMe holds the checkpoint and the expert store. The store is memory-mapped, and the OS page cache in RAM serves the CPU kernels at 24&ndash;29 GB/s effective in the v4 server (MEASURED). That is an end-to-end rate for the mapped file, lower than the 38.6 GB/s ceiling of the kernel probe used in the budget section. PCIe carries admissions and prompt staging, with pinned host-to-device transfers at 21.4 GiB/s (MEASURED on this host in the earlier research project). Resident experts are read from VRAM slots.</p>
+<ol class="steps">
+<li>Each layer is one CUDA graph of five fused Triton kernels: QKV, attention with split-K, output projection, router and top-k. These five kernels replace about 94 PyTorch kernels per layer. The whole core takes 3.4&ndash;4.0 ms per token instead of 10.0&ndash;10.7 ms (MEASURED).</li>
+<li>The router kernels write the normalized hidden state, 4 expert ids, 4 weights and a hit mask straight into pinned host memory, with no copy.</li>
+<li>The GPU runs MXFP4 GEMVs for the resident experts. A host thread waits on an event and calls the CPU kernel for 0&ndash;4 missed experts (8 threads, AVX-512, OpenMP).</li>
+<li>The next layer's graph reads the CPU result zero-copy. After layer 36 a tail graph applies the final norm, lm_head and argmax or Gumbel sampling.</li>
+</ol>
+<p>Per-layer messages bypass the copy engine. Before that change, 13.2 MB admission copies queued ahead of them, and the GPU wait fell from 9.5 to 4.8 ms per token when it was fixed (MEASURED). The 4.8 ms is the same figure as in the Sep 30 (2) row of the budget table.</p>
+
+<h3>VRAM residency and admission</h3>
+<p>The 250 static slots hold coding-hot experts and are never evicted. The 180 adaptive slots follow the current request. Admission is copy-on-compute. When a miss is an admission candidate and one of 16 capture buffers is free, the CPU kernel writes the expert's bytes into a pinned buffer as it reads them, so there is no second store read. A copy stream then uploads the bytes into a victim slot, and the slot table flips when the copy lands.</p>
+<p>Before v9, candidates were refreshed every 8 tokens, or every 4 in the first 32; v9 changed the candidates per refresh with <code>--refresh-m 16</code>. The admission rate is a device-class lever, so answers can differ. Prompt routing counts as at most 16 generated tokens (<code>--prefill-weight 16</code>). The v3 first answer ran at 0.83&times; llama.cpp (2 runs: 0.67&times; and 0.99&times;, MEASURED). RESULTS.md gives two causes: admission chasing the prompt's experts, and page faults from RAM pressure. The prompt weighting addressed the first; VRAM hit rate on the first answer went from 0.177 to 0.311 (MEASURED). The v3-to-v4 step also changed RAM residency, so this is not an isolated ablation.</p>
+
+<h3>RAM residency</h3>
+<p>The Sep 24 explanation was that a long prompt makes Windows trim expert pages, and the next answer faults them back 4 KB at a time. First answers showed 1,000&ndash;1,500 page faults per token against 10&ndash;350 for follow-ups (MEASURED, v4). This fits the trim explanation but does not isolate it. Three fixes addressed this: <code>--release-resident 1</code>, a warm-up ranking that fills free RAM, and <code>--ws-min 1</code>, a soft minimum working set. A later audit (Sep 30) found that the remaining first-answer faults are mostly compulsory first touches of released adaptive-slot experts, worth at most +1&ndash;2% (MEASURED/audit), plus stall windows under RAM pressure.</p>
+
+<h3>The CPU kernel</h3>
+<p>The decode kernel streams experts from RAM with 8 threads. Its threads share rows dynamically (<code>schedule(dynamic)</code>) and meet at one spinning barrier that yields to the OS. Each output row is reduced in a fixed order by a single thread, so scheduling does not change the result. This was verified bit-identical by content-hash comparison at frozen residency (MEASURED).</p>
+
+<h3>Prompt processing</h3>
+<p>Prompts run layer-major in blocks of up to 4,096 tokens. Tokens are grouped by expert on the GPU. Resident experts use a GPU GEMM from the slot. A non-resident expert with 16 tokens or fewer goes to a CPU multi-token kernel on a worker thread. A non-resident expert with more tokens is copied through a pinned 4-deep ring to a scratch slot for a GPU GEMM.</p>
+<p><code>--prefill-order layer</code> runs each layer over all blocks, so each staged expert is copied once per layer instead of once per block. A 13k prompt staged 8,460 (layer, block, expert) triples; in block mode that meant one copy for each, and layer mode needed 2,717 staging copies for the same 8,460 pairs (MEASURED).</p>
+<p>In the sixth pass the GEMM tile height BLOCK_M was raised from 16 to 64: the 16-row tensor-core tiles wasted rows, and the 13k prompt went from 10.78 / 12.22 s to 7.67 / 7.73 s in mirrored runs (MEASURED, step22), bit-identical by the in-process check (logits, every layer's K/V and the ring buffers equal). A staging producer thread that runs the copies of staged experts ahead of the main thread was neutral at BLOCK_M 16, when the GPU was the wall and the main thread waited 4.0 s for staged copies, and useful at 64 (stage wait 0.3 s). A cached Triton launch path shipped with it, exact. A grouped bias/SwiGLU epilogue per slot group was also exact but measured neutral: host launch time fell from 4.4 to 2.7-3.4 s while the wait for staging grew by the same amount, so the 13k prompt is balanced between host and GPU at about 7.2 s (MEASURED, step25), and the grouping stays opt-in. The instrumented split at BLOCK_M 16 (12.3 s) was: host GEMM-launch time 4.0 s over about 12,500 expert-GEMM calls of about 10 pointwise launches each, synchronous staging copies 2.45 s, copy-ring wait 1.3 s, routing sync 3.45 s, with the CPU multi-token kernel's 3.9 s on its worker thread never waited on (MEASURED, step19).</p>
+
+<h3>K/V cache and API</h3>
+<p>A rolling K/V ring serves the sliding-window layers, which frees about 0.55 GiB of VRAM (CALCULATED; half of the 1.1 GiB K/V). Ring checkpoints let a conversation resume without reprocessing. The API is OpenAI-compatible: <code>/v1/chat/completions</code> (streaming and not) and <code>/v1/models</code>. Tool calls use the gpt-oss harmony format, one per response. The server takes one request at a time, with no concurrent requests and no batching; all throughput figures are single-stream.</p>
+</div>
+</section>
+
+<section class="wrap sec" id="timeline">
+<p class="tag">What was done, in order</p>
+    <div class="sec-body">
+      <h2>From the first server to Sep 30 (4)</h2>
+<p>The server grew out of the Neural research project on heterogeneous-memory MoE inference. That research closed in August 2026 with a runtime at 0.98&times; llama.cpp b10361 (MEASURED). A hybrid runtime followed, in which the CPU computes the misses. That hybrid went through three research steps, interleaved against llama.cpp each time: 0.82&times; with CPU-computed misses alone, 0.85&ndash;0.89&times; on fresh prompts and 1.26&times; warm with a fused graphed core and copy-on-compute admission, then 1.46&ndash;1.56&times; on short prompts with a static core, locked host memory and copy-engine-free small transfers (MEASURED, research builds). The server versions below start from that design. The Effect column mixes two kinds of figure: ratios against llama.cpp (v3 to v5, both measured on the same PC), and A/B gains against Neural's own earlier or control build (the +% items from v5 to v9). v8's entry is a prompt time. Absolute values and protocol differ per row, so do not read the column as a trend.</p>
+<div class="tblwrap"><table class="doc">
+<thead><tr><th>Version and date</th><th>Change</th><th>Mechanism</th><th>Effect</th><th>Exactness</th></tr></thead>
+<tbody>
+<tr><td>v3, Sep 23</td><td>First published server (earlier baseline and v2 servers existed)</td><td>Split-K decode attention and CPU experts for prompts (from v2), tool-call splicing, side-request protection (v3)</td><td>Cold-start first prompt 47.3 vs 153.8 s, not comparable to the warm prompt ratios below; follow-ups 1.11&times;; first answer 0.83&times; (MEASURED)</td><td>&ndash;</td></tr>
+<tr><td>v4, Sep 24</td><td>Prompt weight and RAM residency</td><td>Prompt routing counts at most 16 tokens; release, warm-up ranking, soft working-set minimum</td><td>Prompt 3.1&times;; first answer 1.03&times;; follow-ups 1.24&times; (MEASURED)</td><td>&ndash;</td></tr>
+<tr><td>v5, Sep 29</td><td>K/V ring and fused kernel</td><td>Ring adds about 45 slots (CALCULATED); two-phase CPU kernel with 3 fewer barriers</td><td>First answer 1.16&times;; follow-ups 1.34&times;; ring +2&ndash;3% (corrected down from an earlier +7%; it includes a larger pool, which is device-class), fuse +6.4% (MEASURED)</td><td>Fuse bit-identical; larger pool is device-class</td></tr>
+<tr><td>v6, Sep 30 (1)</td><td>Packed store</td><td>Scale rows as 1 base byte plus 4-bit deltas, 2.88% less to read</td><td>Packed vs unpacked store, both Neural: 20.63 vs 19.88 tok/s, +3.8% (MEASURED)</td><td>Bit-identical</td></tr>
+<tr><td>v7, Sep 30 (2)</td><td>CPU kernel scheduling</td><td>Dynamic row sharing and one yielding spin barrier</td><td>19.91 to 22.07 tok/s, +10.9% median, an A/B on Neural alone (MEASURED)</td><td>Bit-identical</td></tr>
+<tr><td>v8, Sep 30 (3)</td><td>Layer-order prompt</td><td>Each staged expert copied once per layer</td><td>13k prompt 15.03 to 10.67 s, &minus;29% (MEASURED)</td><td>Bit-identical</td></tr>
+<tr><td>v9, Sep 30 (4)</td><td>64-row prompt tiles, staging thread, halved admission candidates</td><td>BLOCK_M 64; staging on a second thread; <code>--refresh-m 16</code></td><td>13k prompt 10.8 to 7.7 s from the tiles (MEASURED, mirrored) and 6.8 s in the published run; follow-ups 23.47 vs 22.77 tok/s, +3.1% median and +5.1% mean from <code>--refresh-m 16</code> (MEASURED, 6 mirrored sessions per kind; admission captures per 512-token turn 2,060 to 1,030 at an unchanged VRAM hit rate, 0.387 vs 0.384)</td><td>Tiles and thread bit-identical; refresh is device-class</td></tr>
+</tbody>
+</table></div>
+<p>Device-class means the lever changes which experts the GPU computes. A GPU-computed expert follows the pool path's bf16 rounding, while a CPU miss is fp32 throughout. Answers can then differ from before, in the same way that VRAM residency, which depends on timing, already makes runs differ.</p>
+<p>The v7 figure of 22.07 tok/s and the v9 follow-up figure of 24.13 tok/s come from different benchmarks (an A/B on Neural alone, and conversation medians against llama.cpp) and must not be chained.</p>
+<p>The prompt gain from v4 to v5 is not credited to the code. The unchanged Sep 24 build re-ran the 13k prompt at 15.6 s on Sep 29 (MEASURED), and why the PC got faster is not established. Later A/B deltas are same-session comparisons, so this drift does not affect them. The gains at v8 and v9 are real code gains.</p>
+</div>
+</section>
+
+<section class="wrap sec" id="rejected">
+<p class="tag">What did not work</p>
+    <div class="sec-body">
+      <h2>Dead ends, kept on record</h2>
+<p>Failed levers stay in the record so nobody repeats them. Each entry below carries its evidence. The policy is that levers which change the arithmetic of the same experts are rejected, while levers that change only residency or timing are accepted and marked device-class.</p>
+<ul>
+<li>Cache policy: on a recorded code trace, LRU with admission of every miss reached 0.406 hit rate and Belady 0.632 (SIMULATED). All tested past-only rules moved more bytes than rate-limited copy-on-compute. Only an oracle beat it, by about 18% (SIMULATED).</li>
+<li>Speculation: verifying 8 drafts reads 4.72&times; the bytes of a single token (a trace-derived estimate, SIMULATED). Prompt-lookup drafting was estimated at 0.79&ndash;0.88&times; (SIMULATED), so it was not built. Both are estimates, not measurements.</li>
+<li>Larger or code-calibrated hot sets: +1&ndash;3 hit points out of sample (MEASURED). Prediction was falsified in the earlier research project, not in this evidence.</li>
+<li>GPU reading experts from page cache: bit-exact, but CPU plus GPU reached 28.5 GB/s against 29.2 GB/s for the CPU alone (MEASURED). This is a mapped-file measurement, different from the 38.6 GB/s kernel probe. The GPU reads over PCIe from the same DRAM, so the two paths share the wall: RAM bandwidth.</li>
+<li>Thread pinning (<code>--kernel-affinity 2</code>): &minus;8% (MEASURED). The shipped pin had been a silent no-op and was fixed before the measurement.</li>
+<li>Doorbell (launching the next layer's graph before the CPU kernel finishes, with a GPU spin node waiting on a pinned flag): the first version's spin gave up during a &gt;500 ms first-answer fault storm and the request failed; the robust port (whole-token re-run on a timeout, a mode switch for the first 32 tokens and after a &gt;300-fault token) is exact including injected timeouts, but measured 22.32 vs 22.70 tok/s, &minus;1.7% (MEASURED, 4 mirrored sessions), because the kernel barrier change had already removed the launch slack it targeted. Merged into main off by default as the record; with the doorbell off, the merged build reproduced the pre-merge build's answer hashes turn for turn at frozen residency (MEASURED, step28).</li>
+<li>Re-warming RAM in bulk after a long prompt: with re-warm, first answer 10.7 and follow-up 12.3 tok/s; without it, 13.3 and 12.6 tok/s (MEASURED).</li>
+<li>Larger prompt chunks (<code>--prefill-chunk 8192</code> or 16384): faster on a 13k prompt but not bit-identical, and +0.3 s on a 3k prompt (MEASURED). Rejected.</li>
+<li>Third pass, also measured: <code>--wait</code> poll no gain (GPU wait 5.6 ms unchanged); admission by DMA from a 40 GiB pinned arena +3%, device-class and needing the pinned RAM; <code>--zc-misses 1</code> (the GPU reading misses over PCIe) first answers &minus;11% from bus sharing; a host-residual micro-patch cut admission bookkeeping 1.75 to 1.55 ms per token as predicted with no measurable tok/s gain (all MEASURED).</li>
+<li>Sixth pass: the multi-token CPU kernel's scheduling fix is bit-identical and +1&ndash;2.5% per call standalone but hidden behind the GPU in the server (its jobs are waited on for 0.0&ndash;0.2 s per prompt), not shipped; a cold-expert prefetch knob (a one-byte probe per expert and one PrefetchVirtualMemory call before each kernel call) was neutral in the cold regime it targets, 25.4 / 25.7 vs 25.7 / 25.1 tok/s off vs on with identical answer hashes (MEASURED, step26), and ships off; the grouped epilogue above, neutral.</li>
+<li>In the research project that preceded the server, seven cache-policy families were killed by oracles on an 80B model, LRU finishing within 2.8% of a cheating oracle, and a perfect next-token knowledge oracle returned no gain because 94% of misses were already pre-satisfied (MEASURED, research runtime); predictive expert paging is dead on this hardware twice over.</li>
+</ul>
+<p>Self-review also caught errors in the work. A ring checkpoint bug had inflated a +7% claim, and the corrected figure is +2&ndash;3% (MEASURED). A DRAM probe timer bug had reported 52&ndash;55 GB/s against a CALCULATED 48 GB/s peak; a perf_counter cross-check gave about 40 GB/s (MEASURED).</p>
+</div>
+</section>
+
+<section class="wrap sec" id="method">
+<p class="tag">How it was measured</p>
+    <div class="sec-body">
+      <h2>Interleaved runs on one PC</h2>
+<p>The harness is <code>tools/bench_vs_llama.py --workload conversation</code>. It sends a 13k-token prompt plus 3 follow-ups of 512 tokens each, at temperature 0 with low reasoning effort. Every session starts a fresh server, and Neural and llama.cpp take turns. Ratios are contemporaneous, measured the same day on the same PC, and are never inherited from an earlier day.</p>
+<ul>
+<li>Follow-up figures are medians over 9 turns (3 per session, 3 sessions per side), reported with the run-by-run ratios next to them (Sep 30 (4): 1.63 / 1.56 / 1.61; Neural 23.4&ndash;25.2 tok/s). Gains inside the run-to-run spread are not claimed as gains.</li>
+<li>Rewrite comparisons use equal token spans. Neural's first N tokens, time-weighted over 64-token windows, are compared with llama.cpp's whole N-token answer.</li>
+<li>Prompt timing is taken with both servers warm. A fresh llama.cpp server's first prompt includes its one-time mmap load (125&ndash;131 s in the Sep 30 (4) sessions against 95.2 s warm, MEASURED), so first prompts are never compared.</li>
+<li>A content hash per turn compares answers. Frozen residency (<code>--refresh-every 0</code>) is used for identity checks.</li>
+<li>Identity checks include <code>--prefill-order-check</code>, which printed <code>logits_equal=True kv_equal=True max_abs_logit_diff=0</code> on a 13,000-token prompt (MEASURED). This compares layer order with block order only. The v9 tile and thread changes are covered by their own identity check.</li>
+</ul>
+<p>Some rows are marked "not measured" on the public page. That means omitted or inconclusive, not zero. The three rewrite attempts for Sep 30 (2) were inconclusive, spoiled by stall windows or a llama.cpp outlier; the steady-state rewrite windows were +7&ndash;8% (MEASURED), the only measured signal. The rewrite leg was left out of Sep 30 (3) and (4) because a rewrite is not residency-frozen: it starts on experts that the preceding llama.cpp sessions had pushed out of the file cache, and its first ~300 tokens then measure disk reads (hard faults of about 5 ms per expert, a 64-token window at 8&ndash;10 tok/s) rather than the engine (MEASURED, step12, the same on three kernel builds).</p>
+<p>Labels follow one convention: MEASURED, SIMULATED, CALCULATED or ASSUMED. Since 2026-09-30 11:31, when the PC hard-froze (Kernel-Power 41, no bugcheck; the cause is not established) while three agents ran heavy measurements at once, agents only read, analyze and edit. Every measurement runs alone, one server or script at a time, through the harnesses.</p>
+</div>
+</section>
+
+<section class="wrap sec" id="budget">
+<p class="tag">Where a token goes now</p>
+    <div class="sec-body">
+      <h2>The time budget per token</h2>
+<p>The rows are decode budgets on successive builds; the last row is the current one.</p>
+<div class="tblwrap"><table class="doc">
+<thead><tr><th>Stage and workload</th><th>Total</th><th>CPU expert reads</th><th>GPU wait</th><th>Host</th></tr></thead>
+<tbody>
+<tr><td>v4, a single code-generation request</td><td>61 ms, 16.3 tok/s (MEASURED)</td><td>49 ms</td><td>4.4 ms</td><td>about 8 ms</td></tr>
+<tr><td>Follow-ups in the 13k conversation, packed store, Sep 30 (1) build</td><td>48.5 ms, 20.6 tok/s (MEASURED)</td><td>37.2 ms</td><td>5.4 ms</td><td>about 6 ms</td></tr>
+<tr><td>Follow-ups in the 13k conversation, Sep 30 (2) build (after kernel scheduling)</td><td>45.3 ms, 22.1 tok/s (MEASURED)</td><td>34.1 ms</td><td>4.8 ms</td><td>about 6 ms</td></tr>
+<tr><td>Follow-ups in the 13k conversation, Sep 30 (4) build (step27)</td><td>41.4 ms, 24.13 tok/s (MEASURED)</td><td>30.6&ndash;32.7 ms</td><td>4.5&ndash;4.8 ms</td><td>about 5&ndash;6 ms</td></tr>
+</tbody>
+</table></div>
+<p>The CPU phase is within a few ms of its floor. 88 CPU-read experts &times; 12.84 MB is 1.13 GB per token, which is 29.3 ms at the MEASURED 38.6 GB/s private-memory wall (CALCULATED); the measured 31&ndash;34 ms also carries the bus tax of the admission copies captured while the kernel reads (about 2.4 ms) and the barrier tails. Host DRAM reads top out near 40 GB/s (MEASURED), 83% of the CALCULATED 48 GB/s dual-channel peak.</p>
+<p>The memory side is the wall. The software-addressable remainder is the GPU wait and about 6 ms of host residual, and the three attempts on them (doorbell, native loop, host micro-patch) returned nothing shippable. One CALCULATED and never-run estimate exists: about 26 tok/s with the whole store pinned in RAM, which needs more RAM than the test PC has. A DDR4-3200 Gear 1 memory setting is estimated at +4&ndash;6% on the CPU-read part (CALCULATED, never run).</p>
+<p>For prompts, the instrumented run (step25, g0) took 7.2 s: host launch 4.4 s in parallel with GPU 1.9 s (routing sync 1.2 s plus staging/H2D waits 0.7 s), with the 5.0 s CPU multi-token kernel hidden on its worker (MEASURED profile). The comparison run took 6.8 s.</p>
+</div>
+</section>
+
+<section class="wrap sec" id="llama">
+<p class="tag">How it differs from llama.cpp</p>
+    <div class="sec-body">
+      <h2>Where the weights sit and who computes them</h2>
+<p>The comparison target is <a href="https://github.com/ggml-org/llama.cpp">llama.cpp</a> build b10361 with <code>-ngl 99 -ncmoe 31 -t 8 -c 16384 -fa on</code>, the decode-tuned MoE offload. It maps the roughly 61 GB checkpoint, keeps the experts of 5 of the 36 layers in VRAM and the experts of the other 31 in system RAM. It computes those 31 layers' experts on the CPU where the weights already sit, so they never cross PCIe.</p>
+<p>Neural's research runtime (August, not the server) took the opposite approach. It shipped experts over PCIe to the GPU, with multi-tier residency. It moved 1.84&times; fewer bytes per token, 850 MiB against about 1562 MiB (MEASURED). It still lost, because llama.cpp avoids the PCIe hop. In August the head-to-head on gpt-oss-120B was 13.65 against 13.90 tok/s, or 0.98&times; (MEASURED; against llama.cpp b10361 <code>-ncmoe 31</code>; it must not be chained with the other studies by protocol).</p>
+<p>llama.cpp places experts per layer (5 layers on the GPU). Neural Server places individual experts adaptively per conversation. The CPU computes misses from RAM, and VRAM holds the experts that the current conversation uses most. Both sides work on each token at the same time. Neural then adds a fused graphed core, admission that copies while the CPU reads, and RAM tuning for prompts.</p>
+<p>The Sep 30 (4) medians against llama.cpp b10361 are below, except for the rewrite row, which is from Sep 30 (1). Neural and llama.cpp columns are MEASURED; ratios are CALCULATED from the medians. The 13k row is one run each, and the follow-up and first-answer rows are medians of 9 turns. The llama.cpp configuration is decode-tuned (<code>-ncmoe 31</code>); no prompt-tuned llama.cpp run was measured, which matters most for the prompt rows.</p>
+<div class="tblwrap"><table class="doc">
+<thead><tr><th>Workload</th><th>Neural</th><th>llama.cpp</th><th>Ratio</th></tr></thead>
+<tbody>
+<tr><td>13k prompt (warm)</td><td>6.8 s (MEASURED)</td><td>95.2 s (MEASURED)</td><td>13.9&times; (CALCULATED)</td></tr>
+<tr><td>3k prompt (warm, 1 run each)</td><td>3.4 s (MEASURED)</td><td>25.0 s (MEASURED)</td><td>7.4&times; (CALCULATED)</td></tr>
+<tr><td>Follow-up answers</td><td>24.13 tok/s (MEASURED)</td><td>15.33 tok/s (MEASURED)</td><td>1.57&times; (CALCULATED)</td></tr>
+<tr><td>First answer (least steady; about 1.67&ndash;1.71&times; against llama.cpp's earlier 13.3&ndash;13.6 tok/s, CALCULATED)</td><td>22.74 tok/s (MEASURED)</td><td>11.60 tok/s (MEASURED)</td><td>1.96&times; (CALCULATED)</td></tr>
+</tbody>
+</table></div>
+<p>Rewrite, a separate row from Sep 30 (1): 20.71 tok/s against 14.57 tok/s, 1.42&times; (MEASURED; 2 runs, 1.41&ndash;1.44&times;). It is a v6 result, not re-measured on v9.</p>
+<p>Fairness notes matter here. A Sep 5 study of the research runtime (not the server) on the same PC, with llama.cpp at <code>-ncmoe 33</code>, a 2048-token context and background load, found llama.cpp 2.92&times; faster on fresh prompts (12.24 against 4.19 tok/s medians, MEASURED); the research runtime led by 9&ndash;11% only on a selected, repeatedly warmed 32-token trajectory. The protocols differ from the August 0.98&times; and from this page, so the studies must not be chained, and the server's fresh-prompt performance in that protocol was not re-measured. Compare warm against warm, use equal token spans, and keep free RAM about equal (54&ndash;57 GiB in the later runs).</p>
+<p>The full comparison is on the <a href="index.html#results">results chart</a>.</p>
+</div>
+</section>
+
+<section class="wrap sec" id="limits">
+<p class="tag">Limits</p>
+    <div class="sec-body">
+      <h2>What these numbers do and do not show</h2>
+<ul>
+<li>One PC and one model. The numbers come from a single machine running gpt-oss-120B, with a 16,384-token context. Throughput is single-stream.</li>
+<li>Bit-identical claims hold at frozen residency only. Under adaptive residency, which depends on timing, even v4 does not reproduce itself byte for byte at temperature 0. Residency changes which experts run on the GPU (bf16 rounding) versus the CPU (fp32).</li>
+<li>The first-answer ratio is the least steady. In Sep 30 (4) llama.cpp's first answers ran low (10.9&ndash;12.8 tok/s against 13.3&ndash;13.6 earlier), so use the follow-up figure.</li>
+<li>The prompt ratios are against a decode-tuned llama.cpp configuration; no prompt-tuned run was measured.</li>
+<li>The model only just fits in 64 GB of RAM next to other programs, so the first answer still pulls some experts from disk. The page-fault counts above are the measured indicator.</li>
+<li>The rewrite figure stands at 1.42&times; from the first Sep 30 measurement, because later attempts were not clean.</li>
+<li>The server handles one request at a time and needs Windows, NVIDIA and AVX-512.</li>
+<li>The repository is private. This is a research artifact, not a product.</li>
+</ul>
+<p>The August research verdict on Neural's original runtime still stands for that runtime. The server is a new design, with the CPU computing misses, built after closure.</p>
+</div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>Neural Server &middot; gpt-oss-120B by OpenAI (Apache&nbsp;2.0)</span>
+    <span>Speed figures measured on the development PC, September 2026. Sizes come from the model's design. Text written September 30, 2026 from the measurement records.</span>
+  </div>
+</footer>
+

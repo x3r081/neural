@@ -1,0 +1,39 @@
+{
+  "status": "PASS_IDENTICAL_1536_GENERATED_TOKENS",
+  "evidence_label": "MEASURED",
+  "source_files": {
+    "original": {
+      "path": "benchmarks\\qwen36_20261002\\port_reference01\\results.json",
+      "sha256": "ff271b8b0b90f54accc92926fdc6faafcde3d9cd79935b1856a3e287d3f6f82b"
+    },
+    "port": {
+      "path": "benchmarks\\qwen36_20261002\\port_candidate01\\results.json",
+      "sha256": "ec9cc0830c15873182f2921ec93062ea1e88312f84c2e6b25cc7616c08c5bdb9"
+    }
+  },
+  "requests_sha256": "038850162ce207e048d35c29d6c5ea6fe8226e28038d60981f6ae5eb1e168d3e",
+  "cases": [
+    {
+      "id": "reasoning_short",
+      "reference_tokens": 512,
+      "candidate_tokens": 512,
+      "identical_tokens": true,
+      "identical_content": true
+    },
+    {
+      "id": "coding_short",
+      "reference_tokens": 512,
+      "candidate_tokens": 512,
+      "identical_tokens": true,
+      "identical_content": true
+    },
+    {
+      "id": "coding_context",
+      "reference_tokens": 512,
+      "candidate_tokens": 512,
+      "identical_tokens": true,
+      "identical_content": true
+    }
+  ],
+  "scope": "Greedy full-generation identity on three frozen prompts; not a general answer-quality score."
+}

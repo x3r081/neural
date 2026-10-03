@@ -1,0 +1,57 @@
+{
+  "reference": "F:\\AI\\NeuralQwen36\\.tools\\qwen36-baseline-7a46a86\\qwen_bf16_experts.dll",
+  "reference_sha256": "11076a97409428a22765425e7bdeda05091114dec1256665a9d4b4b4e897b3bf",
+  "candidate": "F:\\AI\\NeuralQwen36\\.tools\\qwen36-port-optimizations\\qwen_bf16_experts.dll",
+  "candidate_sha256": "9ef19adae539cd02d3bd25bacb3c297aa10aa4ba41c7c905375524fbbecbfcd9",
+  "results": [
+    {
+      "case": "model_shape_random_t3_k8",
+      "threads": 8,
+      "shape": [
+        3,
+        8,
+        2048
+      ],
+      "mismatch_count": 0,
+      "max_abs_error": 0.0,
+      "nonzero_outputs": 49152,
+      "finite_outputs": true,
+      "passed": true
+    },
+    {
+      "case": "model_shape_random_single_thread",
+      "threads": 1,
+      "shape": [
+        3,
+        8,
+        2048
+      ],
+      "mismatch_count": 0,
+      "max_abs_error": 0.0,
+      "nonzero_outputs": 49152,
+      "finite_outputs": true,
+      "passed": true
+    },
+    {
+      "case": "model_shape_sign_tie_extremes",
+      "threads": 8,
+      "shape": [
+        3,
+        8,
+        2048
+      ],
+      "mismatch_count": 0,
+      "max_abs_error": 0.0,
+      "nonzero_outputs": 21,
+      "finite_outputs": true,
+      "passed": true
+    },
+    {
+      "case": "concurrent_reentrant_small",
+      "threads_per_call": 2,
+      "calls": 2,
+      "passed": true
+    }
+  ],
+  "status": "passed"
+}

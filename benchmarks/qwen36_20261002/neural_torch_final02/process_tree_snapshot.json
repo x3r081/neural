@@ -1,0 +1,27 @@
+{
+  "status": "MEASURED_ONE_SNAPSHOT_NOT_HIGH_WATER",
+  "captured_utc": "2026-10-02T18:16:57.819828+00:00",
+  "source_run": "neural_torch_final02",
+  "note": "Windows venv redirector explains original max_server_rss_bytes undercount. This sample includes inference descendants; it is not a replacement for the missing process-tree maximum. Global min_available_ram_bytes remains usable in original runs.",
+  "available_ram_bytes": 402272256,
+  "processes": [
+    {
+      "pid": 25880,
+      "name": "python.exe",
+      "rss_bytes": 7892992,
+      "create_time": 1790964540.4906008
+    },
+    {
+      "pid": 25068,
+      "name": "conhost.exe",
+      "rss_bytes": 8687616,
+      "create_time": 1790964540.4986112
+    },
+    {
+      "pid": 22148,
+      "name": "python.exe",
+      "rss_bytes": 57414144000,
+      "create_time": 1790964540.5351236
+    }
+  ]
+}

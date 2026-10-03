@@ -1,0 +1,3452 @@
+{
+ "config": {
+  "out": "benchmarks\\codex_decode_followup_20261001\\persistent_vs_llama.json",
+  "rounds": 2,
+  "schedule": "opt,llama,llama,opt",
+  "kinds": [
+   "opt=--kdll gptoss_cpu_persistent.dll --kernel-persistent 1 --grouped-prefill-gemm 1 --grouped-prefill-min-tokens 1024 --grouped-prefill-max-tokens 4096 --trim-prefill-cache 1",
+   "llama"
+  ],
+  "workload": "conversation",
+  "ctx_tokens": 13000,
+  "max_tokens": 512,
+  "effort": "low",
+  "llama_dir": "G:\\Tools\\llama-b10361",
+  "gguf": "G:\\Models\\gpt-oss-120b-gguf\\gpt-oss-120b-MXFP4.gguf",
+  "llama_args": "-ngl 99 -ncmoe 31 -t 8 -c 16384 -fa on --jinja",
+  "neural_args": "--pool 6.05 --smax 16384 --threads 8 --hotset hotset_code.json --refresh-every 8 --refresh-m 16 --capbufs 16 --prefill-m 64 --early-every 4 --early-tokens 32 --static 250 --skip-quality --kv-ring 256 --scratch 6 --kernel-fuse 1 --prefill-order layer --store-dir G:\\NeuralStores\\gptoss120b_ps4 --grouped-prefill-gemm 0 --trim-prefill-cache 0 --masked-gemv 0",
+  "python": "F:\\AI\\Neural\\.venv\\Scripts\\python.exe",
+  "log_dir": "logs\\codex_persistent_vs_llama",
+  "server_roots": [],
+  "ctx_root": "F:\\AI\\Neural\\experiments\\neuralserver-base",
+  "replay_prompts": "benchmarks\\codex_decode_followup_20261001\\persistent_cpu_mirrored.json.replay.json",
+  "replay_first_session": false,
+  "replay_session": 0
+ },
+ "provenance": {
+  "neural_repo": {
+   "root": "F:\\AI\\Neural\\experiments\\neuralserver-opt",
+   "commit": "9aa766f509aa997ed18537e8b9c03c553abfa0c0",
+   "dirty": true,
+   "working_diff_sha256": "f3dda40065e661719c4df6a7e8055bc7c8bc8f45ec95de329b31f6c9b35cea4b",
+   "source_manifest": [
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\review_persistent_trial.py",
+     "size": 20558,
+     "mtime_ns": 1790847184582907400,
+     "sha256": "26952cc0907420bbde22cc6dce72e40244ba167b4dddeafadef6af0a4bfb85a8"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\arena.py",
+     "size": 12355,
+     "mtime_ns": 1790804180716145500,
+     "sha256": "f9eb1278a01d482f6ab4b81a1b8a49b62a613cc552a8137ac63391c708cc1f0d"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\chat_client.py",
+     "size": 4226,
+     "mtime_ns": 1790804180830713300,
+     "sha256": "5cf47802b4d5513b25219118468a65f8f40f39f694a0386c99fa66056a751471"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\cpu_prefill.py",
+     "size": 19662,
+     "mtime_ns": 1790804180831819000,
+     "sha256": "dae214c95c871dae1d4ae068b30718e2ea55efe80bf1209d0b9dd7db3f23cb71"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\doorbell.py",
+     "size": 17368,
+     "mtime_ns": 1790804180834991100,
+     "sha256": "0889846a08316695116b580e1d49e6701a676b702e03dc7d6bd03e2889ed673f"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\fused_core.py",
+     "size": 43971,
+     "mtime_ns": 1790804180836016000,
+     "sha256": "3fb4f9d8ee41361611372478fb1a316277dd371defed710506bd1b59102add09"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\harmony_render.py",
+     "size": 26950,
+     "mtime_ns": 1790804180844425000,
+     "sha256": "27fdce7bf26d36cee32049ca3ed046cb9baf6e4e8e25f10fc806ab0bb1c1fbbf"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\kernels\\gptoss_cpu_cap2.c",
+     "size": 34462,
+     "mtime_ns": 1790804180846573400,
+     "sha256": "47996d9f586f315567b5f2ab8baa53539f891d05c15dffed2e8ca1f44c173120"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\kernels\\gptoss_cpu_multi.c",
+     "size": 28545,
+     "mtime_ns": 1790804180846573400,
+     "sha256": "f4cb63e1459d9bed82a17ad1d1f17f817a42fa7e170026f448043dc51d5edf81"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\kernels\\gptoss_cpu_persistent.c",
+     "size": 20053,
+     "mtime_ns": 1790845858529174700,
+     "sha256": "080d08ff6b5d4eb0bf5b6ae324c538615d07cf1f6ab73bf6a93ba6f03979aecb"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\kernels\\membw_probe.c",
+     "size": 8154,
+     "mtime_ns": 1790804180847580900,
+     "sha256": "db40f94d9a0115441209bd1a5bc843be00dd33d9fdff02031421acdfd80e00c6"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\kernels\\memcpy_mt.c",
+     "size": 551,
+     "mtime_ns": 1790804180847580900,
+     "sha256": "841b94fba8589c03db935338e80606485e4d8197775b5d2a6eb2279e589e9b68"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\kv_ring.py",
+     "size": 7508,
+     "mtime_ns": 1790804180848861000,
+     "sha256": "32a57c4ecd2fb2e761845ec0fe37f0b7935fc0f522725d3ed58bc41c57de5e14"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\neural\\__init__.py",
+     "size": 93,
+     "mtime_ns": 1790804180855158500,
+     "sha256": "387f3ccf53983401f58532236abea74427398dbc474511cb06610d9318868532"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\neural\\moe\\__init__.py",
+     "size": 257,
+     "mtime_ns": 1790804180856160500,
+     "sha256": "7c435c0ee4fc2e4c4b6687b5d8f22fe527940e22c189e9306a6623d0d3359dd7"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\neural\\moe\\gptoss_adapter.py",
+     "size": 20164,
+     "mtime_ns": 1790804180857566800,
+     "sha256": "b567308e4b8b965ae731404ccea39556d4ea78a32c1ca021a544c4fb7a99d0ae"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\neural\\moe\\gptoss_core_graphs.py",
+     "size": 9079,
+     "mtime_ns": 1790804180857566800,
+     "sha256": "0dd8093bf94add972f9a82c2ad24e45e202addd8ae1786a6dc15f827ccb7b650"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\neural\\moe\\layout.py",
+     "size": 12452,
+     "mtime_ns": 1790804180858573700,
+     "sha256": "78ac59cdb284f6f1f0132eba1507e2585edf811873c87f5054e3343407eda61d"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\neural\\paging\\__init__.py",
+     "size": 494,
+     "mtime_ns": 1790804180858573700,
+     "sha256": "3fd5a9b9ddc029d8a7935fcd193b9ccda0ca52c25a04a5c87bf5163e11efa555"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\neural\\paging\\compressed_transport.py",
+     "size": 14567,
+     "mtime_ns": 1790804180859580100,
+     "sha256": "f05fc551160b37b10c96723c0ec8d54bb38d878e707974b065974224d70e9221"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\neural\\paging\\quantized_compute.py",
+     "size": 25717,
+     "mtime_ns": 1790804180859580100,
+     "sha256": "a2f6c2f9b0566ca9658bb13ea5a12ec39f53169e19555a1c498fa561a0e65fb4"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\neural\\paging\\residency.py",
+     "size": 9973,
+     "mtime_ns": 1790804180859580100,
+     "sha256": "8b41803483695fae4978bd5da673ef5bdf78ab0934f47489fd17803a73a911bc"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\neural\\q80\\__init__.py",
+     "size": 154,
+     "mtime_ns": 1790804180860580500,
+     "sha256": "e50a2608f5e6a1ca645bda1060e40ad81aafc1a7d4bbae592c4a9e49baefe041"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\neural\\q80\\bench_hygiene.py",
+     "size": 5724,
+     "mtime_ns": 1790804180860580500,
+     "sha256": "84feb69bf46db835604cf97aef5d4bff261033b949007a472015476000b3a11b"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\neural\\q80\\expert_runtime.py",
+     "size": 74717,
+     "mtime_ns": 1790804180861592200,
+     "sha256": "7311357d3e2a919e878e986837673846722fa403d5c94c7adc62fa3e817b0d3d"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\neural\\q80\\expert_store.py",
+     "size": 9159,
+     "mtime_ns": 1790804180862596500,
+     "sha256": "10f6aee849da60caa0be4d7c0e4c6a41f43f0a65d952b812b9d1f60d0e52d88f"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\neural\\q80\\hot_path.py",
+     "size": 22688,
+     "mtime_ns": 1790804180862596500,
+     "sha256": "cd15e2c10987051001d24a87d0f956403d16a6680ae61dac1cb79519a4b40fc0"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\neural\\q80\\intake.py",
+     "size": 46926,
+     "mtime_ns": 1790804180863614800,
+     "sha256": "ed110d6d2e92ffb979e96196df51f491f2ffa6d72137eeba9a98a8e88b4062e9"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\neural\\q80\\mxfp4_kernels.py",
+     "size": 32273,
+     "mtime_ns": 1790841106984363700,
+     "sha256": "1dd2715f1489579efb93ac1108babf3386dc552f17885f5490def314e2f03900"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\neural\\q80\\prepacked_store.py",
+     "size": 12281,
+     "mtime_ns": 1790804180865122800,
+     "sha256": "730b3f9f0b6fa4259017ede456587c89343d349885218b2f11f5da4f05d434b8"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\neural\\q80\\quant_store.py",
+     "size": 11796,
+     "mtime_ns": 1790804180865122800,
+     "sha256": "189cfdade74dfa38637319e5f1276d3599f3ce9050df3711bcd4bd465aa3ffe0"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\neural\\quality\\__init__.py",
+     "size": 0,
+     "mtime_ns": 1790804180865122800,
+     "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\neural\\quality\\harness.py",
+     "size": 4886,
+     "mtime_ns": 1790804180866130700,
+     "sha256": "6fe413f4e8585a654bfe16c7aa78c12da12b15fa4922785ba139b3bb6a63b9ff"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\paths.py",
+     "size": 1017,
+     "mtime_ns": 1790804180866130700,
+     "sha256": "7482648479198a66a3edc5465dbeb7219a27a6a01e512e31d0dc3d4b97a1efde"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\server.py",
+     "size": 197129,
+     "mtime_ns": 1790845719151521400,
+     "sha256": "c97528bc12e8d1d9c3bf3fa59166a3790288928cafda78589300ff7c978f11ea"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\start_neural_chat.bat",
+     "size": 374,
+     "mtime_ns": 1790804180871600000,
+     "sha256": "d1aa540cdcf42b0745a0aafa78c78243998995a5d4f324f85a4f522719473f35"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\start_neural_optimized.bat",
+     "size": 770,
+     "mtime_ns": 1790844701362526700,
+     "sha256": "93c5b4e5a820d012c85f979d449b23377fccc3db5e64916a5d07def4db7299de"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\start_neural_server.bat",
+     "size": 1652,
+     "mtime_ns": 1790804180871600000,
+     "sha256": "3fdedeffcfd2185e27a6355ae1147e6a1a40af4649840177569ac2cfc0e4b7ba"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tests\\render_old.py",
+     "size": 4740,
+     "mtime_ns": 1790804180872774600,
+     "sha256": "e3baae402ef7b8d3268de00046dda1c542cd215566f5c709462543e7eac10d91"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tests\\test_attention.py",
+     "size": 47557,
+     "mtime_ns": 1790804180873621500,
+     "sha256": "50f8812b1940c50bbebb5bede0b8cbfccb686a3f2f80bc914eae351cc72d3e2f"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tests\\test_cpu_multi.py",
+     "size": 25661,
+     "mtime_ns": 1790804180873621500,
+     "sha256": "9761103643bdc958541760d23d07fcd62fc2745e8f1b3b861c71232dc2c0389e"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tests\\test_doorbell_mock.py",
+     "size": 69396,
+     "mtime_ns": 1790804180874634600,
+     "sha256": "074fec1f8380b82c36ebc1573a82f1751f67c1bff2fc96999bc5767caf3d0ace"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tests\\test_grouped_gemm_plan.py",
+     "size": 4476,
+     "mtime_ns": 1790840615554272500,
+     "sha256": "02a7425df31ff8aef46c4cd9f9e71857d04e58ba1a9245b50c0517395739488d"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tests\\test_kv_ring.py",
+     "size": 8270,
+     "mtime_ns": 1790804180875639600,
+     "sha256": "eeaaba4c340c8f7aea4c864945c960e695bdbda1ff03c4f16869d10130d2f13c"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tests\\test_protect.py",
+     "size": 4598,
+     "mtime_ns": 1790804180876192300,
+     "sha256": "ef7c720a5d301e4e7114fbf339506775acedde9f27649d32ac04ce6ee023bf3a"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tests\\test_review_bench.py",
+     "size": 11742,
+     "mtime_ns": 1790845550006488200,
+     "sha256": "4e70bed4b086b7288518123b0beacb4bb10e5297d0c4de274573871152865810"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tests\\test_scale_layout.py",
+     "size": 20458,
+     "mtime_ns": 1790804180876192300,
+     "sha256": "7786f6f66492b2440d373609e5b50c3d544899ae5d18e7c073a038994db7d50e"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tests\\test_splice.py",
+     "size": 61607,
+     "mtime_ns": 1790804180876192300,
+     "sha256": "91d173864f036b5a518fd77dfb15a63c29f500cced36594a708b464db2e2c7e5"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\admission_replay.py",
+     "size": 4561,
+     "mtime_ns": 1790804180877608000,
+     "sha256": "e4b2f0bf1f974b1a94d3aaf71e2339ce5a346cd0689109f49161a2a1d597bb02"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\bench_agent.py",
+     "size": 10262,
+     "mtime_ns": 1790804180877608000,
+     "sha256": "00adcee869eb7860de93d4e7ac041e5936cabe78ed46fa5343e1e7b86382c2ce"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\bench_prompt_warm.py",
+     "size": 3703,
+     "mtime_ns": 1790804180878622400,
+     "sha256": "fd623442ce361563289371786ccdd3abe5040668e1b379329ebf00fb2814a24d"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\bench_vs_llama.py",
+     "size": 28808,
+     "mtime_ns": 1790845550006488200,
+     "sha256": "feefba89641643fd800014b835c48b4f130cb93582143031ca4dd17439f19eeb"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\build_kernels.bat",
+     "size": 900,
+     "mtime_ns": 1790804180879865000,
+     "sha256": "4a6a014afefcccb889ec3d10569de283323c43499e80d176cbf17450e2141391"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\build_store.py",
+     "size": 1381,
+     "mtime_ns": 1790804180879865000,
+     "sha256": "8fd94b47b542b902e9821f332fd37ae8e0ec82eb3309ce6adb3374299747fc3e"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\cache_policy_sim.py",
+     "size": 6663,
+     "mtime_ns": 1790804180880922100,
+     "sha256": "5a1bca4d4fa7f19f0f8efbfcf856f53a2644f12b97e43bc6d302b621a1e75831"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\calibrate_hotset.py",
+     "size": 5313,
+     "mtime_ns": 1790804180880922100,
+     "sha256": "938b845ae4e95c2197ae244b6b3ee667ff59bd4d718df538ec6607b551fae30d"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\compile_check_kernels.py",
+     "size": 4626,
+     "mtime_ns": 1790804180880922100,
+     "sha256": "16b871b2bb1986fbdbda4062d0fe9eef9eaf84f2afeb824117f19f63035352d0"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\decode_kernel_ab.py",
+     "size": 3394,
+     "mtime_ns": 1790804180882123700,
+     "sha256": "ef7a152de03b17877a206206a3026ab8865dde44756d695926dacdbf6f24ae2f"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\doorbell_selftest.py",
+     "size": 12731,
+     "mtime_ns": 1790804180883130200,
+     "sha256": "ebead2cfaa94fd11adb98d1edf8bb32bed4af1b79e0735fc3ff73c4c29616405"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\fit_demand_probe.py",
+     "size": 14147,
+     "mtime_ns": 1790804180883130200,
+     "sha256": "7edfde2384e1c2585212a1869a2432c379c524f628dc434ca30de7064e7901e7"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\graph_replay_probe.py",
+     "size": 18479,
+     "mtime_ns": 1790845874964969300,
+     "sha256": "04a0885104b965e4f5939391d6f29d019cea1996cefcfd7f05e47fb1d7cd4b85"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\grouped_gemm_ab.py",
+     "size": 10697,
+     "mtime_ns": 1790840615553194900,
+     "sha256": "1358ba47c5e92eee4e29040ec6ec126bccabc331c7a0cc3ff845b6f0b65979f1"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\kernel_tuning_ab.py",
+     "size": 8626,
+     "mtime_ns": 1790804180884144600,
+     "sha256": "85f6efe4bf9de470b8f3d398b0097f48e21d1017a83a9b21e4d91587819429c7"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\lookup_spec_estimate.py",
+     "size": 3535,
+     "mtime_ns": 1790804180884144600,
+     "sha256": "d4ee8f945db10231f26c8ca7dc76d228eca77dbaaa2db027571772c3dce79a35"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\lossless_entropy_probe.py",
+     "size": 16402,
+     "mtime_ns": 1790839954734899600,
+     "sha256": "b20fa1d821967221eff104924e91693deae7bff14d47a0e27f1639b447d17e6d"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\masked_gemv_ab.py",
+     "size": 11936,
+     "mtime_ns": 1790840408160271500,
+     "sha256": "fe678db4978b1d909c80557158da0c145f682fa456bf7c8e1a1f410bac8475d7"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\measure_host_dram.py",
+     "size": 15961,
+     "mtime_ns": 1790804180885234800,
+     "sha256": "05edf63dd76c1989ef71a96ac432ebe1f97bcb17d215dd5ced4b597a2d6fb9d2"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\pack_store.py",
+     "size": 31602,
+     "mtime_ns": 1790804180885234800,
+     "sha256": "f946d91b236991e46ae59aed7deec18f6cd8b61afa405a1f776407dd37ea26cc"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\persistent_decode_ab.py",
+     "size": 13192,
+     "mtime_ns": 1790845858534745500,
+     "sha256": "13a896c603db96dd637bc154ebc806b634c2b898c4bd48f1c698e356292b3fb8"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\persistent_team_probe.py",
+     "size": 5360,
+     "mtime_ns": 1790845631053666300,
+     "sha256": "55aeab8eb8aa38b2531d020cc50d35a3d806240b01675551c4e2b3b37e889209"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\review_bench.py",
+     "size": 15446,
+     "mtime_ns": 1790841267033062600,
+     "sha256": "60577e0ad59ab3f716278670d18f31e666afe24b38d5388c073b26c4cafe9b4b"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\review_cpu_decode_check.py",
+     "size": 7989,
+     "mtime_ns": 1790845502864541000,
+     "sha256": "91f4d6802abe5159e1d046a460b4c409b2eb20a9ff5b524f3f2b7035013725fa"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\review_decode_check.py",
+     "size": 13283,
+     "mtime_ns": 1790845418481488300,
+     "sha256": "f73a24d261021a2428749c6eff1d07ea91d9d8b580a37a8c31ed6bcb11d8dee9"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\review_prefill_check.py",
+     "size": 6092,
+     "mtime_ns": 1790843129656900300,
+     "sha256": "5d23bbb7a29d99a34c4d9ab4a5c79a9f39261927afedd3e9e2c63f772548e2b9"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\review_warm_prefill.py",
+     "size": 22024,
+     "mtime_ns": 1790844329655895100,
+     "sha256": "7cf7c861b20adc2f7d77991e0cf2df0a5c2662e859c8dc27e513899790ea6685"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\scale_pack.py",
+     "size": 11575,
+     "mtime_ns": 1790804180886240500,
+     "sha256": "5db4c7278b700d9bcf14dbd7bbc4a7c5abcc0a6778b65af863567cfba4a812cd"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\scale_pack_ab.py",
+     "size": 14004,
+     "mtime_ns": 1790804180886240500,
+     "sha256": "dc07f10ebfd6a78ab2c34facb54f741232367a9b48c27ddcada35ab499d998be"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\scale_pack_gpu_test.py",
+     "size": 14298,
+     "mtime_ns": 1790804180887257500,
+     "sha256": "e283aa217ca82ee0f60d82e69345a2e2dbd80fc9c67a735b7b18e379a1e82d64"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\scale_pack_multi_ab.py",
+     "size": 13883,
+     "mtime_ns": 1790804180888254800,
+     "sha256": "e956bc2823389d3acd42e70bd339dff01c64f1fd19842ae3430ccef80040f2d9"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\scale_pack_triton_interp.py",
+     "size": 5345,
+     "mtime_ns": 1790804180888254800,
+     "sha256": "fbd99fc6816b638d4480edb62d86745fffa6e9aa43226e6633678a623057126e"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\tune_prefill.py",
+     "size": 1475,
+     "mtime_ns": 1790804180888254800,
+     "sha256": "0ebc76dd2af6f9ef7f7b2831fea2bf0d5006c83853f7c53a0d85e47d2d583846"
+    }
+   ]
+  },
+  "context_repo": {
+   "root": "F:\\AI\\Neural\\experiments\\neuralserver-base",
+   "commit": "a5d3c95e17323e9b78f83976da583e31f73f188e",
+   "dirty": true,
+   "working_diff_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "source_manifest": [
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\arena.py",
+     "size": 12355,
+     "mtime_ns": 1790804603398612500,
+     "sha256": "f9eb1278a01d482f6ab4b81a1b8a49b62a613cc552a8137ac63391c708cc1f0d"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\chat_client.py",
+     "size": 4226,
+     "mtime_ns": 1790804603512094800,
+     "sha256": "5cf47802b4d5513b25219118468a65f8f40f39f694a0386c99fa66056a751471"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\cpu_prefill.py",
+     "size": 19662,
+     "mtime_ns": 1790804603512755400,
+     "sha256": "dae214c95c871dae1d4ae068b30718e2ea55efe80bf1209d0b9dd7db3f23cb71"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\doorbell.py",
+     "size": 17368,
+     "mtime_ns": 1790804603516006700,
+     "sha256": "0889846a08316695116b580e1d49e6701a676b702e03dc7d6bd03e2889ed673f"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\fused_core.py",
+     "size": 43971,
+     "mtime_ns": 1790804603516006700,
+     "sha256": "3fb4f9d8ee41361611372478fb1a316277dd371defed710506bd1b59102add09"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\harmony_render.py",
+     "size": 26950,
+     "mtime_ns": 1790804603523713800,
+     "sha256": "27fdce7bf26d36cee32049ca3ed046cb9baf6e4e8e25f10fc806ab0bb1c1fbbf"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\kernels\\gptoss_cpu_cap2.c",
+     "size": 34462,
+     "mtime_ns": 1790804603525976800,
+     "sha256": "47996d9f586f315567b5f2ab8baa53539f891d05c15dffed2e8ca1f44c173120"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\kernels\\gptoss_cpu_multi.c",
+     "size": 28545,
+     "mtime_ns": 1790804603526571500,
+     "sha256": "f4cb63e1459d9bed82a17ad1d1f17f817a42fa7e170026f448043dc51d5edf81"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\kernels\\membw_probe.c",
+     "size": 8154,
+     "mtime_ns": 1790804603526571500,
+     "sha256": "db40f94d9a0115441209bd1a5bc843be00dd33d9fdff02031421acdfd80e00c6"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\kernels\\memcpy_mt.c",
+     "size": 551,
+     "mtime_ns": 1790804603527574500,
+     "sha256": "841b94fba8589c03db935338e80606485e4d8197775b5d2a6eb2279e589e9b68"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\kv_ring.py",
+     "size": 7508,
+     "mtime_ns": 1790804603527574500,
+     "sha256": "32a57c4ecd2fb2e761845ec0fe37f0b7935fc0f522725d3ed58bc41c57de5e14"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\neural\\__init__.py",
+     "size": 93,
+     "mtime_ns": 1790804603533414700,
+     "sha256": "387f3ccf53983401f58532236abea74427398dbc474511cb06610d9318868532"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\neural\\moe\\__init__.py",
+     "size": 257,
+     "mtime_ns": 1790804603533414700,
+     "sha256": "7c435c0ee4fc2e4c4b6687b5d8f22fe527940e22c189e9306a6623d0d3359dd7"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\neural\\moe\\gptoss_adapter.py",
+     "size": 20164,
+     "mtime_ns": 1790804603534581300,
+     "sha256": "b567308e4b8b965ae731404ccea39556d4ea78a32c1ca021a544c4fb7a99d0ae"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\neural\\moe\\gptoss_core_graphs.py",
+     "size": 9079,
+     "mtime_ns": 1790804603534581300,
+     "sha256": "0dd8093bf94add972f9a82c2ad24e45e202addd8ae1786a6dc15f827ccb7b650"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\neural\\moe\\layout.py",
+     "size": 12452,
+     "mtime_ns": 1790804603535591900,
+     "sha256": "78ac59cdb284f6f1f0132eba1507e2585edf811873c87f5054e3343407eda61d"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\neural\\paging\\__init__.py",
+     "size": 494,
+     "mtime_ns": 1790804603535591900,
+     "sha256": "3fd5a9b9ddc029d8a7935fcd193b9ccda0ca52c25a04a5c87bf5163e11efa555"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\neural\\paging\\compressed_transport.py",
+     "size": 14567,
+     "mtime_ns": 1790804603536603300,
+     "sha256": "f05fc551160b37b10c96723c0ec8d54bb38d878e707974b065974224d70e9221"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\neural\\paging\\quantized_compute.py",
+     "size": 25717,
+     "mtime_ns": 1790804603537151300,
+     "sha256": "a2f6c2f9b0566ca9658bb13ea5a12ec39f53169e19555a1c498fa561a0e65fb4"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\neural\\paging\\residency.py",
+     "size": 9973,
+     "mtime_ns": 1790804603537151300,
+     "sha256": "8b41803483695fae4978bd5da673ef5bdf78ab0934f47489fd17803a73a911bc"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\neural\\q80\\__init__.py",
+     "size": 154,
+     "mtime_ns": 1790804603537806100,
+     "sha256": "e50a2608f5e6a1ca645bda1060e40ad81aafc1a7d4bbae592c4a9e49baefe041"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\neural\\q80\\bench_hygiene.py",
+     "size": 5724,
+     "mtime_ns": 1790804603537806100,
+     "sha256": "84feb69bf46db835604cf97aef5d4bff261033b949007a472015476000b3a11b"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\neural\\q80\\expert_runtime.py",
+     "size": 74717,
+     "mtime_ns": 1790804603538812000,
+     "sha256": "7311357d3e2a919e878e986837673846722fa403d5c94c7adc62fa3e817b0d3d"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\neural\\q80\\expert_store.py",
+     "size": 9159,
+     "mtime_ns": 1790804603538812000,
+     "sha256": "10f6aee849da60caa0be4d7c0e4c6a41f43f0a65d952b812b9d1f60d0e52d88f"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\neural\\q80\\hot_path.py",
+     "size": 22688,
+     "mtime_ns": 1790804603540085600,
+     "sha256": "cd15e2c10987051001d24a87d0f956403d16a6680ae61dac1cb79519a4b40fc0"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\neural\\q80\\intake.py",
+     "size": 46926,
+     "mtime_ns": 1790804603540085600,
+     "sha256": "ed110d6d2e92ffb979e96196df51f491f2ffa6d72137eeba9a98a8e88b4062e9"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\neural\\q80\\mxfp4_kernels.py",
+     "size": 17102,
+     "mtime_ns": 1790804603540085600,
+     "sha256": "d077c71970cb93f1beb16ab65d6590bd7db261441d4d237d8a6d141186a2dce6"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\neural\\q80\\prepacked_store.py",
+     "size": 12281,
+     "mtime_ns": 1790804603541441000,
+     "sha256": "730b3f9f0b6fa4259017ede456587c89343d349885218b2f11f5da4f05d434b8"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\neural\\q80\\quant_store.py",
+     "size": 11796,
+     "mtime_ns": 1790804603541441000,
+     "sha256": "189cfdade74dfa38637319e5f1276d3599f3ce9050df3711bcd4bd465aa3ffe0"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\neural\\quality\\__init__.py",
+     "size": 0,
+     "mtime_ns": 1790804603542863400,
+     "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\neural\\quality\\harness.py",
+     "size": 4886,
+     "mtime_ns": 1790804603542863400,
+     "sha256": "6fe413f4e8585a654bfe16c7aa78c12da12b15fa4922785ba139b3bb6a63b9ff"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\paths.py",
+     "size": 1017,
+     "mtime_ns": 1790804603542863400,
+     "sha256": "7482648479198a66a3edc5465dbeb7219a27a6a01e512e31d0dc3d4b97a1efde"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\server.py",
+     "size": 188350,
+     "mtime_ns": 1790804603545382400,
+     "sha256": "6db0402857c81369147f4a15df9c1a3abecd603915a2c4c4ce44837e29126484"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\start_neural_chat.bat",
+     "size": 374,
+     "mtime_ns": 1790804603547819800,
+     "sha256": "d1aa540cdcf42b0745a0aafa78c78243998995a5d4f324f85a4f522719473f35"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\start_neural_server.bat",
+     "size": 1652,
+     "mtime_ns": 1790804603548982600,
+     "sha256": "3fdedeffcfd2185e27a6355ae1147e6a1a40af4649840177569ac2cfc0e4b7ba"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\tests\\render_old.py",
+     "size": 4740,
+     "mtime_ns": 1790804603548982600,
+     "sha256": "e3baae402ef7b8d3268de00046dda1c542cd215566f5c709462543e7eac10d91"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\tests\\test_attention.py",
+     "size": 47557,
+     "mtime_ns": 1790804603550312500,
+     "sha256": "50f8812b1940c50bbebb5bede0b8cbfccb686a3f2f80bc914eae351cc72d3e2f"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\tests\\test_cpu_multi.py",
+     "size": 25661,
+     "mtime_ns": 1790804603550312500,
+     "sha256": "9761103643bdc958541760d23d07fcd62fc2745e8f1b3b861c71232dc2c0389e"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\tests\\test_doorbell_mock.py",
+     "size": 69396,
+     "mtime_ns": 1790804603550312500,
+     "sha256": "074fec1f8380b82c36ebc1573a82f1751f67c1bff2fc96999bc5767caf3d0ace"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\tests\\test_kv_ring.py",
+     "size": 8270,
+     "mtime_ns": 1790804603551817800,
+     "sha256": "eeaaba4c340c8f7aea4c864945c960e695bdbda1ff03c4f16869d10130d2f13c"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\tests\\test_protect.py",
+     "size": 4598,
+     "mtime_ns": 1790804603551817800,
+     "sha256": "ef7c720a5d301e4e7114fbf339506775acedde9f27649d32ac04ce6ee023bf3a"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\tests\\test_scale_layout.py",
+     "size": 20458,
+     "mtime_ns": 1790804603551817800,
+     "sha256": "7786f6f66492b2440d373609e5b50c3d544899ae5d18e7c073a038994db7d50e"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\tests\\test_splice.py",
+     "size": 61607,
+     "mtime_ns": 1790804603553494400,
+     "sha256": "91d173864f036b5a518fd77dfb15a63c29f500cced36594a708b464db2e2c7e5"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\tools\\admission_replay.py",
+     "size": 4561,
+     "mtime_ns": 1790804603553494400,
+     "sha256": "e4b2f0bf1f974b1a94d3aaf71e2339ce5a346cd0689109f49161a2a1d597bb02"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\tools\\bench_agent.py",
+     "size": 10262,
+     "mtime_ns": 1790804603554803200,
+     "sha256": "00adcee869eb7860de93d4e7ac041e5936cabe78ed46fa5343e1e7b86382c2ce"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\tools\\bench_prompt_warm.py",
+     "size": 3703,
+     "mtime_ns": 1790804603555328100,
+     "sha256": "fd623442ce361563289371786ccdd3abe5040668e1b379329ebf00fb2814a24d"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\tools\\bench_vs_llama.py",
+     "size": 13083,
+     "mtime_ns": 1790804603555328100,
+     "sha256": "47b7a37698a9569445b5c00acf57e41aedee2ca34da29a23e542bd340b5c1ee5"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\tools\\build_kernels.bat",
+     "size": 900,
+     "mtime_ns": 1790804603555328100,
+     "sha256": "4a6a014afefcccb889ec3d10569de283323c43499e80d176cbf17450e2141391"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\tools\\build_store.py",
+     "size": 1381,
+     "mtime_ns": 1790804603556462400,
+     "sha256": "8fd94b47b542b902e9821f332fd37ae8e0ec82eb3309ce6adb3374299747fc3e"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\tools\\cache_policy_sim.py",
+     "size": 6663,
+     "mtime_ns": 1790804603556462400,
+     "sha256": "5a1bca4d4fa7f19f0f8efbfcf856f53a2644f12b97e43bc6d302b621a1e75831"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\tools\\calibrate_hotset.py",
+     "size": 5313,
+     "mtime_ns": 1790804603557601900,
+     "sha256": "938b845ae4e95c2197ae244b6b3ee667ff59bd4d718df538ec6607b551fae30d"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\tools\\compile_check_kernels.py",
+     "size": 4626,
+     "mtime_ns": 1790804603557601900,
+     "sha256": "16b871b2bb1986fbdbda4062d0fe9eef9eaf84f2afeb824117f19f63035352d0"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\tools\\decode_kernel_ab.py",
+     "size": 3394,
+     "mtime_ns": 1790804603558603300,
+     "sha256": "ef7a152de03b17877a206206a3026ab8865dde44756d695926dacdbf6f24ae2f"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\tools\\doorbell_selftest.py",
+     "size": 12731,
+     "mtime_ns": 1790804603558603300,
+     "sha256": "ebead2cfaa94fd11adb98d1edf8bb32bed4af1b79e0735fc3ff73c4c29616405"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\tools\\fit_demand_probe.py",
+     "size": 14147,
+     "mtime_ns": 1790804603559613200,
+     "sha256": "7edfde2384e1c2585212a1869a2432c379c524f628dc434ca30de7064e7901e7"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\tools\\kernel_tuning_ab.py",
+     "size": 8626,
+     "mtime_ns": 1790804603559613200,
+     "sha256": "85f6efe4bf9de470b8f3d398b0097f48e21d1017a83a9b21e4d91587819429c7"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\tools\\lookup_spec_estimate.py",
+     "size": 3535,
+     "mtime_ns": 1790804603560693600,
+     "sha256": "d4ee8f945db10231f26c8ca7dc76d228eca77dbaaa2db027571772c3dce79a35"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\tools\\measure_host_dram.py",
+     "size": 15961,
+     "mtime_ns": 1790804603560693600,
+     "sha256": "05edf63dd76c1989ef71a96ac432ebe1f97bcb17d215dd5ced4b597a2d6fb9d2"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\tools\\pack_store.py",
+     "size": 31602,
+     "mtime_ns": 1790804603561744300,
+     "sha256": "f946d91b236991e46ae59aed7deec18f6cd8b61afa405a1f776407dd37ea26cc"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\tools\\scale_pack.py",
+     "size": 11575,
+     "mtime_ns": 1790804603561744300,
+     "sha256": "5db4c7278b700d9bcf14dbd7bbc4a7c5abcc0a6778b65af863567cfba4a812cd"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\tools\\scale_pack_ab.py",
+     "size": 14004,
+     "mtime_ns": 1790804603562742700,
+     "sha256": "dc07f10ebfd6a78ab2c34facb54f741232367a9b48c27ddcada35ab499d998be"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\tools\\scale_pack_gpu_test.py",
+     "size": 14298,
+     "mtime_ns": 1790804603562742700,
+     "sha256": "e283aa217ca82ee0f60d82e69345a2e2dbd80fc9c67a735b7b18e379a1e82d64"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\tools\\scale_pack_multi_ab.py",
+     "size": 13883,
+     "mtime_ns": 1790804603563873500,
+     "sha256": "e956bc2823389d3acd42e70bd339dff01c64f1fd19842ae3430ccef80040f2d9"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\tools\\scale_pack_triton_interp.py",
+     "size": 5345,
+     "mtime_ns": 1790804603563873500,
+     "sha256": "fbd99fc6816b638d4480edb62d86745fffa6e9aa43226e6633678a623057126e"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\tools\\tune_prefill.py",
+     "size": 1475,
+     "mtime_ns": 1790804603564921900,
+     "sha256": "0ebc76dd2af6f9ef7f7b2831fea2bf0d5006c83853f7c53a0d85e47d2d583846"
+    }
+   ]
+  },
+  "context": {
+   "files": [
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\fused_core.py",
+     "sha256": "3fb4f9d8ee41361611372478fb1a316277dd371defed710506bd1b59102add09"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\harmony_render.py",
+     "sha256": "27fdce7bf26d36cee32049ca3ed046cb9baf6e4e8e25f10fc806ab0bb1c1fbbf"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\cpu_prefill.py",
+     "sha256": "dae214c95c871dae1d4ae068b30718e2ea55efe80bf1209d0b9dd7db3f23cb71"
+    },
+    {
+     "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\server.py",
+     "sha256": "6db0402857c81369147f4a15df9c1a3abecd603915a2c4c4ce44837e29126484"
+    }
+   ],
+   "tokenizer_dir": "G:\\Models\\gpt-oss-120b",
+   "ctx_tokens_requested": 13000,
+   "ctx_token_count": 13000,
+   "ctx_token_ids_sha256": "ed0eaa13cf3b4abe69a8dfb81b034593575369314e39f8df026251e806e0924a",
+   "decoded_context_sha256": "a12a7fc4555962261c6e9c599387f4ad3f825f50e44d3e2b0bd22afe7cd5f218"
+  },
+  "gguf": {
+   "path": "G:\\Models\\gpt-oss-120b-gguf\\gpt-oss-120b-MXFP4.gguf",
+   "size": 63387346208,
+   "mtime_ns": 1786479974139140600,
+   "identity_strength": "metadata_only_no_large_file_hash"
+  },
+  "llama_server": {
+   "path": "G:\\Tools\\llama-b10361\\llama-server.exe",
+   "size": 9216,
+   "mtime_ns": 1786478585144998600,
+   "sha256": "c65955724e82ae7c166c71dc448b6bf54637057eb1e677f2087fdac4adf32f11"
+  },
+  "neural_server_roots": {
+   "opt": {
+    "root": "F:\\AI\\Neural\\experiments\\neuralserver-opt",
+    "commit": "9aa766f509aa997ed18537e8b9c03c553abfa0c0",
+    "dirty": true,
+    "working_diff_sha256": "f3dda40065e661719c4df6a7e8055bc7c8bc8f45ec95de329b31f6c9b35cea4b",
+    "source_manifest": [
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\review_persistent_trial.py",
+      "size": 20558,
+      "mtime_ns": 1790847184582907400,
+      "sha256": "26952cc0907420bbde22cc6dce72e40244ba167b4dddeafadef6af0a4bfb85a8"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\arena.py",
+      "size": 12355,
+      "mtime_ns": 1790804180716145500,
+      "sha256": "f9eb1278a01d482f6ab4b81a1b8a49b62a613cc552a8137ac63391c708cc1f0d"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\chat_client.py",
+      "size": 4226,
+      "mtime_ns": 1790804180830713300,
+      "sha256": "5cf47802b4d5513b25219118468a65f8f40f39f694a0386c99fa66056a751471"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\cpu_prefill.py",
+      "size": 19662,
+      "mtime_ns": 1790804180831819000,
+      "sha256": "dae214c95c871dae1d4ae068b30718e2ea55efe80bf1209d0b9dd7db3f23cb71"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\doorbell.py",
+      "size": 17368,
+      "mtime_ns": 1790804180834991100,
+      "sha256": "0889846a08316695116b580e1d49e6701a676b702e03dc7d6bd03e2889ed673f"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\fused_core.py",
+      "size": 43971,
+      "mtime_ns": 1790804180836016000,
+      "sha256": "3fb4f9d8ee41361611372478fb1a316277dd371defed710506bd1b59102add09"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\harmony_render.py",
+      "size": 26950,
+      "mtime_ns": 1790804180844425000,
+      "sha256": "27fdce7bf26d36cee32049ca3ed046cb9baf6e4e8e25f10fc806ab0bb1c1fbbf"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\kernels\\gptoss_cpu_cap2.c",
+      "size": 34462,
+      "mtime_ns": 1790804180846573400,
+      "sha256": "47996d9f586f315567b5f2ab8baa53539f891d05c15dffed2e8ca1f44c173120"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\kernels\\gptoss_cpu_multi.c",
+      "size": 28545,
+      "mtime_ns": 1790804180846573400,
+      "sha256": "f4cb63e1459d9bed82a17ad1d1f17f817a42fa7e170026f448043dc51d5edf81"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\kernels\\gptoss_cpu_persistent.c",
+      "size": 20053,
+      "mtime_ns": 1790845858529174700,
+      "sha256": "080d08ff6b5d4eb0bf5b6ae324c538615d07cf1f6ab73bf6a93ba6f03979aecb"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\kernels\\membw_probe.c",
+      "size": 8154,
+      "mtime_ns": 1790804180847580900,
+      "sha256": "db40f94d9a0115441209bd1a5bc843be00dd33d9fdff02031421acdfd80e00c6"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\kernels\\memcpy_mt.c",
+      "size": 551,
+      "mtime_ns": 1790804180847580900,
+      "sha256": "841b94fba8589c03db935338e80606485e4d8197775b5d2a6eb2279e589e9b68"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\kv_ring.py",
+      "size": 7508,
+      "mtime_ns": 1790804180848861000,
+      "sha256": "32a57c4ecd2fb2e761845ec0fe37f0b7935fc0f522725d3ed58bc41c57de5e14"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\neural\\__init__.py",
+      "size": 93,
+      "mtime_ns": 1790804180855158500,
+      "sha256": "387f3ccf53983401f58532236abea74427398dbc474511cb06610d9318868532"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\neural\\moe\\__init__.py",
+      "size": 257,
+      "mtime_ns": 1790804180856160500,
+      "sha256": "7c435c0ee4fc2e4c4b6687b5d8f22fe527940e22c189e9306a6623d0d3359dd7"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\neural\\moe\\gptoss_adapter.py",
+      "size": 20164,
+      "mtime_ns": 1790804180857566800,
+      "sha256": "b567308e4b8b965ae731404ccea39556d4ea78a32c1ca021a544c4fb7a99d0ae"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\neural\\moe\\gptoss_core_graphs.py",
+      "size": 9079,
+      "mtime_ns": 1790804180857566800,
+      "sha256": "0dd8093bf94add972f9a82c2ad24e45e202addd8ae1786a6dc15f827ccb7b650"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\neural\\moe\\layout.py",
+      "size": 12452,
+      "mtime_ns": 1790804180858573700,
+      "sha256": "78ac59cdb284f6f1f0132eba1507e2585edf811873c87f5054e3343407eda61d"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\neural\\paging\\__init__.py",
+      "size": 494,
+      "mtime_ns": 1790804180858573700,
+      "sha256": "3fd5a9b9ddc029d8a7935fcd193b9ccda0ca52c25a04a5c87bf5163e11efa555"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\neural\\paging\\compressed_transport.py",
+      "size": 14567,
+      "mtime_ns": 1790804180859580100,
+      "sha256": "f05fc551160b37b10c96723c0ec8d54bb38d878e707974b065974224d70e9221"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\neural\\paging\\quantized_compute.py",
+      "size": 25717,
+      "mtime_ns": 1790804180859580100,
+      "sha256": "a2f6c2f9b0566ca9658bb13ea5a12ec39f53169e19555a1c498fa561a0e65fb4"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\neural\\paging\\residency.py",
+      "size": 9973,
+      "mtime_ns": 1790804180859580100,
+      "sha256": "8b41803483695fae4978bd5da673ef5bdf78ab0934f47489fd17803a73a911bc"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\neural\\q80\\__init__.py",
+      "size": 154,
+      "mtime_ns": 1790804180860580500,
+      "sha256": "e50a2608f5e6a1ca645bda1060e40ad81aafc1a7d4bbae592c4a9e49baefe041"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\neural\\q80\\bench_hygiene.py",
+      "size": 5724,
+      "mtime_ns": 1790804180860580500,
+      "sha256": "84feb69bf46db835604cf97aef5d4bff261033b949007a472015476000b3a11b"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\neural\\q80\\expert_runtime.py",
+      "size": 74717,
+      "mtime_ns": 1790804180861592200,
+      "sha256": "7311357d3e2a919e878e986837673846722fa403d5c94c7adc62fa3e817b0d3d"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\neural\\q80\\expert_store.py",
+      "size": 9159,
+      "mtime_ns": 1790804180862596500,
+      "sha256": "10f6aee849da60caa0be4d7c0e4c6a41f43f0a65d952b812b9d1f60d0e52d88f"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\neural\\q80\\hot_path.py",
+      "size": 22688,
+      "mtime_ns": 1790804180862596500,
+      "sha256": "cd15e2c10987051001d24a87d0f956403d16a6680ae61dac1cb79519a4b40fc0"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\neural\\q80\\intake.py",
+      "size": 46926,
+      "mtime_ns": 1790804180863614800,
+      "sha256": "ed110d6d2e92ffb979e96196df51f491f2ffa6d72137eeba9a98a8e88b4062e9"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\neural\\q80\\mxfp4_kernels.py",
+      "size": 32273,
+      "mtime_ns": 1790841106984363700,
+      "sha256": "1dd2715f1489579efb93ac1108babf3386dc552f17885f5490def314e2f03900"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\neural\\q80\\prepacked_store.py",
+      "size": 12281,
+      "mtime_ns": 1790804180865122800,
+      "sha256": "730b3f9f0b6fa4259017ede456587c89343d349885218b2f11f5da4f05d434b8"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\neural\\q80\\quant_store.py",
+      "size": 11796,
+      "mtime_ns": 1790804180865122800,
+      "sha256": "189cfdade74dfa38637319e5f1276d3599f3ce9050df3711bcd4bd465aa3ffe0"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\neural\\quality\\__init__.py",
+      "size": 0,
+      "mtime_ns": 1790804180865122800,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\neural\\quality\\harness.py",
+      "size": 4886,
+      "mtime_ns": 1790804180866130700,
+      "sha256": "6fe413f4e8585a654bfe16c7aa78c12da12b15fa4922785ba139b3bb6a63b9ff"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\paths.py",
+      "size": 1017,
+      "mtime_ns": 1790804180866130700,
+      "sha256": "7482648479198a66a3edc5465dbeb7219a27a6a01e512e31d0dc3d4b97a1efde"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\server.py",
+      "size": 197129,
+      "mtime_ns": 1790845719151521400,
+      "sha256": "c97528bc12e8d1d9c3bf3fa59166a3790288928cafda78589300ff7c978f11ea"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\start_neural_chat.bat",
+      "size": 374,
+      "mtime_ns": 1790804180871600000,
+      "sha256": "d1aa540cdcf42b0745a0aafa78c78243998995a5d4f324f85a4f522719473f35"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\start_neural_optimized.bat",
+      "size": 770,
+      "mtime_ns": 1790844701362526700,
+      "sha256": "93c5b4e5a820d012c85f979d449b23377fccc3db5e64916a5d07def4db7299de"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\start_neural_server.bat",
+      "size": 1652,
+      "mtime_ns": 1790804180871600000,
+      "sha256": "3fdedeffcfd2185e27a6355ae1147e6a1a40af4649840177569ac2cfc0e4b7ba"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tests\\render_old.py",
+      "size": 4740,
+      "mtime_ns": 1790804180872774600,
+      "sha256": "e3baae402ef7b8d3268de00046dda1c542cd215566f5c709462543e7eac10d91"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tests\\test_attention.py",
+      "size": 47557,
+      "mtime_ns": 1790804180873621500,
+      "sha256": "50f8812b1940c50bbebb5bede0b8cbfccb686a3f2f80bc914eae351cc72d3e2f"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tests\\test_cpu_multi.py",
+      "size": 25661,
+      "mtime_ns": 1790804180873621500,
+      "sha256": "9761103643bdc958541760d23d07fcd62fc2745e8f1b3b861c71232dc2c0389e"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tests\\test_doorbell_mock.py",
+      "size": 69396,
+      "mtime_ns": 1790804180874634600,
+      "sha256": "074fec1f8380b82c36ebc1573a82f1751f67c1bff2fc96999bc5767caf3d0ace"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tests\\test_grouped_gemm_plan.py",
+      "size": 4476,
+      "mtime_ns": 1790840615554272500,
+      "sha256": "02a7425df31ff8aef46c4cd9f9e71857d04e58ba1a9245b50c0517395739488d"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tests\\test_kv_ring.py",
+      "size": 8270,
+      "mtime_ns": 1790804180875639600,
+      "sha256": "eeaaba4c340c8f7aea4c864945c960e695bdbda1ff03c4f16869d10130d2f13c"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tests\\test_protect.py",
+      "size": 4598,
+      "mtime_ns": 1790804180876192300,
+      "sha256": "ef7c720a5d301e4e7114fbf339506775acedde9f27649d32ac04ce6ee023bf3a"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tests\\test_review_bench.py",
+      "size": 11742,
+      "mtime_ns": 1790845550006488200,
+      "sha256": "4e70bed4b086b7288518123b0beacb4bb10e5297d0c4de274573871152865810"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tests\\test_scale_layout.py",
+      "size": 20458,
+      "mtime_ns": 1790804180876192300,
+      "sha256": "7786f6f66492b2440d373609e5b50c3d544899ae5d18e7c073a038994db7d50e"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tests\\test_splice.py",
+      "size": 61607,
+      "mtime_ns": 1790804180876192300,
+      "sha256": "91d173864f036b5a518fd77dfb15a63c29f500cced36594a708b464db2e2c7e5"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\admission_replay.py",
+      "size": 4561,
+      "mtime_ns": 1790804180877608000,
+      "sha256": "e4b2f0bf1f974b1a94d3aaf71e2339ce5a346cd0689109f49161a2a1d597bb02"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\bench_agent.py",
+      "size": 10262,
+      "mtime_ns": 1790804180877608000,
+      "sha256": "00adcee869eb7860de93d4e7ac041e5936cabe78ed46fa5343e1e7b86382c2ce"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\bench_prompt_warm.py",
+      "size": 3703,
+      "mtime_ns": 1790804180878622400,
+      "sha256": "fd623442ce361563289371786ccdd3abe5040668e1b379329ebf00fb2814a24d"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\bench_vs_llama.py",
+      "size": 28808,
+      "mtime_ns": 1790845550006488200,
+      "sha256": "feefba89641643fd800014b835c48b4f130cb93582143031ca4dd17439f19eeb"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\build_kernels.bat",
+      "size": 900,
+      "mtime_ns": 1790804180879865000,
+      "sha256": "4a6a014afefcccb889ec3d10569de283323c43499e80d176cbf17450e2141391"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\build_store.py",
+      "size": 1381,
+      "mtime_ns": 1790804180879865000,
+      "sha256": "8fd94b47b542b902e9821f332fd37ae8e0ec82eb3309ce6adb3374299747fc3e"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\cache_policy_sim.py",
+      "size": 6663,
+      "mtime_ns": 1790804180880922100,
+      "sha256": "5a1bca4d4fa7f19f0f8efbfcf856f53a2644f12b97e43bc6d302b621a1e75831"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\calibrate_hotset.py",
+      "size": 5313,
+      "mtime_ns": 1790804180880922100,
+      "sha256": "938b845ae4e95c2197ae244b6b3ee667ff59bd4d718df538ec6607b551fae30d"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\compile_check_kernels.py",
+      "size": 4626,
+      "mtime_ns": 1790804180880922100,
+      "sha256": "16b871b2bb1986fbdbda4062d0fe9eef9eaf84f2afeb824117f19f63035352d0"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\decode_kernel_ab.py",
+      "size": 3394,
+      "mtime_ns": 1790804180882123700,
+      "sha256": "ef7a152de03b17877a206206a3026ab8865dde44756d695926dacdbf6f24ae2f"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\doorbell_selftest.py",
+      "size": 12731,
+      "mtime_ns": 1790804180883130200,
+      "sha256": "ebead2cfaa94fd11adb98d1edf8bb32bed4af1b79e0735fc3ff73c4c29616405"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\fit_demand_probe.py",
+      "size": 14147,
+      "mtime_ns": 1790804180883130200,
+      "sha256": "7edfde2384e1c2585212a1869a2432c379c524f628dc434ca30de7064e7901e7"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\graph_replay_probe.py",
+      "size": 18479,
+      "mtime_ns": 1790845874964969300,
+      "sha256": "04a0885104b965e4f5939391d6f29d019cea1996cefcfd7f05e47fb1d7cd4b85"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\grouped_gemm_ab.py",
+      "size": 10697,
+      "mtime_ns": 1790840615553194900,
+      "sha256": "1358ba47c5e92eee4e29040ec6ec126bccabc331c7a0cc3ff845b6f0b65979f1"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\kernel_tuning_ab.py",
+      "size": 8626,
+      "mtime_ns": 1790804180884144600,
+      "sha256": "85f6efe4bf9de470b8f3d398b0097f48e21d1017a83a9b21e4d91587819429c7"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\lookup_spec_estimate.py",
+      "size": 3535,
+      "mtime_ns": 1790804180884144600,
+      "sha256": "d4ee8f945db10231f26c8ca7dc76d228eca77dbaaa2db027571772c3dce79a35"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\lossless_entropy_probe.py",
+      "size": 16402,
+      "mtime_ns": 1790839954734899600,
+      "sha256": "b20fa1d821967221eff104924e91693deae7bff14d47a0e27f1639b447d17e6d"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\masked_gemv_ab.py",
+      "size": 11936,
+      "mtime_ns": 1790840408160271500,
+      "sha256": "fe678db4978b1d909c80557158da0c145f682fa456bf7c8e1a1f410bac8475d7"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\measure_host_dram.py",
+      "size": 15961,
+      "mtime_ns": 1790804180885234800,
+      "sha256": "05edf63dd76c1989ef71a96ac432ebe1f97bcb17d215dd5ced4b597a2d6fb9d2"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\pack_store.py",
+      "size": 31602,
+      "mtime_ns": 1790804180885234800,
+      "sha256": "f946d91b236991e46ae59aed7deec18f6cd8b61afa405a1f776407dd37ea26cc"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\persistent_decode_ab.py",
+      "size": 13192,
+      "mtime_ns": 1790845858534745500,
+      "sha256": "13a896c603db96dd637bc154ebc806b634c2b898c4bd48f1c698e356292b3fb8"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\persistent_team_probe.py",
+      "size": 5360,
+      "mtime_ns": 1790845631053666300,
+      "sha256": "55aeab8eb8aa38b2531d020cc50d35a3d806240b01675551c4e2b3b37e889209"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\review_bench.py",
+      "size": 15446,
+      "mtime_ns": 1790841267033062600,
+      "sha256": "60577e0ad59ab3f716278670d18f31e666afe24b38d5388c073b26c4cafe9b4b"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\review_cpu_decode_check.py",
+      "size": 7989,
+      "mtime_ns": 1790845502864541000,
+      "sha256": "91f4d6802abe5159e1d046a460b4c409b2eb20a9ff5b524f3f2b7035013725fa"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\review_decode_check.py",
+      "size": 13283,
+      "mtime_ns": 1790845418481488300,
+      "sha256": "f73a24d261021a2428749c6eff1d07ea91d9d8b580a37a8c31ed6bcb11d8dee9"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\review_prefill_check.py",
+      "size": 6092,
+      "mtime_ns": 1790843129656900300,
+      "sha256": "5d23bbb7a29d99a34c4d9ab4a5c79a9f39261927afedd3e9e2c63f772548e2b9"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\review_warm_prefill.py",
+      "size": 22024,
+      "mtime_ns": 1790844329655895100,
+      "sha256": "7cf7c861b20adc2f7d77991e0cf2df0a5c2662e859c8dc27e513899790ea6685"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\scale_pack.py",
+      "size": 11575,
+      "mtime_ns": 1790804180886240500,
+      "sha256": "5db4c7278b700d9bcf14dbd7bbc4a7c5abcc0a6778b65af863567cfba4a812cd"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\scale_pack_ab.py",
+      "size": 14004,
+      "mtime_ns": 1790804180886240500,
+      "sha256": "dc07f10ebfd6a78ab2c34facb54f741232367a9b48c27ddcada35ab499d998be"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\scale_pack_gpu_test.py",
+      "size": 14298,
+      "mtime_ns": 1790804180887257500,
+      "sha256": "e283aa217ca82ee0f60d82e69345a2e2dbd80fc9c67a735b7b18e379a1e82d64"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\scale_pack_multi_ab.py",
+      "size": 13883,
+      "mtime_ns": 1790804180888254800,
+      "sha256": "e956bc2823389d3acd42e70bd339dff01c64f1fd19842ae3430ccef80040f2d9"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\scale_pack_triton_interp.py",
+      "size": 5345,
+      "mtime_ns": 1790804180888254800,
+      "sha256": "fbd99fc6816b638d4480edb62d86745fffa6e9aa43226e6633678a623057126e"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\tune_prefill.py",
+      "size": 1475,
+      "mtime_ns": 1790804180888254800,
+      "sha256": "0ebc76dd2af6f9ef7f7b2831fea2bf0d5006c83853f7c53a0d85e47d2d583846"
+     }
+    ],
+    "artifacts": {
+     "server": {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\server.py",
+      "size": 197129,
+      "mtime_ns": 1790845719151521400,
+      "sha256": "c97528bc12e8d1d9c3bf3fa59166a3790288928cafda78589300ff7c978f11ea"
+     },
+     "gptoss_cpu_cap2.dll": {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\gptoss_cpu_cap2.dll",
+      "size": 413085,
+      "mtime_ns": 1790804180839050200,
+      "sha256": "84a8c5af304e5f1c20b4ee12c8708f0494c7b580be31aff6df95481772b40b44"
+     },
+     "gptoss_cpu_multi.dll": {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\gptoss_cpu_multi.dll",
+      "size": 486449,
+      "mtime_ns": 1790804180843422300,
+      "sha256": "fd48ac7644c1a136f8635f89ecd0b1bf8f1be0caa38f3ffc16c3c778b1db9fbb"
+     },
+     "tokenizer/tokenizer_config.json": {
+      "path": "G:\\Models\\gpt-oss-120b\\tokenizer_config.json",
+      "size": 4200,
+      "mtime_ns": 1786476062771391700,
+      "sha256": "9279e942392b742d633c7adbb89ebe002c98399db8926a7af5125c726f404070"
+     },
+     "tokenizer/special_tokens_map.json": {
+      "path": "G:\\Models\\gpt-oss-120b\\special_tokens_map.json",
+      "size": 98,
+      "mtime_ns": 1786476056839926300,
+      "sha256": "dd5e191d20c12d2fee1da5bae14ca1db0f5f4215300af691f23cdee97120a293"
+     },
+     "tokenizer/chat_template.jinja": {
+      "path": "G:\\Models\\gpt-oss-120b\\chat_template.jinja",
+      "size": 16738,
+      "mtime_ns": 1786475297134244300,
+      "sha256": "a4c9919cbbd4acdd51ccffe22da049264b1b73e59055fa58811a99efbd7c8146"
+     },
+     "tokenizer/tokenizer.json": {
+      "path": "G:\\Models\\gpt-oss-120b\\tokenizer.json",
+      "size": 27868174,
+      "mtime_ns": 1786476062072340600,
+      "sha256": "0614fe83cadab421296e664e1f48f4261fa8fef6e03e63bb75c20f38e37d07d3"
+     },
+     "tokenizer/config.json": {
+      "path": "G:\\Models\\gpt-oss-120b\\config.json",
+      "size": 2089,
+      "mtime_ns": 1786475297078179900,
+      "sha256": "933aeb666a3fd851133ddd7686414f369bc564c4185fb5704416550879f10566"
+     },
+     "tools/bench_vs_llama.py": {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\bench_vs_llama.py",
+      "size": 28808,
+      "mtime_ns": 1790845550006488200,
+      "sha256": "feefba89641643fd800014b835c48b4f130cb93582143031ca4dd17439f19eeb"
+     },
+     "tools/review_bench.py": {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\review_bench.py",
+      "size": 15446,
+      "mtime_ns": 1790841267033062600,
+      "sha256": "60577e0ad59ab3f716278670d18f31e666afe24b38d5388c073b26c4cafe9b4b"
+     },
+     "selected_decode_dll": {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\gptoss_cpu_persistent.dll",
+      "size": 432830,
+      "mtime_ns": 1790845922742736400,
+      "sha256": "c1221ecfacbeb56ccf14b54ba2f0b3a7c1e95ddec15d971a9f53b733dfb8d2ca"
+     },
+     "store_dir": {
+      "path": "G:\\NeuralStores\\gptoss120b_ps4",
+      "size": 16384,
+      "mtime_ns": 1790720591409613800
+     },
+     "store/metadata.json": {
+      "path": "G:\\NeuralStores\\gptoss120b_ps4\\metadata.json",
+      "size": 7117,
+      "mtime_ns": 1790720591405515100,
+      "sha256": "3bb2848c2302ae37134de51807617a4626c0fad6fb6197fe3b5f31a77b1c7b69"
+     },
+     "store/pack_progress.json": {
+      "path": "G:\\NeuralStores\\gptoss120b_ps4\\pack_progress.json",
+      "size": 17311,
+      "mtime_ns": 1790720591042168500,
+      "sha256": "0a4002184e603dbeb09ff6ec727e5430d624f1e3c8f64334efe38fb82ce1df6c"
+     }
+    }
+   },
+   "llama": {
+    "root": "F:\\AI\\Neural\\experiments\\neuralserver-opt",
+    "commit": "9aa766f509aa997ed18537e8b9c03c553abfa0c0",
+    "dirty": true,
+    "working_diff_sha256": "f3dda40065e661719c4df6a7e8055bc7c8bc8f45ec95de329b31f6c9b35cea4b",
+    "source_manifest": [
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\review_persistent_trial.py",
+      "size": 20558,
+      "mtime_ns": 1790847184582907400,
+      "sha256": "26952cc0907420bbde22cc6dce72e40244ba167b4dddeafadef6af0a4bfb85a8"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\arena.py",
+      "size": 12355,
+      "mtime_ns": 1790804180716145500,
+      "sha256": "f9eb1278a01d482f6ab4b81a1b8a49b62a613cc552a8137ac63391c708cc1f0d"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\chat_client.py",
+      "size": 4226,
+      "mtime_ns": 1790804180830713300,
+      "sha256": "5cf47802b4d5513b25219118468a65f8f40f39f694a0386c99fa66056a751471"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\cpu_prefill.py",
+      "size": 19662,
+      "mtime_ns": 1790804180831819000,
+      "sha256": "dae214c95c871dae1d4ae068b30718e2ea55efe80bf1209d0b9dd7db3f23cb71"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\doorbell.py",
+      "size": 17368,
+      "mtime_ns": 1790804180834991100,
+      "sha256": "0889846a08316695116b580e1d49e6701a676b702e03dc7d6bd03e2889ed673f"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\fused_core.py",
+      "size": 43971,
+      "mtime_ns": 1790804180836016000,
+      "sha256": "3fb4f9d8ee41361611372478fb1a316277dd371defed710506bd1b59102add09"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\harmony_render.py",
+      "size": 26950,
+      "mtime_ns": 1790804180844425000,
+      "sha256": "27fdce7bf26d36cee32049ca3ed046cb9baf6e4e8e25f10fc806ab0bb1c1fbbf"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\kernels\\gptoss_cpu_cap2.c",
+      "size": 34462,
+      "mtime_ns": 1790804180846573400,
+      "sha256": "47996d9f586f315567b5f2ab8baa53539f891d05c15dffed2e8ca1f44c173120"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\kernels\\gptoss_cpu_multi.c",
+      "size": 28545,
+      "mtime_ns": 1790804180846573400,
+      "sha256": "f4cb63e1459d9bed82a17ad1d1f17f817a42fa7e170026f448043dc51d5edf81"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\kernels\\gptoss_cpu_persistent.c",
+      "size": 20053,
+      "mtime_ns": 1790845858529174700,
+      "sha256": "080d08ff6b5d4eb0bf5b6ae324c538615d07cf1f6ab73bf6a93ba6f03979aecb"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\kernels\\membw_probe.c",
+      "size": 8154,
+      "mtime_ns": 1790804180847580900,
+      "sha256": "db40f94d9a0115441209bd1a5bc843be00dd33d9fdff02031421acdfd80e00c6"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\kernels\\memcpy_mt.c",
+      "size": 551,
+      "mtime_ns": 1790804180847580900,
+      "sha256": "841b94fba8589c03db935338e80606485e4d8197775b5d2a6eb2279e589e9b68"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\kv_ring.py",
+      "size": 7508,
+      "mtime_ns": 1790804180848861000,
+      "sha256": "32a57c4ecd2fb2e761845ec0fe37f0b7935fc0f522725d3ed58bc41c57de5e14"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\neural\\__init__.py",
+      "size": 93,
+      "mtime_ns": 1790804180855158500,
+      "sha256": "387f3ccf53983401f58532236abea74427398dbc474511cb06610d9318868532"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\neural\\moe\\__init__.py",
+      "size": 257,
+      "mtime_ns": 1790804180856160500,
+      "sha256": "7c435c0ee4fc2e4c4b6687b5d8f22fe527940e22c189e9306a6623d0d3359dd7"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\neural\\moe\\gptoss_adapter.py",
+      "size": 20164,
+      "mtime_ns": 1790804180857566800,
+      "sha256": "b567308e4b8b965ae731404ccea39556d4ea78a32c1ca021a544c4fb7a99d0ae"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\neural\\moe\\gptoss_core_graphs.py",
+      "size": 9079,
+      "mtime_ns": 1790804180857566800,
+      "sha256": "0dd8093bf94add972f9a82c2ad24e45e202addd8ae1786a6dc15f827ccb7b650"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\neural\\moe\\layout.py",
+      "size": 12452,
+      "mtime_ns": 1790804180858573700,
+      "sha256": "78ac59cdb284f6f1f0132eba1507e2585edf811873c87f5054e3343407eda61d"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\neural\\paging\\__init__.py",
+      "size": 494,
+      "mtime_ns": 1790804180858573700,
+      "sha256": "3fd5a9b9ddc029d8a7935fcd193b9ccda0ca52c25a04a5c87bf5163e11efa555"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\neural\\paging\\compressed_transport.py",
+      "size": 14567,
+      "mtime_ns": 1790804180859580100,
+      "sha256": "f05fc551160b37b10c96723c0ec8d54bb38d878e707974b065974224d70e9221"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\neural\\paging\\quantized_compute.py",
+      "size": 25717,
+      "mtime_ns": 1790804180859580100,
+      "sha256": "a2f6c2f9b0566ca9658bb13ea5a12ec39f53169e19555a1c498fa561a0e65fb4"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\neural\\paging\\residency.py",
+      "size": 9973,
+      "mtime_ns": 1790804180859580100,
+      "sha256": "8b41803483695fae4978bd5da673ef5bdf78ab0934f47489fd17803a73a911bc"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\neural\\q80\\__init__.py",
+      "size": 154,
+      "mtime_ns": 1790804180860580500,
+      "sha256": "e50a2608f5e6a1ca645bda1060e40ad81aafc1a7d4bbae592c4a9e49baefe041"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\neural\\q80\\bench_hygiene.py",
+      "size": 5724,
+      "mtime_ns": 1790804180860580500,
+      "sha256": "84feb69bf46db835604cf97aef5d4bff261033b949007a472015476000b3a11b"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\neural\\q80\\expert_runtime.py",
+      "size": 74717,
+      "mtime_ns": 1790804180861592200,
+      "sha256": "7311357d3e2a919e878e986837673846722fa403d5c94c7adc62fa3e817b0d3d"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\neural\\q80\\expert_store.py",
+      "size": 9159,
+      "mtime_ns": 1790804180862596500,
+      "sha256": "10f6aee849da60caa0be4d7c0e4c6a41f43f0a65d952b812b9d1f60d0e52d88f"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\neural\\q80\\hot_path.py",
+      "size": 22688,
+      "mtime_ns": 1790804180862596500,
+      "sha256": "cd15e2c10987051001d24a87d0f956403d16a6680ae61dac1cb79519a4b40fc0"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\neural\\q80\\intake.py",
+      "size": 46926,
+      "mtime_ns": 1790804180863614800,
+      "sha256": "ed110d6d2e92ffb979e96196df51f491f2ffa6d72137eeba9a98a8e88b4062e9"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\neural\\q80\\mxfp4_kernels.py",
+      "size": 32273,
+      "mtime_ns": 1790841106984363700,
+      "sha256": "1dd2715f1489579efb93ac1108babf3386dc552f17885f5490def314e2f03900"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\neural\\q80\\prepacked_store.py",
+      "size": 12281,
+      "mtime_ns": 1790804180865122800,
+      "sha256": "730b3f9f0b6fa4259017ede456587c89343d349885218b2f11f5da4f05d434b8"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\neural\\q80\\quant_store.py",
+      "size": 11796,
+      "mtime_ns": 1790804180865122800,
+      "sha256": "189cfdade74dfa38637319e5f1276d3599f3ce9050df3711bcd4bd465aa3ffe0"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\neural\\quality\\__init__.py",
+      "size": 0,
+      "mtime_ns": 1790804180865122800,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\neural\\quality\\harness.py",
+      "size": 4886,
+      "mtime_ns": 1790804180866130700,
+      "sha256": "6fe413f4e8585a654bfe16c7aa78c12da12b15fa4922785ba139b3bb6a63b9ff"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\paths.py",
+      "size": 1017,
+      "mtime_ns": 1790804180866130700,
+      "sha256": "7482648479198a66a3edc5465dbeb7219a27a6a01e512e31d0dc3d4b97a1efde"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\server.py",
+      "size": 197129,
+      "mtime_ns": 1790845719151521400,
+      "sha256": "c97528bc12e8d1d9c3bf3fa59166a3790288928cafda78589300ff7c978f11ea"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\start_neural_chat.bat",
+      "size": 374,
+      "mtime_ns": 1790804180871600000,
+      "sha256": "d1aa540cdcf42b0745a0aafa78c78243998995a5d4f324f85a4f522719473f35"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\start_neural_optimized.bat",
+      "size": 770,
+      "mtime_ns": 1790844701362526700,
+      "sha256": "93c5b4e5a820d012c85f979d449b23377fccc3db5e64916a5d07def4db7299de"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\start_neural_server.bat",
+      "size": 1652,
+      "mtime_ns": 1790804180871600000,
+      "sha256": "3fdedeffcfd2185e27a6355ae1147e6a1a40af4649840177569ac2cfc0e4b7ba"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tests\\render_old.py",
+      "size": 4740,
+      "mtime_ns": 1790804180872774600,
+      "sha256": "e3baae402ef7b8d3268de00046dda1c542cd215566f5c709462543e7eac10d91"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tests\\test_attention.py",
+      "size": 47557,
+      "mtime_ns": 1790804180873621500,
+      "sha256": "50f8812b1940c50bbebb5bede0b8cbfccb686a3f2f80bc914eae351cc72d3e2f"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tests\\test_cpu_multi.py",
+      "size": 25661,
+      "mtime_ns": 1790804180873621500,
+      "sha256": "9761103643bdc958541760d23d07fcd62fc2745e8f1b3b861c71232dc2c0389e"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tests\\test_doorbell_mock.py",
+      "size": 69396,
+      "mtime_ns": 1790804180874634600,
+      "sha256": "074fec1f8380b82c36ebc1573a82f1751f67c1bff2fc96999bc5767caf3d0ace"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tests\\test_grouped_gemm_plan.py",
+      "size": 4476,
+      "mtime_ns": 1790840615554272500,
+      "sha256": "02a7425df31ff8aef46c4cd9f9e71857d04e58ba1a9245b50c0517395739488d"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tests\\test_kv_ring.py",
+      "size": 8270,
+      "mtime_ns": 1790804180875639600,
+      "sha256": "eeaaba4c340c8f7aea4c864945c960e695bdbda1ff03c4f16869d10130d2f13c"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tests\\test_protect.py",
+      "size": 4598,
+      "mtime_ns": 1790804180876192300,
+      "sha256": "ef7c720a5d301e4e7114fbf339506775acedde9f27649d32ac04ce6ee023bf3a"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tests\\test_review_bench.py",
+      "size": 11742,
+      "mtime_ns": 1790845550006488200,
+      "sha256": "4e70bed4b086b7288518123b0beacb4bb10e5297d0c4de274573871152865810"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tests\\test_scale_layout.py",
+      "size": 20458,
+      "mtime_ns": 1790804180876192300,
+      "sha256": "7786f6f66492b2440d373609e5b50c3d544899ae5d18e7c073a038994db7d50e"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tests\\test_splice.py",
+      "size": 61607,
+      "mtime_ns": 1790804180876192300,
+      "sha256": "91d173864f036b5a518fd77dfb15a63c29f500cced36594a708b464db2e2c7e5"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\admission_replay.py",
+      "size": 4561,
+      "mtime_ns": 1790804180877608000,
+      "sha256": "e4b2f0bf1f974b1a94d3aaf71e2339ce5a346cd0689109f49161a2a1d597bb02"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\bench_agent.py",
+      "size": 10262,
+      "mtime_ns": 1790804180877608000,
+      "sha256": "00adcee869eb7860de93d4e7ac041e5936cabe78ed46fa5343e1e7b86382c2ce"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\bench_prompt_warm.py",
+      "size": 3703,
+      "mtime_ns": 1790804180878622400,
+      "sha256": "fd623442ce361563289371786ccdd3abe5040668e1b379329ebf00fb2814a24d"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\bench_vs_llama.py",
+      "size": 28808,
+      "mtime_ns": 1790845550006488200,
+      "sha256": "feefba89641643fd800014b835c48b4f130cb93582143031ca4dd17439f19eeb"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\build_kernels.bat",
+      "size": 900,
+      "mtime_ns": 1790804180879865000,
+      "sha256": "4a6a014afefcccb889ec3d10569de283323c43499e80d176cbf17450e2141391"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\build_store.py",
+      "size": 1381,
+      "mtime_ns": 1790804180879865000,
+      "sha256": "8fd94b47b542b902e9821f332fd37ae8e0ec82eb3309ce6adb3374299747fc3e"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\cache_policy_sim.py",
+      "size": 6663,
+      "mtime_ns": 1790804180880922100,
+      "sha256": "5a1bca4d4fa7f19f0f8efbfcf856f53a2644f12b97e43bc6d302b621a1e75831"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\calibrate_hotset.py",
+      "size": 5313,
+      "mtime_ns": 1790804180880922100,
+      "sha256": "938b845ae4e95c2197ae244b6b3ee667ff59bd4d718df538ec6607b551fae30d"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\compile_check_kernels.py",
+      "size": 4626,
+      "mtime_ns": 1790804180880922100,
+      "sha256": "16b871b2bb1986fbdbda4062d0fe9eef9eaf84f2afeb824117f19f63035352d0"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\decode_kernel_ab.py",
+      "size": 3394,
+      "mtime_ns": 1790804180882123700,
+      "sha256": "ef7a152de03b17877a206206a3026ab8865dde44756d695926dacdbf6f24ae2f"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\doorbell_selftest.py",
+      "size": 12731,
+      "mtime_ns": 1790804180883130200,
+      "sha256": "ebead2cfaa94fd11adb98d1edf8bb32bed4af1b79e0735fc3ff73c4c29616405"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\fit_demand_probe.py",
+      "size": 14147,
+      "mtime_ns": 1790804180883130200,
+      "sha256": "7edfde2384e1c2585212a1869a2432c379c524f628dc434ca30de7064e7901e7"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\graph_replay_probe.py",
+      "size": 18479,
+      "mtime_ns": 1790845874964969300,
+      "sha256": "04a0885104b965e4f5939391d6f29d019cea1996cefcfd7f05e47fb1d7cd4b85"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\grouped_gemm_ab.py",
+      "size": 10697,
+      "mtime_ns": 1790840615553194900,
+      "sha256": "1358ba47c5e92eee4e29040ec6ec126bccabc331c7a0cc3ff845b6f0b65979f1"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\kernel_tuning_ab.py",
+      "size": 8626,
+      "mtime_ns": 1790804180884144600,
+      "sha256": "85f6efe4bf9de470b8f3d398b0097f48e21d1017a83a9b21e4d91587819429c7"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\lookup_spec_estimate.py",
+      "size": 3535,
+      "mtime_ns": 1790804180884144600,
+      "sha256": "d4ee8f945db10231f26c8ca7dc76d228eca77dbaaa2db027571772c3dce79a35"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\lossless_entropy_probe.py",
+      "size": 16402,
+      "mtime_ns": 1790839954734899600,
+      "sha256": "b20fa1d821967221eff104924e91693deae7bff14d47a0e27f1639b447d17e6d"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\masked_gemv_ab.py",
+      "size": 11936,
+      "mtime_ns": 1790840408160271500,
+      "sha256": "fe678db4978b1d909c80557158da0c145f682fa456bf7c8e1a1f410bac8475d7"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\measure_host_dram.py",
+      "size": 15961,
+      "mtime_ns": 1790804180885234800,
+      "sha256": "05edf63dd76c1989ef71a96ac432ebe1f97bcb17d215dd5ced4b597a2d6fb9d2"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\pack_store.py",
+      "size": 31602,
+      "mtime_ns": 1790804180885234800,
+      "sha256": "f946d91b236991e46ae59aed7deec18f6cd8b61afa405a1f776407dd37ea26cc"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\persistent_decode_ab.py",
+      "size": 13192,
+      "mtime_ns": 1790845858534745500,
+      "sha256": "13a896c603db96dd637bc154ebc806b634c2b898c4bd48f1c698e356292b3fb8"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\persistent_team_probe.py",
+      "size": 5360,
+      "mtime_ns": 1790845631053666300,
+      "sha256": "55aeab8eb8aa38b2531d020cc50d35a3d806240b01675551c4e2b3b37e889209"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\review_bench.py",
+      "size": 15446,
+      "mtime_ns": 1790841267033062600,
+      "sha256": "60577e0ad59ab3f716278670d18f31e666afe24b38d5388c073b26c4cafe9b4b"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\review_cpu_decode_check.py",
+      "size": 7989,
+      "mtime_ns": 1790845502864541000,
+      "sha256": "91f4d6802abe5159e1d046a460b4c409b2eb20a9ff5b524f3f2b7035013725fa"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\review_decode_check.py",
+      "size": 13283,
+      "mtime_ns": 1790845418481488300,
+      "sha256": "f73a24d261021a2428749c6eff1d07ea91d9d8b580a37a8c31ed6bcb11d8dee9"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\review_prefill_check.py",
+      "size": 6092,
+      "mtime_ns": 1790843129656900300,
+      "sha256": "5d23bbb7a29d99a34c4d9ab4a5c79a9f39261927afedd3e9e2c63f772548e2b9"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\review_warm_prefill.py",
+      "size": 22024,
+      "mtime_ns": 1790844329655895100,
+      "sha256": "7cf7c861b20adc2f7d77991e0cf2df0a5c2662e859c8dc27e513899790ea6685"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\scale_pack.py",
+      "size": 11575,
+      "mtime_ns": 1790804180886240500,
+      "sha256": "5db4c7278b700d9bcf14dbd7bbc4a7c5abcc0a6778b65af863567cfba4a812cd"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\scale_pack_ab.py",
+      "size": 14004,
+      "mtime_ns": 1790804180886240500,
+      "sha256": "dc07f10ebfd6a78ab2c34facb54f741232367a9b48c27ddcada35ab499d998be"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\scale_pack_gpu_test.py",
+      "size": 14298,
+      "mtime_ns": 1790804180887257500,
+      "sha256": "e283aa217ca82ee0f60d82e69345a2e2dbd80fc9c67a735b7b18e379a1e82d64"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\scale_pack_multi_ab.py",
+      "size": 13883,
+      "mtime_ns": 1790804180888254800,
+      "sha256": "e956bc2823389d3acd42e70bd339dff01c64f1fd19842ae3430ccef80040f2d9"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\scale_pack_triton_interp.py",
+      "size": 5345,
+      "mtime_ns": 1790804180888254800,
+      "sha256": "fbd99fc6816b638d4480edb62d86745fffa6e9aa43226e6633678a623057126e"
+     },
+     {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\tune_prefill.py",
+      "size": 1475,
+      "mtime_ns": 1790804180888254800,
+      "sha256": "0ebc76dd2af6f9ef7f7b2831fea2bf0d5006c83853f7c53a0d85e47d2d583846"
+     }
+    ],
+    "artifacts": {
+     "server": {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\server.py",
+      "size": 197129,
+      "mtime_ns": 1790845719151521400,
+      "sha256": "c97528bc12e8d1d9c3bf3fa59166a3790288928cafda78589300ff7c978f11ea"
+     },
+     "gptoss_cpu_cap2.dll": {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\gptoss_cpu_cap2.dll",
+      "size": 413085,
+      "mtime_ns": 1790804180839050200,
+      "sha256": "84a8c5af304e5f1c20b4ee12c8708f0494c7b580be31aff6df95481772b40b44"
+     },
+     "gptoss_cpu_multi.dll": {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\gptoss_cpu_multi.dll",
+      "size": 486449,
+      "mtime_ns": 1790804180843422300,
+      "sha256": "fd48ac7644c1a136f8635f89ecd0b1bf8f1be0caa38f3ffc16c3c778b1db9fbb"
+     },
+     "tokenizer/tokenizer_config.json": {
+      "path": "G:\\Models\\gpt-oss-120b\\tokenizer_config.json",
+      "size": 4200,
+      "mtime_ns": 1786476062771391700,
+      "sha256": "9279e942392b742d633c7adbb89ebe002c98399db8926a7af5125c726f404070"
+     },
+     "tokenizer/special_tokens_map.json": {
+      "path": "G:\\Models\\gpt-oss-120b\\special_tokens_map.json",
+      "size": 98,
+      "mtime_ns": 1786476056839926300,
+      "sha256": "dd5e191d20c12d2fee1da5bae14ca1db0f5f4215300af691f23cdee97120a293"
+     },
+     "tokenizer/chat_template.jinja": {
+      "path": "G:\\Models\\gpt-oss-120b\\chat_template.jinja",
+      "size": 16738,
+      "mtime_ns": 1786475297134244300,
+      "sha256": "a4c9919cbbd4acdd51ccffe22da049264b1b73e59055fa58811a99efbd7c8146"
+     },
+     "tokenizer/tokenizer.json": {
+      "path": "G:\\Models\\gpt-oss-120b\\tokenizer.json",
+      "size": 27868174,
+      "mtime_ns": 1786476062072340600,
+      "sha256": "0614fe83cadab421296e664e1f48f4261fa8fef6e03e63bb75c20f38e37d07d3"
+     },
+     "tokenizer/config.json": {
+      "path": "G:\\Models\\gpt-oss-120b\\config.json",
+      "size": 2089,
+      "mtime_ns": 1786475297078179900,
+      "sha256": "933aeb666a3fd851133ddd7686414f369bc564c4185fb5704416550879f10566"
+     },
+     "tools/bench_vs_llama.py": {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\bench_vs_llama.py",
+      "size": 28808,
+      "mtime_ns": 1790845550006488200,
+      "sha256": "feefba89641643fd800014b835c48b4f130cb93582143031ca4dd17439f19eeb"
+     },
+     "tools/review_bench.py": {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\review_bench.py",
+      "size": 15446,
+      "mtime_ns": 1790841267033062600,
+      "sha256": "60577e0ad59ab3f716278670d18f31e666afe24b38d5388c073b26c4cafe9b4b"
+     },
+     "selected_decode_dll": {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\gptoss_cpu_cap2.dll",
+      "size": 413085,
+      "mtime_ns": 1790804180839050200,
+      "sha256": "84a8c5af304e5f1c20b4ee12c8708f0494c7b580be31aff6df95481772b40b44"
+     },
+     "store_dir": {
+      "path": "G:\\NeuralStores\\gptoss120b_ps4",
+      "size": 16384,
+      "mtime_ns": 1790720591409613800
+     },
+     "store/metadata.json": {
+      "path": "G:\\NeuralStores\\gptoss120b_ps4\\metadata.json",
+      "size": 7117,
+      "mtime_ns": 1790720591405515100,
+      "sha256": "3bb2848c2302ae37134de51807617a4626c0fad6fb6197fe3b5f31a77b1c7b69"
+     },
+     "store/pack_progress.json": {
+      "path": "G:\\NeuralStores\\gptoss120b_ps4\\pack_progress.json",
+      "size": 17311,
+      "mtime_ns": 1790720591042168500,
+      "sha256": "0a4002184e603dbeb09ff6ec727e5430d624f1e3c8f64334efe38fb82ce1df6c"
+     }
+    }
+   }
+  },
+  "runner_artifacts": {
+   "server": {
+    "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\server.py",
+    "size": 197129,
+    "mtime_ns": 1790845719151521400,
+    "sha256": "c97528bc12e8d1d9c3bf3fa59166a3790288928cafda78589300ff7c978f11ea"
+   },
+   "gptoss_cpu_cap2.dll": {
+    "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\gptoss_cpu_cap2.dll",
+    "size": 413085,
+    "mtime_ns": 1790804180839050200,
+    "sha256": "84a8c5af304e5f1c20b4ee12c8708f0494c7b580be31aff6df95481772b40b44"
+   },
+   "gptoss_cpu_multi.dll": {
+    "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\gptoss_cpu_multi.dll",
+    "size": 486449,
+    "mtime_ns": 1790804180843422300,
+    "sha256": "fd48ac7644c1a136f8635f89ecd0b1bf8f1be0caa38f3ffc16c3c778b1db9fbb"
+   },
+   "tokenizer/tokenizer_config.json": {
+    "path": "G:\\Models\\gpt-oss-120b\\tokenizer_config.json",
+    "size": 4200,
+    "mtime_ns": 1786476062771391700,
+    "sha256": "9279e942392b742d633c7adbb89ebe002c98399db8926a7af5125c726f404070"
+   },
+   "tokenizer/special_tokens_map.json": {
+    "path": "G:\\Models\\gpt-oss-120b\\special_tokens_map.json",
+    "size": 98,
+    "mtime_ns": 1786476056839926300,
+    "sha256": "dd5e191d20c12d2fee1da5bae14ca1db0f5f4215300af691f23cdee97120a293"
+   },
+   "tokenizer/chat_template.jinja": {
+    "path": "G:\\Models\\gpt-oss-120b\\chat_template.jinja",
+    "size": 16738,
+    "mtime_ns": 1786475297134244300,
+    "sha256": "a4c9919cbbd4acdd51ccffe22da049264b1b73e59055fa58811a99efbd7c8146"
+   },
+   "tokenizer/tokenizer.json": {
+    "path": "G:\\Models\\gpt-oss-120b\\tokenizer.json",
+    "size": 27868174,
+    "mtime_ns": 1786476062072340600,
+    "sha256": "0614fe83cadab421296e664e1f48f4261fa8fef6e03e63bb75c20f38e37d07d3"
+   },
+   "tokenizer/config.json": {
+    "path": "G:\\Models\\gpt-oss-120b\\config.json",
+    "size": 2089,
+    "mtime_ns": 1786475297078179900,
+    "sha256": "933aeb666a3fd851133ddd7686414f369bc564c4185fb5704416550879f10566"
+   },
+   "tools/bench_vs_llama.py": {
+    "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\bench_vs_llama.py",
+    "size": 28808,
+    "mtime_ns": 1790845550006488200,
+    "sha256": "feefba89641643fd800014b835c48b4f130cb93582143031ca4dd17439f19eeb"
+   },
+   "tools/review_bench.py": {
+    "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\review_bench.py",
+    "size": 15446,
+    "mtime_ns": 1790841267033062600,
+    "sha256": "60577e0ad59ab3f716278670d18f31e666afe24b38d5388c073b26c4cafe9b4b"
+   },
+   "selected_decode_dll": {
+    "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\gptoss_cpu_cap2.dll",
+    "size": 413085,
+    "mtime_ns": 1790804180839050200,
+    "sha256": "84a8c5af304e5f1c20b4ee12c8708f0494c7b580be31aff6df95481772b40b44"
+   },
+   "store_dir": {
+    "path": "G:\\NeuralStores\\gptoss120b_ps4",
+    "size": 16384,
+    "mtime_ns": 1790720591409613800
+   },
+   "store/metadata.json": {
+    "path": "G:\\NeuralStores\\gptoss120b_ps4\\metadata.json",
+    "size": 7117,
+    "mtime_ns": 1790720591405515100,
+    "sha256": "3bb2848c2302ae37134de51807617a4626c0fad6fb6197fe3b5f31a77b1c7b69"
+   },
+   "store/pack_progress.json": {
+    "path": "G:\\NeuralStores\\gptoss120b_ps4\\pack_progress.json",
+    "size": 17311,
+    "mtime_ns": 1790720591042168500,
+    "sha256": "0a4002184e603dbeb09ff6ec727e5430d624f1e3c8f64334efe38fb82ce1df6c"
+   }
+  }
+ },
+ "sessions": [
+  {
+   "kind": "opt",
+   "args": "--kdll gptoss_cpu_persistent.dll --kernel-persistent 1 --grouped-prefill-gemm 1 --grouped-prefill-min-tokens 1024 --grouped-prefill-max-tokens 4096 --trim-prefill-cache 1",
+   "tag": "s0",
+   "turns": [
+    {
+     "prompt_tokens": 13108,
+     "cached_tokens": 0,
+     "prompt_s": 8.014,
+     "decode_s": 21.6105,
+     "decode_tokens_timed": 511,
+     "completion_tokens": 512,
+     "decode_tok_s": 23.6459,
+     "vram_hit": 0.3626,
+     "cpu_ms_per_tok": 32.5215,
+     "gpu_wait_ms_per_tok": 4.7863,
+     "cpu_GBps": 36.2353,
+     "prefill_weight": 16,
+     "prefill_fold_w": 0.0012,
+     "cand_marked_start": 64,
+     "captures": 1063,
+     "prompt_ids_sha256": "97db55f393e1c29fe5008c275a990b02c5db7659c77c255af30474490dca40e9",
+     "generated_ids_sha256": "42886c32361900f449d9f5acbbc53de5a6f39fffc37a450cbb00e80153f6532f",
+     "wall_s": 29.7,
+     "neural": {
+      "aborted": false,
+      "natural_final": false,
+      "side_protected": false,
+      "finish": "length",
+      "prompt_tokens": 13108,
+      "cached_tokens": 0,
+      "completion_tokens": 512,
+      "prefill_s": 8.014,
+      "decode_s": 21.6105,
+      "decode_tok_s": 23.6459,
+      "vram_hit": 0.3626,
+      "cpu_GBps": 36.2353,
+      "cpu_ms_per_tok": 32.5215,
+      "gpu_wait_ms_per_tok": 4.7863,
+      "replay_ms_per_tok": 1.2794,
+      "admission_ms_per_tok": 0.9007,
+      "other_ms_per_tok": 2.8028,
+      "gpu_admissions_per_tok": 0.0,
+      "gpu_misses_per_tok": 0.0,
+      "cpu_experts_per_tok": 91.7847,
+      "doorbell": 0,
+      "doorbell_tokens": 0,
+      "doorbell_classic_tokens": 0,
+      "doorbell_timeouts": 0,
+      "persistent_cpu_jobs": 17725,
+      "persistent_cpu_fallback_calls": 0,
+      "persistent_cpu_team_threads": 8,
+      "vram_reserved_gib": 9.715,
+      "vram_allocated_gib": 9.602,
+      "prefill_weight": 16,
+      "prefill_fold_w": 0.0012,
+      "prefill_new_tokens": 13108,
+      "cand_marked_start": 64,
+      "captures": 1063,
+      "decode_page_faults_per_tok": 1164,
+      "decode_disk_mb_per_tok": 0.03,
+      "prefill_page_faults": 189947,
+      "prefill_disk_mb": 83,
+      "prefill_order": "layer",
+      "prefill_stagings": 2763,
+      "prefill_stg_pairs": 8491,
+      "prefill_cpu_experts": 4992,
+      "prefill_cache_trim_s": 0.0054,
+      "prefill_cache_released_gib": 1.1113,
+      "prefill_memcpy_s": 0.0,
+      "prefill_ring_wait_s": 0.0,
+      "prefill_cpu_job_wait_s": 0.064,
+      "prefill_cpu_job_run_s": 4.832,
+      "prefill_counts_sync_s": 0.798,
+      "prefill_cpu_in_sync_s": 0.005,
+      "prefill_attn_router_s": 0.979,
+      "prefill_moe_host_s": 6.739,
+      "prefill_h2d_launch_s": 0.402,
+      "prefill_gemm_launch_s": 4.956,
+      "prefill_moe_other_s": 0.478,
+      "prefill_tail_wait_s": 0.005,
+      "prefill_blocked_s": 0.908,
+      "prefill_unattributed_s": 0.29,
+      "prefill_stage_wait_s": 0.036,
+      "prefill_stage_thread_s": 3.429,
+      "prefill_stage_thread_ring_wait_s": 0.499,
+      "prefill_cpu_jobs": 144,
+      "prefill_gemm_pairs": 10319,
+      "prefill_epi_groups": 0,
+      "decode_tok_s_per_64": [
+       20.9,
+       22.12,
+       24.42,
+       24.89,
+       23.88,
+       24.05,
+       24.46
+      ],
+      "ws_gib_end": 53.85,
+      "free_ram_gib_end": 1.21,
+      "queue_wait_s": 0.0,
+      "render_s": 0.0477,
+      "generation_wall_s": 29.6332,
+      "prompt_ids_sha256": "97db55f393e1c29fe5008c275a990b02c5db7659c77c255af30474490dca40e9",
+      "generated_ids_sha256": "42886c32361900f449d9f5acbbc53de5a6f39fffc37a450cbb00e80153f6532f"
+     },
+     "turn": 0,
+     "content_sha1": "34604dc647b366185618c180d821140121952f38",
+     "content_sha256": "4b881b387793b883c9d0c701157ebe374c12a856dbccdb0c0019a55360ea31f5",
+     "reasoning_sha256": "84b1f4894533a4badb4e0242ec934c4979f884326f75d65cbcaca7d95877c7e6",
+     "tool_calls_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+     "semantic_message_sha256": "8894d30b2fd60480c8b05b1ec3b9c956c2960ae7b6286a0b5b68dd08229e6870",
+     "response_sha256": "76964102d13352e0eb803ca72f913fa31245906438cf055fceb998360252a00b",
+     "request_sha256": "8cf9070b889d0011215b07d5c06705f1e228eabdb5282ed3102fc19878782600",
+     "messages_sha256": "3c0ff94867b4aa9009f093e3cbcc3c00cc442b4108699fbf010f3175650129e5",
+     "free_ram_gib": 1.21
+    },
+    {
+     "prompt_tokens": 13630,
+     "cached_tokens": 13109,
+     "prompt_s": 2.3807,
+     "decode_s": 20.8639,
+     "decode_tokens_timed": 511,
+     "completion_tokens": 512,
+     "decode_tok_s": 24.492,
+     "vram_hit": 0.3866,
+     "cpu_ms_per_tok": 30.995,
+     "gpu_wait_ms_per_tok": 4.8122,
+     "cpu_GBps": 36.5916,
+     "prefill_weight": 16,
+     "prefill_fold_w": 0.0307,
+     "cand_marked_start": 1,
+     "captures": 1037,
+     "prompt_ids_sha256": "a37e4b36e26f95ad3acaad2786feb124046e99532436cb29023b8534ccc70042",
+     "generated_ids_sha256": "8988f8e2c063ac4bdd824052d2c678a9a09a109d4a550ea492ef8e8efaff6635",
+     "wall_s": 23.27,
+     "neural": {
+      "aborted": false,
+      "natural_final": false,
+      "side_protected": false,
+      "finish": "length",
+      "prompt_tokens": 13630,
+      "cached_tokens": 13109,
+      "completion_tokens": 512,
+      "prefill_s": 2.3807,
+      "decode_s": 20.8639,
+      "decode_tok_s": 24.492,
+      "vram_hit": 0.3866,
+      "cpu_GBps": 36.5916,
+      "cpu_ms_per_tok": 30.995,
+      "gpu_wait_ms_per_tok": 4.8122,
+      "replay_ms_per_tok": 1.2688,
+      "admission_ms_per_tok": 0.8838,
+      "other_ms_per_tok": 2.8697,
+      "gpu_admissions_per_tok": 0.0,
+      "gpu_misses_per_tok": 0.0,
+      "cpu_experts_per_tok": 88.3366,
+      "doorbell": 0,
+      "doorbell_tokens": 0,
+      "doorbell_classic_tokens": 0,
+      "doorbell_timeouts": 0,
+      "persistent_cpu_jobs": 17521,
+      "persistent_cpu_fallback_calls": 0,
+      "persistent_cpu_team_threads": 8,
+      "vram_reserved_gib": 9.715,
+      "vram_allocated_gib": 9.602,
+      "prefill_weight": 16,
+      "prefill_fold_w": 0.0307,
+      "prefill_new_tokens": 521,
+      "cand_marked_start": 1,
+      "captures": 1037,
+      "decode_page_faults_per_tok": 134,
+      "decode_disk_mb_per_tok": 0.28,
+      "prefill_page_faults": 56994,
+      "prefill_disk_mb": 183,
+      "prefill_order": "layer",
+      "prefill_stagings": 1070,
+      "prefill_stg_pairs": 1070,
+      "prefill_cpu_experts": 2111,
+      "prefill_cache_trim_s": 0.0007,
+      "prefill_cache_released_gib": 0.0918,
+      "prefill_memcpy_s": 0.0,
+      "prefill_ring_wait_s": 0.0,
+      "prefill_cpu_job_wait_s": 0.567,
+      "prefill_cpu_job_run_s": 2.183,
+      "prefill_counts_sync_s": 0.059,
+      "prefill_cpu_in_sync_s": 0.005,
+      "prefill_attn_router_s": 0.056,
+      "prefill_moe_host_s": 2.304,
+      "prefill_h2d_launch_s": 0.165,
+      "prefill_gemm_launch_s": 1.108,
+      "prefill_moe_other_s": 0.083,
+      "prefill_tail_wait_s": 0.001,
+      "prefill_blocked_s": 0.95,
+      "prefill_unattributed_s": 0.019,
+      "prefill_stage_wait_s": 0.317,
+      "prefill_stage_thread_s": 1.426,
+      "prefill_stage_thread_ring_wait_s": 0.035,
+      "prefill_cpu_jobs": 36,
+      "prefill_gemm_pairs": 0,
+      "prefill_epi_groups": 0,
+      "decode_tok_s_per_64": [
+       24.33,
+       25.61,
+       24.09,
+       23.13,
+       25.0,
+       25.49,
+       24.97
+      ],
+      "ws_gib_end": 54.31,
+      "free_ram_gib_end": 0.79,
+      "queue_wait_s": 0.0,
+      "render_s": 0.0186,
+      "generation_wall_s": 23.2464,
+      "prompt_ids_sha256": "a37e4b36e26f95ad3acaad2786feb124046e99532436cb29023b8534ccc70042",
+      "generated_ids_sha256": "8988f8e2c063ac4bdd824052d2c678a9a09a109d4a550ea492ef8e8efaff6635"
+     },
+     "turn": 1,
+     "content_sha1": "9f5eec8d61b519d6930e1157e4b1fe21ff9a19b6",
+     "content_sha256": "2b90848cdcbee60c8b03e2ca1b3ec7037789da8557c2eea9a0ba65afabf7e532",
+     "reasoning_sha256": "329e5b18ee8c2d3c5ffe9751d7d143b894fd86e9f2032b13eecac441570de57a",
+     "tool_calls_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+     "semantic_message_sha256": "7eb7bab4bb861387b402bcff67eab44ad26ba85c467ecc3ee1b4257dfbe18a1a",
+     "response_sha256": "b66ed56ec85d34eb3272f24d9757020dad7de3a1a0bf8f631e58cee3f921b8d4",
+     "request_sha256": "f0e025469d18825a5f537c55cb77a761c5deb6cc0d140c182b94b0c8dfc16cca",
+     "messages_sha256": "49849491992bd4b1f90324581d10234c7ceb09ef33eb64e79cf613fcdfb43ab8",
+     "free_ram_gib": 0.8
+    },
+    {
+     "prompt_tokens": 14149,
+     "cached_tokens": 13631,
+     "prompt_s": 2.2798,
+     "decode_s": 19.6914,
+     "decode_tokens_timed": 511,
+     "completion_tokens": 512,
+     "decode_tok_s": 25.9504,
+     "vram_hit": 0.4314,
+     "cpu_ms_per_tok": 28.7061,
+     "gpu_wait_ms_per_tok": 4.9301,
+     "cpu_GBps": 36.6235,
+     "prefill_weight": 16,
+     "prefill_fold_w": 0.0309,
+     "cand_marked_start": 1,
+     "captures": 1045,
+     "prompt_ids_sha256": "d19310e0ca1da673adcfbbd598d340a0d3b0b1480de49f7336b863fc867be5f3",
+     "generated_ids_sha256": "c59e4a41eed508f9f96ee311627da39e0f3b2087a8337639fec6c92b68681119",
+     "wall_s": 22.0,
+     "neural": {
+      "aborted": false,
+      "natural_final": false,
+      "side_protected": false,
+      "finish": "length",
+      "prompt_tokens": 14149,
+      "cached_tokens": 13631,
+      "completion_tokens": 512,
+      "prefill_s": 2.2798,
+      "decode_s": 19.6914,
+      "decode_tok_s": 25.9504,
+      "vram_hit": 0.4314,
+      "cpu_GBps": 36.6235,
+      "cpu_ms_per_tok": 28.7061,
+      "gpu_wait_ms_per_tok": 4.9301,
+      "replay_ms_per_tok": 1.2215,
+      "admission_ms_per_tok": 0.8612,
+      "other_ms_per_tok": 2.8161,
+      "gpu_admissions_per_tok": 0.0,
+      "gpu_misses_per_tok": 0.0,
+      "cpu_experts_per_tok": 81.8845,
+      "doorbell": 0,
+      "doorbell_tokens": 0,
+      "doorbell_classic_tokens": 0,
+      "doorbell_timeouts": 0,
+      "persistent_cpu_jobs": 17255,
+      "persistent_cpu_fallback_calls": 0,
+      "persistent_cpu_team_threads": 8,
+      "vram_reserved_gib": 9.715,
+      "vram_allocated_gib": 9.602,
+      "prefill_weight": 16,
+      "prefill_fold_w": 0.0309,
+      "prefill_new_tokens": 518,
+      "cand_marked_start": 1,
+      "captures": 1045,
+      "decode_page_faults_per_tok": 38,
+      "decode_disk_mb_per_tok": 0.01,
+      "prefill_page_faults": 30337,
+      "prefill_disk_mb": 1,
+      "prefill_order": "layer",
+      "prefill_stagings": 1040,
+      "prefill_stg_pairs": 1040,
+      "prefill_cpu_experts": 2159,
+      "prefill_cache_trim_s": 0.0008,
+      "prefill_cache_released_gib": 0.1152,
+      "prefill_memcpy_s": 0.0,
+      "prefill_ring_wait_s": 0.0,
+      "prefill_cpu_job_wait_s": 0.644,
+      "prefill_cpu_job_run_s": 2.107,
+      "prefill_counts_sync_s": 0.055,
+      "prefill_cpu_in_sync_s": 0.007,
+      "prefill_attn_router_s": 0.039,
+      "prefill_moe_host_s": 2.218,
+      "prefill_h2d_launch_s": 0.15,
+      "prefill_gemm_launch_s": 0.955,
+      "prefill_moe_other_s": 0.079,
+      "prefill_tail_wait_s": 0.001,
+      "prefill_blocked_s": 1.036,
+      "prefill_unattributed_s": 0.021,
+      "prefill_stage_wait_s": 0.329,
+      "prefill_stage_thread_s": 1.356,
+      "prefill_stage_thread_ring_wait_s": 0.028,
+      "prefill_cpu_jobs": 36,
+      "prefill_gemm_pairs": 0,
+      "prefill_epi_groups": 0,
+      "decode_tok_s_per_64": [
+       24.32,
+       25.09,
+       25.9,
+       26.86,
+       26.17,
+       26.22,
+       27.0
+      ],
+      "ws_gib_end": 54.48,
+      "free_ram_gib_end": 0.63,
+      "queue_wait_s": 0.0,
+      "render_s": 0.0184,
+      "generation_wall_s": 21.9733,
+      "prompt_ids_sha256": "d19310e0ca1da673adcfbbd598d340a0d3b0b1480de49f7336b863fc867be5f3",
+      "generated_ids_sha256": "c59e4a41eed508f9f96ee311627da39e0f3b2087a8337639fec6c92b68681119"
+     },
+     "turn": 2,
+     "content_sha1": "f176f4fd730f668fdd20c770d6a5403155b6833d",
+     "content_sha256": "1f58bca9db19febdb90548f17e933ee9c2d054e81e5374f0ad9484c02cb68a4d",
+     "reasoning_sha256": "f1e94ac75f81585b09df4a74b36200a6ad168eda7030c3a936892b7a6374bffb",
+     "tool_calls_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+     "semantic_message_sha256": "24cb827a0e9968b203b5cfc5de5a0b012c59fe8cb2f8cbe811d351650d1543c4",
+     "response_sha256": "78d1e38aee793cb325831d65b4ec6ca4011a32dd8c7fc0360150203331e3154a",
+     "request_sha256": "10b98300bd8ee26b270c43fb26a969c3d48af468693544d7cb3d9bd824fac69c",
+     "messages_sha256": "31deedbe0f2b579ce0367390bf272c2e742fba5efbc4f05322800c0d3366ef71",
+     "free_ram_gib": 0.63
+    },
+    {
+     "prompt_tokens": 14671,
+     "cached_tokens": 14150,
+     "prompt_s": 2.213,
+     "decode_s": 20.6148,
+     "decode_tokens_timed": 511,
+     "completion_tokens": 512,
+     "decode_tok_s": 24.788,
+     "vram_hit": 0.3951,
+     "cpu_ms_per_tok": 30.4543,
+     "gpu_wait_ms_per_tok": 4.837,
+     "cpu_GBps": 36.7223,
+     "prefill_weight": 16,
+     "prefill_fold_w": 0.0307,
+     "cand_marked_start": 1,
+     "captures": 1045,
+     "prompt_ids_sha256": "433cc5d08d82f534926d86dfecc6f5c1d410796e7ef5bc16b868ede86d763e1d",
+     "generated_ids_sha256": "9aa05891e6e67acc5374a089cf54f2d5b7efec7f64115934d3580ac63007e978",
+     "wall_s": 22.85,
+     "neural": {
+      "aborted": false,
+      "natural_final": false,
+      "side_protected": false,
+      "finish": "length",
+      "prompt_tokens": 14671,
+      "cached_tokens": 14150,
+      "completion_tokens": 512,
+      "prefill_s": 2.213,
+      "decode_s": 20.6148,
+      "decode_tok_s": 24.788,
+      "vram_hit": 0.3951,
+      "cpu_GBps": 36.7223,
+      "cpu_ms_per_tok": 30.4543,
+      "gpu_wait_ms_per_tok": 4.837,
+      "replay_ms_per_tok": 1.2551,
+      "admission_ms_per_tok": 0.8795,
+      "other_ms_per_tok": 2.9162,
+      "gpu_admissions_per_tok": 0.0,
+      "gpu_misses_per_tok": 0.0,
+      "cpu_experts_per_tok": 87.1057,
+      "doorbell": 0,
+      "doorbell_tokens": 0,
+      "doorbell_classic_tokens": 0,
+      "doorbell_timeouts": 0,
+      "persistent_cpu_jobs": 17579,
+      "persistent_cpu_fallback_calls": 0,
+      "persistent_cpu_team_threads": 8,
+      "vram_reserved_gib": 9.715,
+      "vram_allocated_gib": 9.602,
+      "prefill_weight": 16,
+      "prefill_fold_w": 0.0307,
+      "prefill_new_tokens": 521,
+      "cand_marked_start": 1,
+      "captures": 1045,
+      "decode_page_faults_per_tok": 11,
+      "decode_disk_mb_per_tok": 0.02,
+      "prefill_page_faults": 4843,
+      "prefill_disk_mb": 1,
+      "prefill_order": "layer",
+      "prefill_stagings": 944,
+      "prefill_stg_pairs": 944,
+      "prefill_cpu_experts": 2203,
+      "prefill_cache_trim_s": 0.0009,
+      "prefill_cache_released_gib": 0.0918,
+      "prefill_memcpy_s": 0.0,
+      "prefill_ring_wait_s": 0.0,
+      "prefill_cpu_job_wait_s": 0.693,
+      "prefill_cpu_job_run_s": 2.034,
+      "prefill_counts_sync_s": 0.058,
+      "prefill_cpu_in_sync_s": 0.007,
+      "prefill_attn_router_s": 0.046,
+      "prefill_moe_host_s": 2.145,
+      "prefill_h2d_launch_s": 0.142,
+      "prefill_gemm_launch_s": 0.9,
+      "prefill_moe_other_s": 0.075,
+      "prefill_tail_wait_s": 0.001,
+      "prefill_blocked_s": 1.028,
+      "prefill_unattributed_s": 0.021,
+      "prefill_stage_wait_s": 0.27,
+      "prefill_stage_thread_s": 1.237,
+      "prefill_stage_thread_ring_wait_s": 0.029,
+      "prefill_cpu_jobs": 36,
+      "prefill_gemm_pairs": 0,
+      "prefill_epi_groups": 0,
+      "decode_tok_s_per_64": [
+       23.94,
+       24.8,
+       24.01,
+       24.98,
+       25.31,
+       25.39,
+       25.4
+      ],
+      "ws_gib_end": 54.2,
+      "free_ram_gib_end": 0.8,
+      "queue_wait_s": 0.0,
+      "render_s": 0.0193,
+      "generation_wall_s": 22.8301,
+      "prompt_ids_sha256": "433cc5d08d82f534926d86dfecc6f5c1d410796e7ef5bc16b868ede86d763e1d",
+      "generated_ids_sha256": "9aa05891e6e67acc5374a089cf54f2d5b7efec7f64115934d3580ac63007e978"
+     },
+     "turn": 3,
+     "content_sha1": "46e0542b56899291d319f882a746b79203a77048",
+     "content_sha256": "d32684ab991324806153037a0388210df03b8c9eebac441a46b633e7d88c827f",
+     "reasoning_sha256": "f84cb975ef96ee8ff0798e29f8ff212743f6585b83e1b9196643f64f08ab9d48",
+     "tool_calls_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+     "semantic_message_sha256": "7dfcba7770bddc7140271fa183c0db9666d3f6866bf3c4ca884af6a1cf903e56",
+     "response_sha256": "074c0fcfff1e6e2df77ac87cb3c15180c4a8dde5ddeca39f163851dc50888ded",
+     "request_sha256": "182928d1caab08541fe4d25df3990e41a17cf7a8787dcb86d0378bf7a7767627",
+     "messages_sha256": "846f2c8b45f545c2127bb2f5ef0c3f58cf955220b384b124f3da4f8540db5cdb",
+     "free_ram_gib": 0.8
+    }
+   ],
+   "free_ram_gib_at_start": 54.96,
+   "status": "complete",
+   "startup_s": 45.4,
+   "free_ram_gib_ready": 3.94
+  },
+  {
+   "kind": "llama",
+   "args": "",
+   "tag": "s1",
+   "turns": [
+    {
+     "prompt_tokens": 13108,
+     "cached_tokens": 0,
+     "prompt_s": 139.053132,
+     "decode_s": 41.23318,
+     "decode_tokens_timed": 512,
+     "completion_tokens": 512,
+     "decode_tok_s": 12.417184413135248,
+     "prompt_ids_sha256": null,
+     "generated_ids_sha256": null,
+     "wall_s": 180.35,
+     "timings": {
+      "cache_n": 0,
+      "prompt_n": 13108,
+      "prompt_ms": 139053.132,
+      "prompt_per_token_ms": 10.608264571254196,
+      "prompt_per_second": 94.26612555551786,
+      "predicted_n": 512,
+      "predicted_ms": 41233.18,
+      "predicted_per_token_ms": 80.5335546875,
+      "predicted_per_second": 12.417184413135248
+     },
+     "turn": 0,
+     "content_sha1": "133702a80640e117c3f0956a5c777d9a5b358e56",
+     "content_sha256": "93dd04cccdfa6c9d3905f2278b8c5c70fba95668f66047eae238c90fd53379e0",
+     "reasoning_sha256": "84b1f4894533a4badb4e0242ec934c4979f884326f75d65cbcaca7d95877c7e6",
+     "tool_calls_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+     "semantic_message_sha256": "26b3ec496a055e87df585e03ffd3f2872813f371506869f76983c28e95238ddb",
+     "response_sha256": "f6eb8348cd0f61de74d845740eaa5a951b81cda033c56525a83232ab83283d9c",
+     "request_sha256": "8cf9070b889d0011215b07d5c06705f1e228eabdb5282ed3102fc19878782600",
+     "messages_sha256": "3c0ff94867b4aa9009f093e3cbcc3c00cc442b4108699fbf010f3175650129e5",
+     "free_ram_gib": 0.31
+    },
+    {
+     "prompt_tokens": 13630,
+     "cached_tokens": 13109,
+     "prompt_s": 5.333442,
+     "decode_s": 34.127798999999996,
+     "decode_tokens_timed": 512,
+     "completion_tokens": 512,
+     "decode_tok_s": 15.002432474476306,
+     "prompt_ids_sha256": null,
+     "generated_ids_sha256": null,
+     "wall_s": 39.58,
+     "timings": {
+      "cache_n": 13109,
+      "prompt_n": 521,
+      "prompt_ms": 5333.442,
+      "prompt_per_token_ms": 10.23693282149712,
+      "prompt_per_second": 97.68550965774072,
+      "predicted_n": 512,
+      "predicted_ms": 34127.799,
+      "predicted_per_token_ms": 66.655857421875,
+      "predicted_per_second": 15.002432474476306
+     },
+     "turn": 1,
+     "content_sha1": "88259124fc4c8724360c511bd3f03273d01177d1",
+     "content_sha256": "8b76ef7c7c0aa6441fa004449cca9a00b2651906cddee29b1b44e754654f6d3b",
+     "reasoning_sha256": "48a89270a12d0a730872000422893c472f8d09f705ede718d3640b340b166640",
+     "tool_calls_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+     "semantic_message_sha256": "10e7e3101fa7783067fa30a870ef8930b22b979d69e4d02bec12f5cb7f9d5110",
+     "response_sha256": "969bb7f87a3ea696ec3e9435f1fca194f37e1cfe7e66accb76f14f9113692440",
+     "request_sha256": "f0e025469d18825a5f537c55cb77a761c5deb6cc0d140c182b94b0c8dfc16cca",
+     "messages_sha256": "49849491992bd4b1f90324581d10234c7ceb09ef33eb64e79cf613fcdfb43ab8",
+     "free_ram_gib": 0.32
+    },
+    {
+     "prompt_tokens": 14149,
+     "cached_tokens": 13631,
+     "prompt_s": 4.917134,
+     "decode_s": 34.283326,
+     "decode_tokens_timed": 512,
+     "completion_tokens": 512,
+     "decode_tok_s": 14.934373636910257,
+     "prompt_ids_sha256": null,
+     "generated_ids_sha256": null,
+     "wall_s": 39.23,
+     "timings": {
+      "cache_n": 13631,
+      "prompt_n": 518,
+      "prompt_ms": 4917.134,
+      "prompt_per_token_ms": 9.492536679536679,
+      "prompt_per_second": 105.34591898451414,
+      "predicted_n": 512,
+      "predicted_ms": 34283.326,
+      "predicted_per_token_ms": 66.95962109375,
+      "predicted_per_second": 14.934373636910257
+     },
+     "turn": 2,
+     "content_sha1": "2cf7e11293dce29be4caf71b23ccbe584452e320",
+     "content_sha256": "bc6beaf70c4e6c47dcd0f1168d0016ca2340520e3001610a4b2c527c711745fd",
+     "reasoning_sha256": "e8ef8f7191dc1299bff52a89807cf15fbcb94e2eec87189f55ad83afe0b499dc",
+     "tool_calls_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+     "semantic_message_sha256": "54103e7e1d30b4404831f7c4b539d4e11d05b46c5a833976855f05be2f50621c",
+     "response_sha256": "b340bb63031ad841c09fd3b87259ece5b451c0ffaab018d34cd3b619fa20674b",
+     "request_sha256": "10b98300bd8ee26b270c43fb26a969c3d48af468693544d7cb3d9bd824fac69c",
+     "messages_sha256": "31deedbe0f2b579ce0367390bf272c2e742fba5efbc4f05322800c0d3366ef71",
+     "free_ram_gib": 0.41
+    },
+    {
+     "prompt_tokens": 14671,
+     "cached_tokens": 14150,
+     "prompt_s": 4.900973,
+     "decode_s": 33.92932,
+     "decode_tokens_timed": 512,
+     "completion_tokens": 512,
+     "decode_tok_s": 15.090193378470303,
+     "prompt_ids_sha256": null,
+     "generated_ids_sha256": null,
+     "wall_s": 38.87,
+     "timings": {
+      "cache_n": 14150,
+      "prompt_n": 521,
+      "prompt_ms": 4900.973,
+      "prompt_per_token_ms": 9.406857965451056,
+      "prompt_per_second": 106.30542139285403,
+      "predicted_n": 512,
+      "predicted_ms": 33929.32,
+      "predicted_per_token_ms": 66.268203125,
+      "predicted_per_second": 15.090193378470303
+     },
+     "turn": 3,
+     "content_sha1": "0db9ea5b7d1c568d0ebb645729ed28158216bbd1",
+     "content_sha256": "25860247d30f0667701aa227d401f3e50428b485ca7a8105dc7fd4c022b6ae06",
+     "reasoning_sha256": "e7155523e1cb2e910609679d35ac19f51c1550f5acb8608d5884ef9b82e30a1c",
+     "tool_calls_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+     "semantic_message_sha256": "8b0a24a2ca296dd755f8da1582b8c8846c0093325ac44a112ddbc54564267735",
+     "response_sha256": "3c235732da5cbd8f1d2371de24b2c952c58eb8da33544d6f0e0b0c4288c8bcee",
+     "request_sha256": "182928d1caab08541fe4d25df3990e41a17cf7a8787dcb86d0378bf7a7767627",
+     "messages_sha256": "846f2c8b45f545c2127bb2f5ef0c3f58cf955220b384b124f3da4f8540db5cdb",
+     "free_ram_gib": 0.33
+    }
+   ],
+   "free_ram_gib_at_start": 50.38,
+   "status": "complete",
+   "startup_s": 28.6,
+   "free_ram_gib_ready": 40.92
+  },
+  {
+   "kind": "llama",
+   "args": "",
+   "tag": "s2",
+   "turns": [
+    {
+     "prompt_tokens": 13108,
+     "cached_tokens": 0,
+     "prompt_s": 136.050898,
+     "decode_s": 37.194724,
+     "decode_tokens_timed": 512,
+     "completion_tokens": 512,
+     "decode_tok_s": 13.765393177806615,
+     "prompt_ids_sha256": null,
+     "generated_ids_sha256": null,
+     "wall_s": 173.29,
+     "timings": {
+      "cache_n": 0,
+      "prompt_n": 13108,
+      "prompt_ms": 136050.898,
+      "prompt_per_token_ms": 10.379226274031126,
+      "prompt_per_second": 96.34629534014543,
+      "predicted_n": 512,
+      "predicted_ms": 37194.724,
+      "predicted_per_token_ms": 72.6459453125,
+      "predicted_per_second": 13.765393177806615
+     },
+     "turn": 0,
+     "content_sha1": "133702a80640e117c3f0956a5c777d9a5b358e56",
+     "content_sha256": "93dd04cccdfa6c9d3905f2278b8c5c70fba95668f66047eae238c90fd53379e0",
+     "reasoning_sha256": "84b1f4894533a4badb4e0242ec934c4979f884326f75d65cbcaca7d95877c7e6",
+     "tool_calls_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+     "semantic_message_sha256": "26b3ec496a055e87df585e03ffd3f2872813f371506869f76983c28e95238ddb",
+     "response_sha256": "f307383647838dee88d682846513bd0cdc522d68f34284ef5aeecad98ecba332",
+     "request_sha256": "8cf9070b889d0011215b07d5c06705f1e228eabdb5282ed3102fc19878782600",
+     "messages_sha256": "3c0ff94867b4aa9009f093e3cbcc3c00cc442b4108699fbf010f3175650129e5",
+     "free_ram_gib": 0.35
+    },
+    {
+     "prompt_tokens": 13630,
+     "cached_tokens": 13109,
+     "prompt_s": 5.20559,
+     "decode_s": 34.7978,
+     "decode_tokens_timed": 512,
+     "completion_tokens": 512,
+     "decode_tok_s": 14.713573846622486,
+     "prompt_ids_sha256": null,
+     "generated_ids_sha256": null,
+     "wall_s": 40.11,
+     "timings": {
+      "cache_n": 13109,
+      "prompt_n": 521,
+      "prompt_ms": 5205.59,
+      "prompt_per_token_ms": 9.991535508637236,
+      "prompt_per_second": 100.08471662193911,
+      "predicted_n": 512,
+      "predicted_ms": 34797.8,
+      "predicted_per_token_ms": 67.964453125,
+      "predicted_per_second": 14.713573846622486
+     },
+     "turn": 1,
+     "content_sha1": "88259124fc4c8724360c511bd3f03273d01177d1",
+     "content_sha256": "8b76ef7c7c0aa6441fa004449cca9a00b2651906cddee29b1b44e754654f6d3b",
+     "reasoning_sha256": "48a89270a12d0a730872000422893c472f8d09f705ede718d3640b340b166640",
+     "tool_calls_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+     "semantic_message_sha256": "10e7e3101fa7783067fa30a870ef8930b22b979d69e4d02bec12f5cb7f9d5110",
+     "response_sha256": "9c770cab04a60459e830a791e638f4ab2895c94dc8a8852c68309709a79729f6",
+     "request_sha256": "f0e025469d18825a5f537c55cb77a761c5deb6cc0d140c182b94b0c8dfc16cca",
+     "messages_sha256": "49849491992bd4b1f90324581d10234c7ceb09ef33eb64e79cf613fcdfb43ab8",
+     "free_ram_gib": 0.36
+    },
+    {
+     "prompt_tokens": 14149,
+     "cached_tokens": 13631,
+     "prompt_s": 5.421724,
+     "decode_s": 36.511245,
+     "decode_tokens_timed": 512,
+     "completion_tokens": 512,
+     "decode_tok_s": 14.023076999976308,
+     "prompt_ids_sha256": null,
+     "generated_ids_sha256": null,
+     "wall_s": 41.98,
+     "timings": {
+      "cache_n": 13631,
+      "prompt_n": 518,
+      "prompt_ms": 5421.724,
+      "prompt_per_token_ms": 10.466648648648649,
+      "prompt_per_second": 95.54156574550825,
+      "predicted_n": 512,
+      "predicted_ms": 36511.245,
+      "predicted_per_token_ms": 71.311025390625,
+      "predicted_per_second": 14.023076999976308
+     },
+     "turn": 2,
+     "content_sha1": "2cf7e11293dce29be4caf71b23ccbe584452e320",
+     "content_sha256": "bc6beaf70c4e6c47dcd0f1168d0016ca2340520e3001610a4b2c527c711745fd",
+     "reasoning_sha256": "e8ef8f7191dc1299bff52a89807cf15fbcb94e2eec87189f55ad83afe0b499dc",
+     "tool_calls_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+     "semantic_message_sha256": "54103e7e1d30b4404831f7c4b539d4e11d05b46c5a833976855f05be2f50621c",
+     "response_sha256": "a020cf5db9fd4c7b5d8d17974cff78a5ea7d0371734f723192cf7e1da2483a5b",
+     "request_sha256": "10b98300bd8ee26b270c43fb26a969c3d48af468693544d7cb3d9bd824fac69c",
+     "messages_sha256": "31deedbe0f2b579ce0367390bf272c2e742fba5efbc4f05322800c0d3366ef71",
+     "free_ram_gib": 0.37
+    },
+    {
+     "prompt_tokens": 14671,
+     "cached_tokens": 14150,
+     "prompt_s": 4.912497,
+     "decode_s": 33.97817,
+     "decode_tokens_timed": 512,
+     "completion_tokens": 512,
+     "decode_tok_s": 15.068498391761535,
+     "prompt_ids_sha256": null,
+     "generated_ids_sha256": null,
+     "wall_s": 38.93,
+     "timings": {
+      "cache_n": 14150,
+      "prompt_n": 521,
+      "prompt_ms": 4912.497,
+      "prompt_per_token_ms": 9.428976967370442,
+      "prompt_per_second": 106.05604441081591,
+      "predicted_n": 512,
+      "predicted_ms": 33978.17,
+      "predicted_per_token_ms": 66.36361328125,
+      "predicted_per_second": 15.068498391761535
+     },
+     "turn": 3,
+     "content_sha1": "0db9ea5b7d1c568d0ebb645729ed28158216bbd1",
+     "content_sha256": "25860247d30f0667701aa227d401f3e50428b485ca7a8105dc7fd4c022b6ae06",
+     "reasoning_sha256": "e7155523e1cb2e910609679d35ac19f51c1550f5acb8608d5884ef9b82e30a1c",
+     "tool_calls_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+     "semantic_message_sha256": "8b0a24a2ca296dd755f8da1582b8c8846c0093325ac44a112ddbc54564267735",
+     "response_sha256": "955873a6b2c5f03e967ded0abae0343001e78b51edb8211ffca3cd54b3f83a6b",
+     "request_sha256": "182928d1caab08541fe4d25df3990e41a17cf7a8787dcb86d0378bf7a7767627",
+     "messages_sha256": "846f2c8b45f545c2127bb2f5ef0c3f58cf955220b384b124f3da4f8540db5cdb",
+     "free_ram_gib": 0.37
+    }
+   ],
+   "free_ram_gib_at_start": 55.52,
+   "status": "complete",
+   "startup_s": 27.6,
+   "free_ram_gib_ready": 41.11
+  },
+  {
+   "kind": "opt",
+   "args": "--kdll gptoss_cpu_persistent.dll --kernel-persistent 1 --grouped-prefill-gemm 1 --grouped-prefill-min-tokens 1024 --grouped-prefill-max-tokens 4096 --trim-prefill-cache 1",
+   "tag": "s3",
+   "turns": [
+    {
+     "prompt_tokens": 13108,
+     "cached_tokens": 0,
+     "prompt_s": 9.3189,
+     "decode_s": 21.6859,
+     "decode_tokens_timed": 511,
+     "completion_tokens": 512,
+     "decode_tok_s": 23.5637,
+     "vram_hit": 0.3626,
+     "cpu_ms_per_tok": 32.7051,
+     "gpu_wait_ms_per_tok": 4.7202,
+     "cpu_GBps": 36.0319,
+     "prefill_weight": 16,
+     "prefill_fold_w": 0.0012,
+     "cand_marked_start": 64,
+     "captures": 1063,
+     "prompt_ids_sha256": "97db55f393e1c29fe5008c275a990b02c5db7659c77c255af30474490dca40e9",
+     "generated_ids_sha256": "42886c32361900f449d9f5acbbc53de5a6f39fffc37a450cbb00e80153f6532f",
+     "wall_s": 31.06,
+     "neural": {
+      "aborted": false,
+      "natural_final": false,
+      "side_protected": false,
+      "finish": "length",
+      "prompt_tokens": 13108,
+      "cached_tokens": 0,
+      "completion_tokens": 512,
+      "prefill_s": 9.3189,
+      "decode_s": 21.6859,
+      "decode_tok_s": 23.5637,
+      "vram_hit": 0.3626,
+      "cpu_GBps": 36.0319,
+      "cpu_ms_per_tok": 32.7051,
+      "gpu_wait_ms_per_tok": 4.7202,
+      "replay_ms_per_tok": 1.2905,
+      "admission_ms_per_tok": 0.8814,
+      "other_ms_per_tok": 2.841,
+      "gpu_admissions_per_tok": 0.0,
+      "gpu_misses_per_tok": 0.0,
+      "cpu_experts_per_tok": 91.7847,
+      "doorbell": 0,
+      "doorbell_tokens": 0,
+      "doorbell_classic_tokens": 0,
+      "doorbell_timeouts": 0,
+      "persistent_cpu_jobs": 17725,
+      "persistent_cpu_fallback_calls": 0,
+      "persistent_cpu_team_threads": 8,
+      "vram_reserved_gib": 9.715,
+      "vram_allocated_gib": 9.602,
+      "prefill_weight": 16,
+      "prefill_fold_w": 0.0012,
+      "prefill_new_tokens": 13108,
+      "cand_marked_start": 64,
+      "captures": 1063,
+      "decode_page_faults_per_tok": 1164,
+      "decode_disk_mb_per_tok": 0.09,
+      "prefill_page_faults": 205777,
+      "prefill_disk_mb": 204,
+      "prefill_order": "layer",
+      "prefill_stagings": 2763,
+      "prefill_stg_pairs": 8491,
+      "prefill_cpu_experts": 4992,
+      "prefill_cache_trim_s": 0.0147,
+      "prefill_cache_released_gib": 1.1113,
+      "prefill_memcpy_s": 0.0,
+      "prefill_ring_wait_s": 0.0,
+      "prefill_cpu_job_wait_s": 0.3,
+      "prefill_cpu_job_run_s": 4.993,
+      "prefill_counts_sync_s": 2.506,
+      "prefill_cpu_in_sync_s": 0.006,
+      "prefill_attn_router_s": 0.831,
+      "prefill_moe_host_s": 8.148,
+      "prefill_h2d_launch_s": 0.388,
+      "prefill_gemm_launch_s": 4.206,
+      "prefill_moe_other_s": 0.467,
+      "prefill_tail_wait_s": 0.044,
+      "prefill_blocked_s": 3.132,
+      "prefill_unattributed_s": 0.295,
+      "prefill_stage_wait_s": 0.276,
+      "prefill_stage_thread_s": 3.607,
+      "prefill_stage_thread_ring_wait_s": 0.73,
+      "prefill_cpu_jobs": 144,
+      "prefill_gemm_pairs": 10319,
+      "prefill_epi_groups": 0,
+      "decode_tok_s_per_64": [
+       21.07,
+       21.95,
+       23.69,
+       24.89,
+       24.03,
+       24.06,
+       24.62
+      ],
+      "ws_gib_end": 53.66,
+      "free_ram_gib_end": 3.07,
+      "queue_wait_s": 0.0,
+      "render_s": 0.0475,
+      "generation_wall_s": 31.0071,
+      "prompt_ids_sha256": "97db55f393e1c29fe5008c275a990b02c5db7659c77c255af30474490dca40e9",
+      "generated_ids_sha256": "42886c32361900f449d9f5acbbc53de5a6f39fffc37a450cbb00e80153f6532f"
+     },
+     "turn": 0,
+     "content_sha1": "34604dc647b366185618c180d821140121952f38",
+     "content_sha256": "4b881b387793b883c9d0c701157ebe374c12a856dbccdb0c0019a55360ea31f5",
+     "reasoning_sha256": "84b1f4894533a4badb4e0242ec934c4979f884326f75d65cbcaca7d95877c7e6",
+     "tool_calls_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+     "semantic_message_sha256": "8894d30b2fd60480c8b05b1ec3b9c956c2960ae7b6286a0b5b68dd08229e6870",
+     "response_sha256": "28b32ec408c4ebb37f2a3b2d82b2b59849a25e1792e4762f2c1b5d48dcac39c9",
+     "request_sha256": "8cf9070b889d0011215b07d5c06705f1e228eabdb5282ed3102fc19878782600",
+     "messages_sha256": "3c0ff94867b4aa9009f093e3cbcc3c00cc442b4108699fbf010f3175650129e5",
+     "free_ram_gib": 3.07
+    },
+    {
+     "prompt_tokens": 13630,
+     "cached_tokens": 13109,
+     "prompt_s": 2.2625,
+     "decode_s": 20.7586,
+     "decode_tokens_timed": 511,
+     "completion_tokens": 512,
+     "decode_tok_s": 24.6163,
+     "vram_hit": 0.3866,
+     "cpu_ms_per_tok": 30.8987,
+     "gpu_wait_ms_per_tok": 4.7886,
+     "cpu_GBps": 36.7056,
+     "prefill_weight": 16,
+     "prefill_fold_w": 0.0307,
+     "cand_marked_start": 1,
+     "captures": 1037,
+     "prompt_ids_sha256": "a37e4b36e26f95ad3acaad2786feb124046e99532436cb29023b8534ccc70042",
+     "generated_ids_sha256": "8988f8e2c063ac4bdd824052d2c678a9a09a109d4a550ea492ef8e8efaff6635",
+     "wall_s": 23.04,
+     "neural": {
+      "aborted": false,
+      "natural_final": false,
+      "side_protected": false,
+      "finish": "length",
+      "prompt_tokens": 13630,
+      "cached_tokens": 13109,
+      "completion_tokens": 512,
+      "prefill_s": 2.2625,
+      "decode_s": 20.7586,
+      "decode_tok_s": 24.6163,
+      "vram_hit": 0.3866,
+      "cpu_GBps": 36.7056,
+      "cpu_ms_per_tok": 30.8987,
+      "gpu_wait_ms_per_tok": 4.7886,
+      "replay_ms_per_tok": 1.2521,
+      "admission_ms_per_tok": 0.8551,
+      "other_ms_per_tok": 2.8289,
+      "gpu_admissions_per_tok": 0.0,
+      "gpu_misses_per_tok": 0.0,
+      "cpu_experts_per_tok": 88.3366,
+      "doorbell": 0,
+      "doorbell_tokens": 0,
+      "doorbell_classic_tokens": 0,
+      "doorbell_timeouts": 0,
+      "persistent_cpu_jobs": 17521,
+      "persistent_cpu_fallback_calls": 0,
+      "persistent_cpu_team_threads": 8,
+      "vram_reserved_gib": 9.715,
+      "vram_allocated_gib": 9.602,
+      "prefill_weight": 16,
+      "prefill_fold_w": 0.0307,
+      "prefill_new_tokens": 521,
+      "cand_marked_start": 1,
+      "captures": 1037,
+      "decode_page_faults_per_tok": 134,
+      "decode_disk_mb_per_tok": 0.02,
+      "prefill_page_faults": 56989,
+      "prefill_disk_mb": 7,
+      "prefill_order": "layer",
+      "prefill_stagings": 1070,
+      "prefill_stg_pairs": 1070,
+      "prefill_cpu_experts": 2111,
+      "prefill_cache_trim_s": 0.0009,
+      "prefill_cache_released_gib": 0.0918,
+      "prefill_memcpy_s": 0.0,
+      "prefill_ring_wait_s": 0.0,
+      "prefill_cpu_job_wait_s": 0.495,
+      "prefill_cpu_job_run_s": 2.059,
+      "prefill_counts_sync_s": 0.056,
+      "prefill_cpu_in_sync_s": 0.006,
+      "prefill_attn_router_s": 0.054,
+      "prefill_moe_host_s": 2.189,
+      "prefill_h2d_launch_s": 0.157,
+      "prefill_gemm_launch_s": 1.084,
+      "prefill_moe_other_s": 0.076,
+      "prefill_tail_wait_s": 0.001,
+      "prefill_blocked_s": 0.873,
+      "prefill_unattributed_s": 0.019,
+      "prefill_stage_wait_s": 0.315,
+      "prefill_stage_thread_s": 1.395,
+      "prefill_stage_thread_ring_wait_s": 0.034,
+      "prefill_cpu_jobs": 36,
+      "prefill_gemm_pairs": 0,
+      "prefill_epi_groups": 0,
+      "decode_tok_s_per_64": [
+       24.21,
+       25.59,
+       24.6,
+       23.33,
+       25.0,
+       25.65,
+       25.06
+      ],
+      "ws_gib_end": 54.12,
+      "free_ram_gib_end": 2.6,
+      "queue_wait_s": 0.0,
+      "render_s": 0.0186,
+      "generation_wall_s": 23.0229,
+      "prompt_ids_sha256": "a37e4b36e26f95ad3acaad2786feb124046e99532436cb29023b8534ccc70042",
+      "generated_ids_sha256": "8988f8e2c063ac4bdd824052d2c678a9a09a109d4a550ea492ef8e8efaff6635"
+     },
+     "turn": 1,
+     "content_sha1": "9f5eec8d61b519d6930e1157e4b1fe21ff9a19b6",
+     "content_sha256": "2b90848cdcbee60c8b03e2ca1b3ec7037789da8557c2eea9a0ba65afabf7e532",
+     "reasoning_sha256": "329e5b18ee8c2d3c5ffe9751d7d143b894fd86e9f2032b13eecac441570de57a",
+     "tool_calls_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+     "semantic_message_sha256": "7eb7bab4bb861387b402bcff67eab44ad26ba85c467ecc3ee1b4257dfbe18a1a",
+     "response_sha256": "ef63a6df5d14c54be6e0fecbebe7d588b5a06f7edeb102eda5af5ac1d90e2d76",
+     "request_sha256": "f0e025469d18825a5f537c55cb77a761c5deb6cc0d140c182b94b0c8dfc16cca",
+     "messages_sha256": "49849491992bd4b1f90324581d10234c7ceb09ef33eb64e79cf613fcdfb43ab8",
+     "free_ram_gib": 2.61
+    },
+    {
+     "prompt_tokens": 14149,
+     "cached_tokens": 13631,
+     "prompt_s": 2.2541,
+     "decode_s": 19.7389,
+     "decode_tokens_timed": 511,
+     "completion_tokens": 512,
+     "decode_tok_s": 25.888,
+     "vram_hit": 0.4314,
+     "cpu_ms_per_tok": 28.768,
+     "gpu_wait_ms_per_tok": 4.9151,
+     "cpu_GBps": 36.5448,
+     "prefill_weight": 16,
+     "prefill_fold_w": 0.0309,
+     "cand_marked_start": 1,
+     "captures": 1045,
+     "prompt_ids_sha256": "d19310e0ca1da673adcfbbd598d340a0d3b0b1480de49f7336b863fc867be5f3",
+     "generated_ids_sha256": "c59e4a41eed508f9f96ee311627da39e0f3b2087a8337639fec6c92b68681119",
+     "wall_s": 22.02,
+     "neural": {
+      "aborted": false,
+      "natural_final": false,
+      "side_protected": false,
+      "finish": "length",
+      "prompt_tokens": 14149,
+      "cached_tokens": 13631,
+      "completion_tokens": 512,
+      "prefill_s": 2.2541,
+      "decode_s": 19.7389,
+      "decode_tok_s": 25.888,
+      "vram_hit": 0.4314,
+      "cpu_GBps": 36.5448,
+      "cpu_ms_per_tok": 28.768,
+      "gpu_wait_ms_per_tok": 4.9151,
+      "replay_ms_per_tok": 1.2364,
+      "admission_ms_per_tok": 0.8681,
+      "other_ms_per_tok": 2.8404,
+      "gpu_admissions_per_tok": 0.0,
+      "gpu_misses_per_tok": 0.0,
+      "cpu_experts_per_tok": 81.8845,
+      "doorbell": 0,
+      "doorbell_tokens": 0,
+      "doorbell_classic_tokens": 0,
+      "doorbell_timeouts": 0,
+      "persistent_cpu_jobs": 17255,
+      "persistent_cpu_fallback_calls": 0,
+      "persistent_cpu_team_threads": 8,
+      "vram_reserved_gib": 9.715,
+      "vram_allocated_gib": 9.602,
+      "prefill_weight": 16,
+      "prefill_fold_w": 0.0309,
+      "prefill_new_tokens": 518,
+      "cand_marked_start": 1,
+      "captures": 1045,
+      "decode_page_faults_per_tok": 38,
+      "decode_disk_mb_per_tok": 0.03,
+      "prefill_page_faults": 30336,
+      "prefill_disk_mb": 1,
+      "prefill_order": "layer",
+      "prefill_stagings": 1040,
+      "prefill_stg_pairs": 1040,
+      "prefill_cpu_experts": 2159,
+      "prefill_cache_trim_s": 0.0008,
+      "prefill_cache_released_gib": 0.1152,
+      "prefill_memcpy_s": 0.0,
+      "prefill_ring_wait_s": 0.0,
+      "prefill_cpu_job_wait_s": 0.636,
+      "prefill_cpu_job_run_s": 2.079,
+      "prefill_counts_sync_s": 0.057,
+      "prefill_cpu_in_sync_s": 0.007,
+      "prefill_attn_router_s": 0.039,
+      "prefill_moe_host_s": 2.193,
+      "prefill_h2d_launch_s": 0.153,
+      "prefill_gemm_launch_s": 0.947,
+      "prefill_moe_other_s": 0.08,
+      "prefill_tail_wait_s": 0.001,
+      "prefill_blocked_s": 1.013,
+      "prefill_unattributed_s": 0.022,
+      "prefill_stage_wait_s": 0.312,
+      "prefill_stage_thread_s": 1.351,
+      "prefill_stage_thread_ring_wait_s": 0.03,
+      "prefill_cpu_jobs": 36,
+      "prefill_gemm_pairs": 0,
+      "prefill_epi_groups": 0,
+      "decode_tok_s_per_64": [
+       24.32,
+       25.32,
+       25.88,
+       26.87,
+       26.1,
+       26.21,
+       26.82
+      ],
+      "ws_gib_end": 54.29,
+      "free_ram_gib_end": 2.43,
+      "queue_wait_s": 0.0,
+      "render_s": 0.018,
+      "generation_wall_s": 21.9947,
+      "prompt_ids_sha256": "d19310e0ca1da673adcfbbd598d340a0d3b0b1480de49f7336b863fc867be5f3",
+      "generated_ids_sha256": "c59e4a41eed508f9f96ee311627da39e0f3b2087a8337639fec6c92b68681119"
+     },
+     "turn": 2,
+     "content_sha1": "f176f4fd730f668fdd20c770d6a5403155b6833d",
+     "content_sha256": "1f58bca9db19febdb90548f17e933ee9c2d054e81e5374f0ad9484c02cb68a4d",
+     "reasoning_sha256": "f1e94ac75f81585b09df4a74b36200a6ad168eda7030c3a936892b7a6374bffb",
+     "tool_calls_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+     "semantic_message_sha256": "24cb827a0e9968b203b5cfc5de5a0b012c59fe8cb2f8cbe811d351650d1543c4",
+     "response_sha256": "3f6cb9ccc925f55d2b89ed687c2b1c641aae2a39c3e6e4716359da12bc7b0a9e",
+     "request_sha256": "10b98300bd8ee26b270c43fb26a969c3d48af468693544d7cb3d9bd824fac69c",
+     "messages_sha256": "31deedbe0f2b579ce0367390bf272c2e742fba5efbc4f05322800c0d3366ef71",
+     "free_ram_gib": 2.44
+    },
+    {
+     "prompt_tokens": 14671,
+     "cached_tokens": 14150,
+     "prompt_s": 2.193,
+     "decode_s": 20.6026,
+     "decode_tokens_timed": 511,
+     "completion_tokens": 512,
+     "decode_tok_s": 24.8027,
+     "vram_hit": 0.3951,
+     "cpu_ms_per_tok": 30.4407,
+     "gpu_wait_ms_per_tok": 4.8453,
+     "cpu_GBps": 36.7387,
+     "prefill_weight": 16,
+     "prefill_fold_w": 0.0307,
+     "cand_marked_start": 1,
+     "captures": 1045,
+     "prompt_ids_sha256": "433cc5d08d82f534926d86dfecc6f5c1d410796e7ef5bc16b868ede86d763e1d",
+     "generated_ids_sha256": "9aa05891e6e67acc5374a089cf54f2d5b7efec7f64115934d3580ac63007e978",
+     "wall_s": 22.82,
+     "neural": {
+      "aborted": false,
+      "natural_final": false,
+      "side_protected": false,
+      "finish": "length",
+      "prompt_tokens": 14671,
+      "cached_tokens": 14150,
+      "completion_tokens": 512,
+      "prefill_s": 2.193,
+      "decode_s": 20.6026,
+      "decode_tok_s": 24.8027,
+      "vram_hit": 0.3951,
+      "cpu_GBps": 36.7387,
+      "cpu_ms_per_tok": 30.4407,
+      "gpu_wait_ms_per_tok": 4.8453,
+      "replay_ms_per_tok": 1.2484,
+      "admission_ms_per_tok": 0.8769,
+      "other_ms_per_tok": 2.9067,
+      "gpu_admissions_per_tok": 0.0,
+      "gpu_misses_per_tok": 0.0,
+      "cpu_experts_per_tok": 87.1057,
+      "doorbell": 0,
+      "doorbell_tokens": 0,
+      "doorbell_classic_tokens": 0,
+      "doorbell_timeouts": 0,
+      "persistent_cpu_jobs": 17579,
+      "persistent_cpu_fallback_calls": 0,
+      "persistent_cpu_team_threads": 8,
+      "vram_reserved_gib": 9.715,
+      "vram_allocated_gib": 9.602,
+      "prefill_weight": 16,
+      "prefill_fold_w": 0.0307,
+      "prefill_new_tokens": 521,
+      "cand_marked_start": 1,
+      "captures": 1045,
+      "decode_page_faults_per_tok": 11,
+      "decode_disk_mb_per_tok": 0.01,
+      "prefill_page_faults": 4834,
+      "prefill_disk_mb": 1,
+      "prefill_order": "layer",
+      "prefill_stagings": 944,
+      "prefill_stg_pairs": 944,
+      "prefill_cpu_experts": 2203,
+      "prefill_cache_trim_s": 0.0008,
+      "prefill_cache_released_gib": 0.0918,
+      "prefill_memcpy_s": 0.0,
+      "prefill_ring_wait_s": 0.0,
+      "prefill_cpu_job_wait_s": 0.681,
+      "prefill_cpu_job_run_s": 2.015,
+      "prefill_counts_sync_s": 0.059,
+      "prefill_cpu_in_sync_s": 0.006,
+      "prefill_attn_router_s": 0.045,
+      "prefill_moe_host_s": 2.126,
+      "prefill_h2d_launch_s": 0.141,
+      "prefill_gemm_launch_s": 0.903,
+      "prefill_moe_other_s": 0.074,
+      "prefill_tail_wait_s": 0.001,
+      "prefill_blocked_s": 1.009,
+      "prefill_unattributed_s": 0.021,
+      "prefill_stage_wait_s": 0.261,
+      "prefill_stage_thread_s": 1.233,
+      "prefill_stage_thread_ring_wait_s": 0.029,
+      "prefill_cpu_jobs": 36,
+      "prefill_gemm_pairs": 0,
+      "prefill_epi_groups": 0,
+      "decode_tok_s_per_64": [
+       23.9,
+       24.95,
+       24.03,
+       24.97,
+       25.38,
+       25.45,
+       25.3
+      ],
+      "ws_gib_end": 54.32,
+      "free_ram_gib_end": 2.41,
+      "queue_wait_s": 0.0,
+      "render_s": 0.0188,
+      "generation_wall_s": 22.7976,
+      "prompt_ids_sha256": "433cc5d08d82f534926d86dfecc6f5c1d410796e7ef5bc16b868ede86d763e1d",
+      "generated_ids_sha256": "9aa05891e6e67acc5374a089cf54f2d5b7efec7f64115934d3580ac63007e978"
+     },
+     "turn": 3,
+     "content_sha1": "46e0542b56899291d319f882a746b79203a77048",
+     "content_sha256": "d32684ab991324806153037a0388210df03b8c9eebac441a46b633e7d88c827f",
+     "reasoning_sha256": "f84cb975ef96ee8ff0798e29f8ff212743f6585b83e1b9196643f64f08ab9d48",
+     "tool_calls_sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+     "semantic_message_sha256": "7dfcba7770bddc7140271fa183c0db9666d3f6866bf3c4ca884af6a1cf903e56",
+     "response_sha256": "98f9a21652106bdba6d43dc23a9f906a62cbe7b70fe451eec68c438b371450ad",
+     "request_sha256": "182928d1caab08541fe4d25df3990e41a17cf7a8787dcb86d0378bf7a7767627",
+     "messages_sha256": "846f2c8b45f545c2127bb2f5ef0c3f58cf955220b384b124f3da4f8540db5cdb",
+     "free_ram_gib": 2.41
+    }
+   ],
+   "free_ram_gib_at_start": 56.9,
+   "status": "complete",
+   "startup_s": 45.3,
+   "free_ram_gib_ready": 5.7
+  }
+ ],
+ "summary": {
+  "opt": {
+   "prompt_s_median": 8.66645,
+   "first_decode_median": 23.6048,
+   "first_decode_all": [
+    23.6459,
+    23.5637
+   ],
+   "followup_decode_median": 24.79535,
+   "followup_decode_all": [
+    24.492,
+    25.9504,
+    24.788,
+    24.6163,
+    25.888,
+    24.8027
+   ],
+   "first_vram_hit_median": 0.3626,
+   "followup_vram_hit_median": 0.3951,
+   "first_cpu_ms_median": 32.6133,
+   "followup_prompt_s_median": 2.2583
+  },
+  "llama": {
+   "prompt_s_median": 137.55201499999998,
+   "first_decode_median": 13.09128879547093,
+   "first_decode_all": [
+    12.417184413135248,
+    13.765393177806615
+   ],
+   "followup_decode_median": 14.968403055693281,
+   "followup_decode_all": [
+    15.002432474476306,
+    14.934373636910257,
+    15.090193378470303,
+    14.713573846622486,
+    14.023076999976308,
+    15.068498391761535
+   ],
+   "first_vram_hit_median": null,
+   "followup_vram_hit_median": null,
+   "first_cpu_ms_median": null,
+   "followup_prompt_s_median": 5.061362
+  }
+ }
+}

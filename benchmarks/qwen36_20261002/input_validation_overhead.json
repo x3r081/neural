@@ -1,0 +1,21 @@
+{
+  "evidence": "MEASURED",
+  "scope": "CPU-only input validation, not inference throughput",
+  "prompt_token_count": 77,
+  "tokenizer_class": "Qwen2Tokenizer",
+  "vocab_size": 248077,
+  "boundary_decisions_equal": true,
+  "seconds": {
+    "original": [
+      3.5940335000013874,
+      3.4817094999998517,
+      3.765011300001788
+    ],
+    "cached": [
+      9.300001693191007e-06,
+      1.0399999155197293e-05,
+      9.2999980552122e-06
+    ]
+  },
+  "note": "vocabulary size is immutable for the lifetime of GenerationEngine"
+}

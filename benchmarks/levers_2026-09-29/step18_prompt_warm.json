@@ -1,0 +1,60 @@
+{
+ "sessions": [
+  {
+   "kind": "llama",
+   "round": 0,
+   "prompts": [
+    {
+     "prompt": "warmup_13k",
+     "prompt_tokens": 13077,
+     "cached_tokens": 0,
+     "prompt_s": 122.505623,
+     "wall_s": 122.54
+    },
+    {
+     "prompt": "code_13k",
+     "prompt_tokens": 13078,
+     "cached_tokens": 0,
+     "prompt_s": 99.169845,
+     "wall_s": 99.41
+    },
+    {
+     "prompt": "file_3k",
+     "prompt_tokens": 3077,
+     "cached_tokens": 0,
+     "prompt_s": 25.471139,
+     "wall_s": 25.66
+    }
+   ],
+   "startup_s": 27.7
+  },
+  {
+   "kind": "neural=--kv-ring 256 --scratch 6 --pool 6.05 --kernel-fuse 1 --prefill-order layer --store-dir G:\\NeuralStores\\gptoss120b_ps4",
+   "round": 0,
+   "prompts": [
+    {
+     "prompt": "warmup_13k",
+     "prompt_tokens": 13077,
+     "cached_tokens": 0,
+     "prompt_s": 11.5092,
+     "wall_s": 11.58
+    },
+    {
+     "prompt": "code_13k",
+     "prompt_tokens": 13078,
+     "cached_tokens": 0,
+     "prompt_s": 10.7081,
+     "wall_s": 11.01
+    },
+    {
+     "prompt": "file_3k",
+     "prompt_tokens": 3077,
+     "cached_tokens": 0,
+     "prompt_s": 3.8719,
+     "wall_s": 4.0
+    }
+   ],
+   "startup_s": 42.3
+  }
+ ]
+}

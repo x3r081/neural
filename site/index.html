@@ -1,0 +1,879 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Neural Server</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 22 22'%3E%3Crect x='1' y='1' width='9' height='9' rx='1.5' fill='%23DB8A16'/%3E%3Crect x='12' y='1' width='9' height='9' rx='1.5' fill='%23E2E6EC'/%3E%3Crect x='1' y='12' width='9' height='9' rx='1.5' fill='%23E2E6EC'/%3E%3Crect x='12' y='12' width='9' height='9' rx='1.5' fill='%232E6AB0'/%3E%3C/svg%3E">
+<meta name="description" content="Neural runs OpenAI's gpt-oss-120B on one 12 GB graphics card and 64 GB of RAM: private, fast, and compatible with the OpenAI API.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+:root {
+  --ground: #F3F5F8; --surface: #FFFFFF; --ink: #10141B; --ink-2: #2B3240; --muted: #5A6373;
+  --line: #D6DBE3; --line-2: #E6E9EF;
+  --gpu: #DB8A16; --gpu-ink: #95550A; --gpu-soft: #F8E2BF;
+  --cpu: #2E6AB0; --cpu-ink: #24568F; --cpu-soft: #D9E5F4;
+  --cell: #E2E6EC; --code-bg: #10141B; --code-ink: #E3E7EE; --code-dim: #8D97A8;
+  --on-gpu: #1B1204; --on-cpu: #FFFFFF;
+  --display: "Archivo", "Arial Narrow", "Helvetica Neue", Arial, sans-serif;
+  --body: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --ground: #0D1015; --surface: #151A22; --ink: #E8EBF1; --ink-2: #C7CDD8; --muted: #939CAC;
+    --line: #29313E; --line-2: #1D232D;
+    --gpu: #F0A534; --gpu-ink: #F4B85C; --gpu-soft: #4A3413;
+    --cpu: #6AA3E8; --cpu-ink: #8DBAEF; --cpu-soft: #172A42;
+    --cell: #1C222C; --code-bg: #080A0E; --code-ink: #E3E7EE; --code-dim: #7F899A; --on-cpu: #0D1015;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --ground: #0D1015; --surface: #151A22; --ink: #E8EBF1; --ink-2: #C7CDD8; --muted: #939CAC;
+  --line: #29313E; --line-2: #1D232D;
+  --gpu: #F0A534; --gpu-ink: #F4B85C; --gpu-soft: #4A3413;
+  --cpu: #6AA3E8; --cpu-ink: #8DBAEF; --cpu-soft: #172A42;
+  --cell: #1C222C; --code-bg: #080A0E; --code-ink: #E3E7EE; --code-dim: #7F899A; --on-cpu: #0D1015;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0; background: var(--ground); color: var(--ink);
+  font-family: var(--body); font-size: 17px; line-height: 1.6; font-stretch: 100%;
+}
+img, canvas, svg { max-width: 100%; }
+a { color: var(--cpu-ink); text-underline-offset: 3px; }
+a:hover { text-decoration-thickness: 2px; }
+:focus-visible { outline: 2px solid var(--cpu); outline-offset: 3px; border-radius: 2px; }
+.wrap { max-width: 1120px; margin: 0 auto; padding-inline: clamp(16px, 4vw, 40px); }
+.mono { font-family: var(--mono); }
+.tag {
+  font-family: var(--mono); font-size: 12px; font-weight: 600; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--muted); margin: 0;
+}
+h1, h2, h3 { font-family: var(--display); font-stretch: 118%; text-wrap: balance; margin: 0; }
+h1 { font-size: clamp(34px, 6vw, 68px); line-height: 1.02; font-weight: 800; letter-spacing: -0.015em; }
+h2 { font-size: clamp(26px, 3.4vw, 38px); line-height: 1.1; font-weight: 800; letter-spacing: -0.01em; }
+h3 { font-size: 19px; line-height: 1.25; font-weight: 700; font-stretch: 110%; }
+p { margin: 0; max-width: 64ch; }
+.gpu-t { color: var(--gpu-ink); font-weight: 600; }
+.cpu-t { color: var(--cpu-ink); font-weight: 600; }
+
+/* top bar */
+.bar { border-bottom: 1px solid var(--line); background: var(--ground); }
+.bar .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 14px; flex-wrap: wrap; }
+.brand { display: flex; align-items: center; gap: 10px; font-family: var(--display); font-stretch: 125%; font-weight: 800; font-size: 20px; color: var(--ink); text-decoration: none; letter-spacing: 0.01em; }
+.brand svg { width: 22px; height: 22px; }
+.nav { display: flex; gap: 20px; flex-wrap: wrap; font-size: 15px; }
+.nav a { color: var(--ink-2); text-decoration: none; }
+.nav a:hover { color: var(--ink); text-decoration: underline; }
+
+/* hero */
+.hero { padding-block: clamp(40px, 7vw, 84px) 28px; display: grid; grid-template-columns: minmax(0, 1fr); gap: 22px; }
+.lede { font-size: clamp(18px, 2vw, 21px); line-height: 1.5; color: var(--ink-2); max-width: 60ch; }
+.facts { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0; margin: 14px 0 0; border-top: 1px solid var(--line); }
+.facts div { padding: 14px 18px 4px 0; border-right: 1px solid var(--line-2); margin-right: 18px; }
+.facts div:last-child { border-right: 0; margin-right: 0; }
+.facts dt { font-family: var(--mono); font-weight: 600; font-size: clamp(24px, 3vw, 32px); line-height: 1.1; font-variant-numeric: tabular-nums; }
+.facts dd { margin: 4px 0 0; color: var(--muted); font-size: 14px; line-height: 1.4; }
+
+/* expert strip */
+.strip { margin: 10px 0 0; background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 16px; display: grid; gap: 12px; }
+.strip-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+.strip-head h3 { font-size: 17px; }
+.strip-controls { display: flex; gap: 14px; align-items: center; flex-wrap: wrap; }
+.stats { font-family: var(--mono); font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.stats b { font-weight: 600; }
+.btn-ghost { font: 600 13px var(--mono); color: var(--ink-2); background: transparent; border: 1px solid var(--line); border-radius: 4px; padding: 5px 10px; cursor: pointer; }
+.btn-ghost:hover { border-color: var(--muted); color: var(--ink); }
+.grid-wrap { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 8px; align-items: stretch; }
+.axis-y { writing-mode: vertical-rl; transform: rotate(180deg); font: 11px var(--mono); color: var(--muted); text-align: center; letter-spacing: 0.08em; }
+#experts { width: 100%; aspect-ratio: 128 / 36; display: block; }
+.axis-x { font: 11px var(--mono); color: var(--muted); letter-spacing: 0.08em; text-align: center; margin-top: -4px; }
+.legend { display: flex; gap: 18px; flex-wrap: wrap; font-size: 14px; color: var(--ink-2); }
+.legend span { display: inline-flex; align-items: center; gap: 7px; }
+.sw { width: 12px; height: 12px; border-radius: 2px; display: inline-block; flex: none; }
+.sw.gpu { background: var(--gpu); } .sw.gpu-soft { background: var(--gpu-soft); } .sw.cpu { background: var(--cpu); } .sw.cell { background: var(--cell); border: 1px solid var(--line); }
+.strip-note { font-size: 14px; color: var(--muted); max-width: none; }
+
+/* sections: datasheet rows */
+.sec { border-top: 1px solid var(--line); padding-block: clamp(40px, 6vw, 72px); display: grid; grid-template-columns: 200px minmax(0, 1fr); gap: 24px 40px; }
+.sec > .tag { padding-top: 10px; }
+.sec-body { display: grid; grid-template-columns: minmax(0, 1fr); gap: 20px; align-content: start; min-width: 0; }
+.sec-body > * { min-width: 0; }
+.sec-body > p { color: var(--ink-2); }
+
+/* problem: size bars */
+.sizes { display: grid; gap: 14px; margin-top: 4px; }
+.size-row { display: grid; grid-template-columns: 250px minmax(0, 1fr); gap: 16px; align-items: center; }
+.size-row .lbl { font-size: 15px; line-height: 1.3; }
+.size-row .lbl small { display: block; color: var(--muted); font-size: 13px; }
+.track { position: relative; height: 30px; }
+.fill { height: 100%; border-radius: 3px; display: flex; align-items: center; justify-content: flex-end; padding-right: 8px; font: 600 13px var(--mono); min-width: 64px; }
+.fill.model { background: var(--ink); color: var(--ground); }
+.fill.vram { background: var(--gpu); color: var(--on-gpu); }
+.fill.ram { background: var(--cpu); color: var(--on-cpu); }
+.caption { font-size: 13px; color: var(--muted); font-family: var(--mono); }
+
+/* trick: one layer of experts */
+.layer { display: grid; grid-template-columns: repeat(32, minmax(0, 1fr)); gap: 3px; max-width: 640px; }
+.layer i { aspect-ratio: 1; background: var(--cell); border-radius: 2px; display: block; }
+.layer i.on-gpu { background: var(--gpu); }
+.layer i.on-cpu { background: var(--cpu); }
+.bigstat { display: flex; gap: 28px; flex-wrap: wrap; }
+.bigstat div { display: grid; gap: 2px; }
+.bigstat b { font: 600 clamp(26px, 3vw, 34px) var(--mono); font-variant-numeric: tabular-nums; }
+.bigstat span { font-size: 14px; color: var(--muted); }
+
+/* split: where the work happens */
+.split { display: grid; grid-template-columns: minmax(0, 1fr) 150px minmax(0, 1fr); align-items: stretch; gap: 0; }
+.place { background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 18px; display: grid; gap: 10px; align-content: start; }
+.place.gpu { border-top: 4px solid var(--gpu); }
+.place.cpu { border-top: 4px solid var(--cpu); }
+.place p { font-size: 15.5px; color: var(--ink-2); }
+.place .spec { font: 13px var(--mono); color: var(--muted); }
+.link { display: grid; place-items: center; text-align: center; padding: 10px 12px; position: relative; }
+.link::before { content: ""; position: absolute; left: 0; right: 0; top: 50%; border-top: 2px dashed var(--line); }
+.link div { position: relative; background: var(--ground); padding: 6px 4px; font-size: 13px; line-height: 1.35; color: var(--ink-2); }
+.link b { display: block; font: 600 20px var(--mono); color: var(--ink); }
+
+/* steps */
+.steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; counter-reset: s; }
+.steps li { counter-increment: s; border-top: 2px solid var(--ink); padding-top: 12px; font-size: 15.5px; color: var(--ink-2); line-height: 1.5; }
+.steps li::before { content: counter(s); display: block; font: 600 13px var(--mono); color: var(--muted); margin-bottom: 6px; }
+.steps li.g { border-top-color: var(--gpu); } .steps li.c { border-top-color: var(--cpu); }
+
+/* results chart */
+.chart { background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 20px 20px 14px; display: grid; gap: 16px; }
+.crow { display: grid; grid-template-columns: 230px minmax(0, 1fr); gap: 16px; align-items: center; }
+.crow .lbl { font-size: 15px; line-height: 1.3; }
+.ctrack { position: relative; height: 26px; }
+.ctrack .base { position: absolute; inset: 0 auto 0 0; background: var(--cpu); border-radius: 3px 0 0 3px; opacity: 0.9; }
+.ctrack .range { position: absolute; top: 0; bottom: 0; background: var(--gpu); border-radius: 0 3px 3px 0; }
+.ctrack .range.tail { opacity: 0.45; }
+.ctrack .val { position: absolute; top: 50%; transform: translateY(-50%); font: 600 13px var(--mono); white-space: nowrap; padding-left: 8px; color: var(--ink); }
+.one { position: absolute; top: -6px; bottom: -6px; border-left: 2px solid var(--ink); }
+.ticks { display: grid; grid-template-columns: 230px minmax(0, 1fr); gap: 16px; }
+.ticks .scale { position: relative; height: 18px; font: 11px var(--mono); color: var(--muted); }
+.ticks .scale span { position: absolute; transform: translateX(-50%); }
+.chart-key { display: flex; gap: 18px; flex-wrap: wrap; font-size: 13px; color: var(--muted); }
+.tiles { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.tile { border-top: 1px solid var(--line); padding-top: 12px; display: grid; gap: 4px; align-content: start; }
+.tile b { font: 600 clamp(24px, 2.6vw, 30px) var(--mono); font-variant-numeric: tabular-nums; }
+.tile span { font-size: 14.5px; color: var(--muted); line-height: 1.4; }
+.fine { font-size: 13.5px; color: var(--muted); max-width: 80ch; }
+/* results by version + over time */
+.vtabs { display: flex; flex-wrap: wrap; gap: 8px; }
+.vtabs button { font: 600 14px var(--body); color: var(--ink-2); background: var(--surface); border: 1px solid var(--line); border-radius: 999px; padding: 7px 14px; cursor: pointer; display: inline-flex; gap: 8px; align-items: baseline; }
+.vtabs button span { font: 400 12px var(--mono); color: var(--muted); }
+.vtabs button:hover { border-color: var(--muted); }
+.vtabs button[aria-selected="true"] { background: var(--ink); border-color: var(--ink); color: var(--surface); }
+.vtabs button[aria-selected="true"] span { color: var(--line); }
+.vtabs button:focus-visible, .ctrack:focus-visible, .tpt:focus-visible { outline: 2px solid var(--cpu); outline-offset: 3px; }
+.chart { position: relative; }
+.chart[hidden] { display: none; }
+#bars { display: grid; gap: 16px; }
+.ctrack { cursor: default; }
+.ctrack.none { display: flex; align-items: center; font: 12.5px var(--mono); color: var(--muted); border-left: 2px solid var(--line); padding-left: 10px; }
+.ctrack .was { position: absolute; top: 50%; width: 12px; height: 12px; margin: -6px 0 0 -6px; border-radius: 50%; background: var(--surface); border: 2px solid var(--ink-2); box-shadow: 0 0 0 2px var(--surface); }
+.ctrack .val small { font: 400 12px var(--mono); color: var(--muted); margin-left: 6px; }
+.ctrack .val.in { color: var(--on-gpu); }
+.ctrack .val.in small { color: var(--on-gpu); opacity: 0.8; }
+.ctrack .brk { position: absolute; top: -3px; bottom: -3px; right: 14px; width: 5px; background: var(--surface); transform: skewX(-20deg); }
+.was-key { display: inline-block; width: 11px; height: 11px; border-radius: 50%; border: 2px solid var(--ink-2); vertical-align: -1px; }
+.tip { position: absolute; z-index: 5; pointer-events: none; max-width: 300px; background: var(--ink); color: var(--surface); font: 12.5px/1.5 var(--mono); padding: 8px 10px; border-radius: 4px; }
+.tip b { display: block; font: 600 14px var(--mono); }
+.tip[hidden] { display: none; }
+.tgrid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px 28px; }
+.tpanel h3 { font: 600 15px var(--body); margin: 0; }
+.tpanel .caption { display: block; margin-top: 2px; }
+.tpanel svg { display: block; width: 100%; max-width: 440px; height: auto; margin-top: 8px; overflow: visible; }
+.tsvg .grid { stroke: var(--line-2); stroke-width: 1; }
+.tsvg .ref { stroke: var(--ink); stroke-width: 1.5; }
+.tsvg .wh { stroke: var(--muted); stroke-width: 1.5; stroke-linecap: round; }
+.tsvg .ln { fill: none; stroke: var(--ink-2); stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; }
+.tsvg .pt { stroke: var(--surface); stroke-width: 2; }
+.tsvg .pt.up { fill: var(--gpu); } .tsvg .pt.dn { fill: var(--cpu); }
+.tsvg .pt.alt { fill: var(--surface); stroke: var(--ink-2); }
+.tsvg text { fill: var(--muted); font: 11px var(--mono); }
+.tsvg text.v { fill: var(--ink); font-weight: 600; font-size: 12.5px; }
+.tsvg .tpt { fill: transparent; cursor: default; }
+.ctable summary { cursor: pointer; font-size: 14.5px; color: var(--ink-2); }
+.fine code { font: 12.5px var(--mono); color: var(--ink-2); }
+.sec-body > p code { font: 0.88em var(--mono); }
+#ctable { overflow-x: auto; }   /* five version columns: the table scrolls in its box on a phone, not the page */
+.ctable table { margin-top: 10px; }
+.ctable td { font-size: 13px; }
+@media (max-width: 860px) { .tgrid { grid-template-columns: minmax(0, 1fr); } }
+
+/* coding */
+.spec-table { width: 100%; border-collapse: collapse; font-size: 15px; background: var(--surface); border: 1px solid var(--line); border-radius: 6px; overflow: hidden; }
+.spec-table th, .spec-table td { text-align: left; padding: 10px 14px; border-bottom: 1px solid var(--line-2); vertical-align: top; }
+.spec-table tr:last-child th, .spec-table tr:last-child td { border-bottom: 0; }
+.spec-table th { font-weight: 500; color: var(--muted); width: 34%; }
+.spec-table td { font-family: var(--mono); font-size: 14px; overflow-wrap: anywhere; }
+.checks { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px 28px; }
+.checks li { padding-left: 22px; position: relative; font-size: 15.5px; color: var(--ink-2); }
+.checks li::before { content: ""; position: absolute; left: 0; top: 0.55em; width: 10px; height: 10px; border-radius: 2px; background: var(--gpu); }
+
+/* limits */
+.two { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px; }
+.two ul { margin: 10px 0 0; padding-left: 18px; display: grid; gap: 8px; color: var(--ink-2); font-size: 15.5px; }
+
+/* start */
+.code { position: relative; background: var(--code-bg); color: var(--code-ink); border-radius: 6px; font: 13.5px/1.65 var(--mono); }
+.code pre { margin: 0; padding: 16px 18px; overflow-x: auto; }
+.code .c { color: var(--code-dim); }
+.copy { position: absolute; top: 8px; right: 8px; font: 600 12px var(--mono); color: var(--code-ink); background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.18); border-radius: 4px; padding: 4px 9px; cursor: pointer; }
+.copy:hover { background: rgba(255,255,255,0.16); }
+.step-t { font-weight: 600; font-size: 16px; }
+
+/* faq */
+.faq { display: grid; gap: 0; border-top: 1px solid var(--line); }
+.faq details { border-bottom: 1px solid var(--line); padding-block: 14px; }
+.faq summary { cursor: pointer; font-weight: 600; font-size: 16.5px; list-style: none; display: flex; justify-content: space-between; gap: 16px; }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after { content: "+"; font: 600 18px var(--mono); color: var(--muted); }
+.faq details[open] summary::after { content: "\2212"; }
+.faq details p { margin-top: 10px; color: var(--ink-2); font-size: 15.5px; }
+
+footer { border-top: 1px solid var(--line); padding-block: 28px 44px; font-size: 14px; color: var(--muted); }
+footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+
+@media (max-width: 860px) {
+  .sec { grid-template-columns: minmax(0, 1fr); gap: 16px; }
+  .sec > .tag { padding-top: 0; }
+  .facts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .facts div:nth-child(2) { border-right: 0; margin-right: 0; }
+  .split { grid-template-columns: minmax(0, 1fr); }
+  .link { padding: 14px 0; }
+  .link::before { left: 50%; right: auto; top: 0; bottom: 0; border-top: 0; border-left: 2px dashed var(--line); }
+  .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .tiles { grid-template-columns: minmax(0, 1fr); }
+  .checks, .two { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 600px) {
+  body { font-size: 16px; }
+  .size-row, .crow, .ticks { grid-template-columns: minmax(0, 1fr); gap: 6px; }
+  .ticks > div:first-child { display: none; }
+  .steps { grid-template-columns: minmax(0, 1fr); }
+  .axis-y { display: none; }
+  .grid-wrap { grid-template-columns: minmax(0, 1fr); }
+}
+@media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; } }
+</style>
+
+<header class="bar" id="top">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="Neural, back to top">
+      <svg viewBox="0 0 22 22" aria-hidden="true"><rect x="1" y="1" width="9" height="9" rx="1.5" fill="var(--gpu)"/><rect x="12" y="1" width="9" height="9" rx="1.5" fill="var(--cell)"/><rect x="1" y="12" width="9" height="9" rx="1.5" fill="var(--cell)"/><rect x="12" y="12" width="9" height="9" rx="1.5" fill="var(--cpu)"/></svg>
+      Neural
+    </a>
+    <nav class="nav" aria-label="Sections">
+      <a href="#how">How it works</a>
+      <a href="#results">Results</a>
+      <a href="#coding">For coding</a>
+      <a href="#start">Get started</a>
+      <a href="technical.html">Technical</a>
+      <a href="overview.html">For decision makers</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="wrap hero" aria-labelledby="h1">
+    <p class="tag">Neural &middot; a local AI server for gpt-oss-120B</p>
+    <h1 id="h1">A 120-billion-parameter AI, running on one gaming PC.</h1>
+    <p class="lede">Neural runs OpenAI's gpt-oss-120B, a model built for datacenter GPUs, on a single 12&nbsp;GB graphics card plus 64&nbsp;GB of RAM. It is private and fast enough to work with, and it plugs into coding tools like Continue in VS&nbsp;Code or Cursor.</p>
+    <dl class="facts">
+      <div><dt>117B</dt><dd>parameters in the model</dd></div>
+      <div><dt>12&nbsp;GB</dt><dd>graphics card (RTX 3080&nbsp;Ti)</dd></div>
+      <div><dt>3&ndash;7&times;</dt><dd>faster than llama.cpp at reading a 13,000-token coding prompt</dd></div>
+      <div><dt>0</dt><dd>bytes sent to the cloud</dd></div>
+    </dl>
+
+    <figure class="strip" aria-labelledby="strip-title">
+      <div class="strip-head">
+        <h3 id="strip-title">Every square is one expert: 36 layers &times; 128</h3>
+        <div class="strip-controls">
+          <span class="stats" id="stats">token <b>1</b>/120</span>
+          <button class="btn-ghost" id="play" type="button" aria-pressed="false">Pause</button>
+        </div>
+      </div>
+      <div class="grid-wrap">
+        <div class="axis-y" aria-hidden="true">36 LAYERS</div>
+        <canvas id="experts" role="img" aria-label="Grid of the model's 4,608 experts. For each token, four experts per layer light up: amber when the graphics card computes them, blue when the CPU computes them from RAM."></canvas>
+      </div>
+      <div class="axis-x" aria-hidden="true">128 EXPERTS PER LAYER</div>
+      <div class="legend">
+        <span><i class="sw gpu"></i>used now, on the graphics card</span>
+        <span><i class="sw cpu"></i>used now, computed by the CPU from RAM</span>
+        <span><i class="sw gpu-soft"></i>stored on the graphics card</span>
+        <span><i class="sw cell"></i>stored in RAM</span>
+      </div>
+      <figcaption class="strip-note">Real routing of 120 tokens of code generated by gpt-oss-120B, slowed down about 20&times;. The experts on the graphics card change as the server adapts to the conversation. That part replays the server's own admission rule over the trace.</figcaption>
+    </figure>
+  </section>
+
+  <section class="wrap sec" aria-labelledby="problem">
+    <p class="tag">The problem</p>
+    <div class="sec-body">
+      <h2 id="problem">The model is five times bigger than the graphics card.</h2>
+      <p>AI models run fastest when all their weights sit in the graphics card's own memory. gpt-oss-120B takes 61&nbsp;GB on disk, and a gaming graphics card has 12 to 32&nbsp;GB (this PC's RTX 3080&nbsp;Ti has 12). The usual fix is a datacenter GPU with 80&nbsp;GB of memory, which most people rent in the cloud.</p>
+      <div class="sizes" role="img" aria-label="Bar chart drawn to scale: model 61 GB, graphics card memory 12 GB, system RAM 64 GB.">
+        <div class="size-row"><div class="lbl">gpt-oss-120B<small>the model's weights</small></div><div class="track"><div class="fill model" style="width:95.31%">61 GB</div></div></div>
+        <div class="size-row"><div class="lbl">Graphics card memory<small>RTX 3080 Ti</small></div><div class="track"><div class="fill vram" style="width:18.75%">12 GB</div></div></div>
+        <div class="size-row"><div class="lbl">System RAM<small>a well-equipped desktop</small></div><div class="track"><div class="fill ram" style="width:100%">64 GB</div></div></div>
+      </div>
+      <p class="caption">Drawn to scale, in the units Windows shows.</p>
+      <p>Neural's answer is to use the whole PC, with the graphics card and the processor each doing the part of the work it is best placed to do.</p>
+    </div>
+  </section>
+
+  <section class="wrap sec" aria-labelledby="idea">
+    <p class="tag">The trick</p>
+    <div class="sec-body">
+      <h2 id="idea">For any given word, most of the model rests.</h2>
+      <p>gpt-oss-120B is a <em>mixture of experts</em>. Each of its 36 layers holds 128 small specialist networks, the experts. For every token, which is a word or a piece of one, a router picks the 4 experts that fit it best. The other 124 sit that token out.</p>
+      <div class="layer" id="layer" role="img" aria-label="One layer of 128 experts, with the 4 picked for one token highlighted."></div>
+      <p class="caption">One layer, one token: 4 of 128 experts do the work.</p>
+      <div class="bigstat">
+        <div><b>144</b><span>experts used per token</span></div>
+        <div><b>4,608</b><span>experts in the model</span></div>
+        <div><b>3%</b><span>of the experts active at once</span></div>
+      </div>
+      <p>The catch: the picks change from token to token and are hard to predict. In tests, guessing ahead which experts come next never paid for itself. For code, the model calls on almost every expert it has within a couple of pages of output.</p>
+    </div>
+  </section>
+
+  <section class="wrap sec" id="how" aria-labelledby="split">
+    <p class="tag">The split</p>
+    <div class="sec-body">
+      <h2 id="split">Compute each expert where it already lives.</h2>
+      <div class="split">
+        <div class="place gpu">
+          <h3>Graphics card</h3>
+          <p>Holds the parts every token needs (attention and the router) plus the <span class="gpu-t">~480 most-used experts</span>. It is very fast, but only about 1 expert in 10 fits.</p>
+          <p class="spec">12 GB &middot; 36 layers as CUDA graphs</p>
+        </div>
+        <div class="link"><div><b>~23 KB</b>of messages per layer, instead of 13&nbsp;MB per missing expert</div></div>
+        <div class="place cpu">
+          <h3>Processor + RAM</h3>
+          <p>All the other experts wait in RAM. When a token needs one, <span class="cpu-t">8 CPU cores compute it right there</span>, while the graphics card works on its own share at the same moment.</p>
+          <p class="spec">64 GB &middot; AVX-512 &middot; 21&ndash;30 GB/s</p>
+        </div>
+      </div>
+      <p>The usual way to split a model like this is by layer: some layers live on the card, and the CPU handles the experts of the rest. Neural splits it by expert instead. In every layer, the most-used experts sit on the card and the rest stay in RAM, and both sides work on each token at the same time. The other option, copying experts to the card as they are needed, is slow, because every missing expert is 13&nbsp;MB. Neural moves the <em>work</em> to the data instead of the data to the work.</p>
+      <p><strong>It adapts to your conversation.</strong> An expert that keeps coming up gets copied to the graphics card in the background, a few experts per token, while the CPU reads it anyway. The card's share of the work grows as the conversation goes on.</p>
+    </div>
+  </section>
+
+  <section class="wrap sec" aria-labelledby="oneword">
+    <p class="tag">One token</p>
+    <div class="sec-body">
+      <h2 id="oneword">What happens, layer by layer, for every token.</h2>
+      <ol class="steps">
+        <li class="g">The graphics card reads the conversation so far (attention), and the router picks 4 experts.</li>
+        <li class="g">Experts already on the graphics card are computed there.</li>
+        <li class="c">At the same moment, the CPU computes the others straight from RAM.</li>
+        <li>The results are added up and passed on. After all 36 layers, the next token appears.</li>
+      </ol>
+      <p>That whole loop runs 14 to 21 times a second when writing code, and faster for everyday text.</p>
+    </div>
+  </section>
+
+  <section class="wrap sec" id="results" aria-labelledby="res">
+    <p class="tag">Results</p>
+    <div class="sec-body">
+      <h2 id="res">Measured, not promised.</h2>
+      <p>Same PC, same model, in alternating runs against llama.cpp, the most widely used local AI runner, run with <code>-ncmoe 31</code>, the fastest offload setting we found for this model. The top two rows come from a research build of the same engine, timed on short prompts with a short context, which leaves more room on the graphics card for experts. The other four come from the server, with a fresh server for every run: reading a long prompt after a discarded warm-up prompt, one long coding conversation (a 13,000-token code context, then follow-up questions), and one file rewrite compared over the same length of answer. Pick a date to see that version, with the previous one marked, or see how each result has moved over time.</p>
+      <div class="vtabs" role="tablist" aria-label="Results by server version">
+        <button type="button" role="tab" id="tab-v9" aria-controls="chart" aria-selected="true" data-view="v9">Sep 30 (4) <span>latest</span></button>
+        <button type="button" role="tab" id="tab-v8" aria-controls="chart" aria-selected="false" tabindex="-1" data-view="v8">Sep 30 (3) <span>v8</span></button>
+        <button type="button" role="tab" id="tab-v7" aria-controls="chart" aria-selected="false" tabindex="-1" data-view="v7">Sep 30 (2) <span>v7</span></button>
+        <button type="button" role="tab" id="tab-v6" aria-controls="chart" aria-selected="false" tabindex="-1" data-view="v6">Sep 30 (1) <span>v6</span></button>
+        <button type="button" role="tab" id="tab-v5" aria-controls="chart" aria-selected="false" tabindex="-1" data-view="v5">Sep 29 <span>v5</span></button>
+        <button type="button" role="tab" id="tab-v4" aria-controls="chart" aria-selected="false" tabindex="-1" data-view="v4">Sep 24 <span>v4</span></button>
+        <button type="button" role="tab" id="tab-v3" aria-controls="chart" aria-selected="false" tabindex="-1" data-view="v3">Sep 23 <span>first server</span></button>
+        <button type="button" role="tab" id="tab-time" aria-controls="timechart" aria-selected="false" tabindex="-1" data-view="time">Over time</button>
+      </div>
+      <div class="chart" id="chart" role="tabpanel" aria-labelledby="tab-v9">
+        <div id="bars" role="group" aria-label="Speed relative to llama.cpp on Sep 30 (fourth measurement). Research build: short everyday prompts 1.46 to 1.56 times, short code prompt 1.12 to 1.19 times. Server: reading a 13,000-token prompt 13.9 times; in a 13,000-token coding conversation, first answer 1.96 times, follow-up answers 1.57 times; rewriting a file just read 1.42 (first Sep 30 measurement; not re-measured cleanly) times.">
+          <div class="crow"><div class="lbl">Short everyday prompts<br><span class="caption">research build, Sep 23</span></div><div class="ctrack" data-lo="1.46" data-hi="1.56" data-label="1.46&ndash;1.56&times;"></div></div>
+          <div class="crow"><div class="lbl">Short code prompt<br><span class="caption">research build, Sep 23</span></div><div class="ctrack" data-lo="1.12" data-hi="1.19" data-label="1.12&ndash;1.19&times;"></div></div>
+          <div class="crow"><div class="lbl">Reading a 13,000-token code prompt<br><span class="caption">server, both warmed up</span></div><div class="ctrack" data-lo="13.9" data-hi="13.9" data-label="13.9&times;"></div></div>
+          <div class="crow"><div class="lbl">First answer after a long prompt<br><span class="caption">server, medians of 3 runs</span></div><div class="ctrack" data-lo="1.96" data-hi="1.96" data-label="1.96&times;"></div></div>
+          <div class="crow"><div class="lbl">Follow-up answers<br><span class="caption">server</span></div><div class="ctrack" data-lo="1.57" data-hi="1.57" data-label="1.57&times;"></div></div>
+          <div class="crow"><div class="lbl">Rewriting a file just read<br><span class="caption">server, same stretch of answer</span></div><div class="ctrack" data-lo="1.42" data-hi="1.42" data-label="1.42&times;"></div></div>
+        </div>
+        <div class="ticks"><div></div><div class="scale" id="scale"></div></div>
+        <div class="chart-key" id="barkey"><span><i class="sw cpu"></i>&nbsp;Neural, up to llama.cpp's speed (the line at 1&times;)</span><span><i class="sw gpu"></i>&nbsp;faster than llama.cpp (faded: spread across runs and settings)</span></div>
+        <p class="fine" id="barnote"></p>
+        <div class="tip" id="tip" role="status" hidden></div>
+      </div>
+      <div class="chart" id="timechart" role="tabpanel" aria-labelledby="tab-time" hidden>
+        <p class="fine">Each panel is Neural's speed divided by llama.cpp's, from the same set of alternating runs (the hollow point pairs the Sep&nbsp;24 build's re-run with that night's llama.cpp run). The vertical whiskers show the run-to-run range. Above the solid line at 1&times; is faster than llama.cpp. The three answer-writing panels share one scale; prompt reading has its own.</p>
+        <div class="tgrid" id="tgrid"></div>
+        <div class="chart-key"><span><i class="sw gpu"></i>&nbsp;faster than llama.cpp</span><span><i class="sw cpu"></i>&nbsp;up to llama.cpp's speed</span><span><i class="was-key"></i>&nbsp;the unchanged Sep 24 build, measured again on Sep 29</span></div>
+        <div class="tip" id="tip2" role="status" hidden></div>
+      </div>
+      <details class="ctable"><summary>All numbers as a table</summary><div id="ctable"></div></details>
+      <p id="inshort">In short: by the fourth measurement on Sep 30 Neural read a 13,000-token prompt 13.9&times; faster than llama.cpp (6.8 s against 95.2 s), wrote follow-up answers 1.57&times; faster (1.11&times; on Sep 23, then 1.24, 1.34, 1.38, 1.54 and 1.54&times; through the day), and its first answer after the long prompt was 1.96&times; faster on the median, with individual runs from 1.84&times; to 2.08&times; (llama.cpp's own first answers ran slower this round, 10.9 to 12.8 tok/s against 13.3 to 13.6 earlier in the day, so the follow-up figure is the steadier one). The fourth step does the prompt maths in 64-row tiles instead of 16 (the graphics card was wasting three quarters of each tile) and prepares expert copies on a second thread, both bit-identical, and copies half as many experts into the card per answer at the same hit rate, which changes which experts the card keeps, so answers can differ from the previous version's the way they already differ between runs; earlier steps were layer-order prompt reading, a CPU kernel that reads RAM at the memory's ceiling, and a smaller expert store, all bit-identical. The file-rewrite figure stands at 1.42&times; from the first Sep 30 measurement: later attempts were not clean, because a rewrite starts on experts that other programs had pushed out of the PC's file cache, and reading them back from disk dominated its first tokens on every version tried. On Sep 24 the prompt figure was 3.1&times;, but the unchanged Sep 24 build also measured 6.5&times; on Sep 29, so the versions before Sep 30 (3) are not what made prompts faster then; why the PC got faster that week is not established. The model only just fits in 64&nbsp;GB of RAM next to other programs, so the first answer still has to pull some experts from disk.</p>
+        <p class="caption" id="readmore">Two write-ups of this work: the <a href="technical.html">technical documentation</a> (architecture, every change with its number and verdict, method, the llama.cpp comparison) and a <a href="overview.html">version for decision makers</a>.</p>
+      <div class="tiles">
+        <div class="tile"><b>23&ndash;25</b><span>tokens per second when writing code (latest Sep&nbsp;30 version)</span></div>
+        <div class="tile"><b>0.4&ndash;0.6&nbsp;s</b><span>per step inside an agent's tool loop, before it starts answering</span></div>
+        <div class="tile"><b>99%</b><span>of the conversation reused when the editor sends a side request</span></div>
+      </div>
+      <p class="fine">Development PC: NVIDIA RTX 3080 Ti 12&nbsp;GB, Intel Core i7-11700K, 64&nbsp;GB DDR4-3000, NVMe SSD. A token is about three quarters of an English word. Code is slower than prose: it calls on experts from all over the model, so more of the work lands on RAM, and RAM speed becomes the limit: the CPU reads experts at 21&ndash;30&nbsp;GB/s here, of about 40&nbsp;GB/s the memory can deliver.</p>
+    </div>
+  </section>
+
+  <section class="wrap sec" id="coding" aria-labelledby="cod">
+    <p class="tag">For coding</p>
+    <div class="sec-body">
+      <h2 id="cod">Plugs into your editor like a cloud model.</h2>
+      <p>Neural speaks the OpenAI Chat Completions API. Point tools that use it at the server: Continue in VS&nbsp;Code or Cursor, the OpenAI SDKs, or your own scripts. Cursor's own built-in agent can't reach local models, and autocomplete (<span class="mono">/v1/completions</span>), the Responses API and images are not supported.</p>
+      <table class="spec-table">
+        <tr><th scope="row">Base URL</th><td>http://127.0.0.1:8000/v1</td></tr>
+        <tr><th scope="row">Model</th><td>gpt-oss-120b-neural</td></tr>
+        <tr><th scope="row">API key</th><td>any value (optional lock: NEURAL_API_KEY)</td></tr>
+        <tr><th scope="row">Context</th><td>16,384 tokens</td></tr>
+      </table>
+      <ul class="checks">
+        <li>Tool calls and streaming, with the model's reasoning shown separately</li>
+        <li>Remembers the conversation: each new step only processes what is new</li>
+        <li>Works while you read: after an answer, it prepares for your next message</li>
+        <li>Private by design: no account, no subscription, nothing leaves the PC</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="wrap sec" aria-labelledby="lim">
+    <p class="tag">Limits</p>
+    <div class="sec-body">
+      <h2 id="lim">What it needs, and where it stops.</h2>
+      <div class="two">
+        <div>
+          <h3>You need</h3>
+          <ul>
+            <li>Windows 10 or 11</li>
+            <li>An NVIDIA RTX 30-series or newer graphics card with 12&nbsp;GB or more (tested on an RTX 3080&nbsp;Ti), with an up-to-date driver (CUDA&nbsp;13)</li>
+            <li>A CPU with AVX-512, such as an Intel 11th-gen Core, a Xeon W or Xeon Scalable, or an AMD chip with Zen&nbsp;4 or newer cores (any Ryzen 7000 or 9000 desktop chip, or a laptop chip from the 7040 series on). Intel Core chips from 12th gen on lack it, and so do Ryzen 7020, 7030 and 7035 laptop chips.</li>
+            <li>64&nbsp;GB of RAM</li>
+            <li>About 120&nbsp;GB free on an NVMe SSD</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Good to know</h3>
+          <ul>
+            <li>One conversation at a time: it is a personal server, not a shared one.</li>
+            <li>Code arrives at 14&ndash;21 tokens per second. That is comfortable to read along with, but slower than cloud services.</li>
+            <li>Startup takes about 2 minutes.</li>
+            <li>Speed depends on free RAM, so close memory-hungry apps first.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap sec" id="start" aria-labelledby="go">
+    <p class="tag">Get started</p>
+    <div class="sec-body">
+      <h2 id="go">Three steps to your own 120B model.</h2>
+      <p>The code lives in a private GitHub repository for now, so ask me for access first. Then type these into Command Prompt (not PowerShell), all in the same window.</p>
+      <p class="step-t">1. Get the code and its Python packages</p>
+      <div class="code"><button class="copy" type="button" data-for="c1">Copy</button><pre id="c1">git clone https://github.com/x3r081/NeuralServer.git
+cd NeuralServer
+py -3.12 -m venv .venv
+.venv\Scripts\pip install -r requirements.txt --extra-index-url https://download.pytorch.org/whl/cu130</pre></div>
+      <p class="step-t">2. Download the model (61 GB) and build the expert store once</p>
+      <div class="code"><button class="copy" type="button" data-for="c2">Copy</button><pre id="c2">.venv\Scripts\hf download openai/gpt-oss-120b --exclude "original/*" --exclude "metal/*" --local-dir D:\Models\gpt-oss-120b
+set NEURAL_MODEL_DIR=D:\Models\gpt-oss-120b
+set NEURAL_STORE_DIR=D:\NeuralStores\gptoss120b_prepacked
+.venv\Scripts\python tools\build_store.py</pre></div>
+      <p class="step-t">2b. Optional: pack the store (the Sep 30 numbers; same answers, less to read per token; needs another 55 GB of disk while both copies exist, then delete the first)</p>
+      <div class="code"><button class="copy" type="button" data-for="c2b">Copy</button><pre id="c2b">.venv\Scripts\python tools\pack_store.py --dst D:\NeuralStores\gptoss120b_ps4 --verify
+set NEURAL_STORE_DIR=D:\NeuralStores\gptoss120b_ps4</pre></div>
+      <p class="step-t">3. Start the server, then connect your editor</p>
+      <div class="code"><button class="copy" type="button" data-for="c3">Copy</button><pre id="c3">.\start_neural_server.bat</pre></div>
+      <p>The editor settings are under <a href="#coding">For coding</a> above.</p>
+    </div>
+  </section>
+
+  <section class="wrap sec" aria-labelledby="faqh">
+    <p class="tag">Questions</p>
+    <div class="sec-body">
+      <h2 id="faqh">Fair questions.</h2>
+      <div class="faq">
+        <details><summary>Is this the full model, or a cut-down version?</summary><p>It is the full gpt-oss-120B. OpenAI's published 4-bit expert weights are copied byte for byte into Neural's store. Nothing is re-quantized or pruned.</p></details>
+        <details><summary>Does splitting the work change the answers?</summary><p>The math is the same model. Neural's fast graphics-card code adds numbers in a slightly different order than the reference code, as GPU code generally does. Output quality was tested statistically, and the difference stays inside the spread the reference code itself shows when only its rounding order changes.</p></details>
+        <details><summary>Why does RAM matter so much?</summary><p>Every expert the CPU computes has to be read from RAM. Each token needs about 1.9&nbsp;GB of expert weights in total, split between the graphics card and RAM. For code, the limit is how fast RAM can be read.</p></details>
+        <details><summary>Why not just use llama.cpp?</summary><p>llama.cpp is excellent and runs almost anywhere. On this PC, Neural reads long prompts 3&ndash;7&times; faster than llama.cpp, depending on the day it was measured. In a long coding conversation its follow-up answers were 1.34&times; faster and its first answer after the long prompt 1.16&times; faster (Sep&nbsp;29). A research build answered short prompts 1.1&ndash;1.6&times; faster. Neural also adds features for coding agents: it replays its own tool calls exactly, so each step only reads the new result; it keeps the conversation cached when the editor sends side requests; and it prepares the next turn while you read.</p></details>
+        <details><summary>Can I run it on a Mac or on Linux?</summary><p>Not today. The server is built and tested on Windows with an NVIDIA card. The ideas carry over, but the code does not yet.</p></details>
+        <details><summary>Where did this come from?</summary><p>Neural began as a research project on running very large mixture-of-experts models on consumer hardware. It kept a detailed lab notebook, including the ideas that failed. This server is what came out of it.</p></details>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>Neural Server &middot; gpt-oss-120B by OpenAI (Apache&nbsp;2.0)</span>
+    <span>Speed figures measured on the development PC, September 2026. Sizes come from the model's design.</span>
+  </div>
+</footer>
+
+<script>
+(() => {
+  const D = {"own":"0e660c1109eb0852029d11e0109a10f6108d1119101301990ed911010fd50e100d9c11460681011d021602710bad09140a5a0b4b038108df0a7109361003098f05b00bea0d0402cf00be015c11390d471187051709b20a3e0ddb08ed0cd910a90f4c11a003670f3b0457119800990c8711fd093f074f10700923032807440fc505f10b6a0f430793086e0da50cc40b610e960ae50ffa01f50081086b0f5803910d310a1f001e030e0e2e05ca045b072105990d3307350c12017a0393095b061c11a50fa5047e10b509a509d40c7100fe0ef407740b7308910ca0095a005505f2004c009c09a6080c037207ef0d7b01af0a0c002e0f980d4a11bb0c37017007bd09e8099902b4111a075109190e1c04ae115600ff03ef0fc6119307cb0d6504810ac709ae046f07de00580535070606d90ce606870d9d0766024806730da80e391175069a0722063807ed02c20d030fd70ab6000803c904c0093503e800b403f104bb0cb90d1b011000c5110902f8016f0bca060609bb03bb06db0df307f6054f013410c607a502170342064904a8088f0eee06c50e9e05f907eb0dda0d810a530233052710f711f40436019502f90894103908400b2201f60f7f03150928077304b110620d1d06180f0d092c0f0a0bfd05d311850b2406290c5b01f80ced0ae90c060c6e024a0acc0126080e10a508040fba055f031d1017059605481059076e056104d00ab40eef11a403520cab105d0cc007d906bf007200d3071711c9054b0c690dc80b1f0de20539090a0d7d06530b0004640cf807260afb0b9e082708a00d35089804721019057d11d008cd010307b705d008cb033e084a00640549055c029905c2062807f806510bc303a704e0083f0b40016907e70a330a1a0ea305230b5c094811470ba40efb012501ed0a990fe701430f5a06c90b310333032604830746052210a4026b040106ef06c0088b06a907df083b10d003af071f11320b8f044b047d0e5f0534086402ab0cfa0ede04650ed70488073904ba11dd0e330a700be60c9707e404bc03cd06b70e8c09e011fc051805820a8401fb0cd1027908cf082c0aa20c3505c503ac113b114c0220087c06240645116d0f420030097f025908d4095c0e4e050111c10f4b02dd0ecc10fa01d2044e0a0f06310c2b1030080a0e360951083c03eb05a611650f000ed103fe0bfc01ae07cf11be0784","tok":["2d481205581729375c282c666719611c0d163c481d783969284215540113582b7e4c2b421b3c407061483c10711123196f156d4001072e5006260e44641e4021040e362e6d45601b140a3543262e604e1a49687b697b680b2e24320e6a6e0f3a71116e484266155946044f35235b6234394a456c165c3178584b426057531d64641730063576721543637309601a2474","032e1c4c3360157b2d00265406350e647f3e76222b5c4b0a4264027e4d013b58612b1459511b29524b483c2a112e501342716750070a64265f2651416f0421695c3b362c2f6d626f2b3635535434082622705a0101534c224b30376a242d0f3c11726e3c590642514a6e0415622c51342e556c163c5831431658691e045b553530526b160e1a2137013a635e74244c64","08534818347b1e1b3a5c170f6a671964483c3e3f1d67456f423728250158432b7e2b1450407c1b3c3c61484b117250715540426f070a2e012606735f2164141e267b360e627e1e6d14346f5c7d261a3824094c3414536a4b196a68370f543c7c590a691107425950771a046c62707f1f39451c3d0e55745c581a427d1d6059494355706124652015531e2e126f623260","08524257006d6c7b5c730028460b3e263c3e7f481d590e1742335228011358572b4c7e351b09507c613c484b117113502940155e072e0a2573263f46211e171426367b2c457e62605e1434401a780050145039512b4b6a1d4255235b213c70120a68554442273f2b1a776c3c647f1034021c39450e5c2574580e57211f59300252550b61345b6b43271e6a6b7e763441","684535511d350f683e734f7a4b0b0e467f313c48501d5921424e5233162001436d2b5e051b1736504b483c611171394e293e42400a076f7d26577327146b1e0d147b2c26627e43455e17770c1a662f0050615b1d40616a00093756167a12773c0a294413422b2758776c031a447f3a487f1c6539745c210e7d4c580e494e6d7155613d525b7a3415755b3d3915347e76","254659635c11124a697a472864780d6d1763683554071266730c265938787252494c395c43195809346b7e4b6030683c14243e6e6f5134011f65733f376b5f1e7c191736450760035e432f69661a074b505b230b2b6a4b6142163e21214e0f770a445529422735506c771a037f37323a021c397f0e5c74210e5857495930020b55526144345b7a781e6b6a23767e3460","796f37511d6855097e540e3f356b7e0e427f4c682503764e424e56604124397d7b0659612f51454a484b087f117e7167293e67154e0a376f492a406b3a6b1419142c6e6062434c5709376e777f66231a1d3c6148406100423316575610056a5f0a7a3113424d13660377651a225b3f481c7f6539745c216f4c7d490e496d4e113d4461035b7a786575320a652849602d","344551055b1118616456273f6424260d2e17682b257d0f073a14737938267d134c3f394919585d096b347e183c602f3014246c3f6f511e0165246c496b3772597c7819173d033e076943326e4b663e6e562c0a7242516115331607325a706a050a6d782542683c660365771a223f5b481c7f396574215c044c7d495771492f0a3d4461475b787a2075320a6549282d25","66516c2f0509693343150056632409751716447f01281d07425513730e773b4d591a614c12195d73344b7f1f686730713e24156e136f370a4a6c5f4977340d154860621465386250616e564b24703e522c773b2d51395d42163375660510206a0a7378060c42662b65031a77485b54131c65486874736f6d4c57036c1249710b3d62034b5b7a1f7875013214491c2560","467c516c08090d600e2600566c092404177f1645481d28272655420b77524d5161591b4c197d5d52346b4b7067301629243e6e2d376f1346076c5f6e59772f09622a601e1d766f627d4e636e2d35295a2d7746025d5c7579660d1645100e203d0a2872430042575903771a626d3a387f1c17481074172f5c364c576c560b110612613d521f5f7a19657532185d4b1511","51450d3f0d6560150038360413097f22177f5f3e1d5f48325526426477514d0a61592675197d525d4b7f2348306711713e242d2937136f255f076c4959692f092a1e606e1d62764c4e7d6e632d35295a2d7746025d5c750666160d060e103d770a2843130042575903771a626d2c3a381c17654c2f17745c364c570e560b117812614b525f1f1925163918695d4b1560","497766702568386d4a02007507793522647f653c210a786c20606b305d0d377d4d307b592f5b0e194b6c7f0211307e283e1a24156f0a07132a4018497f306b3207145f623e4335620977376c666f7f183c3861157940062d1656332a207405770a7a386d134d102f031a776522487f3a7f6819406f21747d7d49744c496d114e3d6808627a5b1f1632650a7528492d60","516c7c030d601d09541b7f12032024211744097f215f1d28645655534d777d416159063719525b7d4b3d6b6f30677e2f3e24352d6f3720136c792a67692f5977622a1e141d3776627d4e253c29352d5a2d467702795d481666160d452005100e0a72282600570b2f031a62776d7f503a171c0368172f747336176c3a56001106123d132a1f5f4325091639755d11751c","5c0605662d41706d3b092339180b54017f3c3b0d70214759101852313718791b17273059765b71194b6c7f4869303f713e24291a6f3d13075461496c71683059076257603e35436270213a096f6630182c3a3c617909154216563349742805770a7a38444d13472f1a037765227f4860681c7f197d216f747d4c490a6d495d113d6203085b7a1678750a65322849602d","6c416f1f0f601369030054261b647024177f562268482e1d53426f5e774d1e4f591a6129183919524f34706b302f6768243e6e35516f260b794a6e5f5977696e17483b711f764f502561561d70491166770b2c4639795d06161b0666057410200a06604a0c47546c1a55657f1348607f641c68487d025e7303630f407841126b4b130346571f16030914035f491c0720","70517c6c600d0957267f00047038210417097f56682e1d75536f2564774d51525961291b7d5239184f704b7730672f29243e356e6f263751796e076c590977691e626022701d764e4e7d25632d355a292d024677755c5d796616450d3d0e10740a287231574200591a0377626d60487f1c17484c7d172f74364c255c562c0006123d70185f1f1925045739015d116025","170b7a126b375f6d230d5d580b3e47333c7f0b6e5905131d3352321879134418273564300950615b4b37617f11713d3029754015070a786f73340f26175a23215a26386e7e624d6a217b165f7d5b1a78240f624d142a4b0019760149540e0f7c0a44591359427b2e7728031a627f70341c3d395f550e74217d4c586073491d277057556115472a792e1e3a016a75742c","2a4536371d685522541b3e21350e0f3d4c7f313c0a21262d424e5660572439437b5e06452f6f5b454b487f6c117e4e71293e40670a6f07642a4961183a6b141914072c7b4335623e09371721666f697f3c611d1540790006165633570574776a0a7a44291342104d0377651a22487f3a7f681c4821746f5c7d4c4974496d114e3d70082e7a5b0c29320a657528496015","6c7c513d600d2a151800262d0435092417162248541d28390a2542734d771e676108591a4b52455b6f4b6b1050304b393e2d44296f4007265f794a245969776e62174871501d2f765661256578707429770d2c2d05393a791b66065b0577105c060a1375524b3b0c5e1a03403d2c6048011c1d5f447d784c4b0362587c786b02054b4613352425020943571460492569","1f7c295e600d0973261200180409244b1b17227f541d752825260a48774d675261590d757d4519406f346b5c613029002d3e6e356f512640795f674a5969772f621e2a171d4e706f4e7d253c35292d5a2d024677755c7900660d36453d0e77650a13287257594244031a62776d3d7f381c5f174c172f7442364c172556002c16706152131f5f7825010957045d112575","170b7a7b6b375f6d230d587c3e0b01183c7f6e3e5905132833521832791844132730172a50095b15024b3727713e1130753e40296f07780a73340f61175a23195a3807267e4d626a21167b5f7d5b1a6f24620f4d142a4b0019017649540e7c0f0a445969597b422e7728031a627f70343d1c3966550e74217d4c69747349271d705755082a4715202e3a1e146a757466","2a3645371d356d331b3e54213536070e7f3c4c5121507d0a4e427107573943167b07175e0b5b366f6c4b5d582d11714e3e1529176f0a077d2a61182765143a66072c143d43353e62376c09176f001a7f3c4a1d1579402d61165659091274050e0a44317a13102f3e031a772622487f60687f0703215c6f74747d4929496d5d0b3d08621a7a295b78320a657528491507","20606c7c13090d607f12265464752469176862557e612e62444013730e774f1e1a16622e1e721241344e1f5c604b3c20240f6e2d510b6f34794a176e7759286e48713b091c5076385661251d705e49640b772c4639792d6d061b16640510200e0f380664542f4b0c55261a51027f5913680355780f60562a03746c707824686b4b624e527a1f7838096669753549101c","7737446f3c605109122f15546450702417552f68614b072e40441319774f0e7d2e0a2924521e7d5b344e701f60293c2d242d17496f51347a79674a0459772f69621e4b011d6f37707d4e3c252d295a352d46027c757916630d1666450e3d05105f0a3872572f0b382662121d487f6d596803170e2f170f427436251756001106186252031f7a5f7839753c095d11154b","591376222573384a4a661b0207211422252a0b656e4e6c616b5a4a315d0d7a7d304d7b702f6d735b13026b3728602d68473e2d6f6f20510a492a0d267f193268195f147b3e64433509183a77666f307f1c72383c79406d3e531633566a4a2041387a046d17602f4d2676753848597f22680349556f215c60741c7d0a6d714927623d034a7a5b7800390a753c49662d28","6c377c601360715a2f12542b0f64246d17681b55242561074044192677527d671a231c1b44417d1e4e5c381c600e3c1c49246e7351296f1e6e79074a5977692f1e2a17317071761d4e257d535a2d29352d02461c75795c634566160d0e3d2077720238282f575f192662761348597f6d68034952170f2f4274361c6c00563e285b7005181f5f297a39213d565d117560","170b7a3f6b375f20230d582b0b3e18013c6e0b7f591305285233183244791813273064350950156137274b023e303971754051246f07780a73340f61175a2348075a38267e3e4d6a21167b337d6f665b244d620f14792a6a194916760e540f200a443859597b135f03772826627f3a223d0319722155746f297d744f7349270b70085557470c737932652e756a752c66","2a5736371d68557a1b3e541407227078251e7f2a6e5021144e7156605724160d7b175e6d735b2f194b6c6b00393068603e2414476f0a20512a4961186b7f3a191907143d3e3543640937185b666f18301c3c725940795e42531633566a20054a387a266d605f194d7675572648225909680349726f2141746b741c3a6d497a25625b3d2e7a5b1f200a39327528492d66","1c6c2b00711341056949127f3024396417682f207a2d071a5e4269593b4b1009231a4058001e41121e385c1f4b3c34006c736e5351156d626e794a09597756784831713b561c714a5319611d4c7e48701c59776a3905580a047c1b5e6c2041645b300560694b19567607523d0931481368033c554c7c0f6c1c036a066b41183d6201190565370b296f1801585025326f","08104757134471092f6f056930246d3d172038582d1a07124d5e1d26525f770a23400d1a00411269381e5c1f3c0058426c6e1d73516d29156e7930415977786f311e1701565b1d6f537d7c195a2d4c1d2d02467775795c5d66450d160e48053d304338735719004b766203136d09487f68034c17172f500f361c744c56000b117005625b1f5f7a25394f56015d114b15","170b7a3f6b375f20230d587c3e0b09213c6e0b6c590513285233313244180a7927113017157309506b2702373e6830287547516e6f78592034730f46235a17195a0738267e4d3e6a217b160c7d666f5b244d506279142a094919163e0e5420774438590a5f59657b03772813627f3a223d03726621556f7429747d0a734959270870551b470c7a7332652e756a752c66","1c6c0d2e717e406012693257373950566b1720762507125b7659731f2748774b7d1a23584d35081e5c70281f6034203c733f12361500296e516e177977596e040131007d761c1d6f7d25611964703d2d48462d5163791d2d66551b3e0e480522094b5f385f776557621338036d0a287f680e17036f6617212936746b6806110a08621b5b1f7a5f46650a32565d637e15","15130d1b2538273d414a54604a5977500c6536686e0f25216b5f31205d7a0d0a7930700c3e4d4a5b13211c60607f3c347e2d630d6f1c554d497a7b555919413543511b192d3e3d1042096254753048780a2038652d0c5e42331a066b48382172786d417a5f79542f71574b031a221328684903256f41744c0a746b1c0a711878624a051b7a1f0d460a094b3949286035","5e7d6c0d562a570d12576f477a24397e2d6817200725667c2659227377616727791b3b6a2d3e7d08221a5c203c344c587e0d3f7355293f27056e7a725909472f1e7d2a01701d243b7d4e25632d5a3d31022d461c6375795c0d45663e480e3d730972286d5f576577621303330a6d284768174c0e172f414f3629746b06560a11081b625b1f5f7a0d6556320a5d112515","170b7a3f6b376d5f230d587c3e0b18253c6e0b495905135152331831791844132730176f0915503d273777023c3e604a5175240b6f591e7834730f7a5a2317485a0738267e4d3e6a217b165f7d6f665b244d620f79146a2a194916760e54207c0a445938595f657b03771a28627f3a593d031c395521417429747d0a734959270870575b477a0c2a322e753a6a752c66","2a4536371d685522541b3e7e350f07734c313c7f210a51544e566042577d00397b5e06175b2f19746c4b6b7e302f397e3e40141a6f1e070a612a1849483a6b680719142c3e3543540921375b6f666930693c61157940063e5633571620057438385d7a0a2f4d13101a03771322597f486803497f41216f74746b0a1c496d117a08625b3d7a1f0c5b0a3265752849152d","487c6c661309713d2e7e34252479643d78681724551125075938561d0541773b7d061a517f74353f19765c186f3c5c7a0b3f1230271e4e0b51794a7f59444a771748213b3a57641b5319255b78215469462d2f694173343e661a5134134105105b41267d04162f1d1d165762590128136803251d4c416f5e43360a746c14185552622e131f0d462909396631495d5960","275d6d242d48415009233b39091855246c5a0d1d7031515f10313e1818370a0c17115130747619566b186c19692f6f390b241a3e6f1e310b541d6c7f5c68595b17211957643e2a6e5b4118212e6f780f69661a7a3e197b342434144f414a28697d5d71624b7a37175771133959011376680369254132066e1c3b740a7a2541576252550e0d7a161f396b096676496005","737c376e137139550a2e7e210624647968174c311125557c59222c5105413b4c7d064b6a62353f081938205c6f3c5c580b3f1249271e5f2951177903596f4a043b0a1722713a747619530f2578543d5a462d2f692c413e7966581a51380513417d5b355d042f5f16621d03575928017468032549414c176e4336741c186c3e385b622e701f7a0d6109392a665d604925","276d01762d4841203b092339095518705a0d1d6c5170311110313e7c37180c4b1711515f567476580119187e693c606f0b3d243f1e0b6f6a39546113685c487c215257192a643e355b2118416f2e506669661a593e091906241a5d4c4a4128697d5d71624b5f7a171357271a5913017f68036925416f0632746b0a1c7a5d25275b62082e7a1f0d460a32393c15284976","376e407c1308717e2e217e120c24647517684c012555075b594f341d05413b4c7d06224b353f0053195c76186f52343c0b283046271e5f0b17517915596f4a443b0a21227674702e19535b0f3d545a232d4669022c41793e661a3b450538744a7d5b357275042f4b62131d0359016d286803254e41174c6f4374366b3e1855565b2e2a621f5f7a16392a3d595d116025","27016d242d41204809233b39185521095a0d1d6c7051315f10313e7237180c0a17112751567674157c186b1969556f2f3d0b1a1c6f1e3d593961546c685c487c21525739642a353e5b2118416f2e665069661a1c3e091906241a5d344a4128327d5d71624b5f7a19135726275913017f68690325416f06326b740a1c7a5d25535b6208557a1f0d460a32393c15284976","496e370071137e55077e2e2166792435684c371725583307594f566f056d414c7d064b23353f7f00195c18766f34523c280b7e53271e4f0b1751794e6f594a443b0a214074700e7119535b36543d5a682d4669022c41793e663b451a057438205b35607d75042f5f621a031d59010a6d68034e2517414c6e4374364c3e5500185b702a0e1f5f7a16323909755d11601c","170b7a3f6b375f20230d582b3e0b21123c6e490b59130551523331324479131827646f110950153d7c27376b3e552f307540511c6f7859073473460f5a2317485a3807267e4d3e6a217b5f167d6f6678244d506279146a0919491676540e747c0a445938597b652f031a7728627f3a603d031c6855217d74297d744c734927590870573d477a0c20322e75656a752c66","2a3770361d685560547e1b3e07793504644c227f210a51354e60564657007d397b175e4d5b2f190e6c4b6b34304e7e2f3e40241a6f070a66612a4918483a6b7f0719392c353e434f0921375b6f6630233c6961157940064216563357742005777a380a5d132f4d101a03771322487f606803487f216f4174746b7d4c496d7a113d62082e7a5b0c1f0a3275652849152d","437c116c194513090f7c697a732409645917361611781d06151e25383b1e4d7f6061181019747f5b5f6b346c2f684b16240b1b2d1e6f317a012a09496764445952062139643e54725b18534378652e6669491a5969793e064c1f245b6a4120747106112d247a663a061a38653e5b59601d6848031678411a4b741c6b577a783a6239036435240d2043325609601a6210","4703057c1340717e1a30052154247e6c682f17202107712b597e70683b054c277d181a6941357900765c635b026f343c0b7330781e23290b791751416f5944273b40452171563a7453197c255a540c3d2d46022f41795b69663b45381e0513415b1d7d350416592f621a1d137d012d4368333b514c176e023643694255455b00306b68706646787646192a185f251e07","0d3a7c38375f19091d230d3909243e19591d750a594f111d313e674618440a791127186f151974636b7c77275502613e1c0b51756f1e597846341d0f5a3d59485a386b077e4d6a3e215f7b167d5b6f78240f4d5014796a2a19164974540e777c0a4459697b596500031a7728627f3a603d1c0348557d210e297d744c734927590857703d47207a0c322e75656a752c66","2a36374d1d68136f3e54217e033500644c22683c555f25514e56423957007d417b065e595b192f524b6c754f307e114e3e4024296f0a0713612a496c3a486b7907142c1935433e640921375b66236f183c611d72794006421657335674206a050a7a3864134d2f101a0377652248607f687f03487d216f5c4c747d49496d11713d625c2e7a5b78160a7532392849602d","706c7c51600d095b265412047038640417560916682e1c54532542644d77525161592906523918194f4b703430672f7e24353e50266f0b51796c5f4a6959776e172a01621d1f764e7d4e2563292d351a2d46770d795d5c7516660d360e7410200a2843720b5700591a0362776d487f6068171c487d172f4a364c174556110b063d1270181f5f7a167539014f5d111560","7b591351254a386d544a660207227021252a651c686e6c2e6b20535a5d0d7a587b4d7030735b2f6d4f00136b68307e2f243e6e6f6f510b13492a18407f197e01195f1714644f3e2d0918375b66306f2a7259383c5e40796d165323406a7420272671255760174d2a1a752926482a605b680355367d023328741c77587a256d7b6203793d7a165b373975011849604107","1c6c707c050913600715436964046d7617561b16683f2e3c53251373553b770e1a59236112196973344f1f4e682f3000246e0f2e6d51136f696e794a59771569311e4c1771703865537c657d2a5a4c352d5946777975415d661645400e74273d0a06734f6057004b1a6238034860137f68551c037d17614236746c4c560b112862033d701f5f7a76752939575d11601c","170b7a3a6b375f6d0d23582b3e0b123c3c6e495c59130568335232464479131827646f300950613d27374b4f303e3d50754051246f7807593473460f5a1723215a38265e7e4d6a7a215f337b7d5b7866240f624d146a2a66194901160e540f7c0a445969597b42072803771a627f34701c3d5f3955740e214c7d69297349275957701655152a20793a462e1e6a757466","53680874347b401b5c3a2800623d6a0e483f3c751d5a496f152542280143583b362b646f61503c0903374b6111713d5040752a1607670a40734626066421745a5c2c5e0e7a4d7e6d140a3f2326327d251a1f7b07381668694b6a19322d7c240f6e11322559157407044a153d62472355512e396c31781657586942167c04643530165d431a76720e3a635e0174244c20","38533f0e40341e5d3a5c17076a6e1e67483f165c0669491d42371525013f3b6a0e507e09401b24291d48503c19702e7255335d6740133925705f4435647421405c0e462c6d7a146e0a4314352e265c277b1a343368223805516a2419577c3a5c716e114f42595107044f465e2377103e39555c6e31783c5c584b2853647c5704305d64357672780f6343011960744c71","1c6c2e08157e2a7b2d2a265c0e04356a7f48085c7e241d32426c37744d3b016a613122291b425129483c781d112e7167670116294e2503015f2644646f3b74642c5c6e0e6d471b7a0a1436192e2608540b1a3b78224c34164b37516a2d243c6971116e7359425066044f1d6d23625b34394a4555163c5c3158427069185364043017645d721a762a63193a734c247471","2d4812535817295b5c282c6667196a1c160d3c481d7869282815425401132b582b7e55141b3c40703c48614b1171502e4055011601074e252606645f642174005c2c0e2e6d7a6e600a146b43262e2f3c1a490b656968543a242e510e6a0f3a4f71112959426944664f04461a235b103f394565295c317d3c584b7a4c57041d536444303f2415352143636657601a6224","491c382e053c137b7f2d18542038350e7f22773c5c253d17420638534d013b4359611f1429511b403c482a4b11502e71017167164e3c01075f2651216f2174645c466e3b6d74171e366b35144854260865705a7b10014c534b31376a240f2d4d116e6054590642514a041d386211772c2e4a39513c16583116691e570445185530445d521a0e720d3a630172744c2464","0853486d347b1b585c3a0f2d676a1964483c163e1d67425228254233015843137e2b141d7c68211b3c4b486150711130014015103c07012e2673063f1e213b646e26360e1e0a6d5d14346b67267d2841094c68286014650674686a370f7c6a546956590a0766744204651915625b4770451c102e5516576e421a75691d60787943701951652431355319202e6f623260","2a361c041d274e7b5a5c542a675e70503c3e487f1d4d6a5942335207011343572b7e146450407c613c4b61487150113029401516072e3c0126063f73141e3b216a266e0e0a1e17601434436b0d2628275c780b650106691d4e667416700f215c0a33311342064c1e6d651a77645b23041c651045740e5c6d750e574c0b161178787a44702f44466b3d275c4f7e226075","5966282c1d0f6c494f022a34671754013e4e3c7f1d6a0d43424e2766580143162b1d5914407c5b2f4b3c486f71501130293e1610072e253c262a4d40146b1e3b6a2c6014173d0a4332466e77663e1a4f615b783c0629400005166d33125f0e050a5564314206764d5a651a033f22706c1c7f6a10744b04214c570e7d064e7b2c3d44701a1f5b78713d0c3c754f750715","3445512c5c5b111864282b0e642678672e6368171d0f07123a42627113433801642b35550961503d374b6f617150301129154001072e010a73263f2417211e140e266a6e1e33600a6943775e3e4b2666562c0d72425106793307751612055a216d0a317842683c7603651a6122323f701c667f482104744b4c497d0e49712f533d771a21781f5b7a75323973771c2807","764205481976091f0f1d0d2c3b671c01483e7f4e1d6b786a1528425d7e0143132b105909405b7c684b6f583c507139307c29161550072e3c6b26062414640b6b6a60780e643e3d0a1e7714693e262866495672414251067933160775126a5a050a6d31784268762f651a036122323f231c66487f2104744b4c7d490760491d71643d1a447a1f2a35754332596062331a","161c05083c057b0954787f7a0d6867247f22173c011d687e2f425044100e5043596129085b196e51347f4b48307150563e292416132e076f2a496b5f141b28416a48606e053d311e1d56432e5e3e2728350b0d413979063a0675165e21200e370a3150645400422f55651a7e65707f60551c48107d74041970032b4c780b24644b0339683974201f090f752a35106249","4f531b470545405d391d3a10016719627559484f061d6a5a37152f273d017e1f182b09103c6e50406f103761507139196d162915502e3c0706263f096440141e0e766a6e331e0a04431471152860263e30685f343a66390606123875217720050a6b31065424422f55651a7e6570236055481c667d4b7404706c754c78601d64644b03197405244043092a1460621a13","5a6605582b3c71687f2d123a3d217f7517227f4568211d7642444b0d104f0e5059612e295b521951344b7f6b305629673e241629526f34373640492a1b4159696a4860623d3e171d1d2e544b3e4e4852412c720a4251797133751f1605206a370a7850310c422f0665031a7522481a541c4810667404217d4c7d03574911650b3d3944701f5b7a78754f3201491c0775","66516c5a050969334315004c632409751716445c01281d7b425513650e774d1b591a61291219735d346b6f7f68306750241b166e136f65024a606c4034150d6b486a607865385024614b566e24703e6e2c3b770d39510e5d7533161b0527206a0a7378500c2f420665031a75485460131c486810746f046d4c03577d1249110b3d624b031f7a5b7875324f62491c0775","46517c6c080d09600e267f04096c7524177f1644481d28325526420b77524d5161591b26197d5d14346b4b706730292f246e1b3537135e02076c5f6e59692f096a62606e761d5b244e636e7d2d35295a2d0d77465d017579661f0d750e6a203d280a503100066657031a6265386d7f641c10481717743f2a364c5702560b000639126b701f5f19294f1862045d750711","423a055541376b56580c091d015e0b3e5a3c4e3e1d6a13055233183279137e0127302b70503c5b0a4b376f025030713940161029072e503c2673476b14643b176a260e603e0a1d333114774e2d7c35280f2d390d5d797501660d36160e126a3d0a28311c00065766031a4e626d383a7f1c1710487417044b364c1702560b110678125970191f5f294f3d49155d114b15","523251222506356d7563005d5e6701703e3c2a4e6a1d6c0530522a335d137a4305743053505b4e2f4b377f3c305039713e164024072e6f6b260a402a146b30626a2126603e600a174077462f667c6916395150341d792b0655423a160e1222200a444b31060077273c031a6c647f323a026d1c480e6621744f6729650b59301178083e0b346b1f2f5c1e23277e0c0760","517c456668551d7d1b564e7503706c642a4c7f09216c1d52606e30655d397d41530674592f5b6d523d6b4b34392f307e243e161b6f4d0d7a402a6c553a6b3014626a5f783e492d0e370962777f2366163c61152c4079332d57532a56200512270a387a31064d2f10037e1a76226c7f3a037f1c522104744b7d4c74494e6d49233d3e706e1f5b7a0f3d4f75624f157560","344551195b61111864564e2b265d70242e17161e170f301d623a5214434e1325392b5f315d09626c376f7e4b50713930141540442e074301733f2465146b21170e786a7f331e3e036977711e3e4b2826562c720742792d0607337574205a05126d380a7868062f767e03611a227f321a0368196621044b6f7d4c744949712f233d771a627a1f781a3275650a281c2d77","206c7c601309600d7f1256266475246d1768621c7e612e10734413400e1e774f1a1662081e724b41344e701f604b3c2024493f0f510b1e6f6e4a790959776e2871480962501c763861561d69705e723e0b772c6c3979060506755e642027050c06640f0a542f060c55261243027f13590355687856314b0f03746c70780b111b4b03705b1f397a200975192a3549101c","4f531b475d450528391d581c01623c1e75594f48066a5a61372715253d7e1f01180939683c6e245d106f6137507139196d1629402e50073c093f066864401e140e766a4433040a1e431571142860262730685f7b393a06270638124f2077236c060a6e0f542f152b55267e12027f131403556829564b0f0403744463785723414b6403191f350f244366092a60621a35","5976377e3c7113697f1215496450567017552f686107763c40440d4b104f7d502e0a54621e52465b70344e6b29603c2f24492d17516f5234407936411b59776e62484b783e3d1c491d2e54693e4e52302c41726942332d3933755d352005276c38786a1c0c2f061926037e57221a59001903685221046f0f7d1c744c234911461a623e3d1f7a2a783265750a2849666a","4a03280e713c473206694900397b3756246876417a672555591162301e3f104b1a500226534b1e6e1e6e3f704b3c34393f0f1e716f767a00094a4079770b055948627109501c384a5d1d61153a5e0d4865526c7439061e2d5e32060f6c0c20677c546a64541953795511573e0c4479000319542551564b3d0351744d767315784b70395b391f717a0c0956756a756635","4f475312051e191b391d10580162462175594f4806696a20372715543d7e011f39685c2d435d5805734b6f6b5030392f1444504001072e6f733f1f266b6421370e7c6a36331e0454432c71156028266c3068287b06123a395e063874770c6c237c546a425419532f553e1130370c1131293c41030f51563d034d1c5176601d784b644d19653743296f0c66096f627550","29561b043c710f2a064549030d5e39561c682f210e5c255311371d764f3f40351a2e58081e2c7f411e201f6d344b3c003753124927156276794a412f5659774071483f701c4a505e5d1d61190d34756b2a52077939565f765e1f066d0c6c21277c640f005479195611305557590944472545720341564b42037043747876061f174b5b70393f461f0c1956466a756635","4f531b664519051e391d58170162463c7559483f065a6931377210273d381e2e6849395f58435d537d1c1e20793c316012246b3f271e23621f747a42375f6d6b697c3f212e5407332c437f510628601930345968063e6b3206245e120c7f6f197c6e644254195f695511093e59093e374125520a410f7e5603466c1c78601d1f644d5b4b651f71240c6f6b196f506220","41371c697c2e687a05367f1256750d390d1768416e532d2511595c1d104b4f670d67231a1e5346121e1f002e34003c4b0f373f6c76002751794a413005776e59480962316f1c3876611d1925343e48702c466c2d56394106751b6633156c0520780538060c2f0b4b266276381a7f5400036819666f0f410403361c4c23110b68621370591f7a783965327509495d1c75","4e3a653c292d19670942560a0137000c246c4e4269136a1d153118520a18134b1011302770501557373f6f5e3950713e162a1510076f2e3c097d406d0b36050850620e6a6450300d4f3e3043373e28264963724860063370655d6c146f116a20246c3a60196b3a0e0a020c2611590b6a4974360a2e0f737b061c765223575878420e645b29211d02386f165260586207","1c2e540d71263c7b05526912370d7564176820412d0739127322593a381e7209495f583f58534d322f2229403c426d0b3f6c190b55290f1e1f726574375f6b2d7c725269070933637f2c7166061f1d4c5944691c5a063a2d24721a20414b20385d602530194b792f2627570c1359287b036849500f416007531c74462e233b455d4d720e6e224829521f6d661e0b2007","6c245e20713c2f2c055512690d3764391741680e2d5307121b1159734b693b771a0d67231e5341121e1f28463c00344b3f6c0f6e76512965794a6e5177056e59504831091c5038766119151d5c70343e4846772c3941344975721f666c0520796a065b0c4b1654250a762638300154097436036b0f512a2e0603766c236b55196b4b130e58297746184f016e7b2a1807","3b24055f42415c6b095256580167700b5a6c16691d6a13103152181c0a591344395f681158094301187e196b3c79602f143f246c1e516f016c6e651f6b37362d7c17780e5456765043691e31703e52282c0f48773942412d75331b662005626c78380f060c2f1954267603381a130022036819496f040f74034c7d7423491168623d053e1f7a78466532750a49281c2d","7c4c0837555713716f0512260d6d75241768350e762d07254d19732252770a5f2623581b536941121f5c70283c2f58003f6e6c716529511e076c4a6e096e2f594b621e31766f24704e7d63252d5a3d642d467c77635c3175660d45750e3d207328724309000b2f5762037e266d7f380a17036c6817742a0f3674021756060b1108053e1b1f195f7149154f045d114b75","325925132549384a4a5602757922700d78252a21216c146a206b314a5d377a0a304d4204214b5b763f136b6c3928692f1a16633f6f7a6c6d407b6c19307f7101625f07393e433549092437706f7f66302c3c3815402d4233562a53070538730e387a6a445f4d100626037e3822281a6c49190368216f4f5f6b743a7d496d4e711a081b3e1f7a5b2d6532567528492d07","15130d1b273c7138414936544a7759700c6817466e0f36105f62596b107d5a0e796209453e1e4d5b6c21602e607f293c7e2d4d631c52346f093640491b415930486223513e3d101c1d544279755e48520a5f652c2d395e3a061a6b332148385f786d0f6454795f2f4b3326031a130028036812496f74410f7003740a780a186c626405391f390d461932094635104962","4f53471b1e45057b391d103a01626e3c75594f7d06205a6137152f463d251f7e180939103c246e2e6f103d51503971436d16551e502e3c2509685a6b644028530e76717f30336404435d15712826605e30685f2c2d39063a0633126b2138486b6d786a3279542f5f4b7103261a3e13000368120f6f740f5f740a6b0360780a576405621b1f2420354332095660621a33","5e501c202a4450570512571a7a240d6d17681f351c07660f267359515c61775a791b6a622d3e7d085c40222f3c4c34607e0d2d3f29552734054a5e04591b7747487d2362241c763e1d25544b524872302c417707392d33421b335d1a384873056a0f38785f0c2f0626620316221a002849190368216f4f5f6b743a0a0a4968111b621a597a1f2046567565324928666a","1c10696c713c7e4612325718375039566b172076250712107659731f4877274b7d260d1a4d1e35085c701f1c6034203c73373f2829006e157917076e776e05597d1e31627601706f2561194e702d5c5a482d4677413139751b456675050e3d48090f6a3c5f0b572f6238260a7f386d28490e0325176f4f423603746b6811140a1b084b2b1f5f467a655632095d1c4907","4e3a6566292d195b0942234a0001211224425a4169130572311852321879370a3027114570155b50023f3777283e39507d63513f6f117a78477d1d190b326823776226230d3e64303e4f7714377c16284932483c0933062d655d091a6f4511386a626c7a5f192f78382627712822001a491903684f215f6f6b74032960405d23641b19621f247a20564375076062336f","1c0d2e4853552a3c03125769507a39641720686b10612507761f732e48771e271a7d451e144d411e385c6a60604b342024730b3f51150b6f6e7d4a49590b776e774871561c50764c615d56257737703477036c0539062d5d5e061b720c48580d42090f6d5f54782b55384e624430405e497505254f565a25033a6b1311791b384b051b181f3946295609461935491c5d","4f531b66451e5d05391d101c01626a7675594f48065a206137272f463d1e7e1f3909685c246e5d5b2973106f3050397d6d24552e502e0b1309687d2040640b28760e715c3064043343155d562860272630685f7b393a061306125e1b0c196f05420f6a065f54782b55385e7d443e305549557505604f563f036b133a576038784b64051b1f35240256436f09601a6213","46641c254a25076c41756912774a50560c68766b560b106976593744241e483d087d5c6e4d171e585a6320193460204b3712464d236b00277d092068400b056e713177481c504a5d5d0515615e277728235f33075676065f5e4c05260c57216c0f0609175f547856553d266c74313713493c2905320a607e72707403781823045517645b392f0d551946560935100725","4f531b12451e0519391d3a1037214670755917682051600654793a37133d3825642b395509505d61374b616f5071303940291514072e0113733f260621171e640e266a6e1e330a042c437e71262860784330286866066027746837120f0b3c7769563033075145351704183d345b2b372e541f6c782d6759534b4475571d7860644d551c5578026543566a3a60621a20","7b6f371e0f68551d1232574b4f560d646b30762f25072d10761d591f752767487d2e0d224d1e08355c6e1f60346020003637574d0027171d7d410430052f776f501e4b31706f761c19254e612d5a70342d460277314116751b726645053d480e090f063c5f0b2f5762267e3830380a2825493947174f2a4236033a74001455046b051b391f5846556e09562a5d7b0775","3b5f6b0541422d6b0952581d012516215a6c696e136a1d05311852321844590a271130260a5815097d181c493c603452126c3f7a6215271e7a6e1772596d226e2321691e703e5476314e5669702d5a4e0f2d482c311639411b664575050e3d480f0938645f572f0b627e03266d7f0a384940250e176f214f3674036b68110a06081b5b4b1f7a5f466532564f491c5d07","694c2e6f7e71603c1232577e505639646b17766825072d4b7659193051482777262e7d061e7d3f4a7063195c3460523c37124d462762235b79076e4a09592f771e620a4b70766f544e7d3c252d5a29352d46022e5c31166366450d160e3d05203c0a0943570b060062037e1a386d7f2417521c3617044f2f3625176c0056682c34132a051f195f6f044f49565d116075","170b3a7a6b5f376d0d585d04013e0b763c6e3e646a1d59133352184679134401273064355063095b374b6f27503e3071402a75440778592e73344726175a2314265a076a7e173e6a161434217d5b620b4d62240f14792a6a76490174540e12770a4459137b2e590628031a1e627f4e3d1c3d106b55740e047537426c73024979703e527e3144431f2e464f75756a2c07","73151758341c6b670d1d585c1901763e3e48166e1d7f136a335228157e0113582b645518503c407c376f613c50711939402a2910072e3c01732606346417213b0e266a447e1e334d145c34167d4f28600924624d146038794974686a540e0f77690a5944077b2e0628031a1e627f4e701c3d102e5574217d1a7537421d604979704308573165201f532e75596f326250","3f6a1f4b116c6d586353735c26015d702e3e484e17201d304642523357250143282b1c455b735d504b6f6c58500a30393e442414076f7a1361110a26726b6514260706603e77177e75160d214b6230286f0a1872507951212d3349165a05201d0a7831706806422f031e1a65221a7f091c40482921746f044c497d6c492f0a11473d216e1f7a150c3275650a49281c2d","5144206c0d2a60156b262a76097b2475177f1620481d28792655420677524d6761597f1c19147d5b4b346f6b67301653243e2d6e37135e6f496c5f0762592f796a012a601d24173e63201e7d647c1629510d39771d727901556616420e22126a0a4b2831000677653c031a653a0a647f1c6d4810660e74216729364c0b591130084b5903346b1f5f5c271e237e0c3a63","2235466a350f736d30736b2a7054013d65315a4e50216a56664e20302446580d6d0f45465b6d3619344b7b054e3016503e241b18045e371349572a47731466305f2c60023e431d17462f0c327c661631390d515b2b126a061642553e0e125f6a440a5531000656776c033c650a70607f1c02104874210e4167297549590b063755083d4c2f346b1f6a6b1e237e760734","262877225c0f114930026b2b642470462e1768200d14481d66650914262438255f1c5939195b5d13346b6f733067162f24143e6e375e136f11496c656b727e62786e19025a3e643d460c325e667c283e5b0d50392b6d6a236d163e420e6a5f1264440a55060056656c03651a22485b601c106a4821740e41294c497559063037083d6470711f0d7a1e0c3d6b7e63073a","6f37047455131d60106b7e76357e757f174c687f76482526564e556624465b674659067b194a145b7b0834054e537e301b3e2d4d37045e13492a367d1659693a59025f2c1d670e3e62460178121613660d2d78425c0d2379576616360e6a485f43310a440e660600036265166d0a5b17101c431817744b0436254c5f2c1156005c3418706f1f5f0d49153d4f115d654b","59057722384a492502764a6b54467b09657b2a17484714765a6b55200d245846594d7b0f190e6d14345f137b164e30531b574e7d3702135e492a7d7b7e267f01786e026064186d1e0962787766307a160d38785b233d5e7b166d09336a205f2a310a7a6406664d0e03651a165b4822601c1807107421047b4c5f38496d7b11065978703d1f1a745b3d754f0c154f6007","7c4e2324761f195b0f766b7b093b677b4f167b69781d482815775521587f250d10597e46680e19745f346f101630503a4e7c241b457531027d066c6b767e673b6e2b606364186d1e666b28772e650f26497a69331e7b19422416654b6a6e203871066a387a6066154f26031a1a5b481303684a726f16742e746b3a0a7a5723531464621b29357d2c4332755d60331a58","291c2d647b0a452f6925476b37750d227c17303f39077b28731337541e3b727f68395f505843536e296b7e19302f6079146b240b0b1e016f1f6c6576375f6b5b7c160d1d63545045661543735c74447833055f693a05197b241f6538676e206a6a06755b157a66375e320a263e5f134774684a035142780f280674792b711840714217726e2922046d1f41310b586078","3e5e4c7f1a71135d69556f05370d756d174168762d535b7b1b735911693b4b2e507d1a0d536912226e705c283c70001c713f6e6c65517629514a4e6c676e6f36161d2b481b637650196615735c443470484f6933193442391f245a346e1320415b064f6a7a4b662f4f162676131a623e03684a74166f780f43741c6b187c536b39141b626529762c4156325d125f0b07","64210f552c0a456c25395269372e756e7c3f176839106f681d3772731e3d0a3f225039686e43532e6b32297e30162f396d713f2e65396f3141166c5140760d67161d406e5045631b156619355c7434785f054f333a05196b1f38062467136e416a062432157a5f195e260a553e13591474684903783e500f762806742b1871236742175d04296e481f4152310b585f69","747d5e107130405269556f12376e56756b1768762507125b761d735948514b2722507d0d534d691e6e705c2860003c34713f6e0f6529345141165103406f056e16221d4076011b6f19660f353454705c4f3348693419394c1f2434406e2013415b064f0f7a4b662f164f26321362481a68034a746e6f160f4374036b186b7c463962642b65760d1f4139322a125f5007","4c631069551371606f6905550d6d757e170e68452d7607254d1d1773520a755f22236a7d69415312285c6b182f3c0058713f6e24516529314116516e6f1f5940401d1631766f631b193553665434440f4f336a69344c06191f16345c6e204113725b061166370e0316653d55133f482a3668481c5e2a7369436f44797246185a296f3903764648322957183912073b50","3018214c09050d6343676b56097624751617487f011d4828553e31720a4c6f7061115942192e14186b34185f3016672f246e1b3f02371331356c6e226f595e040a5c4031703c175f53657c365a2d632a2d02463b5c757941663b16450e3d6a5c0a310243000616576503621a387d760a1c10484c176e745e3625436c0055456f6b2939347658296604194676575f5007","6b17330b6b375f6d0d1d765d3e0109196e6c483c6a051d13335232677944135827596442506309154b27023750303e4e75512440597807673473476c235a1722265a026a7e176a3e1416317b7d5b620b240f624d14796a2a497616010e5474160a4459317b2e590028031a65627f4e601c3d481055747d4175372939733049597008523e31441a0e2e46754f6a752c03","5c1f483200356d6c737b6b5d265d0170782e3c3e6a0e1d16465250555702223e1c45643119635b5d4b346f6c30502f67243e4014076f59376c614765626b14320726606a3e601d7e4721462f7c66166f5139500d1d792b725542163e0e2212740a4b4431000677273c03651a647f3a0a1c6d02480e6621742967654f0b59113008033e0b346b1f2f5c1e27237e0c073a","7c414506680f7d6d3002766b0979355465223e78211d6c0a604e66200d46587d0f454d7b2f195b214b6c343d7e3930283e2404296f073713182a6c49306b14735f0760143e43351d7709376c667f6f16613c155b7940062d562a1633207405770a7a4432064d132f03651a7e6c227f3d1c7f6848217404194c7d496c4e496d113d70083e1f5b7a464f753d094f284760","26177a3c346d6b277b0d23283e01760b3e3c6e161d6a135933522869581301792b642a10507c0e5b4b376f5850393028403b102907685972267318483b6b1721267b0e6a1e7e335d64145c67287d3826094c241f6014654674496a680f777c206956590a0759742b180465535b626f7f2e1c10457d751f551a42754b1d6760784370195224654331531920596f326260","424f080543176d767b67310f66673b3d3e794e48511d6b6a2f4652155801177e182b1f097c0e405b3d586c6f392f5028503e1a24076f31503f186c266b680b3b7b0726600a3e64311477211e287d30664d6168727909602356491668207477050a7a48594d2f075903651a4a227f626c681c4803215574047d4c496c49731d4e3d7008591a1f7a47327565096a752c66","1f3f4b32116d6c305354416326095d1c2e3e16241730201d0662142f25577d3e7b592853195b2f736b4b3d342f0a30395024143e316f2c1e6c112a556b720b14286017063d3e775475571e774b303e180a18726f79502342332d1606205a05740a783831682f061303651a61221a7f0e681c0340216f74044c497d0a492f110a3d5947701f7a1a5b3265750a28492d1c","7c234e421f5b76090f2c767c093b24264f162c551d785f3015065d77257f23581051417b7419140e5f6b6f4f2f393068504e247c311e6f456c097d406b67137667212b52641854335b6628772e650f2849697a1c1906421e2414406520416a38714f6a5d7a05172f4f260a031a7f1348680349256f42162e740a6b067a602523627b195b29247d6532435d6f6f336050"],"ev":"05023c1ac05042b1ab05049b1aa05053c1a80505911a70506421a60506401a505068a1a405079e1a30508e21a2050bbc1a1050cc21a0050edc19f05105519d05106119c05109519b06044c19a060836199060fd919707061519609027f193090b16192090c0a190090d1a18f090d7718e090e6518d090f5718b090fc918a09103d1870910db1860a0dff1850a10521840b023e1830b0f0e1820c09e617f0c0e7f17e0c0ea117c0c0f7d17b0c0f4917a0d00511780d03551760d04611710d04591700d049916e0d05e716c0d063e16b0d069316a0d076c1690d08141680d0b851670d0b901660d0dba1640d0f911620d109f1610e057f1600e074915c0e086015b0e0b331580e0bf71570e10f81560e11651540f01001530f01e41510f075f14f1107a114c11099a14b110b8e14a110db4147110e8e14812004514512015414412079414212087b1411208c3140120af913e120da213b120e6813c1211a813912119513813006c1371300e01361301a41351303731341303f71331304d213213056b1311307e91301307f712f13086212e13089d12d1308f612c130a7712b130a2d12a130b661251400891241404fd12314066e122140a46121140b0d11f140ded11e140e1711d1502a811a1504db117150c441181601b5116160ae1114160b56112160fed10c160f8b10d17007c10b17008d10a17062d1081706d11071707791021709250fe170a2c0fa170ba01ad18081e19418097d19118094e1811809ad17d1809a91791809b5177180c7216f180cd7165180d6215d180eaf159180e97150180f36149180fd61461903fd14319072a13f1908be13d19090913a190a3c127190c7a120190caf11c190f7411919110a1151911ad0fc1a02680fb1a074a19e1a07af1951a081718c1a09da1881a0a021731a0b451721a0bbd1521a0c281281a10df1261a11911101b018b1041b04891a61b08071971b0aea1a91b0c9315a1c009d1061c02a11761c0ac21a11d02871291d041a18d1d05bc1471d0e031141e03d21451e0af51991e0add1821e0c381a31f018919b1f02d91411f04301a11f05e814c1f07991aa1f08261a91f08fe1831f09ef1ab1f0a501341f10081a81f11f51002005e01342011fe15b210ac215b22011218b2203730fc22055c14c22082a0fa220adc19a2300ed0fa2301be19b23039814823092115a230a94145230aea15b230b19106230bd4142230dd9116230ed516a2311e61802400371162400e814524034e14224047b1062404af14824056c16a2407611802408b515b240a6119b240ac0175240bf4160240ccd1aa25004814825009316a25084819b2611f61482902a514829040614529069e19b290d13142290dd9182290ec117729105b1062a01231282a01891452a03311952a039817a2a04171aa2a0a8619a2a0cdf10d2a0d2616c2a0d930fa2a0f1c1962b01b50fc2b0f8019a2c09f819a2c0a9415f2c0de014e2c0efd11b2c0fa716c2d009d14e2d056c11b2d081915f2d082c1322d093716c2d0a611792d0c9310a2d0e4814b2d11ad14f2e094314b31024c14b31047b1793104d216c310a8614f310de0199310e4812332057011a3205af1523206a618132068b14d32099a1013303d818133079911a34051f18134095311a340f6c14b3500b714b3501be1813504271013509fd10a350a2414e350a94132350aea0fd350ed519c350f2916c350fa711b35111e14d3600fb14d36018e132380e4514d3903ab14d39041413239054814b39072614e39075f19c39082c16c3908e00fd390c59181390e6511b390efd1593a083b14d3b03251323b03330fd3b04fc11b3b06ae1813b08361433b0bfc1793b0bd40fa3c04d01813c0c1311b3d08601433d096e11b3d0a800fa3d0ccd1233e095e11b40057f11b4006930fa400ab914340104b1044101e710441042b14341053711b41056111d4105d011f41061518b4107e4194410794101410e4812e4200f11084204d2132420ac216f420f8b1954304dd1084309611794309f014d430b1b0ff430d93132440af50ff440f8010845018b1794503f914d4505021084600ed1084603c314d4604af13446053c15b460d6c11247009d11247024c1084703fd1344704061aa4709ff132470f491804807a11324901121084905e013449068b17949076e1aa49086211a490a2c15f490c8610a490d2619a490d9319d490e8f11d4a05b911d4a061619a4a06ae1794a086a1344a0e841424b04d21424b0a691664b11e61414c03591414c0e251664f0abe1665008ef166500ccb14151042716651056f1415108e41405109430ff5109be173510d26172510ff81805200f114052060b123520a69166520bc1183530848183530ab9123530b75166530f0312853104b1845401f01125405e0120540e840fc54119c14c550b0d142550c80130550e1711256056c1275608b5168560b5614c560f6b1455703fd127570b0614559035916859055c14c59063f12759091d112590aad17a590c781425911e61305911ea1045a051f1045a0af51125a0b451305a0e250fa5a119c0fd5b01230fa5b01811045b03311425b09771765b09a80fd5b0a3c14d5b0c7a13a5b0c991125b10641305b11e21755c0add1765c0cd40fa5d0e551765f01f01765f05611125f079718c5f09f810c5f0b8f19161039818c61042710c6105b411261094e13a6109f015b610b45153610bbd16c610e49191610e250fc610f6b14d61119c15962040610c62049e15b62097d1646209b517e620eaf18c63023e18c6302d917e63033310c6307da19c6308fe0fc6309fd12d630a94164630bd41a2630c5918b630e3d142630ed517463112e1996503c319c650693142650761199650860164650c781a2650c3117465108c18b66018918b6602a81996605e717e6702a11996708c312d6711b417e68081917e6808e418b6901b517e69035612d69047b18c6907e918b69082c1a269089d199690c8019c690e840fc6a090912d6a0ccd18c6a0de017e6a0f4918b6a0fed16c6a0f8616f6b0a6918c6c001c18c6c037312d6c08c516c6c0e8f16f6d07ee16c6d09f018c6e0c9916c70095316c71018916c71033118b71038a13a710a02160710af51a2710bbd10c7202ea16072029313a7204271a27208fe18b720efd166720f2917372114f18c7304dd13a730dba1737402a113a7404af18c7408141a2740977159740909166740a3c175740ac019f740c7a173740ccd10c740c93116740e7f18b740fed14675087b116750b8f18c7608e41167708171a2770ac219f770c78175770d9a13a"};
+  const NL = 36, NE = 128, NT = D.tok.length;
+  const own0 = [];
+  for (let i = 0; i < D.own.length; i += 4) own0.push(parseInt(D.own.substr(i, 4), 16));
+  const toks = D.tok.map(s => { const a = new Uint8Array(144); for (let j = 0; j < 144; j++) a[j] = parseInt(s.substr(j * 2, 2), 16); return a; });
+  const evByTok = Array.from({ length: NT }, () => []);
+  for (let i = 0; i < D.ev.length; i += 9) evByTok[parseInt(D.ev.substr(i, 2), 16)].push([parseInt(D.ev.substr(i + 2, 4), 16), parseInt(D.ev.substr(i + 6, 3), 16)]);
+
+  const root = document.documentElement;
+  let C = {};
+  const readColors = () => { const cs = getComputedStyle(root); for (const k of ["gpu", "gpu-soft", "cpu", "cell", "ink", "surface"]) C[k] = cs.getPropertyValue("--" + k).trim(); };
+  readColors();
+
+  // ---------- one-layer illustration
+  const layer = document.getElementById("layer");
+  const res0 = new Uint8Array(NL * NE); own0.forEach(g => res0[g] = 1);
+  const pick = new Set(Array.from(toks[0].slice(0, 4)));
+  for (let e = 0; e < NE; e++) {
+    const i = document.createElement("i");
+    if (pick.has(e)) i.className = res0[e] ? "on-gpu" : "on-cpu";
+    layer.appendChild(i);
+  }
+
+  // ---------- results: every value MEASURED against llama.cpp b10361 (-ncmoe 31) on this PC, in alternating
+  // runs with a fresh server each; sources: NeuralServer benchmarks/RESULTS.md, docs/LEVERS.md, benchmarks/*.json
+  const X = "\u00d7";
+  const VERS = [
+    { id: "v3", date: "Sep 23", name: "first server", what: "split-K decode attention, CPU experts for prompts, tool-call splicing, side-request protection" },
+    { id: "v4", date: "Sep 24", name: "server v4", what: "prompt-weighted expert admission, RAM residency" },
+    { id: "v5", date: "Sep 29", name: "server v5", what: "rolling K/V cache for the sliding-window layers (+45 expert slots), two-phase CPU expert kernel" },
+    { id: "v6", date: "Sep 30 (1)", name: "server v6", what: "packed expert store: each expert's scale rows stored in 4-bit form, 2.9% less to read per token, outputs bit-identical (an optional one-time conversion, tools/pack_store.py)" },
+    { id: "v7", date: "Sep 30 (2)", name: "server v7", what: "CPU expert kernel: the eight threads now share the rows dynamically and meet at one spinning barrier instead of sleeping ones, so the kernel streams RAM at its ceiling; outputs bit-identical" },
+    { id: "v8", date: "Sep 30 (3)", name: "server v8", what: "prompt processing in layer order: a long prompt runs each layer over all its 4,096-token blocks, so an expert that is not on the graphics card is copied there once per layer instead of once per block; outputs bit-identical" },
+    { id: "v9", date: "Sep 30 (4)", name: "latest", what: "prompt maths in 64-row tiles instead of 16 (the graphics card was wasting three quarters of each tile) and expert copies prepared on a second thread, both bit-identical; and half as many experts copied into the card per answer at the same hit rate, which changes which experts the card keeps, so answers can differ from v8's the way they already differ between runs" }
+  ];
+  const ROWS = [
+    { t: "Short everyday prompts", c: "research build, Sep 23", research: true, lo: 1.46, hi: 1.56, d: "Research build (Sep 23), 1k context, short prompts; range over 2-4 runs and two settings" },
+    { t: "Short code prompt", c: "research build, Sep 23", research: true, lo: 1.12, hi: 1.19, d: "Research build (Sep 23), short code prompt; range over runs and two settings" },
+    { k: "prompt", t: "Reading a 13,000-token code prompt", c: "server, both warmed up", unit: "s", join: false, v: {
+      v4: { x: 3.1, n: 29.8, l: 93.2, d: "2 runs each" },
+      v5: { x: 6.8, n: 14.8, l: 101.7, d: "1 run each", flag: "The unchanged Sep 24 build read the same prompt in 15.6 s that night (6.5\u00d7 against that night's llama.cpp run), so the new version is not what made prompts faster; why the PC got faster is not established." },
+      v6: { x: 6.5, n: 14.3, l: 93.5, d: "1 run each; the packed store changes nothing in prompt reading" },
+      v7: { x: 6.4, n: 14.7, l: 94.8, d: "1 run each; the kernel change is decode-only, prompt reading is unchanged" },
+      v8: { x: 9.3, n: 10.7, l: 99.2, d: "1 run each; the same 13,000-token prompt in 10.7 s instead of 14.7 s, with the same result bit for bit" },
+      v9: { x: 13.9, n: 6.8, l: 95.2, d: "1 run each; the same 13,000-token prompt in 6.8 s, with the same result bit for bit" } },
+      alt: { at: "v5", x: 6.5, n: 15.6, l: 101.7, d: "the unchanged Sep 24 build, re-run on Sep 29, against that night's llama.cpp run" } },
+    { k: "first", t: "First answer after a long prompt", c: { v3: "server, medians of 2 runs", v4: "server, medians of 3 runs", v5: "server, medians of 3 runs", v6: "server, medians of 3 runs", v7: "server, medians of 3 runs", v8: "server, medians of 3 runs", v9: "server, medians of 3 runs" }, unit: "tok/s", v: {
+      v3: { x: 0.83, n: 10.88, l: 13.07, r: [0.67, 0.99], d: "2 runs: 0.67\u00d7 and 0.99\u00d7" },
+      v4: { x: 1.03, n: 14.08, l: 13.70, r: [1.02, 1.04], d: "3 runs: 1.02-1.04\u00d7 run by run" },
+      v5: { x: 1.16, n: 15.57, l: 13.46, r: [1.02, 1.27], d: "3 runs: 1.02-1.27\u00d7 run by run" },
+      v6: { x: 1.36, n: 19.17, l: 14.06, r: [1.36, 1.37], d: "3 runs: 1.36-1.37\u00d7 run by run" },
+      v7: { x: 1.49, n: 20.26, l: 13.62, r: [1.46, 1.5], d: "3 runs: 1.46-1.50\u00d7 run by run" },
+      v8: { x: 1.64, n: 21.75, l: 13.25, r: [1.6, 1.66], d: "3 runs: 1.60-1.66\u00d7 run by run" },
+      v9: { x: 1.96, n: 22.74, l: 11.6, r: [1.84, 2.08], d: "3 runs: 1.84-2.08\u00d7 run by run; llama.cpp's first answers ran low this round (10.9-12.8 tok/s)" } } },
+    { k: "follow", t: "Follow-up answers", c: "server", unit: "tok/s", v: {
+      v3: { x: 1.11, n: 15.82, l: 14.21, r: [1.11, 1.12], d: "median of 6 answers; 2 runs: 1.11-1.12\u00d7" },
+      v4: { x: 1.24, n: 18.07, l: 14.52, r: [1.24, 1.27], d: "median of 9 answers; 3 runs: 1.24-1.27\u00d7" },
+      v5: { x: 1.34, n: 19.47, l: 14.58, r: [1.33, 1.35], d: "median of 9 answers (Neural 16.4-20.6 tok/s); 3 runs: 1.33-1.35\u00d7" },
+      v6: { x: 1.38, n: 20.93, l: 15.15, r: [1.37, 1.39], d: "median of 9 answers (Neural 20.0-21.6 tok/s); 3 runs: 1.37-1.39\u00d7" },
+      v7: { x: 1.54, n: 22.46, l: 14.55, r: [1.5, 1.55], d: "median of 9 answers (Neural 22.0-23.2 tok/s); 3 runs: 1.50-1.55\u00d7" },
+      v8: { x: 1.54, n: 22.66, l: 14.73, r: [1.53, 1.55], d: "median of 9 answers (Neural 21.7-23.5 tok/s); 3 runs: 1.53-1.55\u00d7" },
+      v9: { x: 1.57, n: 24.13, l: 15.33, r: [1.56, 1.63], d: "median of 9 answers (Neural 23.4-25.2 tok/s); 3 runs: 1.56-1.63\u00d7" } } },
+    { k: "rewrite", t: "Rewriting a file just read", c: "server, same stretch of answer", unit: "tok/s", v: {
+      v4: { x: 1.06, n: 15.15, l: 14.26, r: [1.05, 1.07], d: "2 runs each; Neural's first 192 tokens vs llama.cpp's whole 196-token answer" },
+      v5: { x: 1.25, n: 17.88, l: 14.32, r: [1.21, 1.28], d: "2 runs each; Neural's first 192 tokens vs llama.cpp's whole 171-token answer; Neural's whole 1,536-token answer ran at 20.9 tok/s" },
+      v6: { x: 1.42, n: 20.71, l: 14.57, r: [1.41, 1.44], d: "2 runs each; Neural's first 291 tokens vs llama.cpp's whole 291-token answer (the same stretch, time-weighted over 64-token windows); Neural's whole 1,536-token answer ran at 21.9 tok/s" } } }
+  ];
+  const f2 = v => v.toFixed(2).replace(/0$/, "").replace(/\.$/, ".0");
+  const fx = v => (v >= 2 ? v.toFixed(1) : v.toFixed(2)) + X;
+  const cap = (r, id) => typeof r.c === "string" ? r.c : r.c[id];
+  const pair = (u, n, l) => u === "s" ? "Neural " + n + " s \u00b7 llama.cpp " + l + " s" : "Neural " + f2(n) + " \u00b7 llama.cpp " + f2(l) + " tok/s";
+
+  // one tooltip per panel; text only (textContent), never markup
+  const tipOn = (tip, host, el, title, lines) => {
+    tip.textContent = "";
+    const b = document.createElement("b"); b.textContent = title; tip.appendChild(b);
+    lines.forEach(s => { const d = document.createElement("div"); d.textContent = s; tip.appendChild(d); });
+    tip.style.left = "0"; tip.style.top = "0"; tip.hidden = false;
+    const hr = host.getBoundingClientRect(), er = el.getBoundingClientRect();
+    let x = er.left - hr.left + er.width / 2 - tip.offsetWidth / 2;
+    x = Math.max(4, Math.min(x, hr.width - tip.offsetWidth - 4));
+    let y = er.top - hr.top - tip.offsetHeight - 8;
+    if (y < 4) y = er.bottom - hr.top + 8;
+    tip.style.left = x + "px"; tip.style.top = y + "px";
+  };
+  const hover = (el, tip, host, title, lines) => {
+    const on = () => tipOn(tip, host, el, title, lines), off = () => { tip.hidden = true; };
+    el.addEventListener("pointerenter", e => { if (e.pointerType === "mouse") on(); });
+    el.addEventListener("pointerleave", e => { if (e.pointerType === "mouse") off(); });
+    el.addEventListener("click", () => { if (tip.hidden) on(); else off(); });   // touch: tap to show / hide
+    el.addEventListener("focus", on); el.addEventListener("blur", off);
+    el.setAttribute("aria-label", title + ". " + lines.join(". "));
+  };
+  document.addEventListener("keydown", e => { if (e.key === "Escape") document.querySelectorAll(".tip").forEach(t => { t.hidden = true; }); });
+
+  // ---------- bars for one version (one scale 0..3.4x; a longer bar is cut with a break mark)
+  const MAX = 3.4, pct = v => (Math.min(v, MAX) / MAX * 100) + "%";
+  const bars = document.getElementById("bars"), chart = document.getElementById("chart"), tip = document.getElementById("tip");
+  const drawBars = id => {
+    const vi = VERS.findIndex(v => v.id === id), prev = vi > 0 ? VERS[vi - 1] : null;
+    bars.textContent = "";
+    const aria = [];
+    ROWS.forEach(r => {
+      const m = r.research ? { x: r.hi } : r.v[id];
+      const pv = r.research || r.join === false ? null : VERS.slice(0, vi).reverse().find(v => r.v[v.id]), p = pv ? r.v[pv.id] : null;
+      if (!m) {
+        const row = document.createElement("div"); row.className = "crow";
+        const lbl = document.createElement("div"); lbl.className = "lbl"; lbl.textContent = r.t;
+        const t = document.createElement("div"); t.className = "ctrack none"; t.textContent = "not measured on " + VERS[vi].date;
+        row.appendChild(lbl); row.appendChild(t); bars.appendChild(row);
+        aria.push(r.t + " not measured"); return;
+      }
+      const lo = r.research ? r.lo : m.x, hi = r.research ? r.hi : m.x, clip = hi > MAX;
+      const row = document.createElement("div"); row.className = "crow";
+      const lbl = document.createElement("div"); lbl.className = "lbl"; lbl.textContent = r.t;
+      const cp = document.createElement("span"); cp.className = "caption"; cp.textContent = cap(r, id);
+      lbl.appendChild(document.createElement("br")); lbl.appendChild(cp);
+      const t = document.createElement("div"); t.className = "ctrack"; t.tabIndex = 0; t.setAttribute("role", "img");
+      let h = '<div class="base" style="width:' + pct(Math.min(hi, 1)) + (hi <= 1 ? ';border-radius:3px' : '') + '"></div>';
+      if (hi > 1) {
+        h += '<div class="range" style="left:' + pct(1) + ';width:calc(' + pct(lo) + ' - ' + pct(1) + ')' + (lo < hi ? ';border-radius:0' : '') + '"></div>';
+        if (lo < hi) h += '<div class="range tail" style="left:' + pct(lo) + ';width:calc(' + pct(hi) + ' - ' + pct(lo) + ')"></div>';
+      }
+      if (clip) h += '<div class="brk"></div>';
+      h += '<div class="one" style="left:' + pct(1) + '"></div>';
+      if (p) h += '<div class="was" style="left:' + pct(p.x) + '"></div>';
+      const label = r.research ? r.lo.toFixed(2) + "\u2013" + r.hi.toFixed(2) + X : fx(m.x);
+      // a cut bar has no free end: its label sits inside, just past the 1x line (clear of the break and the old-value mark)
+      h += '<span class="val' + (clip ? ' in' : '') + '" style="left:' + pct(clip ? 1 : Math.max(hi, 1)) + '"></span>';
+      t.innerHTML = h;
+      const val = t.querySelector(".val"); val.textContent = label;
+      if (p) { const s = document.createElement("small"); s.textContent = "from " + fx(p.x); val.appendChild(s); }
+      const lines = r.research ? [r.d] : [pair(r.unit, m.n, m.l), m.d].concat(p ? [pv.date + ": " + fx(p.x)] : []).concat(m.flag ? [m.flag] : []);
+      hover(t, tip, chart, r.t + ": " + label, lines);
+      row.appendChild(lbl); row.appendChild(t); bars.appendChild(row);
+      aria.push(r.t + " " + label.replace("\u2013", " to ").replace(X, " times") + (p ? ", up from " + fx(p.x).replace(X, " times") : ""));
+    });
+    bars.setAttribute("aria-label", "Speed relative to llama.cpp, " + VERS[vi].date + ": " + aria.join("; ") + ".");
+    const note = document.getElementById("barnote"), flag = ROWS.find(r => r.v && r.v[id] && r.v[id].flag);
+    note.textContent = VERS[vi].date + " (" + VERS[vi].name + "): " + VERS[vi].what + "." + (flag ? " " + flag.v[id].flag : "");
+    const key = document.getElementById("barkey"); key.querySelector(".wk") && key.querySelector(".wk").remove();
+    if (prev) { const s = document.createElement("span"); s.className = "wk"; s.innerHTML = '<i class="was-key"></i>&nbsp;'; s.appendChild(document.createTextNode("the previous measured result")); key.appendChild(s); }
+  };
+  const scale = document.getElementById("scale");
+  [0, 1, 2, 3].forEach(v => { const s = document.createElement("span"); s.style.left = pct(v); s.textContent = v + X; scale.appendChild(s); });
+
+  // ---------- over time: small multiples, one per server result
+  const NS = "http://www.w3.org/2000/svg", tgrid = document.getElementById("tgrid"), tchart = document.getElementById("timechart"), tip2 = document.getElementById("tip2");
+  const svgEl = (tag, a, parent) => { const e = document.createElementNS(NS, tag); for (const k in a) e.setAttribute(k, a[k]); if (parent) parent.appendChild(e); return e; };
+  const drawTime = () => {
+    tgrid.textContent = "";
+    const served = ROWS.filter(r => r.v);
+    const answers = served.filter(r => r.k !== "prompt").flatMap(r => Object.values(r.v).flatMap(m => [m.x].concat(m.r || [])));   // whisker ends too
+    const shared = [Math.min(0.9, Math.floor(Math.min(...answers) * 10) / 10), Math.ceil(Math.max(...answers) * 10 + 1) / 10];
+    ["follow", "first", "rewrite", "prompt"].forEach(key => {
+      const r = served.find(s => s.k === key);
+      const pmax = key === "prompt" ? Math.max(8, Math.ceil(Math.max(...Object.values(r.v).map(m => m.x).concat(r.alt ? [r.alt.x] : [])) / 2) * 2) : 0;   // prompt axis grows in steps of 2 with the data
+      const dom = key === "prompt" ? [0, pmax] : shared, ticks = key === "prompt" ? Array.from({ length: pmax / 2 + 1 }, (_, i) => i * 2) : [];
+      if (!ticks.length) for (let v = Math.ceil(dom[0] * 10) / 10; v <= dom[1] + 1e-9; v += 0.1) if (Math.round(v * 10) % 2 === 0 || dom[1] - dom[0] < 0.5) ticks.push(Math.round(v * 10) / 10);
+      const W = 320, H = 170, L = 36, R = 58, T = 12, B = 26;
+      const xs = i => L + (VERS.length === 1 ? (W - L - R) / 2 : i * (W - L - R) / (VERS.length - 1));
+      const ys = v => T + (1 - (v - dom[0]) / (dom[1] - dom[0])) * (H - T - B);
+      const box = document.createElement("div"); box.className = "tpanel";
+      const h3 = document.createElement("h3"); h3.textContent = r.t; box.appendChild(h3);
+      const pts = VERS.filter(v => r.v[v.id]).map(v => ({ ver: v, m: r.v[v.id], i: VERS.indexOf(v) }));
+      const cp = document.createElement("span"); cp.className = "caption";
+      cp.textContent = pts.map(p => p.ver.date + " " + fx(p.m.x)).join(r.join === false ? " \u00b7 " : " \u2192 ") +
+        (key === "prompt" ? " \u00b7 own scale, not joined: the unchanged Sep 24 build measured " + fx(r.alt.x) + " on Sep 29" : "");
+      box.appendChild(cp);
+      const svg = svgEl("svg", { viewBox: "0 0 " + W + " " + H, class: "tsvg", role: "group",
+        "aria-label": r.t + ": " + pts.map(p => p.ver.date + " " + fx(p.m.x).replace(X, " times")).join(", ") + (r.alt ? "; the unchanged Sep 24 build measured again on Sep 29: " + fx(r.alt.x).replace(X, " times") : "") });
+      ticks.forEach(v => {
+        svgEl("line", { x1: L, x2: W - R + 10, y1: ys(v), y2: ys(v), class: v === 1 ? "ref" : "grid" }, svg);
+        svgEl("text", { x: L - 6, y: ys(v) + 4, "text-anchor": "end" }, svg).textContent = v + X;
+      });
+      if (!ticks.includes(1) && dom[0] <= 1 && dom[1] >= 1) {
+        svgEl("line", { x1: L, x2: W - R + 10, y1: ys(1), y2: ys(1), class: "ref" }, svg);
+        svgEl("text", { x: L - 6, y: ys(1) + 4, "text-anchor": "end" }, svg).textContent = "1" + X;
+      }
+      VERS.forEach((v, i) => { svgEl("text", { x: xs(i), y: H - 6, "text-anchor": "middle" }, svg).textContent = v.date; });
+      pts.forEach(p => { if (p.m.r) svgEl("line", { x1: xs(p.i), x2: xs(p.i), y1: ys(p.m.r[0]), y2: ys(p.m.r[1]), class: "wh" }, svg); });
+      if (pts.length > 1 && r.join !== false) svgEl("polyline", { class: "ln", points: pts.map(p => xs(p.i) + "," + ys(p.m.x)).join(" ") }, svg);
+      // labels: only the latest point carries its value (the caption above lists every value, the tooltip the details);
+      // a re-measured point at the same date takes the side away from its neighbour
+      const mark = (x, y, cls, title, lines, label, dx, dy, anchor) => {
+        svgEl("circle", { cx: x, cy: y, r: 5, class: "pt " + cls }, svg);
+        if (label) svgEl("text", { x: x + dx, y: y + dy, class: "v", "text-anchor": anchor }, svg).textContent = label;
+        const hit = svgEl("circle", { cx: x, cy: y, r: 14, class: "tpt", tabindex: "0", role: "img", "aria-label": title + ". " + lines.join(". ") }, svg);
+        hover(hit, tip2, tchart, title, lines);
+      };
+      const altAt = r.alt ? VERS.findIndex(v => v.id === r.alt.at) : -1;
+      pts.forEach((p, j) => {
+        const last = j === pts.length - 1, y = ys(p.m.x);
+        const split = last && p.i === altAt, above = split && r.alt.x < p.m.x;
+        mark(xs(p.i), y, p.m.x > 1 ? "up" : "dn", r.t + ", " + p.ver.date + ": " + fx(p.m.x), [pair(r.unit, p.m.n, p.m.l), p.m.d],
+          last ? fx(p.m.x) : "", 10, split ? (above ? -4 : 12) : 4, "start");   // only the latest value on the plot; the caption lists all
+      });
+      if (r.alt) {
+        const main = r.v[r.alt.at].x, below = r.alt.x < main;
+        mark(xs(altAt), ys(r.alt.x), "alt", "Sep 24 build, measured again on " + VERS[altAt].date + ": " + fx(r.alt.x),
+          [pair(r.unit, r.alt.n, r.alt.l), r.alt.d], fx(r.alt.x), 10, below ? 14 : -4, "start");
+      }
+      box.appendChild(svg); tgrid.appendChild(box);
+    });
+  };
+
+  // ---------- table view (every number, no hover needed)
+  (() => {
+    const tb = document.createElement("table"); tb.className = "spec-table";
+    const hr = tb.insertRow(); const th0 = document.createElement("th"); th0.textContent = "Result vs llama.cpp"; hr.appendChild(th0);
+    VERS.forEach(v => { const th = document.createElement("th"); th.textContent = v.date + " (" + v.name + ")"; hr.appendChild(th); });
+    ROWS.filter(r => r.v).forEach(r => {
+      const tr = tb.insertRow(); const th = document.createElement("th"); th.textContent = r.t; tr.appendChild(th);
+      VERS.forEach(v => { const m = r.v[v.id], td = tr.insertCell(); td.textContent = m ? fx(m.x) + " \u00b7 " + pair(r.unit, m.n, m.l) + (r.alt && r.alt.at === v.id ? " (Sep 24 build that night: " + fx(r.alt.x) + ")" : "") : "not measured"; });
+    });
+    document.getElementById("ctable").appendChild(tb);
+  })();
+
+  // ---------- tabs (arrow keys move between them)
+  const tabs = Array.from(document.querySelectorAll(".vtabs [role=tab]"));
+  const show = view => {
+    tabs.forEach(b => { const on = b.dataset.view === view; b.setAttribute("aria-selected", String(on)); b.tabIndex = on ? 0 : -1; });
+    const time = view === "time";
+    chart.hidden = time; tchart.hidden = !time; tip.hidden = true; tip2.hidden = true;
+    if (time) drawTime(); else { chart.setAttribute("aria-labelledby", "tab-" + view); drawBars(view); }
+  };
+  tabs.forEach((b, i) => {
+    b.addEventListener("click", () => show(b.dataset.view));
+    b.addEventListener("keydown", e => {
+      const j = e.key === "ArrowRight" ? (i + 1) % tabs.length : e.key === "ArrowLeft" ? (i - 1 + tabs.length) % tabs.length :
+        e.key === "Home" ? 0 : e.key === "End" ? tabs.length - 1 : -1;
+      if (j < 0) return;
+      e.preventDefault(); tabs[j].focus(); show(tabs[j].dataset.view);
+    });
+  });
+  // deep links: #over-time, #sep-23, #sep-24, #sep-29, #sep-30, #sep-30-2, #sep-30-3, #sep-30-4 open that view (the tabs don't rewrite the URL)
+  const LINKS = { "#over-time": "time", "#sep-23": "v3", "#sep-24": "v4", "#sep-29": "v5", "#sep-30": "v6", "#sep-30-2": "v7", "#sep-30-3": "v8", "#sep-30-4": "v9" }, linked = LINKS[location.hash];
+  show(linked || "v9");
+  if (linked) document.getElementById("results").scrollIntoView();
+  addEventListener("hashchange", () => { const v = LINKS[location.hash]; if (v) { show(v); document.getElementById("results").scrollIntoView(); } });
+
+  // ---------- copy buttons
+  document.querySelectorAll(".copy").forEach(b => b.addEventListener("click", () => {
+    const pre = document.getElementById(b.dataset.for);
+    const done = ok => { b.textContent = ok ? "Copied" : "Select + Ctrl+C"; setTimeout(() => b.textContent = "Copy", 1600); };
+    const sel = () => { const r = document.createRange(); r.selectNodeContents(pre); const s = getSelection(); s.removeAllRanges(); s.addRange(r); };
+    try { navigator.clipboard.writeText(pre.textContent).then(() => done(true), () => { sel(); done(false); }); }
+    catch (e) { sel(); done(false); }
+  }));
+
+  // ---------- expert strip
+  const cv = document.getElementById("experts"), ctx = cv.getContext("2d");
+  const stats = document.getElementById("stats"), btn = document.getElementById("play");
+  const reduce = matchMedia("(prefers-reduced-motion: reduce)");
+  const STEP = 26, GAP_T = 260, FADE = 1100;
+  let owner, resident, moved, tIdx, layerIdx, flashes, arrivals, hits, miss, last, acc, running = true, visible = true, base = null, dirty = true;
+
+  function reset() {
+    owner = own0.slice(); resident = new Uint8Array(NL * NE); owner.forEach(g => resident[g] = 1);
+    moved = 0; tIdx = 0; layerIdx = 0; flashes = []; arrivals = []; hits = 0; miss = 0; acc = -GAP_T; dirty = true;
+  }
+  function size() {
+    const dpr = Math.min(window.devicePixelRatio || 1, 2), w = cv.clientWidth;
+    if (!w) return;
+    cv.width = Math.round(w * dpr); cv.height = Math.round(w * dpr * NL / NE); dirty = true;
+  }
+  function rect(c, g, pad) {
+    const cw = cv.width / NE, ch = cv.height / NL, L = (g / NE) | 0, e = g % NE, gp = cw > 5 ? 1 : 0.5;
+    c.fillRect(e * cw + gp / 2 - pad, L * ch + gp / 2 - pad, cw - gp + 2 * pad, ch - gp + 2 * pad);
+  }
+  function drawBase() {
+    if (!base) base = document.createElement("canvas");
+    base.width = cv.width; base.height = cv.height;
+    const b = base.getContext("2d");
+    b.fillStyle = C.surface; b.fillRect(0, 0, base.width, base.height);
+    for (let g = 0; g < NL * NE; g++) { b.fillStyle = resident[g] ? C["gpu-soft"] : C.cell; rect(b, g, 0); }
+    dirty = false;
+  }
+  function beginToken() {
+    for (const [g, s] of evByTok[tIdx]) { const old = owner[s]; resident[old] = 0; owner[s] = g; resident[g] = 1; moved++; arrivals.push({ g, t: performance.now() }); }
+    if (evByTok[tIdx].length) dirty = true;
+    hits = 0; miss = 0;
+  }
+  function fireLayer(L, now) {
+    const tk = toks[tIdx];
+    for (let j = 0; j < 4; j++) {
+      const g = L * NE + tk[L * 4 + j], onGpu = resident[g] === 1;
+      onGpu ? hits++ : miss++;
+      flashes.push({ g, t: now, gpu: onGpu });
+    }
+  }
+  function showStats() {
+    stats.innerHTML = "token <b>" + (tIdx + 1) + "</b>/" + NT + " &middot; GPU <b>" + hits + "</b> &middot; CPU <b>" + miss + "</b> &middot; moved to GPU <b>" + moved + "</b>";
+  }
+  function render(now) {
+    if (dirty || !base || base.width !== cv.width) drawBase();
+    ctx.drawImage(base, 0, 0);
+    const ch = cv.height / NL;
+    if (running && !reduce.matches) { ctx.globalAlpha = 0.07; ctx.fillStyle = C.ink; ctx.fillRect(0, layerIdx * ch, cv.width, ch); }
+    for (const a of arrivals) {
+      const k = 1 - (now - a.t) / 1600; if (k <= 0) continue;
+      ctx.globalAlpha = k; ctx.fillStyle = C.gpu; rect(ctx, a.g, Math.max(1, cv.width / NE * 0.35));
+    }
+    for (const f of flashes) {
+      const k = reduce.matches || !running ? 1 : 1 - (now - f.t) / FADE; if (k <= 0) continue;
+      ctx.globalAlpha = Math.max(0.12, k); ctx.fillStyle = f.gpu ? C.gpu : C.cpu; rect(ctx, f.g, 0);
+    }
+    ctx.globalAlpha = 1;
+    flashes = flashes.filter(f => reduce.matches || !running || now - f.t < FADE);
+    arrivals = arrivals.filter(a => now - a.t < 1600);
+  }
+  function staticFrame() {                          // one whole token lit: the page at rest
+    const now = performance.now();
+    beginToken(); for (let L = 0; L < NL; L++) fireLayer(L, now);
+    showStats(); render(now);
+  }
+  function loop(now) {
+    if (!running || reduce.matches || !visible) { last = now; requestAnimationFrame(loop); return; }
+    acc += Math.min(now - (last || now), 100); last = now;
+    while (acc >= STEP) {
+      acc -= STEP;
+      if (layerIdx === 0) beginToken();
+      fireLayer(layerIdx, now);
+      layerIdx++;
+      if (layerIdx === NL) { showStats(); layerIdx = 0; tIdx++; acc -= GAP_T; if (tIdx === NT) { reset(); flashes = []; } }
+    }
+    render(now);
+    requestAnimationFrame(loop);
+  }
+
+  reset(); size(); staticFrame();
+  tIdx = 1; acc = -900;
+  new ResizeObserver(() => { size(); render(performance.now()); }).observe(cv);
+  new IntersectionObserver(es => { visible = es[0].isIntersecting; }).observe(cv);
+  document.addEventListener("visibilitychange", () => { visible = !document.hidden; });
+  btn.addEventListener("click", () => {
+    running = !running; btn.textContent = running ? "Pause" : "Play"; btn.setAttribute("aria-pressed", String(!running)); render(performance.now());
+  });
+  const retheme = () => { readColors(); dirty = true; render(performance.now()); };
+  new MutationObserver(retheme).observe(root, { attributes: true, attributeFilter: ["data-theme"] });
+  matchMedia("(prefers-color-scheme: dark)").addEventListener("change", retheme);
+  if (reduce.matches) { btn.hidden = true; }
+  requestAnimationFrame(loop);
+})();
+</script>
+
+</html>

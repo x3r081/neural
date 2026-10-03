@@ -1,0 +1,28 @@
+CPU kernel tuning: prefetch 0 B, pair 0, affinity stride 0, fuse 1, cold-prefetch 0
+runtime package: F:\AI\Neural\experiments\neuralserver-opt\neural
+expert store: G:\NeuralStores\gptoss120b_ps4 (mxfp4_g32_ps4, 12,839,040 B/slot, scale layout 1); decode kernel gptoss_cpu_cap2.dll
+free RAM at start: 53.99 GiB
+embedding: read-only memmap of the checkpoint tensor (6 rows verified bit-equal); CPU copy freed
+fused graphs captured; usable slots=499; vram_reserved=9.71 GiB
+doorbell: off (classic sequence: CPU kernel -> bookkeeping -> launch next graph)
+hot set loaded from hotset_code.json: 499
+static core: 250 slots protected; 499 VRAM-resident experts' store pages released from RAM in 0.65s; WS 1.82 GiB, private commit 12.94 GiB, free RAM 52.58 GiB
+RAM cache warmed: 49.1 GiB of experts in 24 s
+working set: soft minimum 51.6 GiB set
+REVIEW_PREFILL production 128 1.6227
+REVIEW_PREFILL grouped_gemm_g1 128 1.2092
+REVIEW_PREFILL grouped_gemm_g3 128 1.2242
+REVIEW_PREFILL grouped_gemm_g6 128 1.2242
+REVIEW_PREFILL production 3000 3.501
+REVIEW_PREFILL grouped_gemm_g1 3000 3.6062
+REVIEW_PREFILL grouped_gemm_g3 3000 3.5294
+REVIEW_PREFILL grouped_gemm_g6 3000 3.7113
+REVIEW_PREFILL production 5000 4.615
+REVIEW_PREFILL grouped_gemm_g1 5000 4.8391
+REVIEW_PREFILL grouped_gemm_g3 5000 4.9148
+REVIEW_PREFILL grouped_gemm_g6 5000 4.797
+REVIEW_PREFILL production 13000 7.4192
+REVIEW_PREFILL grouped_gemm_g1 13000 8.2494
+REVIEW_PREFILL grouped_gemm_g3 13000 7.9613
+REVIEW_PREFILL grouped_gemm_g6 13000 8.7002
+REVIEW_PREFILL_ALL_BIT_EQUAL

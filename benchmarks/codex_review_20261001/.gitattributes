@@ -1,0 +1,4 @@
+# Preserve raw evidence bytes and their SHA-256 hashes across Windows checkouts.
+* -text whitespace=cr-at-eol
+# External documentation snapshot intentionally retains its original final blank line.
+published_technical.html whitespace=cr-at-eol,-blank-at-eof

@@ -1,0 +1,13 @@
+# Python 3.12 on Windows 11 with an NVIDIA GPU (CUDA 13 driver). Versions this server was
+# built and measured with:
+#   pip install -r requirements.txt --extra-index-url https://download.pytorch.org/whl/cu130
+torch==2.10.0+cu130
+triton-windows==3.7.1.post27
+transformers==5.14.1
+tokenizers==0.22.2
+safetensors==0.8.0
+numpy==2.5.1
+psutil==7.2.2
+# downloading the model, and the tools/tests:
+huggingface_hub==1.27.0
+httpx==0.28.1

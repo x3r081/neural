@@ -1,0 +1,203 @@
+{
+  "identity": [
+    {
+      "turn": 0,
+      "samples": 4,
+      "prompt_hashes_present": 4,
+      "generated_hashes_present": 4,
+      "prompt_distinct_hashes": 1,
+      "generated_distinct_hashes": 1,
+      "prompt_identical": true,
+      "generated_identical": true
+    },
+    {
+      "turn": 1,
+      "samples": 4,
+      "prompt_hashes_present": 4,
+      "generated_hashes_present": 4,
+      "prompt_distinct_hashes": 1,
+      "generated_distinct_hashes": 1,
+      "prompt_identical": true,
+      "generated_identical": true
+    },
+    {
+      "turn": 2,
+      "samples": 4,
+      "prompt_hashes_present": 4,
+      "generated_hashes_present": 4,
+      "prompt_distinct_hashes": 1,
+      "generated_distinct_hashes": 1,
+      "prompt_identical": true,
+      "generated_identical": true
+    },
+    {
+      "turn": 3,
+      "samples": 4,
+      "prompt_hashes_present": 4,
+      "generated_hashes_present": 4,
+      "prompt_distinct_hashes": 1,
+      "generated_distinct_hashes": 1,
+      "prompt_identical": true,
+      "generated_identical": true
+    }
+  ],
+  "metrics": {
+    "off": {
+      "sessions": 2,
+      "turns": 8,
+      "all_turns_weighted_decode": {
+        "tokens": 4088,
+        "seconds": 205.7795,
+        "tok_s": 19.8659
+      },
+      "first_weighted_decode": {
+        "tokens": 1022,
+        "seconds": 53.9215,
+        "tok_s": 18.9535
+      },
+      "followup_weighted_decode": {
+        "tokens": 3066,
+        "seconds": 151.858,
+        "tok_s": 20.1899
+      },
+      "first_decode_tok_s_median": 18.9538,
+      "followup_decode_tok_s_median": 20.2703,
+      "first_turn_medians": {
+        "client_wall_s": 35.58,
+        "prefill_prompt_s": 8.55005
+      },
+      "followup_turn_medians": {
+        "client_wall_s": 27.455,
+        "prefill_prompt_s": 2.30125
+      },
+      "stage_medians": {
+        "client_wall_s": 27.955,
+        "generation_wall_s": 27.9298,
+        "prefill_prompt_s": 2.32205,
+        "prompt_tokens": 13889.5,
+        "vram_reserved_gib": 10.828,
+        "cpu_ms_per_tok": 40.0843,
+        "replay_ms_per_tok": 1.71125,
+        "gpu_wait_ms_per_tok": 4.95655,
+        "admission_ms_per_tok": 0.03995,
+        "other_ms_per_tok": 3.3943
+      }
+    },
+    "cpu": {
+      "sessions": 2,
+      "turns": 8,
+      "all_turns_weighted_decode": {
+        "tokens": 4088,
+        "seconds": 200.0092,
+        "tok_s": 20.4391
+      },
+      "first_weighted_decode": {
+        "tokens": 1022,
+        "seconds": 52.1847,
+        "tok_s": 19.5843
+      },
+      "followup_weighted_decode": {
+        "tokens": 3066,
+        "seconds": 147.8245,
+        "tok_s": 20.7408
+      },
+      "first_decode_tok_s_median": 19.5851,
+      "followup_decode_tok_s_median": 20.8618,
+      "first_turn_medians": {
+        "client_wall_s": 34.26,
+        "prefill_prompt_s": 8.09975
+      },
+      "followup_turn_medians": {
+        "client_wall_s": 26.73,
+        "prefill_prompt_s": 2.28855
+      },
+      "stage_medians": {
+        "client_wall_s": 27.265,
+        "generation_wall_s": 27.24205,
+        "prefill_prompt_s": 2.29275,
+        "prompt_tokens": 13889.5,
+        "vram_reserved_gib": 10.828,
+        "cpu_ms_per_tok": 39.1637,
+        "replay_ms_per_tok": 1.47345,
+        "gpu_wait_ms_per_tok": 4.95335,
+        "admission_ms_per_tok": 0.0287,
+        "other_ms_per_tok": 3.25295
+      }
+    }
+  },
+  "comparison": {
+    "ratio": 1.02885017,
+    "percent_change": 2.885017
+  },
+  "integrity": {
+    "request_archive_integrity": true,
+    "response_archive_integrity": true,
+    "result_archive_link_integrity": true,
+    "archive_capture_state": {
+      "complete": 16,
+      "failed": 0,
+      "pending": 0,
+      "legacy_unknown": 0
+    },
+    "request_match_across_sessions_by_turn": [
+      {
+        "turn": 0,
+        "distinct_hashes": 1,
+        "matched": true
+      },
+      {
+        "turn": 1,
+        "distinct_hashes": 1,
+        "matched": true
+      },
+      {
+        "turn": 2,
+        "distinct_hashes": 1,
+        "matched": true
+      },
+      {
+        "turn": 3,
+        "distinct_hashes": 1,
+        "matched": true
+      }
+    ],
+    "prompt_token_ids_match_by_turn": [
+      {
+        "turn": 0,
+        "samples": 4,
+        "hashes_present": 4,
+        "missing_hash_count": 0,
+        "distinct_hashes": 1,
+        "matched": true,
+        "matched_among_known": true
+      },
+      {
+        "turn": 1,
+        "samples": 4,
+        "hashes_present": 4,
+        "missing_hash_count": 0,
+        "distinct_hashes": 1,
+        "matched": true,
+        "matched_among_known": true
+      },
+      {
+        "turn": 2,
+        "samples": 4,
+        "hashes_present": 4,
+        "missing_hash_count": 0,
+        "distinct_hashes": 1,
+        "matched": true,
+        "matched_among_known": true
+      },
+      {
+        "turn": 3,
+        "samples": 4,
+        "hashes_present": 4,
+        "missing_hash_count": 0,
+        "distinct_hashes": 1,
+        "matched": true,
+        "matched_among_known": true
+      }
+    ]
+  }
+}

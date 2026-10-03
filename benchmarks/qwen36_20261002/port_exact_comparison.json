@@ -1,0 +1,33 @@
+{
+  "status": "PASS_EXACT_LOGITS_AND_STATES",
+  "evidence_label": "MEASURED",
+  "reference": "benchmarks\\qwen36_20261002\\port_reference_numerics.json",
+  "candidate": "benchmarks\\qwen36_20261002\\port_candidate_numerics.json",
+  "cases": {
+    "reasoning_short": {
+      "logit_positions": 25,
+      "identical_logits": true,
+      "all_finite": true,
+      "max_abs_logit_difference": 0.0,
+      "argmax_matches": 25,
+      "identical_cache_states": true
+    },
+    "coding_short": {
+      "logit_positions": 25,
+      "identical_logits": true,
+      "all_finite": true,
+      "max_abs_logit_difference": 0.0,
+      "argmax_matches": 25,
+      "identical_cache_states": true
+    },
+    "coding_context": {
+      "logit_positions": 25,
+      "identical_logits": true,
+      "all_finite": true,
+      "max_abs_logit_difference": 0.0,
+      "argmax_matches": 25,
+      "identical_cache_states": true
+    }
+  },
+  "scope": "Bounded teacher-forced numerical identity, not general answer quality."
+}

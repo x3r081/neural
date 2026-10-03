@@ -1,0 +1,425 @@
+.......................FFF.....                                          [100%]
+================================== FAILURES ===================================
+_ test_workspace_reuses_expert_views_and_dispatch_scratch_without_output_alias _
+
+    def test_workspace_reuses_expert_views_and_dispatch_scratch_without_output_alias():
+        store = _ViewStore()
+        workspace = NativeExpertWorkspace(max_expert_cache_entries=8)
+        hidden = torch.zeros((1, 4), dtype=torch.bfloat16)
+        ids = torch.tensor([[2, 1, 2, 0]], dtype=torch.int64)
+        weights = torch.tensor([[0.5, 0.25, 0.125, 0.25]], dtype=torch.bfloat16)
+    
+>       first = workspace.dispatch(
+            hidden, ids, weights, layer=5, store=store, threads=2,
+            run_experts_fn=_run_routes,
+        )
+
+tests\test_qwen_native_workspace.py:44: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+qwen_neural\native_dispatch.py:138: in dispatch
+    return dispatch_native_experts(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+hidden_states = tensor([[0., 0., 0., 0.]], dtype=torch.bfloat16)
+top_k_index = tensor([[2, 1, 2, 0]])
+top_k_weights = tensor([[0.5000, 0.2500, 0.1250, 0.2500]], dtype=torch.bfloat16)
+layer = 5
+store = <test_qwen_native_workspace._ViewStore object at 0x000001E87B610980>
+threads = 2, run_expert_fn = <function run_expert at 0x000001E87B34F9C0>
+run_experts_fn = <function _run_routes at 0x000001E87B3B2660>
+workspace = <qwen_neural.native_dispatch.NativeExpertWorkspace object at 0x000001E87B6117F0>
+
+    def dispatch_native_experts(
+        hidden_states,
+        top_k_index,
+        top_k_weights,
+        *,
+        layer: int,
+        store,
+        threads: int = 8,
+        run_expert_fn=None,
+        run_experts_fn=None,
+        workspace: NativeExpertWorkspace | None = None,
+    ):
+        """Compute routed experts and aggregate on CPU.
+    
+        Args are the tensors passed to Qwen's expert module: hidden states
+        ``[tokens, hidden]``, expert IDs ``[tokens, routes]``, and BF16 route
+        weights with the same leading dimensions. `store.fetch_expert(layer, id)`
+        must return original contiguous CPU BF16 ``(gate_up, down)`` matrices.
+        `run_expert_fn` and `run_experts_fn` are injectable for small CPU tests;
+        normal callers should omit them to use the native kernel wrappers.
+    
+        For a single token, all routes are sent through one native batched call.
+        For prefill, tokens are grouped by expert to reuse each selected expert
+        matrix for all of its hits. Each weighted contribution is rounded to the
+        hidden-state dtype before ordered accumulation, matching the existing
+        native backend path's BF16 weighting boundary.
+        """
+        import torch
+    
+        if hidden_states.ndim != 2:
+            raise ValueError("hidden_states must have shape [tokens, hidden]")
+        if top_k_index.ndim != 2 or top_k_weights.ndim != 2:
+            raise ValueError("top_k_index and top_k_weights must have shape [tokens, routes]")
+        if tuple(top_k_index.shape) != tuple(top_k_weights.shape):
+            raise ValueError("top_k_index and top_k_weights must have the same shape")
+        if hidden_states.shape[0] != top_k_index.shape[0]:
+            raise ValueError("hidden_states and routing tensors must have the same token count")
+        if hidden_states.shape[0] <= 0 or hidden_states.shape[1] <= 0 or top_k_index.shape[1] <= 0:
+            raise ValueError("hidden and routing dimensions must be non-empty")
+        if not isinstance(threads, int) or threads <= 0:
+            raise ValueError("threads must be a positive integer")
+    
+        use_default_run_expert = run_expert_fn is None
+        use_default_run_experts = hidden_states.shape[0] == 1 and run_experts_fn is None
+        if run_expert_fn is None or use_default_run_experts:
+            from . import cpu_experts
+    
+            if run_expert_fn is None:
+                run_expert_fn = cpu_experts.run_expert
+            if run_experts_fn is None:
+                run_experts_fn = cpu_experts.run_experts
+    
+        # Do exactly one device transfer for each of the three layer inputs. The
+        # detached contiguous tensors are read-only in this dispatch operation.
+        if workspace is None:
+            states_cpu = hidden_states.detach().to(device="cpu").contiguous()
+            ids_cpu = top_k_index.detach().to(device="cpu", dtype=torch.int64).contiguous()
+            weights_cpu = top_k_weights.detach().to(device="cpu").contiguous()
+            output_cpu = torch.zeros_like(states_cpu)
+        else:
+            states_cpu, ids_cpu, weights_cpu, output_cpu = workspace._prepare_dispatch(
+                hidden_states, top_k_index, top_k_weights
+            )
+        if workspace is not None and (use_default_run_expert or use_default_run_experts):
+            from .cpu_experts import ExpertWorkspace
+    
+            if workspace._compute_workspace is None:
+                workspace._compute_workspace = ExpertWorkspace(
+                    max_scratch_bytes=workspace.max_kernel_scratch_bytes
+                )
+    
+        def fetched(expert_id: int, cache: dict[int, tuple]):
+            pair = cache.get(expert_id)
+            if pair is None:
+                pair = (
+                    workspace.fetch_expert(layer, expert_id, store)
+                    if workspace is not None
+                    else store.fetch_expert(layer, expert_id)
+                )
+                cache[expert_id] = pair
+            return pair
+    
+        if states_cpu.shape[0] == 1:
+            # The old expert loop visits hits in ascending expert id and positions
+            # within an expert in ascending route order. Stable sort preserves that
+            # same order while allowing all routes to share one native OpenMP team.
+            route_order = sorted(
+                range(ids_cpu.shape[1]), key=lambda pos: int(ids_cpu[0, pos])
+            )
+            pairs: dict[int, tuple] = {}
+            route_pairs = [fetched(int(ids_cpu[0, pos]), pairs) for pos in route_order]
+            gate_up = [pair[0] for pair in route_pairs]
+            down = [pair[1] for pair in route_pairs]
+            if workspace is not None and use_default_run_experts:
+                computed = run_experts_fn(
+                    states_cpu[0], gate_up, down, threads=threads,
+                    workspace=workspace._compute_workspace,
+                )
+            else:
+                computed = run_experts_fn(states_cpu[0], gate_up, down, threads=threads)
+            if computed.ndim == 2:
+                computed = computed.unsqueeze(0)
+            if tuple(computed.shape[:2]) != (1, len(route_order)):
+>               raise ValueError("run_experts_fn returned an unexpected route shape")
+E               ValueError: run_experts_fn returned an unexpected route shape
+
+qwen_neural\native_dispatch.py:295: ValueError
+______________ test_workspace_lru_and_scratch_budget_are_bounded ______________
+
+    def test_workspace_lru_and_scratch_budget_are_bounded():
+        store = _ViewStore()
+        pair_bytes = sum(t.numel() * t.element_size() for t in store.pairs[0])
+        workspace = NativeExpertWorkspace(
+            max_expert_cache_entries=1,
+            max_dispatch_scratch_bytes=64,
+        )
+        hidden = torch.zeros((1, 4), dtype=torch.bfloat16)
+        weights = torch.ones((1, 1), dtype=torch.bfloat16)
+    
+        for expert in (0, 1):
+>           workspace.dispatch(
+                hidden,
+                torch.tensor([[expert]], dtype=torch.int64),
+                weights,
+                layer=0,
+                store=store,
+                run_experts_fn=_run_routes,
+            )
+
+tests\test_qwen_native_workspace.py:82: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+qwen_neural\native_dispatch.py:138: in dispatch
+    return dispatch_native_experts(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+hidden_states = tensor([[0., 0., 0., 0.]], dtype=torch.bfloat16)
+top_k_index = tensor([[0]])
+top_k_weights = tensor([[1.]], dtype=torch.bfloat16), layer = 0
+store = <test_qwen_native_workspace._ViewStore object at 0x000001E87B613CE0>
+threads = 8, run_expert_fn = <function run_expert at 0x000001E87B34F9C0>
+run_experts_fn = <function _run_routes at 0x000001E87B3B2660>
+workspace = <qwen_neural.native_dispatch.NativeExpertWorkspace object at 0x000001E87B611700>
+
+    def dispatch_native_experts(
+        hidden_states,
+        top_k_index,
+        top_k_weights,
+        *,
+        layer: int,
+        store,
+        threads: int = 8,
+        run_expert_fn=None,
+        run_experts_fn=None,
+        workspace: NativeExpertWorkspace | None = None,
+    ):
+        """Compute routed experts and aggregate on CPU.
+    
+        Args are the tensors passed to Qwen's expert module: hidden states
+        ``[tokens, hidden]``, expert IDs ``[tokens, routes]``, and BF16 route
+        weights with the same leading dimensions. `store.fetch_expert(layer, id)`
+        must return original contiguous CPU BF16 ``(gate_up, down)`` matrices.
+        `run_expert_fn` and `run_experts_fn` are injectable for small CPU tests;
+        normal callers should omit them to use the native kernel wrappers.
+    
+        For a single token, all routes are sent through one native batched call.
+        For prefill, tokens are grouped by expert to reuse each selected expert
+        matrix for all of its hits. Each weighted contribution is rounded to the
+        hidden-state dtype before ordered accumulation, matching the existing
+        native backend path's BF16 weighting boundary.
+        """
+        import torch
+    
+        if hidden_states.ndim != 2:
+            raise ValueError("hidden_states must have shape [tokens, hidden]")
+        if top_k_index.ndim != 2 or top_k_weights.ndim != 2:
+            raise ValueError("top_k_index and top_k_weights must have shape [tokens, routes]")
+        if tuple(top_k_index.shape) != tuple(top_k_weights.shape):
+            raise ValueError("top_k_index and top_k_weights must have the same shape")
+        if hidden_states.shape[0] != top_k_index.shape[0]:
+            raise ValueError("hidden_states and routing tensors must have the same token count")
+        if hidden_states.shape[0] <= 0 or hidden_states.shape[1] <= 0 or top_k_index.shape[1] <= 0:
+            raise ValueError("hidden and routing dimensions must be non-empty")
+        if not isinstance(threads, int) or threads <= 0:
+            raise ValueError("threads must be a positive integer")
+    
+        use_default_run_expert = run_expert_fn is None
+        use_default_run_experts = hidden_states.shape[0] == 1 and run_experts_fn is None
+        if run_expert_fn is None or use_default_run_experts:
+            from . import cpu_experts
+    
+            if run_expert_fn is None:
+                run_expert_fn = cpu_experts.run_expert
+            if run_experts_fn is None:
+                run_experts_fn = cpu_experts.run_experts
+    
+        # Do exactly one device transfer for each of the three layer inputs. The
+        # detached contiguous tensors are read-only in this dispatch operation.
+        if workspace is None:
+            states_cpu = hidden_states.detach().to(device="cpu").contiguous()
+            ids_cpu = top_k_index.detach().to(device="cpu", dtype=torch.int64).contiguous()
+            weights_cpu = top_k_weights.detach().to(device="cpu").contiguous()
+            output_cpu = torch.zeros_like(states_cpu)
+        else:
+            states_cpu, ids_cpu, weights_cpu, output_cpu = workspace._prepare_dispatch(
+                hidden_states, top_k_index, top_k_weights
+            )
+        if workspace is not None and (use_default_run_expert or use_default_run_experts):
+            from .cpu_experts import ExpertWorkspace
+    
+            if workspace._compute_workspace is None:
+                workspace._compute_workspace = ExpertWorkspace(
+                    max_scratch_bytes=workspace.max_kernel_scratch_bytes
+                )
+    
+        def fetched(expert_id: int, cache: dict[int, tuple]):
+            pair = cache.get(expert_id)
+            if pair is None:
+                pair = (
+                    workspace.fetch_expert(layer, expert_id, store)
+                    if workspace is not None
+                    else store.fetch_expert(layer, expert_id)
+                )
+                cache[expert_id] = pair
+            return pair
+    
+        if states_cpu.shape[0] == 1:
+            # The old expert loop visits hits in ascending expert id and positions
+            # within an expert in ascending route order. Stable sort preserves that
+            # same order while allowing all routes to share one native OpenMP team.
+            route_order = sorted(
+                range(ids_cpu.shape[1]), key=lambda pos: int(ids_cpu[0, pos])
+            )
+            pairs: dict[int, tuple] = {}
+            route_pairs = [fetched(int(ids_cpu[0, pos]), pairs) for pos in route_order]
+            gate_up = [pair[0] for pair in route_pairs]
+            down = [pair[1] for pair in route_pairs]
+            if workspace is not None and use_default_run_experts:
+                computed = run_experts_fn(
+                    states_cpu[0], gate_up, down, threads=threads,
+                    workspace=workspace._compute_workspace,
+                )
+            else:
+                computed = run_experts_fn(states_cpu[0], gate_up, down, threads=threads)
+            if computed.ndim == 2:
+                computed = computed.unsqueeze(0)
+            if tuple(computed.shape[:2]) != (1, len(route_order)):
+>               raise ValueError("run_experts_fn returned an unexpected route shape")
+E               ValueError: run_experts_fn returned an unexpected route shape
+
+qwen_neural\native_dispatch.py:295: ValueError
+__ test_workspace_rejects_a_different_store_and_handles_shape_dtype_changes ___
+
+    def test_workspace_rejects_a_different_store_and_handles_shape_dtype_changes():
+        store = _ViewStore()
+        workspace = NativeExpertWorkspace(max_expert_cache_entries=8)
+        ids = torch.tensor([[1, 0]], dtype=torch.int64)
+        weights = torch.tensor([[0.5, 0.25]], dtype=torch.bfloat16)
+>       first = workspace.dispatch(
+            torch.zeros((1, 4), dtype=torch.bfloat16), ids, weights,
+            layer=0, store=store, run_expert_fn=_run_one, run_experts_fn=_run_routes,
+        )
+
+tests\test_qwen_native_workspace.py:126: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+qwen_neural\native_dispatch.py:138: in dispatch
+    return dispatch_native_experts(
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+hidden_states = tensor([[0., 0., 0., 0.]], dtype=torch.bfloat16)
+top_k_index = tensor([[1, 0]])
+top_k_weights = tensor([[0.5000, 0.2500]], dtype=torch.bfloat16), layer = 0
+store = <test_qwen_native_workspace._ViewStore object at 0x000001E87B613110>
+threads = 8, run_expert_fn = <function _run_one at 0x000001E87B3B1BC0>
+run_experts_fn = <function _run_routes at 0x000001E87B3B2660>
+workspace = <qwen_neural.native_dispatch.NativeExpertWorkspace object at 0x000001E87B6130B0>
+
+    def dispatch_native_experts(
+        hidden_states,
+        top_k_index,
+        top_k_weights,
+        *,
+        layer: int,
+        store,
+        threads: int = 8,
+        run_expert_fn=None,
+        run_experts_fn=None,
+        workspace: NativeExpertWorkspace | None = None,
+    ):
+        """Compute routed experts and aggregate on CPU.
+    
+        Args are the tensors passed to Qwen's expert module: hidden states
+        ``[tokens, hidden]``, expert IDs ``[tokens, routes]``, and BF16 route
+        weights with the same leading dimensions. `store.fetch_expert(layer, id)`
+        must return original contiguous CPU BF16 ``(gate_up, down)`` matrices.
+        `run_expert_fn` and `run_experts_fn` are injectable for small CPU tests;
+        normal callers should omit them to use the native kernel wrappers.
+    
+        For a single token, all routes are sent through one native batched call.
+        For prefill, tokens are grouped by expert to reuse each selected expert
+        matrix for all of its hits. Each weighted contribution is rounded to the
+        hidden-state dtype before ordered accumulation, matching the existing
+        native backend path's BF16 weighting boundary.
+        """
+        import torch
+    
+        if hidden_states.ndim != 2:
+            raise ValueError("hidden_states must have shape [tokens, hidden]")
+        if top_k_index.ndim != 2 or top_k_weights.ndim != 2:
+            raise ValueError("top_k_index and top_k_weights must have shape [tokens, routes]")
+        if tuple(top_k_index.shape) != tuple(top_k_weights.shape):
+            raise ValueError("top_k_index and top_k_weights must have the same shape")
+        if hidden_states.shape[0] != top_k_index.shape[0]:
+            raise ValueError("hidden_states and routing tensors must have the same token count")
+        if hidden_states.shape[0] <= 0 or hidden_states.shape[1] <= 0 or top_k_index.shape[1] <= 0:
+            raise ValueError("hidden and routing dimensions must be non-empty")
+        if not isinstance(threads, int) or threads <= 0:
+            raise ValueError("threads must be a positive integer")
+    
+        use_default_run_expert = run_expert_fn is None
+        use_default_run_experts = hidden_states.shape[0] == 1 and run_experts_fn is None
+        if run_expert_fn is None or use_default_run_experts:
+            from . import cpu_experts
+    
+            if run_expert_fn is None:
+                run_expert_fn = cpu_experts.run_expert
+            if run_experts_fn is None:
+                run_experts_fn = cpu_experts.run_experts
+    
+        # Do exactly one device transfer for each of the three layer inputs. The
+        # detached contiguous tensors are read-only in this dispatch operation.
+        if workspace is None:
+            states_cpu = hidden_states.detach().to(device="cpu").contiguous()
+            ids_cpu = top_k_index.detach().to(device="cpu", dtype=torch.int64).contiguous()
+            weights_cpu = top_k_weights.detach().to(device="cpu").contiguous()
+            output_cpu = torch.zeros_like(states_cpu)
+        else:
+            states_cpu, ids_cpu, weights_cpu, output_cpu = workspace._prepare_dispatch(
+                hidden_states, top_k_index, top_k_weights
+            )
+        if workspace is not None and (use_default_run_expert or use_default_run_experts):
+            from .cpu_experts import ExpertWorkspace
+    
+            if workspace._compute_workspace is None:
+                workspace._compute_workspace = ExpertWorkspace(
+                    max_scratch_bytes=workspace.max_kernel_scratch_bytes
+                )
+    
+        def fetched(expert_id: int, cache: dict[int, tuple]):
+            pair = cache.get(expert_id)
+            if pair is None:
+                pair = (
+                    workspace.fetch_expert(layer, expert_id, store)
+                    if workspace is not None
+                    else store.fetch_expert(layer, expert_id)
+                )
+                cache[expert_id] = pair
+            return pair
+    
+        if states_cpu.shape[0] == 1:
+            # The old expert loop visits hits in ascending expert id and positions
+            # within an expert in ascending route order. Stable sort preserves that
+            # same order while allowing all routes to share one native OpenMP team.
+            route_order = sorted(
+                range(ids_cpu.shape[1]), key=lambda pos: int(ids_cpu[0, pos])
+            )
+            pairs: dict[int, tuple] = {}
+            route_pairs = [fetched(int(ids_cpu[0, pos]), pairs) for pos in route_order]
+            gate_up = [pair[0] for pair in route_pairs]
+            down = [pair[1] for pair in route_pairs]
+            if workspace is not None and use_default_run_experts:
+                computed = run_experts_fn(
+                    states_cpu[0], gate_up, down, threads=threads,
+                    workspace=workspace._compute_workspace,
+                )
+            else:
+                computed = run_experts_fn(states_cpu[0], gate_up, down, threads=threads)
+            if computed.ndim == 2:
+                computed = computed.unsqueeze(0)
+            if tuple(computed.shape[:2]) != (1, len(route_order)):
+>               raise ValueError("run_experts_fn returned an unexpected route shape")
+E               ValueError: run_experts_fn returned an unexpected route shape
+
+qwen_neural\native_dispatch.py:295: ValueError
+============================== warnings summary ===============================
+tests/test_qwen_recurrent_graph.py: 14 warnings
+  F:\AI\Neural\.venv\Lib\site-packages\torch\jit\_script.py:362: DeprecationWarning: `torch.jit.script_method` is deprecated. Please switch to `torch.compile` or `torch.export`.
+    warnings.warn(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ===========================
+FAILED tests/test_qwen_native_workspace.py::test_workspace_reuses_expert_views_and_dispatch_scratch_without_output_alias
+FAILED tests/test_qwen_native_workspace.py::test_workspace_lru_and_scratch_budget_are_bounded
+FAILED tests/test_qwen_native_workspace.py::test_workspace_rejects_a_different_store_and_handles_shape_dtype_changes
+3 failed, 28 passed, 14 warnings in 8.26s

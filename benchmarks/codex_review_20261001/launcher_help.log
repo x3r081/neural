@@ -1,0 +1,343 @@
+usage: server.py [-h] [--model-dir MODEL_DIR] [--store-dir STORE_DIR]
+                 [--out OUT] [--host HOST] [--port PORT]
+                 [--model-name MODEL_NAME] [--effort {low,medium,high}]
+                 [--temperature TEMPERATURE] [--identity IDENTITY]
+                 [--api-key-env API_KEY_ENV] [--selftest] [--prewarm PREWARM]
+                 [--fast-prefill FAST_PREFILL] [--prefill-chunk PREFILL_CHUNK]
+                 [--trim-prefill-cache {0,1,2}] [--grouped-prefill-gemm {0,1}]
+                 [--grouped-prefill-max-tokens GROUPED_PREFILL_MAX_TOKENS]
+                 [--grouped-prefill-min-tokens GROUPED_PREFILL_MIN_TOKENS]
+                 [--masked-gemv {0,1}] [--prefill-order {block,layer}]
+                 [--prefill-order-check]
+                 [--prefill-order-check-tokens PREFILL_ORDER_CHECK_TOKENS]
+                 [--review-prefill-check JSON]
+                 [--review-prefill-lengths REVIEW_PREFILL_LENGTHS]
+                 [--review-prefill-groups REVIEW_PREFILL_GROUPS]
+                 [--review-decode-check JSON]
+                 [--review-decode-lengths REVIEW_DECODE_LENGTHS]
+                 [--review-decode-tokens REVIEW_DECODE_TOKENS]
+                 [--count-routing] [--cpu-prefill-max CPU_PREFILL_MAX]
+                 [--idle-canon IDLE_CANON] [--split-k SPLIT_K] [--ppl-check]
+                 [--protect-side PROTECT_SIDE] [--pool POOL] [--tokens TOKENS]
+                 [--threads THREADS] [--calib-tokens CALIB_TOKENS]
+                 [--smax SMAX] [--hotset HOTSET] [--kdll KDLL]
+                 [--skip-quality] [--refresh-every REFRESH_EVERY]
+                 [--refresh-m REFRESH_M] [--capbufs CAPBUFS]
+                 [--prefill-m PREFILL_M] [--prefill-weight PREFILL_WEIGHT]
+                 [--early-every EARLY_EVERY] [--early-tokens EARLY_TOKENS]
+                 [--static STATIC] [--no-unlock] [--warm-margin WARM_MARGIN]
+                 [--warm-general WARM_GENERAL]
+                 [--warm-order {likely-last,likely-first}] [--ws-min WS_MIN]
+                 [--release-resident RELEASE_RESIDENT] [--no-fold]
+                 [--eager-core] [--no-zerocopy]
+                 [--direct-prefill DIRECT_PREFILL]
+                 [--quality-keys QUALITY_KEYS] [--mmap-embed MMAP_EMBED]
+                 [--splice-memory SPLICE_MEMORY]
+                 [--splice-memory-tokens SPLICE_MEMORY_TOKENS]
+                 [--splice-after-final {drop,keep}]
+                 [--splice-reserve SPLICE_RESERVE]
+                 [--kernel-prefetch KERNEL_PREFETCH]
+                 [--kernel-pair KERNEL_PAIR]
+                 [--kernel-affinity KERNEL_AFFINITY]
+                 [--kernel-fuse KERNEL_FUSE]
+                 [--kernel-cold-prefetch KERNEL_COLD_PREFETCH]
+                 [--zc-misses ZC_MISSES] [--wait {event,poll}]
+                 [--doorbell {0,1}]
+                 [--doorbell-timeout-ms DOORBELL_TIMEOUT_MS]
+                 [--doorbell-max-timeouts DOORBELL_MAX_TIMEOUTS]
+                 [--doorbell-faults-max DOORBELL_FAULTS_MAX]
+                 [--doorbell-warm-tokens DOORBELL_WARM_TOKENS]
+                 [--doorbell-flush {0,1}]
+                 [--doorbell-poll-cap DOORBELL_POLL_CAP]
+                 [--doorbell-inject DOORBELL_INJECT] [--kv-ring KV_RING]
+                 [--kv-checkpoints KV_CHECKPOINTS] [--scratch SCRATCH]
+                 [--stage-ring STAGE_RING] [--stage-thread {0,1}]
+                 [--near-miss {0,1,2}] [--trace-max-tokens TRACE_MAX_TOKENS]
+                 [--arena {off,pinned,large}] [--arena-max-gib ARENA_MAX_GIB]
+                 [--admit-gpu ADMIT_GPU] [--admit-gpu-max ADMIT_GPU_MAX]
+                 [--admit-rule {server,window,demand}] [--admit-k ADMIT_K]
+                 [--admit-window ADMIT_WINDOW] [--victim {count,lru}]
+                 [--demand-probe DEMAND_PROBE]
+                 [--selftest-admit SELFTEST_ADMIT]
+
+options:
+  -h, --help            show this help message and exit
+  --model-dir MODEL_DIR
+  --store-dir STORE_DIR
+                        expert store directory (tools/build_store.py; default
+                        NEURAL_STORE_DIR). A raw store (13,219,200 B/slot) or
+                        a packed-scale store (tools/pack_store.py, 12,839,040
+                        B/slot) - the layout is read from the store's
+                        metadata.json and every consumer follows it
+  --out OUT
+  --host HOST
+  --port PORT
+  --model-name MODEL_NAME
+  --effort {low,medium,high}
+  --temperature TEMPERATURE
+  --identity IDENTITY
+  --api-key-env API_KEY_ENV
+  --selftest
+  --prewarm PREWARM
+  --fast-prefill FAST_PREFILL
+  --prefill-chunk PREFILL_CHUNK
+  --trim-prefill-cache {0,1,2}
+                        experimental: release unused allocations after prompt
+                        processing and its GPU synchronization. 0 keeps the
+                        allocator caches; 1 releases unused CUDA blocks; 2
+                        also releases the reusable CPU-prefill buffers and
+                        unused pinned-host blocks. Model, K/V and graph
+                        storage stay live. The release cost is charged to
+                        prefill_s; no tensor arithmetic changes
+  --grouped-prefill-gemm {0,1}
+                        experimental: group independent prefill expert GEMMs
+                        into one launch without merging their row tiles or
+                        changing accumulation order (default:
+                        NEURAL_PREFILL_GROUPED_GEMM, normally 0)
+  --grouped-prefill-max-tokens GROUPED_PREFILL_MAX_TOKENS
+                        limit grouped GEMMs to one prefill block with at most
+                        this many new tokens; 0 disables the size guard for
+                        research (default 4096)
+  --grouped-prefill-min-tokens GROUPED_PREFILL_MIN_TOKENS
+                        minimum new tokens for grouped GEMMs when the maximum
+                        is positive; smaller prompts retain the stock path
+                        (default 1024)
+  --masked-gemv {0,1}   experimental: skip zero-weight GPU experts during
+                        decode, preserving active expert arithmetic and the
+                        four-row reduction. Requires finite original expert
+                        results; default 0
+  --prefill-order {block,layer}
+                        order of prompt processing when the prompt is longer
+                        than --prefill-chunk. block: each block runs all
+                        layers before the next block starts, so a non-resident
+                        expert that several blocks route to crosses PCIe once
+                        per block. layer: each layer runs over all blocks and
+                        every non-resident expert the GPU computes is copied
+                        ONCE per layer and serves every block that routes to
+                        it. Outputs are bit-identical (the per-block CPU/GPU
+                        split and GEMM calls are unchanged; --prefill-order-
+                        check verifies it). Costs VRAM proportional to the
+                        whole prompt instead of one block (~50 KB per prompt
+                        token: the layer's sorted expert inputs and outputs,
+                        plus the residuals)
+  --prefill-order-check
+                        validation entry point (like --ppl-check): prefill a
+                        long text in both orders, compare the final hidden
+                        states, every position's logits and every layer's K/V
+                        bit for bit, print PREFILL_ORDER_CHECK (with the
+                        timings and expert stagings of both); then the same
+                        comparison for block order at --prefill-chunk 4096 vs
+                        16384 (PREFILL_CHUNK_CHECK, and
+                        PREFILL_CHUNK_CHECK_GPUONLY with --cpu-prefill-max 0
+                        for both) and exit
+  --prefill-order-check-tokens PREFILL_ORDER_CHECK_TOKENS
+                        with --prefill-order-check: prompt length in tokens
+                        (capped at --smax - 17; more than --prefill-chunk, or
+                        there is only one block and nothing to compare)
+  --review-prefill-check JSON
+                        run the optimization review's frozen-residency prefill
+                        bit checks and write their JSON report
+  --review-prefill-lengths REVIEW_PREFILL_LENGTHS
+                        comma-separated prompt lengths for --review-prefill-
+                        check
+  --review-prefill-groups REVIEW_PREFILL_GROUPS
+                        comma-separated staged-expert group sizes to validate
+                        against production
+  --review-decode-check JSON
+                        validate masked GEMV against full decode logits,
+                        hidden states, routing and K/V at frozen residency
+  --review-decode-lengths REVIEW_DECODE_LENGTHS
+  --review-decode-tokens REVIEW_DECODE_TOKENS
+  --count-routing
+  --cpu-prefill-max CPU_PREFILL_MAX
+  --idle-canon IDLE_CANON
+  --split-k SPLIT_K
+  --ppl-check
+  --protect-side PROTECT_SIDE
+  --pool POOL
+  --tokens TOKENS
+  --threads THREADS
+  --calib-tokens CALIB_TOKENS
+  --smax SMAX
+  --hotset HOTSET       json with chosen (layer, expert) list; calibrate if
+                        absent
+  --kdll KDLL
+  --skip-quality
+  --refresh-every REFRESH_EVERY
+  --refresh-m REFRESH_M
+  --capbufs CAPBUFS
+  --prefill-m PREFILL_M
+  --prefill-weight PREFILL_WEIGHT
+                        the prompt's expert routing counts as this many
+                        generated tokens for VRAM admission (0 = ignore the
+                        prompt; a huge value = the old full-weight behaviour)
+  --early-every EARLY_EVERY
+  --early-tokens EARLY_TOKENS
+  --static STATIC
+  --no-unlock
+  --warm-margin WARM_MARGIN
+                        GiB of free RAM the startup warm-up leaves untouched
+  --warm-general WARM_GENERAL
+                        rank the warm-up by coding + general calibration
+                        counts (0 = coding only)
+  --warm-order {likely-last,likely-first}
+                        touch order of the warm-up; the most recently touched
+                        pages are trimmed last
+  --ws-min WS_MIN       after the warm-up, ask Windows (soft minimum working
+                        set) to trim other processes' idle pages before this
+                        server's expert pages (0 = off)
+  --release-resident RELEASE_RESIDENT
+                        at startup, drop the RAM copies of all VRAM-resident
+                        experts (0 = the static core only)
+  --no-fold
+  --eager-core
+  --no-zerocopy
+  --direct-prefill DIRECT_PREFILL
+  --quality-keys QUALITY_KEYS
+  --mmap-embed MMAP_EMBED
+  --splice-memory SPLICE_MEMORY
+                        tool-call responses whose exact tokens are remembered
+                        for re-rendering (0 = off)
+  --splice-memory-tokens SPLICE_MEMORY_TOKENS
+                        total tokens the splice memory may hold (4 bytes each;
+                        LRU-evicted beyond it)
+  --splice-after-final {drop,keep}
+                        drop (harmony-canonical): once a final answer follows
+                        an agent loop, its tool-call turns render without
+                        their reasoning again, so the next user turn re-
+                        prefills that loop once. keep: keep splicing them
+                        (prefix cache kept across user turns; earlier
+                        reasoning stays in context, which is not the rendering
+                        the model was trained on)
+  --splice-reserve SPLICE_RESERVE
+                        a spliced prompt must leave this many tokens (or the
+                        request's max_tokens if smaller; at most a quarter of
+                        the context) below smax-16 for generation; otherwise
+                        the shorter unspliced prompt is used
+  --kernel-prefetch KERNEL_PREFETCH
+                        CPU expert kernel: software prefetch distance in bytes
+                        (0 = off; try 1024). Bit-identical.
+  --kernel-pair KERNEL_PAIR
+                        CPU expert kernel: 1 = stream two rows per thread
+                        iteration (more misses in flight). Bit-identical.
+  --kernel-affinity KERNEL_AFFINITY
+                        CPU expert kernel: pin OpenMP thread t to logical CPU
+                        t*stride (0 = off; 2 = one per physical core)
+  --kernel-fuse KERNEL_FUSE
+                        CPU expert kernel: 1 = two-phase kernel (3 fewer
+                        barriers per call). Bit-identical.
+  --kernel-cold-prefetch KERNEL_COLD_PREFETCH
+                        CPU expert kernel: 1 = before each call, probe one
+                        byte per expert and PrefetchVirtualMemory the experts
+                        whose pages are not resident, so the OS reads them at
+                        queue depth instead of 8 threads faulting page by page
+                        (first answers, rewrites after the file cache was
+                        churned). Outputs untouched.
+  --zc-misses ZC_MISSES
+                        per layer, up to N plain misses (not admitted) are
+                        streamed by DMA from the arena into scratch slots and
+                        computed by the GPU, as an extra DRAM read pipe next
+                        to the CPU (needs --arena; always leaves at least one
+                        miss to the CPU). Exact: same numerics as a VRAM hit.
+  --wait {event,poll}   how the host waits for a layer's router:
+                        cudaEventSynchronize, or busy-poll the event
+  --doorbell {0,1}      1 = in steady state launch each layer's graph BEFORE
+                        the CPU expert kernel that feeds it; the graph's first
+                        node spins on a pinned-host doorbell word
+                        (doorbell.py) that the host rings once the kernel's
+                        output is complete. Same kernels in the same stream
+                        order: outputs are bit-identical (residency frozen). A
+                        spin that gives up (host stalled) is recovered by re-
+                        running the token in the classic order: it never fails
+                        a request. 0 = the classic sequence (no spin node is
+                        captured).
+  --doorbell-timeout-ms DOORBELL_TIMEOUT_MS
+                        a spin node gives up after this long (WDDM's TDR kills
+                        a kernel that runs ~2 s, so 1800 is the enforced
+                        maximum). Not fatal: the host then re-runs the token
+                        in the classic order
+  --doorbell-max-timeouts DOORBELL_MAX_TIMEOUTS
+                        after this many timeout recoveries in one process the
+                        early launch is switched off for good (every token
+                        then runs the classic order); 0 = never switch it off
+  --doorbell-faults-max DOORBELL_FAULTS_MAX
+                        a token that follows one with more than this many
+                        process page faults runs the classic order (first
+                        answers after a cold start ~1,200 faults/token, first
+                        turns ~130, later ~20: MEASURED)
+  --doorbell-warm-tokens DOORBELL_WARM_TOKENS
+                        the first N decode tokens of every request run the
+                        classic order (the fault-storm regime)
+  --doorbell-flush {0,1}
+                        1 = cudaStreamQuery right after each early launch
+                        (WDDM batches launches; this submits the spin graph to
+                        the GPU now instead of at the next sync). A/B knob.
+  --doorbell-poll-cap DOORBELL_POLL_CAP
+                        second bound of a spin (iterations), in case the GPU
+                        timer (globaltimer) misbehaves: ~1.1 polls/us
+                        MEASURED, so the default is ~1 s; at most 2**20 (below
+                        WDDM's TDR)
+  --doorbell-inject DOORBELL_INJECT
+                        TEST ONLY: every N-th early token withholds the ring
+                        of one hand-off (after layer 17): its spin must time
+                        out and the token must be recovered (0 = off).
+                        Exercises the recovery on the real GPU; with residency
+                        frozen the answers must equal the classic run's
+  --kv-ring KV_RING     rolling K/V cache of this many positions for the 18
+                        sliding-window layers (0 = full smax; 256 frees ~0.55
+                        GiB for ~45 more expert slots; needs --pool raised to
+                        use it)
+  --kv-checkpoints KV_CHECKPOINTS
+                        with --kv-ring: ring snapshots kept (9 MiB each at
+                        R=256) for prompt-cache rollback
+  --scratch SCRATCH     prefill scratch slots carved out of the pool (16 = v4;
+                        4-6 frees 10-12 decode slots)
+  --stage-ring STAGE_RING
+                        pinned staging buffers (12.8 MB each, 2..8) between
+                        the mmap'd store and the prompt-processing H2D. With
+                        --stage-thread 1 this is the copy look-ahead (up to N
+                        experts copied and not yet issued to the GPU); 4 = the
+                        old ring size
+  --stage-thread {0,1}  1 = a producer thread does the prompt-processing
+                        expert copies (mmap -> pinned ring) ahead of the
+                        launching thread; 0 = the old inline copy on the
+                        launching thread. Same bytes, same order, same events
+                        either way
+  --near-miss {0,1,2}   router ranks 5-8 (near misses): 0 = off, 1 = compute
+                        them (into traces), 2 = also mark them as admission
+                        candidates. Exact: the top-4 and their weights are
+                        unchanged
+  --trace-max-tokens TRACE_MAX_TOKENS
+  --arena {off,pinned,large}
+                        hold the CPU-side expert store in a locked arena
+                        instead of the page cache: pinned = cudaHostAlloc'd
+                        (also zero-copy readable by the GPU), large =
+                        VirtualAlloc MEM_LARGE_PAGES + cudaHostRegister (needs
+                        'Lock pages in memory'); partial fallback to the mmap
+                        on failure
+  --arena-max-gib ARENA_MAX_GIB
+                        cap the arena size (0 = free RAM at start minus
+                        --warm-margin)
+  --admit-gpu ADMIT_GPU
+                        1 = zero-surcharge admission: an admitted miss is
+                        computed by the GPU straight from the arena and the
+                        streamed bytes land in its VRAM slot (needs --arena)
+  --admit-gpu-max ADMIT_GPU_MAX
+                        GPU admissions per layer at most (PCIe budget)
+  --admit-rule {server,window,demand}
+                        server = v4 candidates (>=2 uses in the request,
+                        refreshed every 8 tokens); window = admit a miss used
+                        >= --admit-k times in the last --admit-window tokens;
+                        demand = --demand-probe scores
+  --admit-k ADMIT_K
+  --admit-window ADMIT_WINDOW
+  --victim {count,lru}  eviction key among adaptive slots: count = v4 (uses in
+                        request, then calibration), lru = last use
+  --demand-probe DEMAND_PROBE
+                        reports/demand_probe.npz from
+                        tools/fit_demand_probe.py: per-token near-future
+                        expert demand scores from the final hidden state (used
+                        by --admit-rule demand)
+  --selftest-admit SELFTEST_ADMIT
+                        with --admit-gpu: verify the zero-copy compute-and-
+                        store kernel against the CPU kernel at startup

@@ -1,0 +1,341 @@
+{
+  "schema_version": 1,
+  "validated_at_utc": "2026-10-03T10:33:05.237457+00:00",
+  "validator": "F:\\AI\\NeuralQwen36\\tools\\validate_portable_cpu.py",
+  "mode": "full",
+  "result": "PASS",
+  "full_validation": true,
+  "full_validation_passed": true,
+  "portable_dll_sha256": "cab1f6da1c5143a8ac4ec3a0c7ba0632c4fd183e6e747cabfde625fc6af1b66b",
+  "target_isa": "AVX2+FMA row-dot with scalar fallback",
+  "build_target": "avx2-fma",
+  "build_flags": [
+    "-O3",
+    "-shared",
+    "-ffp-contract=off",
+    "-fopenmp",
+    "-static",
+    "-mavx2",
+    "-mfma"
+  ],
+  "openmp_transient_regions": true,
+  "persistent_worker_pool": false,
+  "thread_counts_tested": [
+    1,
+    8
+  ],
+  "minimum_cpu_features": [
+    "AVX2",
+    "FMA3"
+  ],
+  "cpu_signature_informational": "Windows|AMD64|Intel64 Family 6 Model 167 Stepping 1, GenuineIntel",
+  "cpu_features_informational": {
+    "FMA3": true,
+    "AVX2": true,
+    "AVX512F": true,
+    "AVX512VL": true,
+    "AVX512BW": true,
+    "AVX512DQ": true
+  },
+  "python": "3.12.10 (tags/v3.12.10:0cc8128, Apr  8 2025, 12:21:36) [MSC v.1943 64 bit (AMD64)]",
+  "numpy": "2.5.1",
+  "dlls": {
+    "portable": {
+      "path": "F:\\AI\\NeuralQwen36\\.tools\\gptoss_cpu_portable_avx2.dll",
+      "sha256": "cab1f6da1c5143a8ac4ec3a0c7ba0632c4fd183e6e747cabfde625fc6af1b66b"
+    },
+    "reference_single": {
+      "path": "F:\\AI\\NeuralQwen36\\gptoss_cpu_cap2.dll",
+      "sha256": "84a8c5af304e5f1c20b4ee12c8708f0494c7b580be31aff6df95481772b40b44"
+    },
+    "reference_multi": {
+      "path": "F:\\AI\\NeuralQwen36\\gptoss_cpu_multi.dll",
+      "sha256": "fd48ac7644c1a136f8635f89ecd0b1bf8f1be0caa38f3ffc16c3c778b1db9fbb"
+    }
+  },
+  "reference_provenance": "The existing Neural GPT-OSS CPU cap2 and multi DLLs in this repository; no model weights loaded.",
+  "symbols_required": [
+    "gptoss_set_scale_layout",
+    "gptoss_get_scale_layout",
+    "gptoss_slot_bytes",
+    "gptoss_experts",
+    "gptoss_experts_cap",
+    "gptoss_experts_multi",
+    "gptoss_multi_scratch_floats",
+    "gptoss_combine_pairs",
+    "gptoss_multi_set_tiling",
+    "gptoss_multi_set_schedule",
+    "gptoss_multi_get_config",
+    "gptoss_multi_activation",
+    "gptoss_multi_check_exp"
+  ],
+  "abi_contracts": {
+    "raw_layout": 13219200,
+    "ps4_layout": 12839040,
+    "scratch_formula_floats": "P*(H+GU)+16",
+    "persistent_worker_pool": false,
+    "slot_bytes_api": [
+      13219200,
+      12839040
+    ]
+  },
+  "cases": [
+    {
+      "operation": "single",
+      "layout": "raw",
+      "experts": 1,
+      "capture_experts": [
+        0
+      ],
+      "threads_tested": [
+        1,
+        8
+      ],
+      "status": "PASS",
+      "bitwise_mismatches": 0
+    },
+    {
+      "operation": "single",
+      "layout": "raw",
+      "experts": 2,
+      "capture_experts": [],
+      "threads_tested": [
+        1,
+        8
+      ],
+      "status": "PASS",
+      "bitwise_mismatches": 0
+    },
+    {
+      "operation": "single",
+      "layout": "raw",
+      "experts": 3,
+      "capture_experts": [],
+      "threads_tested": [
+        1,
+        8
+      ],
+      "status": "PASS",
+      "bitwise_mismatches": 0
+    },
+    {
+      "operation": "single",
+      "layout": "raw",
+      "experts": 4,
+      "capture_experts": [
+        0,
+        2
+      ],
+      "threads_tested": [
+        1,
+        8
+      ],
+      "status": "PASS",
+      "bitwise_mismatches": 0
+    },
+    {
+      "operation": "single",
+      "layout": "raw",
+      "experts": 5,
+      "capture_experts": [],
+      "threads_tested": [
+        1,
+        8
+      ],
+      "status": "PASS",
+      "bitwise_mismatches": 0
+    },
+    {
+      "operation": "single",
+      "layout": "raw",
+      "experts": 8,
+      "capture_experts": [],
+      "threads_tested": [
+        1,
+        8
+      ],
+      "status": "PASS",
+      "bitwise_mismatches": 0
+    },
+    {
+      "operation": "multi",
+      "layout": "raw",
+      "experts": 1,
+      "pairs": 1,
+      "threads_tested": [
+        1,
+        8
+      ],
+      "status": "PASS",
+      "bitwise_mismatches": 0
+    },
+    {
+      "operation": "multi",
+      "layout": "raw",
+      "experts": 2,
+      "pairs": 3,
+      "threads_tested": [
+        1,
+        8
+      ],
+      "status": "PASS",
+      "bitwise_mismatches": 0
+    },
+    {
+      "operation": "multi",
+      "layout": "raw",
+      "experts": 4,
+      "pairs": 6,
+      "threads_tested": [
+        1,
+        8
+      ],
+      "status": "PASS",
+      "bitwise_mismatches": 0
+    },
+    {
+      "operation": "single",
+      "layout": "ps4",
+      "experts": 1,
+      "capture_experts": [
+        0
+      ],
+      "threads_tested": [
+        1,
+        8
+      ],
+      "status": "PASS",
+      "bitwise_mismatches": 0
+    },
+    {
+      "operation": "single",
+      "layout": "ps4",
+      "experts": 2,
+      "capture_experts": [],
+      "threads_tested": [
+        1,
+        8
+      ],
+      "status": "PASS",
+      "bitwise_mismatches": 0
+    },
+    {
+      "operation": "single",
+      "layout": "ps4",
+      "experts": 3,
+      "capture_experts": [],
+      "threads_tested": [
+        1,
+        8
+      ],
+      "status": "PASS",
+      "bitwise_mismatches": 0
+    },
+    {
+      "operation": "single",
+      "layout": "ps4",
+      "experts": 4,
+      "capture_experts": [
+        0,
+        2
+      ],
+      "threads_tested": [
+        1,
+        8
+      ],
+      "status": "PASS",
+      "bitwise_mismatches": 0
+    },
+    {
+      "operation": "single",
+      "layout": "ps4",
+      "experts": 5,
+      "capture_experts": [],
+      "threads_tested": [
+        1,
+        8
+      ],
+      "status": "PASS",
+      "bitwise_mismatches": 0
+    },
+    {
+      "operation": "single",
+      "layout": "ps4",
+      "experts": 8,
+      "capture_experts": [],
+      "threads_tested": [
+        1,
+        8
+      ],
+      "status": "PASS",
+      "bitwise_mismatches": 0
+    },
+    {
+      "operation": "multi",
+      "layout": "ps4",
+      "experts": 1,
+      "pairs": 1,
+      "threads_tested": [
+        1,
+        8
+      ],
+      "status": "PASS",
+      "bitwise_mismatches": 0
+    },
+    {
+      "operation": "multi",
+      "layout": "ps4",
+      "experts": 2,
+      "pairs": 3,
+      "threads_tested": [
+        1,
+        8
+      ],
+      "status": "PASS",
+      "bitwise_mismatches": 0
+    },
+    {
+      "operation": "multi",
+      "layout": "ps4",
+      "experts": 4,
+      "pairs": 6,
+      "threads_tested": [
+        1,
+        8
+      ],
+      "status": "PASS",
+      "bitwise_mismatches": 0
+    },
+    {
+      "operation": "combine",
+      "layout": "n/a",
+      "tokens": 3,
+      "experts_per_token": [
+        0,
+        3,
+        8
+      ],
+      "status": "PASS",
+      "bitwise_mismatches": 0
+    },
+    {
+      "operation": "auxiliary_abi",
+      "status": "PASS",
+      "bitwise_mismatches": 0,
+      "default_multi_config": [
+        16,
+        8,
+        1,
+        64
+      ],
+      "exp_check_lanes": 256,
+      "scalar_exp_lanes": 256
+    }
+  ],
+  "error": null,
+  "compiler": {
+    "path": "F:\\AI\\Neural\\third_party\\tools\\w64devkit\\bin\\gcc.exe",
+    "version": "16.1.0"
+  },
+  "source_sha256": "03344b96237b4546777d5e2a48a9d151816ec1b02b95527aa573ffa6c624868d"
+}

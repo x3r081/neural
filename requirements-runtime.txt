@@ -1,0 +1,3 @@
+# Windows CUDA deployment: optimized GPT-OSS plus explicit reference adapters.
+-r requirements.txt
+accelerate==1.14.0

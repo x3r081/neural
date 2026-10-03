@@ -1,0 +1,23 @@
+{
+  "status": "PASS_IDENTICAL_TOKEN_IDS",
+  "scope": "Only compares Neural native/grouped Torch before and after input-validation caching and protocol fixes. Not a cross-engine or general quality guarantee.",
+  "before": "neural_torch_01/results.json",
+  "after": "neural_torch_final02/results.json",
+  "checks": [
+    {
+      "id": "reasoning_short",
+      "tokens_checked": 512,
+      "identical_token_ids": true
+    },
+    {
+      "id": "coding_short",
+      "tokens_checked": 512,
+      "identical_token_ids": true
+    },
+    {
+      "id": "coding_context",
+      "tokens_checked": 512,
+      "identical_token_ids": true
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+CPU kernel tuning: prefetch 0 B, pair 0, affinity stride 0, fuse 1
+runtime package: F:\AI\NeuralServer_work_lm\neural
+expert store: G:\NeuralStores\gptoss120b_ps4 (mxfp4_g32_ps4, 12,839,040 B/slot, scale layout 1); decode kernel gptoss_cpu_cap2.dll
+free RAM at start: 56.0 GiB
+embedding: read-only memmap of the checkpoint tensor (6 rows verified bit-equal); CPU copy freed
+fused graphs captured; usable slots=499; vram_reserved=9.71 GiB
+hot set loaded from F:\AI\NeuralServer_work_lm\hotset_code.json: 499
+static core: 250 slots protected; 499 VRAM-resident experts' store pages released from RAM in 0.59s; WS 1.82 GiB, private commit 12.94 GiB, free RAM 54.64 GiB
+PREFILL_ORDER_CHECK logits_equal=True kv_equal=True max_abs_logit_diff=0 block_s=13.516 layer_s=12.191 stagings_block=9232 stagings_layer=3052 hidden_equal=True routes_equal=True prompt_tokens=13000 blocks=4 chunk=4096 kv_ring=256 stg_pairs=9232 cpu_experts_block=5100 cpu_experts_layer=5100 residency_frozen=True
+PREFILL_CHUNK_CHECK chunk_a=4096 chunk_b=16384 logits_equal=False kv_equal=False max_abs_logit_diff=18.8125 a_s=13.678 b_s=25.926 hidden_equal=False first_diff_pos=0 prompt_tokens=13000 cpu_prefill_max=16 cpu_experts_a=5100 cpu_experts_b=636 stagings_a=9232 stagings_b=3355 kv_ring=256 residency_frozen=True
+PREFILL_CHUNK_CHECK_GPUONLY chunk_a=4096 chunk_b=16384 logits_equal=False kv_equal=False max_abs_logit_diff=24.6719 a_s=17.305 b_s=26.874 hidden_equal=False first_diff_pos=0 prompt_tokens=13000 cpu_prefill_max=0 cpu_experts_a=0 cpu_experts_b=0 stagings_a=14341 stagings_b=3985 kv_ring=256 residency_frozen=True
+PREFILL_BM_CHECK bm_a=16 bm_b=64 logits_equal=True kv_equal=True max_abs_logit_diff=0 a_s=13.613 b_s=13.670
+PREFILL_FAST_LAUNCH_CHECK fast_a=0 fast_b=1 logits_equal=True kv_equal=True max_abs_logit_diff=0 a_s=13.855 b_s=13.702
+EXIT rc=0

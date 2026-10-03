@@ -1,0 +1,10 @@
+[transformers] The fast path is not available because one of the required library is not installed. Falling back to torch implementation. To install follow https://github.com/fla-org/flash-linear-attention#installation and https://github.com/Dao-AILab/causal-conv1d
+READY: qwen3.6-35b-a3b-neural at http://127.0.0.1:8001/v1
+127.0.0.1 - - [02/Oct/2026 20:42:03] "GET /health HTTP/1.1" 200 -
+127.0.0.1 - - [02/Oct/2026 20:42:40] "POST /completion HTTP/1.1" 200 -
+127.0.0.1 - - [02/Oct/2026 20:42:41] "POST /tokenize HTTP/1.1" 200 -
+127.0.0.1 - - [02/Oct/2026 20:45:19] "POST /completion HTTP/1.1" 200 -
+127.0.0.1 - - [02/Oct/2026 20:45:19] "POST /tokenize HTTP/1.1" 200 -
+127.0.0.1 - - [02/Oct/2026 20:48:02] "POST /completion HTTP/1.1" 200 -
+127.0.0.1 - - [02/Oct/2026 20:48:02] "POST /tokenize HTTP/1.1" 200 -
+127.0.0.1 - - [02/Oct/2026 20:50:20] "POST /completion HTTP/1.1" 200 -

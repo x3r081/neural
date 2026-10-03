@@ -1,0 +1,18 @@
+CPU kernel tuning: prefetch 0 B, pair 0, affinity stride 0, fuse 1, cold-prefetch 0
+runtime package: F:\AI\Neural\experiments\neuralserver-opt\neural
+expert store: G:\NeuralStores\gptoss120b_ps4 (mxfp4_g32_ps4, 12,839,040 B/slot, scale layout 1); decode kernel gptoss_cpu_cap2.dll
+free RAM at start: 54.11 GiB
+embedding: read-only memmap of the checkpoint tensor (6 rows verified bit-equal); CPU copy freed
+fused graphs captured; usable slots=499; vram_reserved=9.71 GiB
+doorbell: off (classic sequence: CPU kernel -> bookkeeping -> launch next graph)
+hot set loaded from hotset_code.json: 499
+static core: 250 slots protected; 499 VRAM-resident experts' store pages released from RAM in 0.58s; WS 1.78 GiB, private commit 12.93 GiB, free RAM 52.82 GiB
+RAM cache warmed: 49.1 GiB of experts in 23 s
+working set: soft minimum 51.5 GiB set
+REVIEW_DECODE masked_gemv_0 128 f4bd11e0dafae4391c5dff6b14d38d97ee42bbc4a28832da2e41762b5b4c085e
+REVIEW_DECODE masked_gemv_1 128 f4bd11e0dafae4391c5dff6b14d38d97ee42bbc4a28832da2e41762b5b4c085e
+REVIEW_DECODE masked_gemv_0 3000 854b5b39277ef12790d037708344a588da40ac0c3df4ef495f26e9cd06ff01ca
+REVIEW_DECODE masked_gemv_1 3000 854b5b39277ef12790d037708344a588da40ac0c3df4ef495f26e9cd06ff01ca
+REVIEW_DECODE masked_gemv_0 13000 84dd913f5ff737ef2ac50be6ac37c8d8accc2c214cb9f6c1ed1558b1808b6723
+REVIEW_DECODE masked_gemv_1 13000 84dd913f5ff737ef2ac50be6ac37c8d8accc2c214cb9f6c1ed1558b1808b6723
+REVIEW_DECODE_ALL_BIT_EQUAL

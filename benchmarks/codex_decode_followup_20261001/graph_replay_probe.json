@@ -1,0 +1,85 @@
+{
+  "schema": "neuralserver-graph-replay-probe-v1",
+  "label": "UNMEASURED",
+  "scope": "graph-launch microbenchmark only; no model inference or serving-speed claim",
+  "config": {
+    "output": "benchmarks\\codex_decode_followup_20261001\\graph_replay_probe.json",
+    "device": "cuda:0",
+    "chain_length": 36,
+    "small_width": 128,
+    "model_width": 2880,
+    "iterations": 24,
+    "warmup": 5,
+    "repeats": 4,
+    "host_gaps_us": [
+      0.0,
+      50.0,
+      800.0
+    ],
+    "seed": 20261001
+  },
+  "torch": {
+    "version": "2.10.0+cu130",
+    "cuda": "13.0"
+  },
+  "results": [
+    {
+      "scenario": "ordinary_single",
+      "launches_per_iteration": 1,
+      "correctness": {
+        "python_replay": {
+          "bit_equal": true,
+          "numel": 256,
+          "output_sha256": "035bb5031776beba62bb4d3a0bb5739e91dac4dcb6cdcedb9ccce9a27bb2e9f5"
+        },
+        "base_c_replay": {
+          "bit_equal": true,
+          "numel": 256,
+          "output_sha256": "035bb5031776beba62bb4d3a0bb5739e91dac4dcb6cdcedb9ccce9a27bb2e9f5"
+        },
+        "ctypes_c_replay": {
+          "bit_equal": true,
+          "numel": 256,
+          "output_sha256": "035bb5031776beba62bb4d3a0bb5739e91dac4dcb6cdcedb9ccce9a27bb2e9f5"
+        },
+        "ctypes_python_replay": {
+          "bit_equal": true,
+          "numel": 256,
+          "output_sha256": "035bb5031776beba62bb4d3a0bb5739e91dac4dcb6cdcedb9ccce9a27bb2e9f5"
+        },
+        "skip_launch_negative_control": {
+          "skipped_graph_index": 0,
+          "failure_detected": true
+        }
+      },
+      "legs": [],
+      "medians": {}
+    }
+  ],
+  "status": "failed",
+  "runtime": {
+    "device": "cuda:0",
+    "device_name": "NVIDIA GeForce RTX 3080 Ti",
+    "cudart": "F:\\AI\\Neural\\.venv\\Lib\\site-packages\\torch\\lib\\cudart64_13.dll",
+    "ctypes_libraries": {
+      "ctypes_c_replay": "F:\\AI\\Neural\\.venv\\Lib\\site-packages\\torch\\lib\\cudart64_13.dll",
+      "ctypes_python_replay": "F:\\AI\\Neural\\.venv\\Lib\\site-packages\\torch\\lib\\cudart64_13.dll"
+    },
+    "cudart_dll_directory_handle_retained": true,
+    "graph_replay_methods": [
+      "python_replay",
+      "base_c_replay",
+      "ctypes_c_replay",
+      "ctypes_python_replay"
+    ],
+    "current_stream": 2144082005104,
+    "torch_graphs_py": "F:\\AI\\Neural\\.venv\\Lib\\site-packages\\torch\\cuda\\graphs.py",
+    "torch_graphs_py_sha256": "65b7411c148f4393f7d61ca9c43809c8ae1090a044dcdf3d750b790addb83214"
+  },
+  "owners_retained": true,
+  "error": {
+    "type": "AttributeError",
+    "message": "AttributeError(\"'Namespace' object has no attribute 'host_gaps'\")",
+    "traceback": "Traceback (most recent call last):\n  File \"F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\graph_replay_probe.py\", line 404, in main\n    measure_scenario(torch, stream, scenario, launchers, args, rng, result[\"results\"], save)\n  File \"F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\graph_replay_probe.py\", line 316, in measure_scenario\n    conditions = [(method, gap) for gap in args.host_gaps for method in METHODS]\n                                           ^^^^^^^^^^^^^^\nAttributeError: 'Namespace' object has no attribute 'host_gaps'. Did you mean: 'host_gaps_us'?\n"
+  }
+}

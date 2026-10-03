@@ -1,0 +1,36 @@
+trace: 1398 tokens, 201312 expert uses, 4164 distinct experts of 4608; server had 430 usable slots, 250 static
+
+1. hit rate, admit on every miss (no admission cost)
+   slots  static |   LRU  | Belady
+     430     250 | 0.406 | 0.632
+     430       0 | 0.468 | 0.715
+     472     250 | 0.448 | 0.668
+     472       0 | 0.499 | 0.735
+     530     250 | 0.496 | 0.707
+     530       0 | 0.534 | 0.759
+
+2. cost-aware admission, 430 slots: cost = CPU expert reads/token = misses + 2 x admissions
+   static 250 | static set only, no admission                  | hit 0.297 | miss/tok 101.2 | adm/tok   0.0 | cost  101.2
+   static 250 | admit on >= 2 uses in last 32 tokens, LRU      | hit 0.424 | miss/tok  82.9 | adm/tok  62.1 | cost  207.1
+   static 250 | admit on >= 3 uses in last 64 tokens, LRU      | hit 0.431 | miss/tok  82.0 | adm/tok  57.5 | cost  197.0
+   static 250 | admit on >= 4 uses in last 128 tokens, LRU     | hit 0.428 | miss/tok  82.4 | adm/tok  60.4 | cost  203.1
+   static 250 | admit on >= 6 uses in last 256 tokens, LRU     | hit 0.427 | miss/tok  82.5 | adm/tok  60.0 | cost  202.5
+   static 250 | ORACLE: admit if >= 2 uses in next 32 tokens   | hit 0.619 | miss/tok  54.8 | adm/tok  25.9 | cost  106.6
+   static 250 | ORACLE: admit if >= 3 uses in next 64 tokens   | hit 0.615 | miss/tok  55.5 | adm/tok  27.5 | cost  110.4
+   static 250 | ORACLE: admit if >= 4 uses in next 128 tokens  | hit 0.615 | miss/tok  55.5 | adm/tok  31.8 | cost  119.0
+   static   0 | static set only, no admission                  | hit 0.297 | miss/tok 101.2 | adm/tok   0.0 | cost  101.2
+   static   0 | admit on >= 2 uses in last 32 tokens, LRU      | hit 0.489 | miss/tok  73.6 | adm/tok  51.5 | cost  176.7
+   static   0 | admit on >= 3 uses in last 64 tokens, LRU      | hit 0.492 | miss/tok  73.1 | adm/tok  47.4 | cost  167.9
+   static   0 | admit on >= 4 uses in last 128 tokens, LRU     | hit 0.489 | miss/tok  73.5 | adm/tok  50.5 | cost  174.6
+   static   0 | admit on >= 6 uses in last 256 tokens, LRU     | hit 0.483 | miss/tok  74.4 | adm/tok  51.0 | cost  176.4
+   static   0 | ORACLE: admit if >= 2 uses in next 32 tokens   | hit 0.699 | miss/tok  43.3 | adm/tok  17.8 | cost   78.9
+   static   0 | ORACLE: admit if >= 3 uses in next 64 tokens   | hit 0.693 | miss/tok  44.3 | adm/tok  19.0 | cost   82.2
+   static   0 | ORACLE: admit if >= 4 uses in next 128 tokens  | hit 0.693 | miss/tok  44.2 | adm/tok  22.5 | cost   89.3
+
+3. multi-token verify: unique experts per step of T tokens (1 token = 144)
+   T=1:  144.0 experts (1.00x), non-static  116.2, best case (all drafts accepted) 1.00x tokens per expert read
+   T=2:  249.0 experts (1.73x), non-static  203.3, best case (all drafts accepted) 1.16x tokens per expert read
+   T=3:  339.5 experts (2.36x), non-static  279.3, best case (all drafts accepted) 1.27x tokens per expert read
+   T=4:  420.7 experts (2.92x), non-static  348.2, best case (all drafts accepted) 1.37x tokens per expert read
+   T=6:  561.0 experts (3.90x), non-static  468.7, best case (all drafts accepted) 1.54x tokens per expert read
+   T=8:  680.0 experts (4.72x), non-static  572.6, best case (all drafts accepted) 1.69x tokens per expert read

@@ -1,0 +1,60 @@
+{
+ "sessions": [
+  {
+   "kind": "llama",
+   "round": 0,
+   "prompts": [
+    {
+     "prompt": "warmup_13k",
+     "prompt_tokens": 13077,
+     "cached_tokens": 0,
+     "prompt_s": 150.124208,
+     "wall_s": 150.16
+    },
+    {
+     "prompt": "code_13k",
+     "prompt_tokens": 13078,
+     "cached_tokens": 0,
+     "prompt_s": 101.666475,
+     "wall_s": 101.98
+    },
+    {
+     "prompt": "file_3k",
+     "prompt_tokens": 3077,
+     "cached_tokens": 0,
+     "prompt_s": 24.669664,
+     "wall_s": 24.93
+    }
+   ],
+   "startup_s": 12.6
+  },
+  {
+   "kind": "neural=--kv-ring 256 --scratch 6 --pool 6.05 --kernel-fuse 1",
+   "round": 0,
+   "prompts": [
+    {
+     "prompt": "warmup_13k",
+     "prompt_tokens": 13077,
+     "cached_tokens": 0,
+     "prompt_s": 16.1275,
+     "wall_s": 16.2
+    },
+    {
+     "prompt": "code_13k",
+     "prompt_tokens": 13078,
+     "cached_tokens": 0,
+     "prompt_s": 14.8438,
+     "wall_s": 15.19
+    },
+    {
+     "prompt": "file_3k",
+     "prompt_tokens": 3077,
+     "cached_tokens": 0,
+     "prompt_s": 3.9305,
+     "wall_s": 4.07
+    }
+   ],
+   "startup_s": 41.3
+  }
+ ]
+}

@@ -1,0 +1,429 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Neural Server: what was achieved</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 22 22'%3E%3Crect x='1' y='1' width='9' height='9' rx='1.5' fill='%23DB8A16'/%3E%3Crect x='12' y='1' width='9' height='9' rx='1.5' fill='%23E2E6EC'/%3E%3Crect x='1' y='12' width='9' height='9' rx='1.5' fill='%23E2E6EC'/%3E%3Crect x='12' y='12' width='9' height='9' rx='1.5' fill='%232E6AB0'/%3E%3C/svg%3E">
+<meta name="description" content="A plain-language account for decision makers: what the Neural server achieved, how it works, how it differs from llama.cpp, and how the results were verified.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+:root {
+  --ground: #F3F5F8; --surface: #FFFFFF; --ink: #10141B; --ink-2: #2B3240; --muted: #5A6373;
+  --line: #D6DBE3; --line-2: #E6E9EF;
+  --gpu: #DB8A16; --gpu-ink: #95550A; --gpu-soft: #F8E2BF;
+  --cpu: #2E6AB0; --cpu-ink: #24568F; --cpu-soft: #D9E5F4;
+  --cell: #E2E6EC; --code-bg: #10141B; --code-ink: #E3E7EE; --code-dim: #8D97A8;
+  --on-gpu: #1B1204; --on-cpu: #FFFFFF;
+  --display: "Archivo", "Arial Narrow", "Helvetica Neue", Arial, sans-serif;
+  --body: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --ground: #0D1015; --surface: #151A22; --ink: #E8EBF1; --ink-2: #C7CDD8; --muted: #939CAC;
+    --line: #29313E; --line-2: #1D232D;
+    --gpu: #F0A534; --gpu-ink: #F4B85C; --gpu-soft: #4A3413;
+    --cpu: #6AA3E8; --cpu-ink: #8DBAEF; --cpu-soft: #172A42;
+    --cell: #1C222C; --code-bg: #080A0E; --code-ink: #E3E7EE; --code-dim: #7F899A; --on-cpu: #0D1015;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --ground: #0D1015; --surface: #151A22; --ink: #E8EBF1; --ink-2: #C7CDD8; --muted: #939CAC;
+  --line: #29313E; --line-2: #1D232D;
+  --gpu: #F0A534; --gpu-ink: #F4B85C; --gpu-soft: #4A3413;
+  --cpu: #6AA3E8; --cpu-ink: #8DBAEF; --cpu-soft: #172A42;
+  --cell: #1C222C; --code-bg: #080A0E; --code-ink: #E3E7EE; --code-dim: #7F899A; --on-cpu: #0D1015;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0; background: var(--ground); color: var(--ink);
+  font-family: var(--body); font-size: 17px; line-height: 1.6; font-stretch: 100%;
+}
+img, canvas, svg { max-width: 100%; }
+a { color: var(--cpu-ink); text-underline-offset: 3px; }
+a:hover { text-decoration-thickness: 2px; }
+:focus-visible { outline: 2px solid var(--cpu); outline-offset: 3px; border-radius: 2px; }
+.wrap { max-width: 1120px; margin: 0 auto; padding-inline: clamp(16px, 4vw, 40px); }
+.mono { font-family: var(--mono); }
+.tag {
+  font-family: var(--mono); font-size: 12px; font-weight: 600; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--muted); margin: 0;
+}
+h1, h2, h3 { font-family: var(--display); font-stretch: 118%; text-wrap: balance; margin: 0; }
+h1 { font-size: clamp(34px, 6vw, 68px); line-height: 1.02; font-weight: 800; letter-spacing: -0.015em; }
+h2 { font-size: clamp(26px, 3.4vw, 38px); line-height: 1.1; font-weight: 800; letter-spacing: -0.01em; }
+h3 { font-size: 19px; line-height: 1.25; font-weight: 700; font-stretch: 110%; }
+p { margin: 0; max-width: 64ch; }
+.gpu-t { color: var(--gpu-ink); font-weight: 600; }
+.cpu-t { color: var(--cpu-ink); font-weight: 600; }
+
+/* top bar */
+.bar { border-bottom: 1px solid var(--line); background: var(--ground); }
+.bar .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 14px; flex-wrap: wrap; }
+.brand { display: flex; align-items: center; gap: 10px; font-family: var(--display); font-stretch: 125%; font-weight: 800; font-size: 20px; color: var(--ink); text-decoration: none; letter-spacing: 0.01em; }
+.brand svg { width: 22px; height: 22px; }
+.nav { display: flex; gap: 20px; flex-wrap: wrap; font-size: 15px; }
+.nav a { color: var(--ink-2); text-decoration: none; }
+.nav a:hover { color: var(--ink); text-decoration: underline; }
+
+/* hero */
+.hero { padding-block: clamp(40px, 7vw, 84px) 28px; display: grid; grid-template-columns: minmax(0, 1fr); gap: 22px; }
+.lede { font-size: clamp(18px, 2vw, 21px); line-height: 1.5; color: var(--ink-2); max-width: 60ch; }
+.facts { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0; margin: 14px 0 0; border-top: 1px solid var(--line); }
+.facts div { padding: 14px 18px 4px 0; border-right: 1px solid var(--line-2); margin-right: 18px; }
+.facts div:last-child { border-right: 0; margin-right: 0; }
+.facts dt { font-family: var(--mono); font-weight: 600; font-size: clamp(24px, 3vw, 32px); line-height: 1.1; font-variant-numeric: tabular-nums; }
+.facts dd { margin: 4px 0 0; color: var(--muted); font-size: 14px; line-height: 1.4; }
+
+/* expert strip */
+.strip { margin: 10px 0 0; background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 16px; display: grid; gap: 12px; }
+.strip-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap; }
+.strip-head h3 { font-size: 17px; }
+.strip-controls { display: flex; gap: 14px; align-items: center; flex-wrap: wrap; }
+.stats { font-family: var(--mono); font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.stats b { font-weight: 600; }
+.btn-ghost { font: 600 13px var(--mono); color: var(--ink-2); background: transparent; border: 1px solid var(--line); border-radius: 4px; padding: 5px 10px; cursor: pointer; }
+.btn-ghost:hover { border-color: var(--muted); color: var(--ink); }
+.grid-wrap { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 8px; align-items: stretch; }
+.axis-y { writing-mode: vertical-rl; transform: rotate(180deg); font: 11px var(--mono); color: var(--muted); text-align: center; letter-spacing: 0.08em; }
+#experts { width: 100%; aspect-ratio: 128 / 36; display: block; }
+.axis-x { font: 11px var(--mono); color: var(--muted); letter-spacing: 0.08em; text-align: center; margin-top: -4px; }
+.legend { display: flex; gap: 18px; flex-wrap: wrap; font-size: 14px; color: var(--ink-2); }
+.legend span { display: inline-flex; align-items: center; gap: 7px; }
+.sw { width: 12px; height: 12px; border-radius: 2px; display: inline-block; flex: none; }
+.sw.gpu { background: var(--gpu); } .sw.gpu-soft { background: var(--gpu-soft); } .sw.cpu { background: var(--cpu); } .sw.cell { background: var(--cell); border: 1px solid var(--line); }
+.strip-note { font-size: 14px; color: var(--muted); max-width: none; }
+
+/* sections: datasheet rows */
+.sec { border-top: 1px solid var(--line); padding-block: clamp(40px, 6vw, 72px); display: grid; grid-template-columns: 200px minmax(0, 1fr); gap: 24px 40px; }
+.sec > .tag { padding-top: 10px; }
+.sec-body { display: grid; grid-template-columns: minmax(0, 1fr); gap: 20px; align-content: start; min-width: 0; }
+.sec-body > * { min-width: 0; }
+.sec-body > p { color: var(--ink-2); }
+
+/* problem: size bars */
+.sizes { display: grid; gap: 14px; margin-top: 4px; }
+.size-row { display: grid; grid-template-columns: 250px minmax(0, 1fr); gap: 16px; align-items: center; }
+.size-row .lbl { font-size: 15px; line-height: 1.3; }
+.size-row .lbl small { display: block; color: var(--muted); font-size: 13px; }
+.track { position: relative; height: 30px; }
+.fill { height: 100%; border-radius: 3px; display: flex; align-items: center; justify-content: flex-end; padding-right: 8px; font: 600 13px var(--mono); min-width: 64px; }
+.fill.model { background: var(--ink); color: var(--ground); }
+.fill.vram { background: var(--gpu); color: var(--on-gpu); }
+.fill.ram { background: var(--cpu); color: var(--on-cpu); }
+.caption { font-size: 13px; color: var(--muted); font-family: var(--mono); }
+
+/* trick: one layer of experts */
+.layer { display: grid; grid-template-columns: repeat(32, minmax(0, 1fr)); gap: 3px; max-width: 640px; }
+.layer i { aspect-ratio: 1; background: var(--cell); border-radius: 2px; display: block; }
+.layer i.on-gpu { background: var(--gpu); }
+.layer i.on-cpu { background: var(--cpu); }
+.bigstat { display: flex; gap: 28px; flex-wrap: wrap; }
+.bigstat div { display: grid; gap: 2px; }
+.bigstat b { font: 600 clamp(26px, 3vw, 34px) var(--mono); font-variant-numeric: tabular-nums; }
+.bigstat span { font-size: 14px; color: var(--muted); }
+
+/* split: where the work happens */
+.split { display: grid; grid-template-columns: minmax(0, 1fr) 150px minmax(0, 1fr); align-items: stretch; gap: 0; }
+.place { background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 18px; display: grid; gap: 10px; align-content: start; }
+.place.gpu { border-top: 4px solid var(--gpu); }
+.place.cpu { border-top: 4px solid var(--cpu); }
+.place p { font-size: 15.5px; color: var(--ink-2); }
+.place .spec { font: 13px var(--mono); color: var(--muted); }
+.link { display: grid; place-items: center; text-align: center; padding: 10px 12px; position: relative; }
+.link::before { content: ""; position: absolute; left: 0; right: 0; top: 50%; border-top: 2px dashed var(--line); }
+.link div { position: relative; background: var(--ground); padding: 6px 4px; font-size: 13px; line-height: 1.35; color: var(--ink-2); }
+.link b { display: block; font: 600 20px var(--mono); color: var(--ink); }
+
+/* steps */
+.steps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; counter-reset: s; }
+.steps li { counter-increment: s; border-top: 2px solid var(--ink); padding-top: 12px; font-size: 15.5px; color: var(--ink-2); line-height: 1.5; }
+.steps li::before { content: counter(s); display: block; font: 600 13px var(--mono); color: var(--muted); margin-bottom: 6px; }
+.steps li.g { border-top-color: var(--gpu); } .steps li.c { border-top-color: var(--cpu); }
+
+/* results chart */
+.chart { background: var(--surface); border: 1px solid var(--line); border-radius: 6px; padding: 20px 20px 14px; display: grid; gap: 16px; }
+.crow { display: grid; grid-template-columns: 230px minmax(0, 1fr); gap: 16px; align-items: center; }
+.crow .lbl { font-size: 15px; line-height: 1.3; }
+.ctrack { position: relative; height: 26px; }
+.ctrack .base { position: absolute; inset: 0 auto 0 0; background: var(--cpu); border-radius: 3px 0 0 3px; opacity: 0.9; }
+.ctrack .range { position: absolute; top: 0; bottom: 0; background: var(--gpu); border-radius: 0 3px 3px 0; }
+.ctrack .range.tail { opacity: 0.45; }
+.ctrack .val { position: absolute; top: 50%; transform: translateY(-50%); font: 600 13px var(--mono); white-space: nowrap; padding-left: 8px; color: var(--ink); }
+.one { position: absolute; top: -6px; bottom: -6px; border-left: 2px solid var(--ink); }
+.ticks { display: grid; grid-template-columns: 230px minmax(0, 1fr); gap: 16px; }
+.ticks .scale { position: relative; height: 18px; font: 11px var(--mono); color: var(--muted); }
+.ticks .scale span { position: absolute; transform: translateX(-50%); }
+.chart-key { display: flex; gap: 18px; flex-wrap: wrap; font-size: 13px; color: var(--muted); }
+.tiles { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.tile { border-top: 1px solid var(--line); padding-top: 12px; display: grid; gap: 4px; align-content: start; }
+.tile b { font: 600 clamp(24px, 2.6vw, 30px) var(--mono); font-variant-numeric: tabular-nums; }
+.tile span { font-size: 14.5px; color: var(--muted); line-height: 1.4; }
+.fine { font-size: 13.5px; color: var(--muted); max-width: 80ch; }
+/* results by version + over time */
+.vtabs { display: flex; flex-wrap: wrap; gap: 8px; }
+.vtabs button { font: 600 14px var(--body); color: var(--ink-2); background: var(--surface); border: 1px solid var(--line); border-radius: 999px; padding: 7px 14px; cursor: pointer; display: inline-flex; gap: 8px; align-items: baseline; }
+.vtabs button span { font: 400 12px var(--mono); color: var(--muted); }
+.vtabs button:hover { border-color: var(--muted); }
+.vtabs button[aria-selected="true"] { background: var(--ink); border-color: var(--ink); color: var(--surface); }
+.vtabs button[aria-selected="true"] span { color: var(--line); }
+.vtabs button:focus-visible, .ctrack:focus-visible, .tpt:focus-visible { outline: 2px solid var(--cpu); outline-offset: 3px; }
+.chart { position: relative; }
+.chart[hidden] { display: none; }
+#bars { display: grid; gap: 16px; }
+.ctrack { cursor: default; }
+.ctrack.none { display: flex; align-items: center; font: 12.5px var(--mono); color: var(--muted); border-left: 2px solid var(--line); padding-left: 10px; }
+.ctrack .was { position: absolute; top: 50%; width: 12px; height: 12px; margin: -6px 0 0 -6px; border-radius: 50%; background: var(--surface); border: 2px solid var(--ink-2); box-shadow: 0 0 0 2px var(--surface); }
+.ctrack .val small { font: 400 12px var(--mono); color: var(--muted); margin-left: 6px; }
+.ctrack .val.in { color: var(--on-gpu); }
+.ctrack .val.in small { color: var(--on-gpu); opacity: 0.8; }
+.ctrack .brk { position: absolute; top: -3px; bottom: -3px; right: 14px; width: 5px; background: var(--surface); transform: skewX(-20deg); }
+.was-key { display: inline-block; width: 11px; height: 11px; border-radius: 50%; border: 2px solid var(--ink-2); vertical-align: -1px; }
+.tip { position: absolute; z-index: 5; pointer-events: none; max-width: 300px; background: var(--ink); color: var(--surface); font: 12.5px/1.5 var(--mono); padding: 8px 10px; border-radius: 4px; }
+.tip b { display: block; font: 600 14px var(--mono); }
+.tip[hidden] { display: none; }
+.tgrid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px 28px; }
+.tpanel h3 { font: 600 15px var(--body); margin: 0; }
+.tpanel .caption { display: block; margin-top: 2px; }
+.tpanel svg { display: block; width: 100%; max-width: 440px; height: auto; margin-top: 8px; overflow: visible; }
+.tsvg .grid { stroke: var(--line-2); stroke-width: 1; }
+.tsvg .ref { stroke: var(--ink); stroke-width: 1.5; }
+.tsvg .wh { stroke: var(--muted); stroke-width: 1.5; stroke-linecap: round; }
+.tsvg .ln { fill: none; stroke: var(--ink-2); stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; }
+.tsvg .pt { stroke: var(--surface); stroke-width: 2; }
+.tsvg .pt.up { fill: var(--gpu); } .tsvg .pt.dn { fill: var(--cpu); }
+.tsvg .pt.alt { fill: var(--surface); stroke: var(--ink-2); }
+.tsvg text { fill: var(--muted); font: 11px var(--mono); }
+.tsvg text.v { fill: var(--ink); font-weight: 600; font-size: 12.5px; }
+.tsvg .tpt { fill: transparent; cursor: default; }
+.ctable summary { cursor: pointer; font-size: 14.5px; color: var(--ink-2); }
+.fine code { font: 12.5px var(--mono); color: var(--ink-2); }
+.sec-body > p code { font: 0.88em var(--mono); }
+#ctable { overflow-x: auto; }   /* five version columns: the table scrolls in its box on a phone, not the page */
+.ctable table { margin-top: 10px; }
+.ctable td { font-size: 13px; }
+@media (max-width: 860px) { .tgrid { grid-template-columns: minmax(0, 1fr); } }
+
+/* coding */
+.spec-table { width: 100%; border-collapse: collapse; font-size: 15px; background: var(--surface); border: 1px solid var(--line); border-radius: 6px; overflow: hidden; }
+.spec-table th, .spec-table td { text-align: left; padding: 10px 14px; border-bottom: 1px solid var(--line-2); vertical-align: top; }
+.spec-table tr:last-child th, .spec-table tr:last-child td { border-bottom: 0; }
+.spec-table th { font-weight: 500; color: var(--muted); width: 34%; }
+.spec-table td { font-family: var(--mono); font-size: 14px; overflow-wrap: anywhere; }
+.checks { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px 28px; }
+.checks li { padding-left: 22px; position: relative; font-size: 15.5px; color: var(--ink-2); }
+.checks li::before { content: ""; position: absolute; left: 0; top: 0.55em; width: 10px; height: 10px; border-radius: 2px; background: var(--gpu); }
+
+/* limits */
+.two { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px; }
+.two ul { margin: 10px 0 0; padding-left: 18px; display: grid; gap: 8px; color: var(--ink-2); font-size: 15.5px; }
+
+/* start */
+.code { position: relative; background: var(--code-bg); color: var(--code-ink); border-radius: 6px; font: 13.5px/1.65 var(--mono); }
+.code pre { margin: 0; padding: 16px 18px; overflow-x: auto; }
+.code .c { color: var(--code-dim); }
+.copy { position: absolute; top: 8px; right: 8px; font: 600 12px var(--mono); color: var(--code-ink); background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.18); border-radius: 4px; padding: 4px 9px; cursor: pointer; }
+.copy:hover { background: rgba(255,255,255,0.16); }
+.step-t { font-weight: 600; font-size: 16px; }
+
+/* faq */
+.faq { display: grid; gap: 0; border-top: 1px solid var(--line); }
+.faq details { border-bottom: 1px solid var(--line); padding-block: 14px; }
+.faq summary { cursor: pointer; font-weight: 600; font-size: 16.5px; list-style: none; display: flex; justify-content: space-between; gap: 16px; }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after { content: "+"; font: 600 18px var(--mono); color: var(--muted); }
+.faq details[open] summary::after { content: "\2212"; }
+.faq details p { margin-top: 10px; color: var(--ink-2); font-size: 15.5px; }
+
+footer { border-top: 1px solid var(--line); padding-block: 28px 44px; font-size: 14px; color: var(--muted); }
+footer .wrap { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+
+@media (max-width: 860px) {
+  .sec { grid-template-columns: minmax(0, 1fr); gap: 16px; }
+  .sec > .tag { padding-top: 0; }
+  .facts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .facts div:nth-child(2) { border-right: 0; margin-right: 0; }
+  .split { grid-template-columns: minmax(0, 1fr); }
+  .link { padding: 14px 0; }
+  .link::before { left: 50%; right: auto; top: 0; bottom: 0; border-top: 0; border-left: 2px dashed var(--line); }
+  .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .tiles { grid-template-columns: minmax(0, 1fr); }
+  .checks, .two { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 600px) {
+  body { font-size: 16px; }
+  .size-row, .crow, .ticks { grid-template-columns: minmax(0, 1fr); gap: 6px; }
+  .ticks > div:first-child { display: none; }
+  .steps { grid-template-columns: minmax(0, 1fr); }
+  .axis-y { display: none; }
+  .grid-wrap { grid-template-columns: minmax(0, 1fr); }
+}
+@media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; } }
+
+/* documentation pages */
+.hero-doc { padding-block: clamp(36px, 6vw, 64px) clamp(20px, 4vw, 40px); display: grid; gap: 14px; }
+.hero-doc h1 { font-size: clamp(30px, 4.6vw, 52px); line-height: 1.05; font-weight: 800; letter-spacing: -0.015em; max-width: 24ch; }
+.hero-doc .meta { font-family: var(--mono); font-size: 13px; color: var(--muted); display: flex; gap: 18px; flex-wrap: wrap; }
+.hero-doc .meta a { color: var(--ink-2); }
+.sec-body h3 { margin-top: 6px; }
+.sec-body ul, .sec-body ol:not(.steps) { margin: 0; padding-left: 20px; display: grid; gap: 8px; color: var(--ink-2); font-size: 15.5px; }
+.sec-body li > p { margin: 0; }
+.sec-body p code, .sec-body li code, .doc code { font: 0.88em var(--mono); }
+.sec-body blockquote { margin: 0; padding-left: 16px; border-left: 3px solid var(--line); color: var(--ink-2); font-size: 15.5px; }
+.tblwrap { overflow-x: auto; }
+.doc { width: 100%; border-collapse: collapse; font-size: 14.5px; background: var(--surface); border: 1px solid var(--line); border-radius: 6px; overflow: hidden; }
+.doc th, .doc td { text-align: left; padding: 9px 12px; border-bottom: 1px solid var(--line-2); vertical-align: top; }
+.doc thead th { font: 600 12px var(--mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); background: var(--ground); }
+.doc tbody th { font-weight: 500; color: var(--ink); }
+.doc tbody td { color: var(--ink-2); font-variant-numeric: tabular-nums; }
+.doc tr:last-child th, .doc tr:last-child td { border-bottom: 0; }
+.nav a[aria-current="page"] { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; }
+@media (max-width: 860px) { .hero-doc h1 { max-width: none; } }
+</style>
+<header class="bar" id="top">
+  <div class="wrap">
+    <a class="brand" href="index.html" aria-label="Neural, back to top">
+      <svg viewBox="0 0 22 22" aria-hidden="true"><rect x="1" y="1" width="9" height="9" rx="1.5" fill="var(--gpu)"/><rect x="12" y="1" width="9" height="9" rx="1.5" fill="var(--cell)"/><rect x="1" y="12" width="9" height="9" rx="1.5" fill="var(--cell)"/><rect x="12" y="12" width="9" height="9" rx="1.5" fill="var(--cpu)"/></svg>
+      Neural
+    </a>
+    <nav class="nav" aria-label="Sections">
+      <a href="index.html#how">How it works</a>
+      <a href="index.html#results">Results</a>
+      <a href="technical.html">Technical</a>
+      <a href="overview.html" aria-current="page">For decision makers</a>
+    </nav>
+  </div>
+</header>
+<main>
+  <section class="wrap hero-doc" aria-labelledby="doc-title">
+    <p class="tag">For decision makers</p>
+    <h1 id="doc-title">A 120-billion-parameter AI model, running privately on one ordinary PC, faster than the standard tool.</h1>
+    <p class="lede">What was achieved, how, how it differs from llama.cpp, and how we know the numbers are right. No prior knowledge assumed.</p>
+    <p class="meta"><span>Neural Server &middot; September 30, 2026</span><a href="index.html">Back to the main page</a><a href="technical.html">The technical documentation</a></p>
+  </section>
+<section class="wrap sec" id="summary">
+<p class="tag">Summary</p>
+    <div class="sec-body">
+<h2>The one-paragraph version</h2>
+<p>Neural runs OpenAI's gpt-oss-120B, a very large AI model with about 117 billion adjustable settings (called parameters), on one gaming PC with a 12 GiB graphics card and 64 GB of RAM (the computer's main working memory). It runs entirely on this PC and needs no account or subscription. AI models read and write in small pieces called tokens (a token is roughly three quarters of a word). On the latest measurement, both programs were already warm. Neural is ready to answer after a 13,000-token coding prompt in 6.8 seconds, where llama.cpp takes 95.2 seconds. That is about 14 times quicker (13.9&times;, one run each). When you ask a further question in the same conversation, Neural writes its answer at 24.13 tokens per second against llama.cpp's 15.33, about 57% faster (1.57&times;). llama.cpp (build b10361) is a widely used open-source program for running AI models locally, and it is the comparison point here. The comparison uses the same PC, the same model file and the same questions, on the same afternoon, with the two programs taking turns.</p>
+    </div>
+  </section>
+
+<section class="wrap sec" id="achieved">
+<p class="tag">Results</p>
+    <div class="sec-body">
+<h2>What was achieved</h2>
+<p>Every figure on this page was measured on the same PC on the same afternoon, with the two programs taking turns, unless it is described as a calculation.</p>
+<p>Three rows come from the fourth measurement on Sep 30 (latest build). The rewrite row comes from the first measurement that day (an earlier build, equal-length span); it was not re-measured cleanly. Speed is counted in tokens per second.</p>
+<div class="tblwrap"><table class="doc">
+<thead><tr><th>Activity</th><th>Neural</th><th>llama.cpp</th><th>Ratio</th></tr></thead>
+<tbody>
+<tr><td>Reading a 13,000-token code prompt</td><td>6.8 s</td><td>95.2 s</td><td>13.9&times;</td></tr>
+<tr><td>Follow-up answers</td><td>24.13 tokens per second</td><td>15.33 tokens per second</td><td>1.57&times;</td></tr>
+<tr><td>First answer after the long prompt</td><td>22.74 tokens per second</td><td>11.60 tokens per second</td><td>1.96&times;</td></tr>
+<tr><td>Rewriting a file just read</td><td>20.71 tokens per second</td><td>14.57 tokens per second</td><td>1.42&times;</td></tr>
+</tbody>
+</table></div>
+<p>The first-answer advantage ranged from 1.84 to 2.08 times across runs, and llama.cpp was slower than usual in that round. Read 1.57 times for follow-ups as the more dependable figure.</p>
+<p>We made the comparison as fair as we could: same PC, same model weights for the experts, alternating runs, and each run started the program from scratch so no earlier work was left in memory. First answers depend on run order and on what the PC's file cache held, and each program's own timer is used. Where a change is marked &ldquo;identical&rdquo;, the new version gives exactly the same answer, character for character, as the old one. A few changes are not identical; see the Trust section.</p>
+    </div>
+  </section>
+
+<section class="wrap sec" id="why">
+<p class="tag">Why it matters</p>
+    <div class="sec-body">
+<h2>A very large model, privately, on one PC</h2>
+<p>The model takes 61 GiB on disk (about 65 GB), roughly the size of a large game install. The graphics card holds 12 GiB, so the model is about five times too big for it (calculated from 61 and 12). Neural writes at 23 to 25 tokens per second on the latest version, several times faster than most people read.</p>
+<p>It speaks the OpenAI chat-completions interface (streaming and tool calls), so tools such as Continue in VS Code can connect to it. Not everything the cloud offers is supported (no images, no Responses API, one tool call per response), and Cursor's built-in agent cannot use local models. It is designed to keep everything on the machine; its network traffic has not been audited.</p>
+<p>We have not compared running costs against a cloud service, so we make no cost claim here. What the work shows is a capability: a model of this size, at these speeds, on hardware many people already own.</p>
+    </div>
+  </section>
+
+<section class="wrap sec" id="how">
+<p class="tag">How it works</p>
+    <div class="sec-body">
+<h2>Send the work to the data, not the data to the work</h2>
+<p>The model is built from many small specialist networks, called &ldquo;experts&rdquo;. Picture a hospital with 36 floors (the model's &ldquo;layers&rdquo;) and 128 specialists on each floor. Each token, roughly three quarters of a word, is handled by only 4 per floor. That makes 4,608 specialists in total and 144 used per token, about 3% (a calculation).</p>
+<p>The busiest specialists sit in the graphics card's own memory: about 500 of them on the current version, a configuration choice. That is roughly 1 in 10 of the 4,608 (a calculation). The rest stay in the PC's main memory (RAM). The PC's main chip (the processor) uses its eight cores to consult them there, while the card handles its own share at the same time.</p>
+<p>The alternative is to copy each missing specialist to the card, about 13 megabytes each time, roughly a large photo. Instead, for each layer, the per-token messages between card and processor are about 23 kilobytes, and the processor does the work where the data sits. A few popular experts are still copied to the card in the background, and long prompts stage experts too. The processor reads RAM at about 36 GB per second on the latest build (Sep 30), against a measured memory ceiling of about 38 to 40 GB per second.</p>
+<p>For long inputs, Neural works through the model one floor at a time, so each specialist not on the card is fetched once per floor instead of once per block of the prompt. That cut the 13,000-token prompt from 15.0 to 10.7 seconds. Making the card work on 64 rows of the prompt at a time instead of 16 then took it to 7.7 seconds in like-for-like runs, and 6.8 seconds in the published comparison. Both changes leave the prompt's result identical bit for bit.</p>
+    </div>
+  </section>
+
+<section class="wrap sec" id="llama">
+<p class="tag">Versus llama.cpp</p>
+    <div class="sec-body">
+<h2>How Neural differs from llama.cpp</h2>
+<p>llama.cpp is mature and runs on many kinds of computers, which Neural does not (see Limits). For llama.cpp we used the setting tuned for decode speed on this PC (-ncmoe 31, the specialists of 31 of the 36 layers kept in RAM), and it computes them there on the processor. That setting was not tuned for prompt reading. Neural does the same, but it decides for each individual specialist, not for whole layers. It also keeps the ones used most recently on the card, so the choice follows the current conversation.</p>
+<p>The gain differs by activity. Prompt reading gains most: llama.cpp with this setting takes 93 to 102 seconds for the same prompt. We did not profile llama.cpp's prompt path; its setting was chosen for answer speed and we did not try a prompt-tuned one, so the prompt ratio is the least conservative of the four. Answers gain less, because both are limited by how fast RAM can be read.</p>
+<p>In August our research version lost to llama.cpp, at 13.65 against 13.90 tokens per second. That version copied 1.84 times less data than llama.cpp, but it copied it over the connection between the PC and the graphics card, which is slow. llama.cpp avoided that trip by computing the data where it already sat. The design then changed to a hybrid: for every token, the processor computes the experts held in RAM while the card computes the resident ones. Three research steps took that hybrid from 0.82 times llama.cpp to about 1.5 times on short prompts, and the server versions started from there.</p>
+    </div>
+  </section>
+
+<section class="wrap sec" id="trust">
+<p class="tag">Trust</p>
+    <div class="sec-body">
+<h2>How we checked it</h2>
+<ul>
+<li>Most speed-ups leave every answer exactly unchanged.</li>
+<li>A few changes are not bit-identical: the larger expert pool from the rolling K/V cache, the halved admission rate, and the fused core's different summation order. Answers can therefore differ from earlier versions, as this server's answers already can between two runs, because which specialists sit on the card depends on timing.</li>
+<li>Neural uses OpenAI's published 4-bit (MXFP4) expert weights with the same values (the packed store re-encodes only the scale bytes, losslessly), and nothing is re-quantized or pruned.</li>
+<li>The fused graphics-card code was tested statistically and stays inside the spread the reference code shows when only its summation order changes (4 sigma, 3 nulls). The later admission changes were not separately quality-tested.</li>
+<li>Every ratio was measured against llama.cpp on the same day, on the same PC.</li>
+<li>Where a measurement was not clean, the row says &ldquo;not measured&rdquo; instead of showing a number.</li>
+<li>Failed experiments are kept on record, and reviews corrected our own earlier claims.</li>
+</ul>
+    </div>
+  </section>
+
+<section class="wrap sec" id="limits">
+<p class="tag">Limits</p>
+    <div class="sec-body">
+<h2>What it does not do</h2>
+<ul>
+<li>It is one PC and one model: Windows, an NVIDIA card with 12 GB or more, and a recent Intel or AMD processor that supports a set of fast maths instructions called AVX-512.</li>
+<li>It serves one conversation at a time.</li>
+<li>It can hold 16,384 tokens (roughly 12,000 words, calculated at 0.75 word per token) of conversation at once, and it takes about 2 minutes to start.</li>
+<li>The expert store (about 55&ndash;57 GiB) only just fits in 64 GB next to other programs; the first answer touches some experts for the first time and can also hit disk stalls when free RAM is low (about 55 GiB free is recommended). First-answer speed therefore varies more than follow-ups.</li>
+<li>The advantage was measured only with the expert store held in RAM. In an earlier research build under RAM pressure, Neural fell to 0.31&times; llama.cpp (un-replicated). On Sep 5 an earlier build was 2.92&times; slower than llama.cpp on fresh prompts under background load.</li>
+<li>Prompt-reading speed on this PC also drifted between days on an unchanged build in September, for reasons not established; the Sep 30 gains are code changes verified against the previous build on the same day.</li>
+<li>It is a personal server, not a product, and the code is private.</li>
+</ul>
+    </div>
+  </section>
+
+<section class="wrap sec" id="story">
+<p class="tag">The story</p>
+    <div class="sec-body">
+<h2>The story in brief</h2>
+<ol class="steps">
+<li>In August the research said no: it reached 0.98 times llama.cpp's speed, and the best it could theoretically reach was 1.17 times (a calculation). The project's own minimum worth building was 1.20 times.</li>
+<li>The design changed to a hybrid: for every token, the processor computes the experts held in RAM while the card computes the resident ones.</li>
+<li>Over Sep 29 and 30, six passes of measured changes. Each was kept only if it measured faster in like-for-like runs and, where this page says so, gave identical output.</li>
+<li>Follow-up answers rose from 1.11&times; llama.cpp on Sep 23 to 1.57&times;.</li>
+<li>Prompt reading went from 3.1 times llama.cpp on Sep 24 to 13.9 times on Sep 30; the Sep 30 steps are verified code gains.</li>
+</ol>
+    </div>
+  </section>
+
+<section class="wrap sec" id="next">
+<p class="tag">Next</p>
+    <div class="sec-body">
+<h2>What would move it further</h2>
+<p>For prompt reading, the processor side and the graphics-card side now take the same time, about 7.2 seconds for the 13,000-token prompt, so no further change on one side alone helps. For answers, the processor already reads RAM within a few percent of what the memory can physically deliver, and the remaining housekeeping is about 6 thousandths of a second per token; three attempts to hide it gave nothing usable. The software is at its measured balance point. What would move it further is the PC itself: faster memory, or a graphics card with more memory so that more specialists stay on it (each extra percent of specialists on the card is worth about 0.7 thousandths of a second per token, measured). This page makes no purchase recommendation.</p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>Neural Server &middot; gpt-oss-120B by OpenAI (Apache&nbsp;2.0)</span>
+    <span>Speed figures measured on the development PC, September 2026. Sizes come from the model's design. Text written September 30, 2026 from the measurement records.</span>
+  </div>
+</footer>

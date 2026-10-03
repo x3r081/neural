@@ -1,0 +1,143 @@
+........................................................................ [ 70%]
+..............................                                           [100%]
+============================== warnings summary ===============================
+experiments/neuralserver-opt/tests/test_splice.py::test_segment_tokenization_identity
+  F:\AI\Neural\.venv\Lib\site-packages\_pytest\python.py:171: PytestReturnNotNoneWarning: Test functions should return None, but experiments/neuralserver-opt/tests/test_splice.py::test_segment_tokenization_identity returned <class 'dict'>.
+  Did you mean to use `assert` instead of `return`?
+  See https://docs.pytest.org/en/stable/how-to/assert.html#return-not-none for more information.
+    warnings.warn(
+
+experiments/neuralserver-opt/tests/test_splice.py::test_turn2_prefix_property
+  F:\AI\Neural\.venv\Lib\site-packages\_pytest\python.py:171: PytestReturnNotNoneWarning: Test functions should return None, but experiments/neuralserver-opt/tests/test_splice.py::test_turn2_prefix_property returned <class 'dict'>.
+  Did you mean to use `assert` instead of `return`?
+  See https://docs.pytest.org/en/stable/how-to/assert.html#return-not-none for more information.
+    warnings.warn(
+
+experiments/neuralserver-opt/tests/test_splice.py::test_three_chained_calls_then_final
+  F:\AI\Neural\.venv\Lib\site-packages\_pytest\python.py:171: PytestReturnNotNoneWarning: Test functions should return None, but experiments/neuralserver-opt/tests/test_splice.py::test_three_chained_calls_then_final returned <class 'dict'>.
+  Did you mean to use `assert` instead of `return`?
+  See https://docs.pytest.org/en/stable/how-to/assert.html#return-not-none for more information.
+    warnings.warn(
+
+experiments/neuralserver-opt/tests/test_splice.py::test_unknown_id_and_restart
+  F:\AI\Neural\.venv\Lib\site-packages\_pytest\python.py:171: PytestReturnNotNoneWarning: Test functions should return None, but experiments/neuralserver-opt/tests/test_splice.py::test_unknown_id_and_restart returned <class 'dict'>.
+  Did you mean to use `assert` instead of `return`?
+  See https://docs.pytest.org/en/stable/how-to/assert.html#return-not-none for more information.
+    warnings.warn(
+
+experiments/neuralserver-opt/tests/test_splice.py::test_parallel_tool_calls
+  F:\AI\Neural\.venv\Lib\site-packages\_pytest\python.py:171: PytestReturnNotNoneWarning: Test functions should return None, but experiments/neuralserver-opt/tests/test_splice.py::test_parallel_tool_calls returned <class 'dict'>.
+  Did you mean to use `assert` instead of `return`?
+  See https://docs.pytest.org/en/stable/how-to/assert.html#return-not-none for more information.
+    warnings.warn(
+
+experiments/neuralserver-opt/tests/test_splice.py::test_tool_output_still_defanged
+  F:\AI\Neural\.venv\Lib\site-packages\_pytest\python.py:171: PytestReturnNotNoneWarning: Test functions should return None, but experiments/neuralserver-opt/tests/test_splice.py::test_tool_output_still_defanged returned <class 'dict'>.
+  Did you mean to use `assert` instead of `return`?
+  See https://docs.pytest.org/en/stable/how-to/assert.html#return-not-none for more information.
+    warnings.warn(
+
+experiments/neuralserver-opt/tests/test_splice.py::test_system_developer_merging
+  F:\AI\Neural\.venv\Lib\site-packages\_pytest\python.py:171: PytestReturnNotNoneWarning: Test functions should return None, but experiments/neuralserver-opt/tests/test_splice.py::test_system_developer_merging returned <class 'dict'>.
+  Did you mean to use `assert` instead of `return`?
+  See https://docs.pytest.org/en/stable/how-to/assert.html#return-not-none for more information.
+    warnings.warn(
+
+experiments/neuralserver-opt/tests/test_splice.py::test_mismatched_echo_falls_back
+  F:\AI\Neural\.venv\Lib\site-packages\_pytest\python.py:171: PytestReturnNotNoneWarning: Test functions should return None, but experiments/neuralserver-opt/tests/test_splice.py::test_mismatched_echo_falls_back returned <class 'dict'>.
+  Did you mean to use `assert` instead of `return`?
+  See https://docs.pytest.org/en/stable/how-to/assert.html#return-not-none for more information.
+    warnings.warn(
+
+experiments/neuralserver-opt/tests/test_splice.py::test_noncanonical_tokens_preserved
+  F:\AI\Neural\.venv\Lib\site-packages\_pytest\python.py:171: PytestReturnNotNoneWarning: Test functions should return None, but experiments/neuralserver-opt/tests/test_splice.py::test_noncanonical_tokens_preserved returned <class 'dict'>.
+  Did you mean to use `assert` instead of `return`?
+  See https://docs.pytest.org/en/stable/how-to/assert.html#return-not-none for more information.
+    warnings.warn(
+
+experiments/neuralserver-opt/tests/test_splice.py::test_memory_lru
+  F:\AI\Neural\.venv\Lib\site-packages\_pytest\python.py:171: PytestReturnNotNoneWarning: Test functions should return None, but experiments/neuralserver-opt/tests/test_splice.py::test_memory_lru returned <class 'dict'>.
+  Did you mean to use `assert` instead of `return`?
+  See https://docs.pytest.org/en/stable/how-to/assert.html#return-not-none for more information.
+    warnings.warn(
+
+experiments/neuralserver-opt/tests/test_splice.py::test_sentinel_collision_is_harmless
+  F:\AI\Neural\.venv\Lib\site-packages\_pytest\python.py:171: PytestReturnNotNoneWarning: Test functions should return None, but experiments/neuralserver-opt/tests/test_splice.py::test_sentinel_collision_is_harmless returned <class 'dict'>.
+  Did you mean to use `assert` instead of `return`?
+  See https://docs.pytest.org/en/stable/how-to/assert.html#return-not-none for more information.
+    warnings.warn(
+
+experiments/neuralserver-opt/tests/test_splice.py::test_commentary_preamble_turn
+  F:\AI\Neural\.venv\Lib\site-packages\_pytest\python.py:171: PytestReturnNotNoneWarning: Test functions should return None, but experiments/neuralserver-opt/tests/test_splice.py::test_commentary_preamble_turn returned <class 'dict'>.
+  Did you mean to use `assert` instead of `return`?
+  See https://docs.pytest.org/en/stable/how-to/assert.html#return-not-none for more information.
+    warnings.warn(
+
+experiments/neuralserver-opt/tests/test_splice.py::test_server_glue_static
+  F:\AI\Neural\.venv\Lib\site-packages\_pytest\python.py:171: PytestReturnNotNoneWarning: Test functions should return None, but experiments/neuralserver-opt/tests/test_splice.py::test_server_glue_static returned <class 'dict'>.
+  Did you mean to use `assert` instead of `return`?
+  See https://docs.pytest.org/en/stable/how-to/assert.html#return-not-none for more information.
+    warnings.warn(
+
+experiments/neuralserver-opt/tests/test_splice.py::test_template_shape_fallback
+  F:\AI\Neural\.venv\Lib\site-packages\_pytest\python.py:171: PytestReturnNotNoneWarning: Test functions should return None, but experiments/neuralserver-opt/tests/test_splice.py::test_template_shape_fallback returned <class 'dict'>.
+  Did you mean to use `assert` instead of `return`?
+  See https://docs.pytest.org/en/stable/how-to/assert.html#return-not-none for more information.
+    warnings.warn(
+
+experiments/neuralserver-opt/tests/test_splice.py::test_followup_turn_policy_ab
+  F:\AI\Neural\.venv\Lib\site-packages\_pytest\python.py:171: PytestReturnNotNoneWarning: Test functions should return None, but experiments/neuralserver-opt/tests/test_splice.py::test_followup_turn_policy_ab returned <class 'dict'>.
+  Did you mean to use `assert` instead of `return`?
+  See https://docs.pytest.org/en/stable/how-to/assert.html#return-not-none for more information.
+    warnings.warn(
+
+experiments/neuralserver-opt/tests/test_splice.py::test_length_fallback_never_rejects_what_old_served
+  F:\AI\Neural\.venv\Lib\site-packages\_pytest\python.py:171: PytestReturnNotNoneWarning: Test functions should return None, but experiments/neuralserver-opt/tests/test_splice.py::test_length_fallback_never_rejects_what_old_served returned <class 'dict'>.
+  Did you mean to use `assert` instead of `return`?
+  See https://docs.pytest.org/en/stable/how-to/assert.html#return-not-none for more information.
+    warnings.warn(
+
+experiments/neuralserver-opt/tests/test_splice.py::test_fallback_policy_comparison
+  F:\AI\Neural\.venv\Lib\site-packages\_pytest\python.py:171: PytestReturnNotNoneWarning: Test functions should return None, but experiments/neuralserver-opt/tests/test_splice.py::test_fallback_policy_comparison returned <class 'dict'>.
+  Did you mean to use `assert` instead of `return`?
+  See https://docs.pytest.org/en/stable/how-to/assert.html#return-not-none for more information.
+    warnings.warn(
+
+experiments/neuralserver-opt/tests/test_splice.py::test_keep_policy_fallback_chain
+  F:\AI\Neural\.venv\Lib\site-packages\_pytest\python.py:171: PytestReturnNotNoneWarning: Test functions should return None, but experiments/neuralserver-opt/tests/test_splice.py::test_keep_policy_fallback_chain returned <class 'dict'>.
+  Did you mean to use `assert` instead of `return`?
+  See https://docs.pytest.org/en/stable/how-to/assert.html#return-not-none for more information.
+    warnings.warn(
+
+experiments/neuralserver-opt/tests/test_splice.py::test_keep_policy_oracle_fuzz
+  F:\AI\Neural\.venv\Lib\site-packages\_pytest\python.py:171: PytestReturnNotNoneWarning: Test functions should return None, but experiments/neuralserver-opt/tests/test_splice.py::test_keep_policy_oracle_fuzz returned <class 'dict'>.
+  Did you mean to use `assert` instead of `return`?
+  See https://docs.pytest.org/en/stable/how-to/assert.html#return-not-none for more information.
+    warnings.warn(
+
+experiments/neuralserver-opt/tests/test_splice.py::test_call_matches_type_strict
+  F:\AI\Neural\.venv\Lib\site-packages\_pytest\python.py:171: PytestReturnNotNoneWarning: Test functions should return None, but experiments/neuralserver-opt/tests/test_splice.py::test_call_matches_type_strict returned <class 'dict'>.
+  Did you mean to use `assert` instead of `return`?
+  See https://docs.pytest.org/en/stable/how-to/assert.html#return-not-none for more information.
+    warnings.warn(
+
+experiments/neuralserver-opt/tests/test_splice.py::test_memory_token_budget
+  F:\AI\Neural\.venv\Lib\site-packages\_pytest\python.py:171: PytestReturnNotNoneWarning: Test functions should return None, but experiments/neuralserver-opt/tests/test_splice.py::test_memory_token_budget returned <class 'dict'>.
+  Did you mean to use `assert` instead of `return`?
+  See https://docs.pytest.org/en/stable/how-to/assert.html#return-not-none for more information.
+    warnings.warn(
+
+experiments/neuralserver-opt/tests/test_splice.py::test_report_and_reserve_helpers
+  F:\AI\Neural\.venv\Lib\site-packages\_pytest\python.py:171: PytestReturnNotNoneWarning: Test functions should return None, but experiments/neuralserver-opt/tests/test_splice.py::test_report_and_reserve_helpers returned <class 'dict'>.
+  Did you mean to use `assert` instead of `return`?
+  See https://docs.pytest.org/en/stable/how-to/assert.html#return-not-none for more information.
+    warnings.warn(
+
+experiments/neuralserver-opt/tests/test_splice.py::test_regression_old_vs_new
+  F:\AI\Neural\.venv\Lib\site-packages\_pytest\python.py:171: PytestReturnNotNoneWarning: Test functions should return None, but experiments/neuralserver-opt/tests/test_splice.py::test_regression_old_vs_new returned <class 'dict'>.
+  Did you mean to use `assert` instead of `return`?
+  See https://docs.pytest.org/en/stable/how-to/assert.html#return-not-none for more information.
+    warnings.warn(
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+102 passed, 23 warnings in 33.09s

@@ -1,0 +1,15 @@
+{"id": "reasoning_short", "client_wall_s": 152.17938270000013, "timings": {"prompt_n": 77, "prompt_ms": 4766.2177000020165, "prompt_per_second": 16.15536780872754, "predicted_n": 512, "decode_calls": 511, "predicted_ms": 147398.56719999807, "predicted_per_second": 3.466790822373792, "first_token_s": 4.766318099998898, "wall_s": 152.1647849000001, "generation_tokens_per_wall_s": 3.364773264303413, "clock": "request prefill through generation, including sampling, detokenization and streaming callback; excludes startup"}}
+{"id": "coding_short", "client_wall_s": 165.7939778, "timings": {"prompt_n": 73, "prompt_ms": 13680.372900002112, "prompt_per_second": 5.336111854084674, "predicted_n": 512, "decode_calls": 511, "predicted_ms": 152097.87949999736, "predicted_per_second": 3.35967866008289, "first_token_s": 13.682638099999167, "wall_s": 165.77825239999947, "generation_tokens_per_wall_s": 3.0884630075880906, "clock": "request prefill through generation, including sampling, detokenization and streaming callback; excludes startup"}}
+{"id": "coding_context", "client_wall_s": 138.05375260000073, "timings": {"prompt_n": 163, "prompt_ms": 11026.338499999838, "prompt_per_second": 14.782785781517807, "predicted_n": 512, "decode_calls": 511, "predicted_ms": 127025.12320000096, "predicted_per_second": 4.02282624985477, "first_token_s": 11.026575399999274, "wall_s": 138.0514617000008, "generation_tokens_per_wall_s": 3.708761889914832, "clock": "request prefill through generation, including sampling, detokenization and streaming callback; excludes startup"}}
+PASS health: GET /health returns status=ok (0.061s)
+PASS models: model list includes the configured Qwen ID (0.012s)
+PASS reject_top_level_array: malformed request rejected with HTTP 400 (0.017s)
+PASS reject_null_message: malformed request rejected with HTTP 400 (0.013s)
+PASS reject_string_false_stream: malformed request rejected with HTTP 400 (0.013s)
+PASS plain_greedy_math: answer contains 42: '42' (3.094s)
+PASS streamed_greedy_math: SSE ended with [DONE], had no errors, and answer contains 42: '42' (2.558s)
+PASS weather_function_call: one valid get_weather(location=Stockholm) call returned (43.422s)
+PASS tool_result_consumed: assistant used the local fixture without another tool call: 'The weather in Stockholm is currently 18�C and sunny.' (12.745s)
+{"status": "passed", "output": "F:\\AI\\NeuralQwen36\\benchmarks\\qwen36_20261002\\neural_torch_final02\\http_validation_coding.json"}
+PASS generated_python_function: generated function passed five behavior/input-preservation cases (52.951s)
+Report: F:\AI\NeuralQwen36\benchmarks\qwen36_20261002\neural_torch_final02\http_validation.json

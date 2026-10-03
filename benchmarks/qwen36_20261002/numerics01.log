@@ -1,0 +1,19 @@
+[numerics] loading staged/Torch backend
+[transformers] The fast path is not available because one of the required library is not installed. Falling back to torch implementation. To install follow https://github.com/fla-org/flash-linear-attention#installation and https://github.com/Dao-AILab/causal-conv1d
+[numerics] prompt=coding mode=staged-torch start
+[numerics] prompt=coding mode=staged-torch complete
+[numerics] prompt=coding mode=native-legacy-torch start
+[numerics] prompt=coding mode=native-legacy-torch complete
+[numerics] prompt=coding mode=native-grouped-torch start
+[numerics] prompt=coding mode=native-grouped-torch complete
+[numerics] prompt=coding mode=native-grouped-fla start
+[numerics] prompt=coding mode=native-grouped-fla complete
+[numerics] prompt=reasoning mode=staged-torch start
+[numerics] prompt=reasoning mode=staged-torch complete
+[numerics] prompt=reasoning mode=native-legacy-torch start
+[numerics] prompt=reasoning mode=native-legacy-torch complete
+[numerics] prompt=reasoning mode=native-grouped-torch start
+[numerics] prompt=reasoning mode=native-grouped-torch complete
+[numerics] prompt=reasoning mode=native-grouped-fla start
+[numerics] prompt=reasoning mode=native-grouped-fla complete
+Wrote numerical comparison report: benchmarks\qwen36_20261002\numerics01.json

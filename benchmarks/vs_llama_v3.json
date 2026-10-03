@@ -1,0 +1,258 @@
+{
+ "config": {
+  "out": "benchmarks/vs_llama_v3.json",
+  "rounds": 2,
+  "only": null,
+  "ctx_tokens": 13000,
+  "max_tokens": 512,
+  "effort": "low",
+  "llama_dir": "G:\\Tools\\llama-b10361",
+  "gguf": "G:\\Models\\gpt-oss-120b-gguf\\gpt-oss-120b-MXFP4.gguf",
+  "llama_args": "-ngl 99 -ncmoe 31 -t 8 -c 16384 -fa on --jinja",
+  "neural_args": "--pool 5.5 --smax 16384 --threads 8 --hotset hotset_code.json --refresh-every 8 --refresh-m 32 --capbufs 16 --prefill-m 64 --early-every 4 --early-tokens 32 --static 250 --skip-quality",
+  "python": null,
+  "log_dir": "F:\\AI\\NeuralServer\\logs"
+ },
+ "sessions": [
+  {
+   "kind": "neural",
+   "tag": "r0",
+   "free_ram_gib_at_start": 49.97,
+   "turns": [
+    {
+     "prompt_tokens": 13150,
+     "cached_tokens": 0,
+     "prompt_s": 48.6438,
+     "completion_tokens": 512,
+     "decode_tok_s": 8.8701,
+     "vram_hit": 0.1768,
+     "cpu_ms_per_tok": 93.846,
+     "gpu_wait_ms_per_tok": 9.9316,
+     "cpu_GBps": 16.6984,
+     "wall_s": 106.34,
+     "turn": 0
+    },
+    {
+     "prompt_tokens": 13672,
+     "cached_tokens": 13151,
+     "prompt_s": 2.9964,
+     "completion_tokens": 512,
+     "decode_tok_s": 15.1026,
+     "vram_hit": 0.3136,
+     "cpu_ms_per_tok": 50.3948,
+     "gpu_wait_ms_per_tok": 7.6567,
+     "cpu_GBps": 25.9269,
+     "wall_s": 36.9,
+     "turn": 1
+    },
+    {
+     "prompt_tokens": 14192,
+     "cached_tokens": 13673,
+     "prompt_s": 2.484,
+     "completion_tokens": 512,
+     "decode_tok_s": 16.3599,
+     "vram_hit": 0.3539,
+     "cpu_ms_per_tok": 46.042,
+     "gpu_wait_ms_per_tok": 7.1469,
+     "cpu_GBps": 26.7104,
+     "wall_s": 33.76,
+     "turn": 2
+    },
+    {
+     "prompt_tokens": 14713,
+     "cached_tokens": 14193,
+     "prompt_s": 2.4469,
+     "completion_tokens": 512,
+     "decode_tok_s": 15.8549,
+     "vram_hit": 0.3292,
+     "cpu_ms_per_tok": 47.1098,
+     "gpu_wait_ms_per_tok": 7.5168,
+     "cpu_GBps": 27.1066,
+     "wall_s": 34.75,
+     "turn": 3
+    }
+   ],
+   "startup_s": 45.4,
+   "free_ram_gib_ready": 5.49
+  },
+  {
+   "kind": "llama",
+   "tag": "r0",
+   "free_ram_gib_at_start": 42.26,
+   "turns": [
+    {
+     "prompt_tokens": 13108,
+     "cached_tokens": 0,
+     "prompt_s": 148.431355,
+     "completion_tokens": 512,
+     "decode_tok_s": 13.165649247407003,
+     "wall_s": 187.38,
+     "turn": 0
+    },
+    {
+     "prompt_tokens": 13646,
+     "cached_tokens": 13619,
+     "prompt_s": 1.181121,
+     "completion_tokens": 512,
+     "decode_tok_s": 13.965827855951105,
+     "wall_s": 37.95,
+     "turn": 1
+    },
+    {
+     "prompt_tokens": 14157,
+     "cached_tokens": 13647,
+     "prompt_s": 5.167873999999999,
+     "completion_tokens": 512,
+     "decode_tok_s": 14.2112740146244,
+     "wall_s": 41.24,
+     "turn": 2
+    },
+    {
+     "prompt_tokens": 14638,
+     "cached_tokens": 14158,
+     "prompt_s": 4.798748,
+     "completion_tokens": 512,
+     "decode_tok_s": 14.285627790702273,
+     "wall_s": 40.7,
+     "turn": 3
+    }
+   ],
+   "startup_s": 27.6,
+   "free_ram_gib_ready": 40.44
+  },
+  {
+   "kind": "llama",
+   "tag": "r1",
+   "free_ram_gib_at_start": 55.11,
+   "turns": [
+    {
+     "prompt_tokens": 13108,
+     "cached_tokens": 0,
+     "prompt_s": 159.14857,
+     "completion_tokens": 512,
+     "decode_tok_s": 12.97130226047743,
+     "wall_s": 198.67,
+     "turn": 0
+    },
+    {
+     "prompt_tokens": 13646,
+     "cached_tokens": 13619,
+     "prompt_s": 1.105413,
+     "completion_tokens": 512,
+     "decode_tok_s": 13.832713378316848,
+     "wall_s": 38.24,
+     "turn": 1
+    },
+    {
+     "prompt_tokens": 14157,
+     "cached_tokens": 13647,
+     "prompt_s": 5.148881,
+     "completion_tokens": 512,
+     "decode_tok_s": 14.198856426321996,
+     "wall_s": 41.25,
+     "turn": 2
+    },
+    {
+     "prompt_tokens": 14638,
+     "cached_tokens": 14158,
+     "prompt_s": 4.812291,
+     "completion_tokens": 512,
+     "decode_tok_s": 14.25381461449737,
+     "wall_s": 40.78,
+     "turn": 3
+    }
+   ],
+   "startup_s": 30.7,
+   "free_ram_gib_ready": 40.5
+  },
+  {
+   "kind": "neural",
+   "tag": "r1",
+   "free_ram_gib_at_start": 54.97,
+   "turns": [
+    {
+     "prompt_tokens": 13150,
+     "cached_tokens": 0,
+     "prompt_s": 45.8938,
+     "completion_tokens": 512,
+     "decode_tok_s": 12.8797,
+     "vram_hit": 0.1574,
+     "cpu_ms_per_tok": 60.7986,
+     "gpu_wait_ms_per_tok": 8.3997,
+     "cpu_GBps": 26.3805,
+     "wall_s": 85.66,
+     "turn": 0
+    },
+    {
+     "prompt_tokens": 13672,
+     "cached_tokens": 13151,
+     "prompt_s": 2.6392,
+     "completion_tokens": 512,
+     "decode_tok_s": 14.231,
+     "vram_hit": 0.3292,
+     "cpu_ms_per_tok": 54.591,
+     "gpu_wait_ms_per_tok": 7.6781,
+     "cpu_GBps": 23.3895,
+     "wall_s": 38.59,
+     "turn": 1
+    },
+    {
+     "prompt_tokens": 14192,
+     "cached_tokens": 13673,
+     "prompt_s": 2.4632,
+     "completion_tokens": 512,
+     "decode_tok_s": 16.3069,
+     "vram_hit": 0.3528,
+     "cpu_ms_per_tok": 45.7402,
+     "gpu_wait_ms_per_tok": 7.5499,
+     "cpu_GBps": 26.9336,
+     "wall_s": 33.86,
+     "turn": 2
+    },
+    {
+     "prompt_tokens": 14716,
+     "cached_tokens": 14193,
+     "prompt_s": 2.4653,
+     "completion_tokens": 512,
+     "decode_tok_s": 15.7815,
+     "vram_hit": 0.3253,
+     "cpu_ms_per_tok": 47.1684,
+     "gpu_wait_ms_per_tok": 7.7794,
+     "cpu_GBps": 27.2275,
+     "wall_s": 34.91,
+     "turn": 3
+    }
+   ],
+   "startup_s": 45.4,
+   "free_ram_gib_ready": 5.18
+  }
+ ],
+ "summary": {
+  "neural": {
+   "prompt_s_median": 47.2688,
+   "first_decode_median": 10.8749,
+   "followup_decode_median": 15.818200000000001,
+   "followup_decode_all": [
+    15.1026,
+    16.3599,
+    15.8549,
+    14.231,
+    16.3069,
+    15.7815
+   ]
+  },
+  "llama": {
+   "prompt_s_median": 153.7899625,
+   "first_decode_median": 13.068475753942216,
+   "followup_decode_median": 14.205065220473198,
+   "followup_decode_all": [
+    13.965827855951105,
+    14.2112740146244,
+    14.285627790702273,
+    13.832713378316848,
+    14.198856426321996,
+    14.25381461449737
+   ]
+  }
+ }
+}

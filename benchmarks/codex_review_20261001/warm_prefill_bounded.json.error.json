@@ -1,0 +1,12 @@
+{
+ "schema": "neural-warm-prefill-review-v1",
+ "out": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\benchmarks\\codex_review_20261001\\warm_prefill_bounded.json",
+ "errors": [
+  {
+   "session": 0,
+   "kind": "off",
+   "error": "NameError: name 'args' is not defined"
+  }
+ ],
+ "traceback": "Traceback (most recent call last):\n  File \"F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\review_warm_prefill.py\", line 325, in main\n    run_session(bench, kind, f\"s{index}\", args.group_size, prompts, result, save,\n  File \"F:\\AI\\Neural\\experiments\\neuralserver-opt\\tools\\review_warm_prefill.py\", line 187, in run_session\n    effective_group_rows = (str(args.group_rows) if args.group_rows is not None else\n                                                    ^^^^\nNameError: name 'args' is not defined\n"
+}

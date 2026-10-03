@@ -1,0 +1,75 @@
+{
+  "status": "TEXT_RUNTIME_VALIDATED_BOUNDED_SCOPE",
+  "evidence_label": "MEASURED",
+  "created_utc": "2026-10-02T18:25:39.524657+00:00",
+  "original_main_commit": "772399c380274eec4fe00ba081dba7549a1a8a7f",
+  "runtime_source_commit": "f5d6b747ee752920cf9a6b8330d9597f5797f38f",
+  "benchmark_tool_commit": "818c014fa355b84953aabf44bbb9b6eb250ebec6",
+  "checkpoint_revision": "995ad96eacd98c81ed38be0c5b274b04031597b0",
+  "focused_tests_passed": 23,
+  "live_http_checks_passed": 10,
+  "generated_function_behavior_cases_passed": 5,
+  "no_added_quantization": true,
+  "primary_client_rate_tokens_s": {
+    "llama_3_gpu": 8.960712980783097,
+    "llama_2_gpu": 8.686509396561972,
+    "neural_torch_final": 3.3682207830988657,
+    "neural_fla_initial": 3.465398347536674,
+    "neural_torch_initial": 3.2839575190479167
+  },
+  "evidence_sha256": {
+    "checkpoint_verification.json": "a5b24ad22cd5587108d470aa79bf8d8706746a3c583e8f4fcd5ba2ee7be291ff",
+    "gguf_verification.json": "bf5929ca83769260d79027481dd7377dab6f03599f48dd1882e010080ccd2bb0",
+    "comparison.json": "29bea0806320614be9c1008e336ecc6e5a7315c5c40ce1a89277d96ab5d53657",
+    "focused_tests_final.log": "0e399cf0cb9705766359ad6ec3d6b904918518974b552fc10d34e7457e843b45",
+    "neural_torch_final02/http_validation.json": "5f1486ece84e58a10b7c836a476edca7658e2d9e0e46fdab019b99bdaf3cdbae",
+    "neural_torch_final02/http_validation_coding.json": "ea7922feb0bf1ce93ed4fa3ef545b7194cbae4f929dd8bfb588154681a3a6948",
+    "input_validation_equivalence.json": "4643c98b9f6f61cc798feb0d681d14724733f3b56e6f6074c001f5769d22495b",
+    "numerics01.json": "3212720de6cedad18fd26ebae58c8f1f726c8490b33db9bc9c45e08b7baad8de"
+  },
+  "owned_server_records": [
+    {
+      "run": "llama_bf16_01",
+      "recorded_status": "completed",
+      "pid": 30076,
+      "pid_exists_at_closeout": false
+    },
+    {
+      "run": "llama_bf16_02_ncmoe37",
+      "recorded_status": "completed",
+      "pid": 15752,
+      "pid_exists_at_closeout": false
+    },
+    {
+      "run": "neural_torch_01",
+      "recorded_status": "failed",
+      "pid": 28536,
+      "pid_exists_at_closeout": false
+    },
+    {
+      "run": "neural_torch_final02",
+      "recorded_status": "completed",
+      "pid": 25880,
+      "pid_exists_at_closeout": false
+    },
+    {
+      "run": "neural_fla_01",
+      "recorded_status": "completed",
+      "pid": 28020,
+      "pid_exists_at_closeout": false
+    }
+  ],
+  "server_ports_open_at_closeout": {
+    "8001": false,
+    "8002": false
+  },
+  "available_ram_bytes_at_closeout": 58395557888,
+  "gpu_memory_csv_at_closeout": "679 MiB, 11408 MiB",
+  "limits": [
+    "No long autonomous coding qualification or full-context validation.",
+    "No bit-identical logits or cross-engine output equivalence claim.",
+    "All throughput answers reached the 512-token cap.",
+    "Initial Neural RSS sampled the Windows venv redirector; use later process-tree evidence.",
+    "Neural currently slower than both tested llama.cpp placements."
+  ]
+}

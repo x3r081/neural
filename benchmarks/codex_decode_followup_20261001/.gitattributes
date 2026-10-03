@@ -1,0 +1,2 @@
+# Keep measured evidence byte-identical across Windows checkouts.
+* -text whitespace=cr-at-eol

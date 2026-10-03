@@ -1,0 +1,147 @@
+{
+  "conversion_verification": {
+    "exact_payload_comparison": true,
+    "gguf_architecture": "qwen35moe",
+    "gguf_bytes": 69376637440,
+    "gguf_path": "F:\\Models\\Qwen3.6-35B-A3B-bf16.gguf",
+    "gguf_tensor_count": 733,
+    "gguf_tensor_type_counts": {
+      "BF16": 432,
+      "F32": 301
+    },
+    "mtp_included": false,
+    "skipped_source_known_nonweights": 0,
+    "skipped_source_mtp_tensors": 19,
+    "skipped_source_vision_or_audio_tensors": 333,
+    "source_tensor_elements_compared": 34660610688,
+    "source_tensor_outputs_compared": 733,
+    "status": "PASS_EXACT_BF16_OR_F32_PAYLOADS",
+    "weight_files_hashed": false
+  },
+  "gguf_conversion_commit": "fb4b2737a808a3fb7c2117a498f43815dc9be53e",
+  "source_architecture": "Qwen3_5MoeForConditionalGeneration",
+  "source_metadata": {
+    "index_total_size_bytes": 71903645408.0,
+    "source_categories": {
+      "mtp": 19,
+      "other": 693,
+      "vision_or_audio": 333
+    },
+    "source_dtype_counts": {
+      "BF16": 1045
+    },
+    "source_tensor_count": 1045,
+    "weight_files": [
+      {
+        "bytes": 3996199712,
+        "name": "model-00001-of-00026.safetensors"
+      },
+      {
+        "bytes": 1284907696,
+        "name": "model-00002-of-00026.safetensors"
+      },
+      {
+        "bytes": 3357898360,
+        "name": "model-00003-of-00026.safetensors"
+      },
+      {
+        "bytes": 3370808712,
+        "name": "model-00004-of-00026.safetensors"
+      },
+      {
+        "bytes": 3357898360,
+        "name": "model-00005-of-00026.safetensors"
+      },
+      {
+        "bytes": 3959424904,
+        "name": "model-00006-of-00026.safetensors"
+      },
+      {
+        "bytes": 1096788232,
+        "name": "model-00007-of-00026.safetensors"
+      },
+      {
+        "bytes": 3946842008,
+        "name": "model-00008-of-00026.safetensors"
+      },
+      {
+        "bytes": 1096460848,
+        "name": "model-00009-of-00026.safetensors"
+      },
+      {
+        "bytes": 3946841992,
+        "name": "model-00010-of-00026.safetensors"
+      },
+      {
+        "bytes": 1096460752,
+        "name": "model-00011-of-00026.safetensors"
+      },
+      {
+        "bytes": 3409971080,
+        "name": "model-00012-of-00026.safetensors"
+      },
+      {
+        "bytes": 1633331664,
+        "name": "model-00013-of-00026.safetensors"
+      },
+      {
+        "bytes": 3422553872,
+        "name": "model-00014-of-00026.safetensors"
+      },
+      {
+        "bytes": 1633659224,
+        "name": "model-00015-of-00026.safetensors"
+      },
+      {
+        "bytes": 3946842136,
+        "name": "model-00016-of-00026.safetensors"
+      },
+      {
+        "bytes": 1096460608,
+        "name": "model-00017-of-00026.safetensors"
+      },
+      {
+        "bytes": 3946841992,
+        "name": "model-00018-of-00026.safetensors"
+      },
+      {
+        "bytes": 1096460808,
+        "name": "model-00019-of-00026.safetensors"
+      },
+      {
+        "bytes": 3409971072,
+        "name": "model-00020-of-00026.safetensors"
+      },
+      {
+        "bytes": 1633331744,
+        "name": "model-00021-of-00026.safetensors"
+      },
+      {
+        "bytes": 3370808752,
+        "name": "model-00022-of-00026.safetensors"
+      },
+      {
+        "bytes": 3357898392,
+        "name": "model-00023-of-00026.safetensors"
+      },
+      {
+        "bytes": 3370808752,
+        "name": "model-00024-of-00026.safetensors"
+      },
+      {
+        "bytes": 3832888256,
+        "name": "model-00025-of-00026.safetensors"
+      },
+      {
+        "bytes": 2231416848,
+        "name": "model-00026-of-00026.safetensors"
+      }
+    ],
+    "weights_hashed": false
+  },
+  "source_model_type": "qwen3_5_moe",
+  "source_path": "F:\\Models\\Qwen3.6-35B-A3B",
+  "source_repo": "Qwen/Qwen3.6-35B-A3B",
+  "source_revision": "995ad96eacd98c81ed38be0c5b274b04031597b0",
+  "text_layers": 40
+}

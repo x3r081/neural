@@ -1,0 +1,21 @@
+name: Neural (local)
+version: 1.0.0
+schema: v1
+
+# gpt-oss-120B served by the local Neural OpenAI-compatible server.
+# Start the server first (start_neural_server.bat); it listens on 127.0.0.1:8000 only.
+models:
+  - name: gpt-oss-120b (Neural, local)
+    provider: openai
+    model: gpt-oss-120b-neural
+    apiBase: http://127.0.0.1:8000/v1
+    apiKey: local
+    roles:
+      - chat
+      - edit
+      - apply
+    capabilities:
+      - tool_use
+    defaultCompletionOptions:
+      contextLength: 16384
+      maxTokens: 4096

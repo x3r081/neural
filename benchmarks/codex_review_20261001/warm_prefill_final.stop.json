@@ -1,0 +1,1 @@
+{"status":"STOPPED_EXPLORATORY_SWEEP","reason":"Large grouped workspace increases reserved VRAM and regresses warm prompts; test bounded row workspace next.","completed_sessions":2}

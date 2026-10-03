@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "kernel_kind": "portable-avx2-fma",
+  "library": "gptoss_cpu_portable.dll",
+  "sha256": "cab1f6da1c5143a8ac4ec3a0c7ba0632c4fd183e6e747cabfde625fc6af1b66b",
+  "prefill_library": "gptoss_cpu_portable.dll",
+  "prefill_sha256": "cab1f6da1c5143a8ac4ec3a0c7ba0632c4fd183e6e747cabfde625fc6af1b66b",
+  "compiler": {
+    "path": "F:\\AI\\Neural\\third_party\\tools\\w64devkit\\bin\\gcc.exe",
+    "version": "16.1.0",
+    "flags": [
+      "-O3",
+      "-shared",
+      "-ffp-contract=off",
+      "-fopenmp",
+      "-static",
+      "-mavx2",
+      "-mfma"
+    ]
+  },
+  "cpu_features": [
+    "AVX2",
+    "FMA3"
+  ],
+  "cpu_signature": null,
+  "model_id": null,
+  "symbols": [
+    "gptoss_set_scale_layout",
+    "gptoss_get_scale_layout",
+    "gptoss_slot_bytes",
+    "gptoss_experts",
+    "gptoss_experts_cap",
+    "gptoss_experts_multi",
+    "gptoss_multi_scratch_floats",
+    "gptoss_combine_pairs",
+    "gptoss_multi_set_tiling",
+    "gptoss_multi_set_schedule",
+    "gptoss_multi_get_config",
+    "gptoss_multi_activation",
+    "gptoss_multi_check_exp"
+  ],
+  "prefill_symbols": [
+    "gptoss_experts_multi",
+    "gptoss_multi_scratch_floats",
+    "gptoss_combine_pairs",
+    "gptoss_multi_set_tiling",
+    "gptoss_multi_set_schedule",
+    "gptoss_multi_get_config",
+    "gptoss_multi_activation",
+    "gptoss_multi_check_exp"
+  ],
+  "scale_layouts": [
+    0,
+    1
+  ],
+  "exact_validation": {
+    "status": "PASS",
+    "mode": "full",
+    "full_validation": true,
+    "portable_dll_sha256": "cab1f6da1c5143a8ac4ec3a0c7ba0632c4fd183e6e747cabfde625fc6af1b66b",
+    "report": "benchmarks/gptoss_agnostic_20261003/portable_avx2_omp_parity.json",
+    "report_sha256": "fa70a12687bda484c610a23f1af535c46ea89e46ffb6ec1d0dfadef8e04dcf1c"
+  },
+  "source_sha256": "03344b96237b4546777d5e2a48a9d151816ec1b02b95527aa573ffa6c624868d"
+}

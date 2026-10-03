@@ -1,0 +1,25 @@
+{
+  "repository": "https://github.com/ggml-org/llama.cpp",
+  "release_api": "https://api.github.com/repos/ggml-org/llama.cpp/releases/tags/b11349",
+  "tag": "b11349",
+  "source_commit": "fb4b2737a808a3fb7c2117a498f43815dc9be53e",
+  "release_published_at": "2026-10-02T15:41:03.0000000Z",
+  "source_path": "F:\\AI\\NeuralQwen36\\.tools\\llama.cpp",
+  "binary_path": "F:\\AI\\NeuralQwen36\\.tools\\llama-b11349-win-cuda-12.4",
+  "binary_flavor": "Windows x64 CUDA 12.4; companion CUDA runtime archive applied",
+  "version_output": "version: 0.5.0-dev (build 11349, commit fb4b2737a)\nbuilt with Clang 20.1.8 for Windows x86_64",
+  "assets": [
+    {
+      "name": "llama-b11349-bin-win-cuda-12.4-x64.zip",
+      "path": "F:\\AI\\NeuralQwen36\\.tools\\downloads\\llama-b11349-bin-win-cuda-12.4-x64.zip",
+      "sha256": "1084a0a4c6567511c7f67d8c4db71979f837170ed22b2fcb72c0d8637a4eaf14",
+      "bytes": 263288146
+    },
+    {
+      "name": "cudart-llama-bin-win-cuda-12.4-x64.zip",
+      "path": "F:\\AI\\NeuralQwen36\\.tools\\downloads\\cudart-llama-bin-win-cuda-12.4-x64.zip",
+      "sha256": "8c79a9b226de4b3cacfd1f83d24f962d0773be79f1e7b75c6af4ded7e32ae1d6",
+      "bytes": 391443627
+    }
+  ]
+}

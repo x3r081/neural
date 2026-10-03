@@ -1,0 +1,600 @@
+{
+  "profile": "Qwen3.6 short teacher-forced decode wall-time attribution",
+  "started_at": "2026-10-02T17:51:37.038271+00:00",
+  "model_dir": "F:\\Models\\Qwen3.6-35B-A3B",
+  "configuration": {
+    "expert_backend": "native",
+    "native_dispatch": "grouped",
+    "native_gpu_layers": 2,
+    "gpu_expert_cache_gib": 3.0,
+    "gdn_backend": "torch",
+    "native_threads": 8,
+    "warmup_decode_tokens": 8,
+    "measured_decode_tokens": 16
+  },
+  "prompt": "What is 6 times 7? Reply with one number.",
+  "thinking_enabled": false,
+  "teacher_forcing": true,
+  "profiler_perturbs_time": true,
+  "profiler_caveat": "CUDA is synchronized before and after every measured module and forward call. These wrappers serialize work and add host overhead; timings attribute costs and are not an uninstrumented throughput claim.",
+  "category_definition": {
+    "cpu_experts": "whole native expert-module call for layers before the final two; includes input/device transfers, store reads, CPU compute, aggregation, and output transfer",
+    "gpu_experts": "whole expert-module call for the final two CUDA-resident expert layers",
+    "attention": "self_attn module calls",
+    "deltanet": "linear_attn module calls",
+    "remainder": "measured full-forward wall time minus the non-overlapping expert, attention, and DeltaNet module wall times"
+  },
+  "environment": {
+    "python": "3.12.10",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "torch": "2.10.0+cu130",
+    "cuda_runtime": "13.0",
+    "device": "cuda:0",
+    "gpu_name": "NVIDIA GeForce RTX 3080 Ti",
+    "gpu_total_memory_bytes": 12884377600,
+    "model_layers": 40,
+    "cpu_expert_layer_range": [
+      0,
+      38
+    ],
+    "gpu_expert_layer_range": [
+      38,
+      40
+    ]
+  },
+  "warmup": {
+    "tokens": 8,
+    "seconds": 3.7210853999968094,
+    "teacher_forced_token_ids": [
+      220,
+      19,
+      17,
+      220,
+      19,
+      17,
+      220,
+      19
+    ]
+  },
+  "measured": {
+    "tokens": 16,
+    "forward_seconds": [
+      0.4164572000008775,
+      0.44368089999989024,
+      0.4371562999986054,
+      0.3448313999979291,
+      0.37635360000058427,
+      0.3829637000017101,
+      0.3636521000007633,
+      0.46249530000204686,
+      0.41804010000123526,
+      0.33236050000050454,
+      0.36715820000245003,
+      0.428041300001496,
+      0.35979740000038873,
+      0.33236549999855924,
+      0.3647785000030126,
+      0.31725589999769
+    ],
+    "categories": {
+      "deltanet": {
+        "calls": 480,
+        "seconds": 1.193624700037617,
+        "layers": {
+          "0": {
+            "calls": 16,
+            "seconds": 0.04070230000070296,
+            "module_attribute": "forward",
+            "module_class": "Qwen3_5MoeGatedDeltaNet"
+          },
+          "1": {
+            "calls": 16,
+            "seconds": 0.039581300006830133,
+            "module_attribute": "forward",
+            "module_class": "Qwen3_5MoeGatedDeltaNet"
+          },
+          "2": {
+            "calls": 16,
+            "seconds": 0.039227700006449595,
+            "module_attribute": "forward",
+            "module_class": "Qwen3_5MoeGatedDeltaNet"
+          },
+          "4": {
+            "calls": 16,
+            "seconds": 0.0399187000002712,
+            "module_attribute": "forward",
+            "module_class": "Qwen3_5MoeGatedDeltaNet"
+          },
+          "5": {
+            "calls": 16,
+            "seconds": 0.04320760000337032,
+            "module_attribute": "forward",
+            "module_class": "Qwen3_5MoeGatedDeltaNet"
+          },
+          "6": {
+            "calls": 16,
+            "seconds": 0.044735399995261105,
+            "module_attribute": "forward",
+            "module_class": "Qwen3_5MoeGatedDeltaNet"
+          },
+          "8": {
+            "calls": 16,
+            "seconds": 0.04583280000224477,
+            "module_attribute": "forward",
+            "module_class": "Qwen3_5MoeGatedDeltaNet"
+          },
+          "9": {
+            "calls": 16,
+            "seconds": 0.037850000000617,
+            "module_attribute": "forward",
+            "module_class": "Qwen3_5MoeGatedDeltaNet"
+          },
+          "10": {
+            "calls": 16,
+            "seconds": 0.0436163000013039,
+            "module_attribute": "forward",
+            "module_class": "Qwen3_5MoeGatedDeltaNet"
+          },
+          "12": {
+            "calls": 16,
+            "seconds": 0.0378876999966451,
+            "module_attribute": "forward",
+            "module_class": "Qwen3_5MoeGatedDeltaNet"
+          },
+          "13": {
+            "calls": 16,
+            "seconds": 0.03938570000536856,
+            "module_attribute": "forward",
+            "module_class": "Qwen3_5MoeGatedDeltaNet"
+          },
+          "14": {
+            "calls": 16,
+            "seconds": 0.03904409998722258,
+            "module_attribute": "forward",
+            "module_class": "Qwen3_5MoeGatedDeltaNet"
+          },
+          "16": {
+            "calls": 16,
+            "seconds": 0.038142199999128934,
+            "module_attribute": "forward",
+            "module_class": "Qwen3_5MoeGatedDeltaNet"
+          },
+          "17": {
+            "calls": 16,
+            "seconds": 0.036530300003505545,
+            "module_attribute": "forward",
+            "module_class": "Qwen3_5MoeGatedDeltaNet"
+          },
+          "18": {
+            "calls": 16,
+            "seconds": 0.03815320000285283,
+            "module_attribute": "forward",
+            "module_class": "Qwen3_5MoeGatedDeltaNet"
+          },
+          "20": {
+            "calls": 16,
+            "seconds": 0.04112850000456092,
+            "module_attribute": "forward",
+            "module_class": "Qwen3_5MoeGatedDeltaNet"
+          },
+          "21": {
+            "calls": 16,
+            "seconds": 0.04166330000953167,
+            "module_attribute": "forward",
+            "module_class": "Qwen3_5MoeGatedDeltaNet"
+          },
+          "22": {
+            "calls": 16,
+            "seconds": 0.0402494000045408,
+            "module_attribute": "forward",
+            "module_class": "Qwen3_5MoeGatedDeltaNet"
+          },
+          "24": {
+            "calls": 16,
+            "seconds": 0.04146980000223266,
+            "module_attribute": "forward",
+            "module_class": "Qwen3_5MoeGatedDeltaNet"
+          },
+          "25": {
+            "calls": 16,
+            "seconds": 0.03539799999271054,
+            "module_attribute": "forward",
+            "module_class": "Qwen3_5MoeGatedDeltaNet"
+          },
+          "26": {
+            "calls": 16,
+            "seconds": 0.04048659999170923,
+            "module_attribute": "forward",
+            "module_class": "Qwen3_5MoeGatedDeltaNet"
+          },
+          "28": {
+            "calls": 16,
+            "seconds": 0.041977600019890815,
+            "module_attribute": "forward",
+            "module_class": "Qwen3_5MoeGatedDeltaNet"
+          },
+          "29": {
+            "calls": 16,
+            "seconds": 0.03353570001127082,
+            "module_attribute": "forward",
+            "module_class": "Qwen3_5MoeGatedDeltaNet"
+          },
+          "30": {
+            "calls": 16,
+            "seconds": 0.043375799996283604,
+            "module_attribute": "forward",
+            "module_class": "Qwen3_5MoeGatedDeltaNet"
+          },
+          "32": {
+            "calls": 16,
+            "seconds": 0.039300500000535976,
+            "module_attribute": "forward",
+            "module_class": "Qwen3_5MoeGatedDeltaNet"
+          },
+          "33": {
+            "calls": 16,
+            "seconds": 0.036738599996169796,
+            "module_attribute": "forward",
+            "module_class": "Qwen3_5MoeGatedDeltaNet"
+          },
+          "34": {
+            "calls": 16,
+            "seconds": 0.039117099993745796,
+            "module_attribute": "forward",
+            "module_class": "Qwen3_5MoeGatedDeltaNet"
+          },
+          "36": {
+            "calls": 16,
+            "seconds": 0.04089560000647907,
+            "module_attribute": "forward",
+            "module_class": "Qwen3_5MoeGatedDeltaNet"
+          },
+          "37": {
+            "calls": 16,
+            "seconds": 0.038785999997344334,
+            "module_attribute": "forward",
+            "module_class": "Qwen3_5MoeGatedDeltaNet"
+          },
+          "38": {
+            "calls": 16,
+            "seconds": 0.03568689999883645,
+            "module_attribute": "forward",
+            "module_class": "Qwen3_5MoeGatedDeltaNet"
+          }
+        }
+      },
+      "cpu_experts": {
+        "calls": 608,
+        "seconds": 3.1639609999656386,
+        "layers": {
+          "0": {
+            "calls": 16,
+            "seconds": 0.08246770000914694,
+            "module_attribute": "forward",
+            "module_class": "Qwen3_5MoeExperts"
+          },
+          "1": {
+            "calls": 16,
+            "seconds": 0.10337149999759276,
+            "module_attribute": "forward",
+            "module_class": "Qwen3_5MoeExperts"
+          },
+          "2": {
+            "calls": 16,
+            "seconds": 0.07205860000249231,
+            "module_attribute": "forward",
+            "module_class": "Qwen3_5MoeExperts"
+          },
+          "3": {
+            "calls": 16,
+            "seconds": 0.11569439999584574,
+            "module_attribute": "forward",
+            "module_class": "Qwen3_5MoeExperts"
+          },
+          "4": {
+            "calls": 16,
+            "seconds": 0.07490549998328788,
+            "module_attribute": "forward",
+            "module_class": "Qwen3_5MoeExperts"
+          },
+          "5": {
+            "calls": 16,
+            "seconds": 0.07870309999634628,
+            "module_attribute": "forward",
+            "module_class": "Qwen3_5MoeExperts"
+          },
+          "6": {
+            "calls": 16,
+            "seconds": 0.1193643999977212,
+            "module_attribute": "forward",
+            "module_class": "Qwen3_5MoeExperts"
+          },
+          "7": {
+            "calls": 16,
+            "seconds": 0.13634069999534404,
+            "module_attribute": "forward",
+            "module_class": "Qwen3_5MoeExperts"
+          },
+          "8": {
+            "calls": 16,
+            "seconds": 0.06826659999205731,
+            "module_attribute": "forward",
+            "module_class": "Qwen3_5MoeExperts"
+          },
+          "9": {
+            "calls": 16,
+            "seconds": 0.0762603000002855,
+            "module_attribute": "forward",
+            "module_class": "Qwen3_5MoeExperts"
+          },
+          "10": {
+            "calls": 16,
+            "seconds": 0.14758730001267395,
+            "module_attribute": "forward",
+            "module_class": "Qwen3_5MoeExperts"
+          },
+          "11": {
+            "calls": 16,
+            "seconds": 0.11368700001548859,
+            "module_attribute": "forward",
+            "module_class": "Qwen3_5MoeExperts"
+          },
+          "12": {
+            "calls": 16,
+            "seconds": 0.11590060000162339,
+            "module_attribute": "forward",
+            "module_class": "Qwen3_5MoeExperts"
+          },
+          "13": {
+            "calls": 16,
+            "seconds": 0.06878299999516457,
+            "module_attribute": "forward",
+            "module_class": "Qwen3_5MoeExperts"
+          },
+          "14": {
+            "calls": 16,
+            "seconds": 0.07581180000124732,
+            "module_attribute": "forward",
+            "module_class": "Qwen3_5MoeExperts"
+          },
+          "15": {
+            "calls": 16,
+            "seconds": 0.12004679999881773,
+            "module_attribute": "forward",
+            "module_class": "Qwen3_5MoeExperts"
+          },
+          "16": {
+            "calls": 16,
+            "seconds": 0.1121820000007574,
+            "module_attribute": "forward",
+            "module_class": "Qwen3_5MoeExperts"
+          },
+          "17": {
+            "calls": 16,
+            "seconds": 0.06857849999505561,
+            "module_attribute": "forward",
+            "module_class": "Qwen3_5MoeExperts"
+          },
+          "18": {
+            "calls": 16,
+            "seconds": 0.06986790000155452,
+            "module_attribute": "forward",
+            "module_class": "Qwen3_5MoeExperts"
+          },
+          "19": {
+            "calls": 16,
+            "seconds": 0.0725843999935023,
+            "module_attribute": "forward",
+            "module_class": "Qwen3_5MoeExperts"
+          },
+          "20": {
+            "calls": 16,
+            "seconds": 0.08579700000336743,
+            "module_attribute": "forward",
+            "module_class": "Qwen3_5MoeExperts"
+          },
+          "21": {
+            "calls": 16,
+            "seconds": 0.06801059999634163,
+            "module_attribute": "forward",
+            "module_class": "Qwen3_5MoeExperts"
+          },
+          "22": {
+            "calls": 16,
+            "seconds": 0.0670633999943675,
+            "module_attribute": "forward",
+            "module_class": "Qwen3_5MoeExperts"
+          },
+          "23": {
+            "calls": 16,
+            "seconds": 0.07301389999702224,
+            "module_attribute": "forward",
+            "module_class": "Qwen3_5MoeExperts"
+          },
+          "24": {
+            "calls": 16,
+            "seconds": 0.06991849999758415,
+            "module_attribute": "forward",
+            "module_class": "Qwen3_5MoeExperts"
+          },
+          "25": {
+            "calls": 16,
+            "seconds": 0.11362290000397479,
+            "module_attribute": "forward",
+            "module_class": "Qwen3_5MoeExperts"
+          },
+          "26": {
+            "calls": 16,
+            "seconds": 0.07431179999184678,
+            "module_attribute": "forward",
+            "module_class": "Qwen3_5MoeExperts"
+          },
+          "27": {
+            "calls": 16,
+            "seconds": 0.07374350000463892,
+            "module_attribute": "forward",
+            "module_class": "Qwen3_5MoeExperts"
+          },
+          "28": {
+            "calls": 16,
+            "seconds": 0.07141159999082447,
+            "module_attribute": "forward",
+            "module_class": "Qwen3_5MoeExperts"
+          },
+          "29": {
+            "calls": 16,
+            "seconds": 0.05957559999660589,
+            "module_attribute": "forward",
+            "module_class": "Qwen3_5MoeExperts"
+          },
+          "30": {
+            "calls": 16,
+            "seconds": 0.06473080000068876,
+            "module_attribute": "forward",
+            "module_class": "Qwen3_5MoeExperts"
+          },
+          "31": {
+            "calls": 16,
+            "seconds": 0.06931620000250405,
+            "module_attribute": "forward",
+            "module_class": "Qwen3_5MoeExperts"
+          },
+          "32": {
+            "calls": 16,
+            "seconds": 0.06082310000783764,
+            "module_attribute": "forward",
+            "module_class": "Qwen3_5MoeExperts"
+          },
+          "33": {
+            "calls": 16,
+            "seconds": 0.06590560000040568,
+            "module_attribute": "forward",
+            "module_class": "Qwen3_5MoeExperts"
+          },
+          "34": {
+            "calls": 16,
+            "seconds": 0.06693049999375944,
+            "module_attribute": "forward",
+            "module_class": "Qwen3_5MoeExperts"
+          },
+          "35": {
+            "calls": 16,
+            "seconds": 0.06907949999367702,
+            "module_attribute": "forward",
+            "module_class": "Qwen3_5MoeExperts"
+          },
+          "36": {
+            "calls": 16,
+            "seconds": 0.06033430000388762,
+            "module_attribute": "forward",
+            "module_class": "Qwen3_5MoeExperts"
+          },
+          "37": {
+            "calls": 16,
+            "seconds": 0.05791010000029928,
+            "module_attribute": "forward",
+            "module_class": "Qwen3_5MoeExperts"
+          }
+        }
+      },
+      "attention": {
+        "calls": 160,
+        "seconds": 0.35071480001715827,
+        "layers": {
+          "3": {
+            "calls": 16,
+            "seconds": 0.033024300006218255,
+            "module_attribute": "forward",
+            "module_class": "Qwen3_5MoeAttention"
+          },
+          "7": {
+            "calls": 16,
+            "seconds": 0.036151099993730895,
+            "module_attribute": "forward",
+            "module_class": "Qwen3_5MoeAttention"
+          },
+          "11": {
+            "calls": 16,
+            "seconds": 0.03479590000642929,
+            "module_attribute": "forward",
+            "module_class": "Qwen3_5MoeAttention"
+          },
+          "15": {
+            "calls": 16,
+            "seconds": 0.03760360000524088,
+            "module_attribute": "forward",
+            "module_class": "Qwen3_5MoeAttention"
+          },
+          "19": {
+            "calls": 16,
+            "seconds": 0.03134419999696547,
+            "module_attribute": "forward",
+            "module_class": "Qwen3_5MoeAttention"
+          },
+          "23": {
+            "calls": 16,
+            "seconds": 0.03335830001014983,
+            "module_attribute": "forward",
+            "module_class": "Qwen3_5MoeAttention"
+          },
+          "27": {
+            "calls": 16,
+            "seconds": 0.035672099995281314,
+            "module_attribute": "forward",
+            "module_class": "Qwen3_5MoeAttention"
+          },
+          "31": {
+            "calls": 16,
+            "seconds": 0.04117490000135149,
+            "module_attribute": "forward",
+            "module_class": "Qwen3_5MoeAttention"
+          },
+          "35": {
+            "calls": 16,
+            "seconds": 0.03776389999984531,
+            "module_attribute": "forward",
+            "module_class": "Qwen3_5MoeAttention"
+          },
+          "39": {
+            "calls": 16,
+            "seconds": 0.029826500001945533,
+            "module_attribute": "forward",
+            "module_class": "Qwen3_5MoeAttention"
+          }
+        }
+      },
+      "gpu_experts": {
+        "calls": 32,
+        "seconds": 0.21700990000317688,
+        "layers": {
+          "38": {
+            "calls": 16,
+            "seconds": 0.08411820000765147,
+            "module_attribute": "forward",
+            "module_class": "Qwen3_5MoeExperts"
+          },
+          "39": {
+            "calls": 16,
+            "seconds": 0.13289169999552541,
+            "module_attribute": "forward",
+            "module_class": "Qwen3_5MoeExperts"
+          }
+        }
+      }
+    },
+    "overall_forward_seconds": 6.147387900007743,
+    "overall_forward_ms_per_token": 384.21174375048395,
+    "cpu_expert_seconds": 3.1639609999656386,
+    "gpu_expert_seconds": 0.21700990000317688,
+    "attention_seconds": 0.35071480001715827,
+    "deltanet_seconds": 1.193624700037617,
+    "remainder_seconds": 1.2220774999841524,
+    "remainder_definition": "overall minus disjoint timed module buckets; includes router/norm/MLP non-expert work and dispatch/runtime overhead"
+  },
+  "final_status": "complete",
+  "updated_at": "2026-10-02T17:52:13.874110+00:00",
+  "prompt_tokens": 25,
+  "prefill_seconds": 9.711449499998707,
+  "finished_at": "2026-10-02T17:52:13.874110+00:00",
+  "output_path": "F:\\AI\\NeuralQwen36\\benchmarks\\qwen36_20261002\\profile_torch01.json"
+}

@@ -1,0 +1,76 @@
+{
+  "evidence": "MEASURED",
+  "source": "benchmarks/codex_review_20261001/trim_study.json",
+  "results": {
+    "off": {
+      "sessions": 2,
+      "first_median": 20.633,
+      "followup_median": 23.54455,
+      "weighted_decode": 21.798388415225105,
+      "prompt_first_s": [
+        8.2227,
+        8.2296
+      ],
+      "followup_rates": [
+        17.0113,
+        24.3254,
+        23.7373,
+        23.2518,
+        23.3732,
+        23.7159
+      ],
+      "reserved_gib": [
+        10.826,
+        10.828
+      ]
+    },
+    "cuda": {
+      "sessions": 2,
+      "first_median": 20.731099999999998,
+      "followup_median": 23.72825,
+      "weighted_decode": 22.91004774049654,
+      "prompt_first_s": [
+        12.6798,
+        8.1833
+      ],
+      "followup_rates": [
+        23.442,
+        24.2062,
+        23.9198,
+        23.2311,
+        24.16,
+        23.5367
+      ],
+      "reserved_gib": [
+        9.715
+      ]
+    },
+    "both": {
+      "sessions": 2,
+      "first_median": 20.694499999999998,
+      "followup_median": 23.6951,
+      "weighted_decode": 22.881318861273034,
+      "prompt_first_s": [
+        8.4031,
+        8.3218
+      ],
+      "followup_rates": [
+        23.3069,
+        24.1734,
+        23.7053,
+        23.4024,
+        24.0621,
+        23.6849
+      ],
+      "reserved_gib": [
+        9.715
+      ]
+    }
+  },
+  "all_6_sessions_same_generated_ids": {
+    "0": true,
+    "1": true,
+    "2": true,
+    "3": true
+  }
+}

@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "F:\AI\Neural\experiments\neuralserver-opt\tools\graph_replay_probe.py", line 419, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "F:\AI\Neural\experiments\neuralserver-opt\tools\graph_replay_probe.py", line 404, in main
+    measure_scenario(torch, stream, scenario, launchers, args, rng, result["results"], save)
+  File "F:\AI\Neural\experiments\neuralserver-opt\tools\graph_replay_probe.py", line 316, in measure_scenario
+    conditions = [(method, gap) for gap in args.host_gaps for method in METHODS]
+                                           ^^^^^^^^^^^^^^
+AttributeError: 'Namespace' object has no attribute 'host_gaps'. Did you mean: 'host_gaps_us'?

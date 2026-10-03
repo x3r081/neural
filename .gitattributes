@@ -1,0 +1,6 @@
+# Validation manifests hash the exact report bytes; preserve them across clones.
+benchmarks/gptoss_agnostic_20261003/*.json -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+artifacts/portable_cpu_build.json -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+artifacts/gptoss_known_build.json -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+kernels/gptoss_cpu_portable.c text eol=lf
+gptoss_cpu_portable.dll binary

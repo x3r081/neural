@@ -1,0 +1,362 @@
+{
+  "evidence": "MEASURED",
+  "studies": {
+    "warm_prefill_bounded_abba": {
+      "sessions": 6,
+      "all_request_and_response_hashes_verified": true,
+      "all_request_prompt_and_generated_identities_match": true,
+      "rows": [
+        {
+          "prompt": "code_13k",
+          "context_tokens": 13000,
+          "rendered_tokens": 13098,
+          "identities_match": {
+            "request_sha256": true,
+            "prompt_ids_sha256": true,
+            "generated_ids_sha256": true
+          },
+          "cached_tokens": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "variants": {
+            "off": {
+              "samples_s": [
+                7.2179,
+                7.4378
+              ],
+              "median_s": 7.32785,
+              "wall_samples_s": [
+                7.55,
+                7.76
+              ],
+              "median_wall_s": 7.654999999999999
+            },
+            "g1": {
+              "samples_s": [
+                8.1499,
+                7.7997
+              ],
+              "median_s": 7.9748,
+              "wall_samples_s": [
+                8.49,
+                8.11
+              ],
+              "median_wall_s": 8.3
+            },
+            "g3": {
+              "samples_s": [
+                7.5085,
+                7.4812
+              ],
+              "median_s": 7.49485,
+              "wall_samples_s": [
+                7.85,
+                7.79
+              ],
+              "median_wall_s": 7.82
+            }
+          },
+          "group3_latency_reduction_pct": -2.278976780365327
+        },
+        {
+          "prompt": "file_3k",
+          "context_tokens": 3000,
+          "rendered_tokens": 3099,
+          "identities_match": {
+            "request_sha256": true,
+            "prompt_ids_sha256": true,
+            "generated_ids_sha256": true
+          },
+          "cached_tokens": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "variants": {
+            "off": {
+              "samples_s": [
+                3.8591,
+                3.7402
+              ],
+              "median_s": 3.79965,
+              "wall_samples_s": [
+                3.99,
+                3.9
+              ],
+              "median_wall_s": 3.9450000000000003
+            },
+            "g1": {
+              "samples_s": [
+                3.7727,
+                3.7061
+              ],
+              "median_s": 3.7394,
+              "wall_samples_s": [
+                3.9,
+                3.84
+              ],
+              "median_wall_s": 3.87
+            },
+            "g3": {
+              "samples_s": [
+                3.5209,
+                3.5437
+              ],
+              "median_s": 3.5323,
+              "wall_samples_s": [
+                3.69,
+                3.65
+              ],
+              "median_wall_s": 3.67
+            }
+          },
+          "group3_latency_reduction_pct": 7.036174384482785
+        },
+        {
+          "prompt": "unique_13k",
+          "context_tokens": 13000,
+          "rendered_tokens": 13101,
+          "identities_match": {
+            "request_sha256": true,
+            "prompt_ids_sha256": true,
+            "generated_ids_sha256": true
+          },
+          "cached_tokens": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "variants": {
+            "off": {
+              "samples_s": [
+                7.1783,
+                7.3152
+              ],
+              "median_s": 7.2467500000000005,
+              "wall_samples_s": [
+                7.58,
+                7.65
+              ],
+              "median_wall_s": 7.615
+            },
+            "g1": {
+              "samples_s": [
+                7.8443,
+                7.5922
+              ],
+              "median_s": 7.718249999999999,
+              "wall_samples_s": [
+                8.2,
+                7.95
+              ],
+              "median_wall_s": 8.075
+            },
+            "g3": {
+              "samples_s": [
+                7.461,
+                7.3589
+              ],
+              "median_s": 7.40995,
+              "wall_samples_s": [
+                7.77,
+                7.71
+              ],
+              "median_wall_s": 7.74
+            }
+          },
+          "group3_latency_reduction_pct": -2.2520440197329794
+        }
+      ]
+    },
+    "warm_prefill_short_abba": {
+      "sessions": 4,
+      "all_request_and_response_hashes_verified": true,
+      "all_request_prompt_and_generated_identities_match": true,
+      "rows": [
+        {
+          "prompt": "short_1024",
+          "context_tokens": 1024,
+          "rendered_tokens": 1138,
+          "identities_match": {
+            "request_sha256": true,
+            "prompt_ids_sha256": true,
+            "generated_ids_sha256": true
+          },
+          "cached_tokens": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "variants": {
+            "off": {
+              "samples_s": [
+                2.6791,
+                2.5764
+              ],
+              "median_s": 2.62775,
+              "wall_samples_s": [
+                2.73,
+                2.61
+              ],
+              "median_wall_s": 2.67
+            },
+            "g3": {
+              "samples_s": [
+                2.5582,
+                2.5673
+              ],
+              "median_s": 2.56275,
+              "wall_samples_s": [
+                2.59,
+                2.6
+              ],
+              "median_wall_s": 2.5949999999999998
+            }
+          },
+          "group3_latency_reduction_pct": 2.4735990866711077
+        },
+        {
+          "prompt": "short_128",
+          "context_tokens": 128,
+          "rendered_tokens": 239,
+          "identities_match": {
+            "request_sha256": true,
+            "prompt_ids_sha256": true,
+            "generated_ids_sha256": true
+          },
+          "cached_tokens": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "variants": {
+            "off": {
+              "samples_s": [
+                1.8333,
+                1.8464
+              ],
+              "median_s": 1.83985,
+              "wall_samples_s": [
+                1.87,
+                1.88
+              ],
+              "median_wall_s": 1.875
+            },
+            "g3": {
+              "samples_s": [
+                1.8467,
+                1.8699
+              ],
+              "median_s": 1.8582999999999998,
+              "wall_samples_s": [
+                1.87,
+                1.9
+              ],
+              "median_wall_s": 1.885
+            }
+          },
+          "group3_latency_reduction_pct": -1.002799141234334
+        },
+        {
+          "prompt": "short_3000",
+          "context_tokens": 3000,
+          "rendered_tokens": 3122,
+          "identities_match": {
+            "request_sha256": true,
+            "prompt_ids_sha256": true,
+            "generated_ids_sha256": true
+          },
+          "cached_tokens": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "variants": {
+            "off": {
+              "samples_s": [
+                3.9775,
+                3.6533
+              ],
+              "median_s": 3.8154000000000003,
+              "wall_samples_s": [
+                4.04,
+                3.72
+              ],
+              "median_wall_s": 3.88
+            },
+            "g3": {
+              "samples_s": [
+                3.5312,
+                3.5325
+              ],
+              "median_s": 3.5318500000000004,
+              "wall_samples_s": [
+                3.6,
+                3.6
+              ],
+              "median_wall_s": 3.6
+            }
+          },
+          "group3_latency_reduction_pct": 7.431724065628764
+        },
+        {
+          "prompt": "short_512",
+          "context_tokens": 512,
+          "rendered_tokens": 686,
+          "identities_match": {
+            "request_sha256": true,
+            "prompt_ids_sha256": true,
+            "generated_ids_sha256": true
+          },
+          "cached_tokens": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "variants": {
+            "off": {
+              "samples_s": [
+                2.308,
+                2.3049
+              ],
+              "median_s": 2.30645,
+              "wall_samples_s": [
+                2.34,
+                2.33
+              ],
+              "median_wall_s": 2.335
+            },
+            "g3": {
+              "samples_s": [
+                2.2929,
+                2.3277
+              ],
+              "median_s": 2.3103,
+              "wall_samples_s": [
+                2.33,
+                2.37
+              ],
+              "median_wall_s": 2.35
+            }
+          },
+          "group3_latency_reduction_pct": -0.16692319365256836
+        }
+      ]
+    }
+  }
+}

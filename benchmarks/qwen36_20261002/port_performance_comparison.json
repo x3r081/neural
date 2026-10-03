@@ -1,0 +1,349 @@
+{
+  "status": "SUMMARIZED_NO_QUALITY_SCORING",
+  "requests_file": "F:\\AI\\NeuralQwen36\\benchmarks\\qwen36_20261002\\requests_v1.json",
+  "requests_file_sha256": "038850162ce207e048d35c29d6c5ea6fe8226e28038d60981f6ae5eb1e168d3e",
+  "requested_cohort_count": 3,
+  "comparison_gate": {
+    "eligible": true,
+    "cohort_sha256": "038850162ce207e048d35c29d6c5ea6fe8226e28038d60981f6ae5eb1e168d3e",
+    "placement_may_differ": true,
+    "reasons": []
+  },
+  "relative_rates": {
+    "port": {
+      "reference": "original",
+      "decode_steps_per_second_ratio": 1.2686311763925686,
+      "client_output_tokens_per_second_ratio": 1.2444971913769505
+    },
+    "llama_existing_3gpu": {
+      "reference": "original",
+      "decode_steps_per_second_ratio": 2.943601225104669,
+      "client_output_tokens_per_second_ratio": 2.6808019244002925
+    },
+    "llama_existing_2gpu": {
+      "reference": "original",
+      "decode_steps_per_second_ratio": 2.816287974314909,
+      "client_output_tokens_per_second_ratio": 2.5987676601811516
+    }
+  },
+  "engines": {
+    "original": {
+      "status": "completed",
+      "result_path": "F:\\AI\\NeuralQwen36\\benchmarks\\qwen36_20261002\\port_reference01\\results.json",
+      "run_metadata_path": "F:\\AI\\NeuralQwen36\\benchmarks\\qwen36_20261002\\port_reference01\\run.json",
+      "execution_settings": {
+        "source_revision": "995ad96eacd98c81ed38be0c5b274b04031597b0",
+        "context": 4096,
+        "weight_precision": "bf16",
+        "kv_cache_precision": "bf16"
+      },
+      "run_count": 3,
+      "counts": {
+        "at_cap": 3,
+        "below_cap": 0,
+        "cache_count_not_reported": 3,
+        "prompt_ids_validated": 3,
+        "truncated": 0
+      },
+      "stop_counts": {
+        "length": 3
+      },
+      "prompt_tokens_total": 313,
+      "prompt_prefill_ms_total": 28345.489200000884,
+      "prompt_prefill_tokens_per_second_weighted": 11.042321329913412,
+      "output_tokens_total": 1536,
+      "decode_steps_total": 1533,
+      "decode_elapsed_ms_total": 431123.62090000533,
+      "decode_steps_per_second_weighted": 3.555824653726323,
+      "client_wall_s_total": 459.5294776999981,
+      "client_output_tokens_per_second_weighted": 3.342549443591454,
+      "per_request": [
+        {
+          "id": "reasoning_short",
+          "prompt_tokens": 77,
+          "cache_tokens": null,
+          "output_tokens": 512,
+          "decode_steps": 511,
+          "decode_elapsed_ms": 153291.54840000047,
+          "decode_steps_per_second": 3.333517113850214,
+          "client_wall_s": 158.3452287,
+          "client_output_tokens_per_second": 3.2334412865071696,
+          "output_cap": 512,
+          "at_cap": true,
+          "stop": "length",
+          "truncated": false
+        },
+        {
+          "id": "coding_short",
+          "prompt_tokens": 73,
+          "cache_tokens": null,
+          "output_tokens": 512,
+          "decode_steps": 511,
+          "decode_elapsed_ms": 150443.9842000029,
+          "decode_steps_per_second": 3.396613049815721,
+          "client_wall_s": 162.64280990000043,
+          "client_output_tokens_per_second": 3.1480026710974736,
+          "output_cap": 512,
+          "at_cap": true,
+          "stop": "length",
+          "truncated": false
+        },
+        {
+          "id": "coding_context",
+          "prompt_tokens": 163,
+          "cache_tokens": null,
+          "output_tokens": 512,
+          "decode_steps": 511,
+          "decode_elapsed_ms": 127388.08830000198,
+          "decode_steps_per_second": 4.01136406723196,
+          "client_wall_s": 138.54143909999766,
+          "client_output_tokens_per_second": 3.6956451681611604,
+          "output_cap": 512,
+          "at_cap": true,
+          "stop": "length",
+          "truncated": false
+        }
+      ]
+    },
+    "port": {
+      "status": "completed",
+      "result_path": "F:\\AI\\NeuralQwen36\\benchmarks\\qwen36_20261002\\port_candidate01\\results.json",
+      "run_metadata_path": "F:\\AI\\NeuralQwen36\\benchmarks\\qwen36_20261002\\port_candidate01\\run.json",
+      "execution_settings": {
+        "source_revision": "995ad96eacd98c81ed38be0c5b274b04031597b0",
+        "context": 4096,
+        "weight_precision": "bf16",
+        "kv_cache_precision": "bf16"
+      },
+      "run_count": 3,
+      "counts": {
+        "at_cap": 3,
+        "below_cap": 0,
+        "cache_count_not_reported": 3,
+        "prompt_ids_validated": 3,
+        "truncated": 0
+      },
+      "stop_counts": {
+        "length": 3
+      },
+      "prompt_tokens_total": 313,
+      "prompt_prefill_ms_total": 29359.21789999702,
+      "prompt_prefill_tokens_per_second_weighted": 10.661046934769736,
+      "output_tokens_total": 1536,
+      "decode_steps_total": 1533,
+      "decode_elapsed_ms_total": 339833.695500005,
+      "decode_steps_per_second_weighted": 4.511030013502523,
+      "client_wall_s_total": 369.24910790000285,
+      "client_output_tokens_per_second_weighted": 4.159793394588153,
+      "per_request": [
+        {
+          "id": "reasoning_short",
+          "prompt_tokens": 77,
+          "cache_tokens": null,
+          "output_tokens": 512,
+          "decode_steps": 511,
+          "decode_elapsed_ms": 112828.52730000013,
+          "decode_steps_per_second": 4.528996453541403,
+          "client_wall_s": 117.33091270000295,
+          "client_output_tokens_per_second": 4.363726389047232,
+          "output_cap": 512,
+          "at_cap": true,
+          "stop": "length",
+          "truncated": false
+        },
+        {
+          "id": "coding_short",
+          "prompt_tokens": 73,
+          "cache_tokens": null,
+          "output_tokens": 512,
+          "decode_steps": 511,
+          "decode_elapsed_ms": 123040.5434000022,
+          "decode_steps_per_second": 4.153102594311127,
+          "client_wall_s": 137.94963550000102,
+          "client_output_tokens_per_second": 3.711499476923201,
+          "output_cap": 512,
+          "at_cap": true,
+          "stop": "length",
+          "truncated": false
+        },
+        {
+          "id": "coding_context",
+          "prompt_tokens": 163,
+          "cache_tokens": null,
+          "output_tokens": 512,
+          "decode_steps": 511,
+          "decode_elapsed_ms": 103964.62480000264,
+          "decode_steps_per_second": 4.915133402183807,
+          "client_wall_s": 113.96855969999888,
+          "client_output_tokens_per_second": 4.492467057122992,
+          "output_cap": 512,
+          "at_cap": true,
+          "stop": "length",
+          "truncated": false
+        }
+      ]
+    },
+    "llama_existing_3gpu": {
+      "status": "completed",
+      "result_path": "F:\\AI\\NeuralQwen36\\benchmarks\\qwen36_20261002\\llama_bf16_02_ncmoe37\\results.json",
+      "run_metadata_path": "F:\\AI\\NeuralQwen36\\benchmarks\\qwen36_20261002\\llama_bf16_02_ncmoe37\\run.json",
+      "execution_settings": {
+        "source_revision": "995ad96eacd98c81ed38be0c5b274b04031597b0",
+        "context": 4096,
+        "weight_precision": "bf16",
+        "kv_cache_precision": "bf16"
+      },
+      "run_count": 3,
+      "counts": {
+        "at_cap": 3,
+        "below_cap": 0,
+        "cache_zero": 3,
+        "prompt_ids_validated": 3,
+        "truncated": 0
+      },
+      "stop_counts": {
+        "limit": 3
+      },
+      "prompt_tokens_total": 313,
+      "prompt_prefill_ms_total": 24746.782,
+      "prompt_prefill_tokens_per_second_weighted": 12.648109156172305,
+      "output_tokens_total": 1536,
+      "decode_steps_total": 1533,
+      "decode_elapsed_ms_total": 146461.286,
+      "decode_steps_per_second_weighted": 10.46692980696619,
+      "client_wall_s_total": 171.41493130000526,
+      "client_output_tokens_per_second_weighted": 8.960712980783097,
+      "per_request": [
+        {
+          "id": "reasoning_short",
+          "prompt_tokens": 77,
+          "cache_tokens": 0,
+          "output_tokens": 512,
+          "decode_steps": 511,
+          "decode_elapsed_ms": 53603.041,
+          "decode_steps_per_second": 9.533041231746536,
+          "client_wall_s": 56.23753580000266,
+          "client_output_tokens_per_second": 9.104239592232911,
+          "output_cap": 512,
+          "at_cap": true,
+          "stop": "limit",
+          "truncated": false
+        },
+        {
+          "id": "coding_short",
+          "prompt_tokens": 73,
+          "cache_tokens": 0,
+          "output_tokens": 512,
+          "decode_steps": 511,
+          "decode_elapsed_ms": 48612.549,
+          "decode_steps_per_second": 10.511689070243982,
+          "client_wall_s": 63.3695332999996,
+          "client_output_tokens_per_second": 8.079592405645872,
+          "output_cap": 512,
+          "at_cap": true,
+          "stop": "limit",
+          "truncated": false
+        },
+        {
+          "id": "coding_context",
+          "prompt_tokens": 163,
+          "cache_tokens": 0,
+          "output_tokens": 512,
+          "decode_steps": 511,
+          "decode_elapsed_ms": 44245.696,
+          "decode_steps_per_second": 11.549145932747898,
+          "client_wall_s": 51.807862200003,
+          "client_output_tokens_per_second": 9.882669893296047,
+          "output_cap": 512,
+          "at_cap": true,
+          "stop": "limit",
+          "truncated": false
+        }
+      ]
+    },
+    "llama_existing_2gpu": {
+      "status": "completed",
+      "result_path": "F:\\AI\\NeuralQwen36\\benchmarks\\qwen36_20261002\\llama_bf16_01\\results.json",
+      "run_metadata_path": "F:\\AI\\NeuralQwen36\\benchmarks\\qwen36_20261002\\llama_bf16_01\\comparison_metadata.json",
+      "execution_settings": {
+        "source_revision": "995ad96eacd98c81ed38be0c5b274b04031597b0",
+        "context": 4096,
+        "weight_precision": "bf16",
+        "kv_cache_precision": "bf16"
+      },
+      "run_count": 3,
+      "counts": {
+        "at_cap": 3,
+        "below_cap": 0,
+        "cache_zero": 3,
+        "prompt_ids_validated": 3,
+        "truncated": 0
+      },
+      "stop_counts": {
+        "limit": 3
+      },
+      "prompt_tokens_total": 313,
+      "prompt_prefill_ms_total": 23518.456,
+      "prompt_prefill_tokens_per_second_weighted": 13.308696795401875,
+      "output_tokens_total": 1536,
+      "decode_steps_total": 1533,
+      "decode_elapsed_ms_total": 153082.222,
+      "decode_steps_per_second_weighted": 10.01422621106192,
+      "client_wall_s_total": 176.82591820000016,
+      "client_output_tokens_per_second_weighted": 8.686509396561972,
+      "per_request": [
+        {
+          "id": "reasoning_short",
+          "prompt_tokens": 77,
+          "cache_tokens": 0,
+          "output_tokens": 512,
+          "decode_steps": 511,
+          "decode_elapsed_ms": 55667.939,
+          "decode_steps_per_second": 9.179430910851577,
+          "client_wall_s": 58.60192939999979,
+          "client_output_tokens_per_second": 8.736913703049542,
+          "output_cap": 512,
+          "at_cap": true,
+          "stop": "limit",
+          "truncated": false
+        },
+        {
+          "id": "coding_short",
+          "prompt_tokens": 73,
+          "cache_tokens": 0,
+          "output_tokens": 512,
+          "decode_steps": 511,
+          "decode_elapsed_ms": 48939.128,
+          "decode_steps_per_second": 10.441542808036957,
+          "client_wall_s": 63.16223190000164,
+          "client_output_tokens_per_second": 8.106110005906658,
+          "output_cap": 512,
+          "at_cap": true,
+          "stop": "limit",
+          "truncated": false
+        },
+        {
+          "id": "coding_context",
+          "prompt_tokens": 163,
+          "cache_tokens": 0,
+          "output_tokens": 512,
+          "decode_steps": 511,
+          "decode_elapsed_ms": 48475.155,
+          "decode_steps_per_second": 10.54148253883871,
+          "client_wall_s": 55.06175689999873,
+          "client_output_tokens_per_second": 9.29864989469691,
+          "output_cap": 512,
+          "at_cap": true,
+          "stop": "limit",
+          "truncated": false
+        }
+      ]
+    }
+  },
+  "interpretation": {
+    "decode_rate": "weighted sum of output_tokens-1 decode calls divided by summed predicted_ms. The numerators match; internal timer boundaries do not: llama.cpp starts after sampling output token 1, while GenerationEngine's predicted_ms starts before sampling it and includes incremental tokenizer.decode work.",
+    "client_rate": "weighted sum of all generated output tokens divided by summed HTTP client_wall_s; includes prompt, generation, serialization and transport",
+    "prompt_rate": "weighted from server-reported prompt_n/prompt_ms; llama.cpp's prompt timer includes sampling output token 1, GenerationEngine's prompt_ms stops immediately before that sample",
+    "quality": "not scored; generated text/token identity is not assumed across engines"
+  }
+}

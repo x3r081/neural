@@ -1,0 +1,12 @@
+L0 E82: ratio 0.9400, decode 0.290 GB/s, bytes+SHA verified
+L4 E100: ratio 0.9548, decode 0.301 GB/s, bytes+SHA verified
+L6 E38: ratio 0.9559, decode 0.296 GB/s, bytes+SHA verified
+L9 E19: ratio 0.9546, decode 0.302 GB/s, bytes+SHA verified
+L14 E34: ratio 0.9546, decode 0.303 GB/s, bytes+SHA verified
+L15 E47: ratio 0.9536, decode 0.299 GB/s, bytes+SHA verified
+L19 E97: ratio 0.9533, decode 0.298 GB/s, bytes+SHA verified
+L21 E87: ratio 0.9553, decode 0.297 GB/s, bytes+SHA verified
+L24 E68: ratio 0.9552, decode 0.301 GB/s, bytes+SHA verified
+L28 E100: ratio 0.9569, decode 0.306 GB/s, bytes+SHA verified
+L30 E80: ratio 0.9546, decode 0.302 GB/s, bytes+SHA verified
+L33 E59: ratio 0.9542, decode 0.299 GB/s, bytes+SHA verified

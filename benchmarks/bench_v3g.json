@@ -1,0 +1,191 @@
+{
+ "decode": [
+  {
+   "wall_s": 27.55,
+   "prompt": 112,
+   "cached": 0,
+   "completion": 384,
+   "prefill_s": 3.1898,
+   "decode_tok_s": 15.7605,
+   "vram_hit": 0.3185,
+   "cpu_GBps": 26.3812,
+   "cpu_ms_per_tok": 49.1729,
+   "gpu_wait_ms_per_tok": 6.7102,
+   "finish": "length",
+   "label": "ctx~0.3k"
+  },
+  {
+   "wall_s": 40.08,
+   "prompt": 3898,
+   "cached": 76,
+   "completion": 384,
+   "prefill_s": 13.7518,
+   "decode_tok_s": 14.564,
+   "vram_hit": 0.1804,
+   "cpu_GBps": 28.7034,
+   "cpu_ms_per_tok": 54.3563,
+   "gpu_wait_ms_per_tok": 7.0583,
+   "finish": "length",
+   "label": "ctx~4k"
+  },
+  {
+   "wall_s": 52.18,
+   "prompt": 9289,
+   "cached": 76,
+   "completion": 384,
+   "prefill_s": 26.0377,
+   "decode_tok_s": 14.7705,
+   "vram_hit": 0.1784,
+   "cpu_GBps": 29.7575,
+   "cpu_ms_per_tok": 52.5596,
+   "gpu_wait_ms_per_tok": 7.4782,
+   "finish": "length",
+   "label": "ctx~10k"
+  }
+ ],
+ "prefill": [
+  {
+   "wall_s": 6.0,
+   "prompt": 3330,
+   "cached": 70,
+   "completion": 24,
+   "prefill_s": 4.3648,
+   "decode_tok_s": 14.5309,
+   "vram_hit": 0.1887,
+   "cpu_GBps": 26.4803,
+   "cpu_ms_per_tok": 58.3207,
+   "gpu_wait_ms_per_tok": 3.9951,
+   "finish": "length",
+   "label": "cold ~4k"
+  },
+  {
+   "wall_s": 5.3,
+   "prompt": 3405,
+   "cached": 70,
+   "completion": 16,
+   "prefill_s": 4.3662,
+   "decode_tok_s": 16.5303,
+   "vram_hit": 0.2005,
+   "cpu_GBps": 29.4659,
+   "cpu_ms_per_tok": 51.652,
+   "gpu_wait_ms_per_tok": 3.8926,
+   "finish": "length",
+   "label": "+~50 tok"
+  },
+  {
+   "wall_s": 2.77,
+   "prompt": 3701,
+   "cached": 3406,
+   "completion": 16,
+   "prefill_s": 1.8506,
+   "decode_tok_s": 16.5705,
+   "vram_hit": 0.2417,
+   "cpu_GBps": 29.0366,
+   "cpu_ms_per_tok": 49.7144,
+   "gpu_wait_ms_per_tok": 4.0942,
+   "finish": "length",
+   "label": "+~300 tok"
+  },
+  {
+   "wall_s": 3.76,
+   "prompt": 5177,
+   "cached": 3702,
+   "completion": 16,
+   "prefill_s": 2.9661,
+   "decode_tok_s": 19.2526,
+   "vram_hit": 0.2569,
+   "cpu_GBps": 32.3889,
+   "cpu_ms_per_tok": 43.671,
+   "gpu_wait_ms_per_tok": 4.0297,
+   "finish": "length",
+   "label": "+~1500 tok"
+  }
+ ],
+ "scenario": [
+  {
+   "turn": "snake",
+   "steps": [
+    {
+     "wall_s": 9.99,
+     "prompt": 759,
+     "cached": 40,
+     "completion": 63,
+     "prefill_s": 2.2595,
+     "decode_tok_s": 8.1278,
+     "vram_hit": 0.3355,
+     "cpu_GBps": 11.6914,
+     "cpu_ms_per_tok": 108.1989,
+     "gpu_wait_ms_per_tok": 6.455,
+     "finish": "tool_calls",
+     "tool": "ls"
+    },
+    {
+     "wall_s": 65.54,
+     "prompt": 838,
+     "cached": 40,
+     "completion": 1092,
+     "prefill_s": 2.4845,
+     "decode_tok_s": 17.3051,
+     "vram_hit": 0.363,
+     "cpu_GBps": 26.5638,
+     "cpu_ms_per_tok": 45.6455,
+     "gpu_wait_ms_per_tok": 5.5347,
+     "finish": "tool_calls",
+     "tool": "create_new_file"
+    },
+    {
+     "wall_s": 4.07,
+     "prompt": 1950,
+     "cached": 1929,
+     "completion": 54,
+     "prefill_s": 0.466,
+     "decode_tok_s": 14.7319,
+     "vram_hit": 0.299,
+     "cpu_GBps": 25.1434,
+     "cpu_ms_per_tok": 53.0712,
+     "gpu_wait_ms_per_tok": 6.6891,
+     "finish": "stop",
+     "tool": null
+    }
+   ]
+  },
+  {
+   "turn": "score+speed",
+   "steps": [
+    {
+     "wall_s": 26.56,
+     "prompt": 1903,
+     "cached": 1882,
+     "completion": 458,
+     "prefill_s": 0.5082,
+     "decode_tok_s": 19.9162,
+     "vram_hit": 0.4103,
+     "cpu_GBps": 28.7386,
+     "cpu_ms_per_tok": 39.0631,
+     "gpu_wait_ms_per_tok": 5.1416,
+     "finish": "tool_calls",
+     "tool": "edit_existing_file"
+    },
+    {
+     "wall_s": 9.6,
+     "prompt": 2382,
+     "cached": 2360,
+     "completion": 150,
+     "prefill_s": 0.4466,
+     "decode_tok_s": 16.3224,
+     "vram_hit": 0.2946,
+     "cpu_GBps": 28.4379,
+     "cpu_ms_per_tok": 47.2175,
+     "gpu_wait_ms_per_tok": 6.5356,
+     "finish": "stop",
+     "tool": null
+    }
+   ]
+  }
+ ],
+ "scenario_total_wall_s": 115.8,
+ "scenario_generated_tokens": 1817,
+ "files": {
+  "index.html": 3555
+ }
+}

@@ -1,0 +1,857 @@
+{
+  "success": true,
+  "completeness_and_matched_inputs": {
+    "candidate_dll_hashes_present_and_identical_across_trials": true,
+    "control_dll_hashes_present_and_identical_across_trials": true,
+    "frozen_four_sessions_four_turns": true,
+    "llama_trial_four_sessions_four_turns": true,
+    "expected_frozen_kinds": true,
+    "expected_llama_kinds": true,
+    "cpu_persistent_jobs_fallback_and_threads_pass_each_turn": true,
+    "opt_persistent_jobs_fallback_and_threads_pass_each_turn": true,
+    "same_source_context_across_all_trials": true,
+    "same_nonempty_llama_executable_hash_in_mirrored_and_llama_trials": true,
+    "same_exact_api_requests_across_frozen_mirrored_llama": true
+  },
+  "quality_identity": {
+    "frozen_prompt_ids_identical_all_four_sessions": true,
+    "frozen_generated_ids_identical_all_four_sessions": true,
+    "opt_prompt_ids_repeat_between_two_opt_sessions": true,
+    "opt_generated_ids_repeat_between_two_opt_sessions": true
+  },
+  "frozen_identity_by_turn": [
+    {
+      "turn": 0,
+      "samples": 4,
+      "prompt_hashes_present": 4,
+      "generated_hashes_present": 4,
+      "prompt_distinct_hashes": 1,
+      "generated_distinct_hashes": 1,
+      "prompt_identical": true,
+      "generated_identical": true
+    },
+    {
+      "turn": 1,
+      "samples": 4,
+      "prompt_hashes_present": 4,
+      "generated_hashes_present": 4,
+      "prompt_distinct_hashes": 1,
+      "generated_distinct_hashes": 1,
+      "prompt_identical": true,
+      "generated_identical": true
+    },
+    {
+      "turn": 2,
+      "samples": 4,
+      "prompt_hashes_present": 4,
+      "generated_hashes_present": 4,
+      "prompt_distinct_hashes": 1,
+      "generated_distinct_hashes": 1,
+      "prompt_identical": true,
+      "generated_identical": true
+    },
+    {
+      "turn": 3,
+      "samples": 4,
+      "prompt_hashes_present": 4,
+      "generated_hashes_present": 4,
+      "prompt_distinct_hashes": 1,
+      "generated_distinct_hashes": 1,
+      "prompt_identical": true,
+      "generated_identical": true
+    }
+  ],
+  "opt_identity_by_turn": [
+    {
+      "turn": 0,
+      "samples": 2,
+      "prompt_hashes_present": 2,
+      "generated_hashes_present": 2,
+      "prompt_distinct_hashes": 1,
+      "generated_distinct_hashes": 1,
+      "prompt_identical": true,
+      "generated_identical": true
+    },
+    {
+      "turn": 1,
+      "samples": 2,
+      "prompt_hashes_present": 2,
+      "generated_hashes_present": 2,
+      "prompt_distinct_hashes": 1,
+      "generated_distinct_hashes": 1,
+      "prompt_identical": true,
+      "generated_identical": true
+    },
+    {
+      "turn": 2,
+      "samples": 2,
+      "prompt_hashes_present": 2,
+      "generated_hashes_present": 2,
+      "prompt_distinct_hashes": 1,
+      "generated_distinct_hashes": 1,
+      "prompt_identical": true,
+      "generated_identical": true
+    },
+    {
+      "turn": 3,
+      "samples": 2,
+      "prompt_hashes_present": 2,
+      "generated_hashes_present": 2,
+      "prompt_distinct_hashes": 1,
+      "generated_distinct_hashes": 1,
+      "prompt_identical": true,
+      "generated_identical": true
+    }
+  ],
+  "llama_internal_prompt_token_ids": {
+    "status": "unknown_not_reported_by_backend",
+    "per_turn_observations": [
+      {
+        "turn": 0,
+        "samples": 4,
+        "prompt_hashes_present": 2,
+        "generated_hashes_present": 2,
+        "prompt_distinct_hashes": 1,
+        "generated_distinct_hashes": 1,
+        "prompt_identical": false,
+        "generated_identical": false
+      },
+      {
+        "turn": 1,
+        "samples": 4,
+        "prompt_hashes_present": 2,
+        "generated_hashes_present": 2,
+        "prompt_distinct_hashes": 1,
+        "generated_distinct_hashes": 1,
+        "prompt_identical": false,
+        "generated_identical": false
+      },
+      {
+        "turn": 2,
+        "samples": 4,
+        "prompt_hashes_present": 2,
+        "generated_hashes_present": 2,
+        "prompt_distinct_hashes": 1,
+        "generated_distinct_hashes": 1,
+        "prompt_identical": false,
+        "generated_identical": false
+      },
+      {
+        "turn": 3,
+        "samples": 4,
+        "prompt_hashes_present": 2,
+        "generated_hashes_present": 2,
+        "prompt_distinct_hashes": 1,
+        "generated_distinct_hashes": 1,
+        "prompt_identical": false,
+        "generated_identical": false
+      }
+    ],
+    "api_request_hash_equality_does_not_establish_internal_prompt_token_identity": true
+  },
+  "cpu_persistent_turn_checks": [
+    {
+      "tag": "s1",
+      "turn": 0,
+      "jobs": 18347,
+      "fallback_calls": 0,
+      "team_threads": 8,
+      "pass": true
+    },
+    {
+      "tag": "s1",
+      "turn": 1,
+      "jobs": 18276,
+      "fallback_calls": 0,
+      "team_threads": 8,
+      "pass": true
+    },
+    {
+      "tag": "s1",
+      "turn": 2,
+      "jobs": 18153,
+      "fallback_calls": 0,
+      "team_threads": 8,
+      "pass": true
+    },
+    {
+      "tag": "s1",
+      "turn": 3,
+      "jobs": 18172,
+      "fallback_calls": 0,
+      "team_threads": 8,
+      "pass": true
+    },
+    {
+      "tag": "s2",
+      "turn": 0,
+      "jobs": 18347,
+      "fallback_calls": 0,
+      "team_threads": 8,
+      "pass": true
+    },
+    {
+      "tag": "s2",
+      "turn": 1,
+      "jobs": 18276,
+      "fallback_calls": 0,
+      "team_threads": 8,
+      "pass": true
+    },
+    {
+      "tag": "s2",
+      "turn": 2,
+      "jobs": 18153,
+      "fallback_calls": 0,
+      "team_threads": 8,
+      "pass": true
+    },
+    {
+      "tag": "s2",
+      "turn": 3,
+      "jobs": 18172,
+      "fallback_calls": 0,
+      "team_threads": 8,
+      "pass": true
+    }
+  ],
+  "opt_persistent_turn_checks": [
+    {
+      "tag": "s0",
+      "turn": 0,
+      "jobs": 17725,
+      "fallback_calls": 0,
+      "team_threads": 8,
+      "pass": true
+    },
+    {
+      "tag": "s0",
+      "turn": 1,
+      "jobs": 17521,
+      "fallback_calls": 0,
+      "team_threads": 8,
+      "pass": true
+    },
+    {
+      "tag": "s0",
+      "turn": 2,
+      "jobs": 17255,
+      "fallback_calls": 0,
+      "team_threads": 8,
+      "pass": true
+    },
+    {
+      "tag": "s0",
+      "turn": 3,
+      "jobs": 17579,
+      "fallback_calls": 0,
+      "team_threads": 8,
+      "pass": true
+    },
+    {
+      "tag": "s3",
+      "turn": 0,
+      "jobs": 17725,
+      "fallback_calls": 0,
+      "team_threads": 8,
+      "pass": true
+    },
+    {
+      "tag": "s3",
+      "turn": 1,
+      "jobs": 17521,
+      "fallback_calls": 0,
+      "team_threads": 8,
+      "pass": true
+    },
+    {
+      "tag": "s3",
+      "turn": 2,
+      "jobs": 17255,
+      "fallback_calls": 0,
+      "team_threads": 8,
+      "pass": true
+    },
+    {
+      "tag": "s3",
+      "turn": 3,
+      "jobs": 17579,
+      "fallback_calls": 0,
+      "team_threads": 8,
+      "pass": true
+    }
+  ],
+  "weighted_decode_and_stage_medians": {
+    "frozen": {
+      "off": {
+        "sessions": 2,
+        "turns": 8,
+        "all_turns_weighted_decode": {
+          "tokens": 4088,
+          "seconds": 205.7795,
+          "tok_s": 19.8659
+        },
+        "first_weighted_decode": {
+          "tokens": 1022,
+          "seconds": 53.9215,
+          "tok_s": 18.9535
+        },
+        "followup_weighted_decode": {
+          "tokens": 3066,
+          "seconds": 151.858,
+          "tok_s": 20.1899
+        },
+        "first_decode_tok_s_median": 18.9538,
+        "followup_decode_tok_s_median": 20.2703,
+        "first_turn_medians": {
+          "client_wall_s": 35.58,
+          "prefill_prompt_s": 8.55005
+        },
+        "followup_turn_medians": {
+          "client_wall_s": 27.455,
+          "prefill_prompt_s": 2.30125
+        },
+        "stage_medians": {
+          "client_wall_s": 27.955,
+          "generation_wall_s": 27.9298,
+          "prefill_prompt_s": 2.32205,
+          "prompt_tokens": 13889.5,
+          "vram_reserved_gib": 10.828,
+          "cpu_ms_per_tok": 40.0843,
+          "replay_ms_per_tok": 1.71125,
+          "gpu_wait_ms_per_tok": 4.95655,
+          "admission_ms_per_tok": 0.03995,
+          "other_ms_per_tok": 3.3943
+        }
+      },
+      "cpu": {
+        "sessions": 2,
+        "turns": 8,
+        "all_turns_weighted_decode": {
+          "tokens": 4088,
+          "seconds": 200.0092,
+          "tok_s": 20.4391
+        },
+        "first_weighted_decode": {
+          "tokens": 1022,
+          "seconds": 52.1847,
+          "tok_s": 19.5843
+        },
+        "followup_weighted_decode": {
+          "tokens": 3066,
+          "seconds": 147.8245,
+          "tok_s": 20.7408
+        },
+        "first_decode_tok_s_median": 19.5851,
+        "followup_decode_tok_s_median": 20.8618,
+        "first_turn_medians": {
+          "client_wall_s": 34.26,
+          "prefill_prompt_s": 8.09975
+        },
+        "followup_turn_medians": {
+          "client_wall_s": 26.73,
+          "prefill_prompt_s": 2.28855
+        },
+        "stage_medians": {
+          "client_wall_s": 27.265,
+          "generation_wall_s": 27.24205,
+          "prefill_prompt_s": 2.29275,
+          "prompt_tokens": 13889.5,
+          "vram_reserved_gib": 10.828,
+          "cpu_ms_per_tok": 39.1637,
+          "replay_ms_per_tok": 1.47345,
+          "gpu_wait_ms_per_tok": 4.95335,
+          "admission_ms_per_tok": 0.0287,
+          "other_ms_per_tok": 3.25295
+        }
+      }
+    },
+    "opt_vs_llama": {
+      "opt": {
+        "sessions": 2,
+        "turns": 8,
+        "all_turns_weighted_decode": {
+          "tokens": 4088,
+          "seconds": 165.5666,
+          "tok_s": 24.691
+        },
+        "first_weighted_decode": {
+          "tokens": 1022,
+          "seconds": 43.2964,
+          "tok_s": 23.6047
+        },
+        "followup_weighted_decode": {
+          "tokens": 3066,
+          "seconds": 122.2702,
+          "tok_s": 25.0756
+        },
+        "first_decode_tok_s_median": 23.6048,
+        "followup_decode_tok_s_median": 24.7953,
+        "first_turn_medians": {
+          "client_wall_s": 30.38,
+          "prefill_prompt_s": 8.66645
+        },
+        "followup_turn_medians": {
+          "client_wall_s": 22.835,
+          "prefill_prompt_s": 2.2583
+        },
+        "stage_medians": {
+          "client_wall_s": 22.945,
+          "generation_wall_s": 22.9265,
+          "prefill_prompt_s": 2.27115,
+          "prompt_tokens": 13889.5,
+          "vram_reserved_gib": 9.715,
+          "cpu_ms_per_tok": 30.6765,
+          "replay_ms_per_tok": 1.2536,
+          "gpu_wait_ms_per_tok": 4.8246,
+          "admission_ms_per_tok": 0.8782,
+          "other_ms_per_tok": 2.8407
+        }
+      },
+      "llama": {
+        "sessions": 2,
+        "turns": 8,
+        "all_turns_weighted_decode": {
+          "tokens": 4096,
+          "seconds": 286.0556,
+          "tok_s": 14.3189
+        },
+        "first_weighted_decode": {
+          "tokens": 1024,
+          "seconds": 78.4279,
+          "tok_s": 13.0566
+        },
+        "followup_weighted_decode": {
+          "tokens": 3072,
+          "seconds": 207.6277,
+          "tok_s": 14.7957
+        },
+        "first_decode_tok_s_median": 13.0913,
+        "followup_decode_tok_s_median": 14.9684,
+        "first_turn_medians": {
+          "client_wall_s": 176.82,
+          "prefill_prompt_s": 137.552015
+        },
+        "followup_turn_medians": {
+          "client_wall_s": 39.405,
+          "prefill_prompt_s": 5.061362
+        },
+        "stage_medians": {
+          "client_wall_s": 39.845,
+          "generation_wall_s": null,
+          "prefill_prompt_s": 5.269516,
+          "prompt_tokens": 13889.5,
+          "vram_reserved_gib": null,
+          "cpu_ms_per_tok": null,
+          "replay_ms_per_tok": null,
+          "gpu_wait_ms_per_tok": null,
+          "admission_ms_per_tok": null,
+          "other_ms_per_tok": null
+        }
+      }
+    }
+  },
+  "weighted_comparisons": {
+    "cpu_vs_off": {
+      "ratio": 1.02885017,
+      "percent_change": 2.885017
+    },
+    "opt_vs_llama": {
+      "ratio": 1.72436287,
+      "percent_change": 72.436287
+    }
+  },
+  "exact_api_request_hashes_by_turn": [
+    {
+      "turn": 0,
+      "request_count_by_file": {
+        "frozen": 4,
+        "mirrored": 6,
+        "llama": 4
+      },
+      "hashes_present": 14,
+      "hashes_expected": 14,
+      "distinct_request_hashes": 1,
+      "matched_across_files_and_sessions": true
+    },
+    {
+      "turn": 1,
+      "request_count_by_file": {
+        "frozen": 4,
+        "mirrored": 6,
+        "llama": 4
+      },
+      "hashes_present": 14,
+      "hashes_expected": 14,
+      "distinct_request_hashes": 1,
+      "matched_across_files_and_sessions": true
+    },
+    {
+      "turn": 2,
+      "request_count_by_file": {
+        "frozen": 4,
+        "mirrored": 6,
+        "llama": 4
+      },
+      "hashes_present": 14,
+      "hashes_expected": 14,
+      "distinct_request_hashes": 1,
+      "matched_across_files_and_sessions": true
+    },
+    {
+      "turn": 3,
+      "request_count_by_file": {
+        "frozen": 4,
+        "mirrored": 6,
+        "llama": 4
+      },
+      "hashes_present": 14,
+      "hashes_expected": 14,
+      "distinct_request_hashes": 1,
+      "matched_across_files_and_sessions": true
+    }
+  ],
+  "source_context_identity": {
+    "frozen": {
+      "ctx_token_ids_sha256": "ed0eaa13cf3b4abe69a8dfb81b034593575369314e39f8df026251e806e0924a",
+      "decoded_context_sha256": "a12a7fc4555962261c6e9c599387f4ad3f825f50e44d3e2b0bd22afe7cd5f218",
+      "ctx_token_count": 13000,
+      "files": [
+        {
+          "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\fused_core.py",
+          "sha256": "3fb4f9d8ee41361611372478fb1a316277dd371defed710506bd1b59102add09"
+        },
+        {
+          "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\harmony_render.py",
+          "sha256": "27fdce7bf26d36cee32049ca3ed046cb9baf6e4e8e25f10fc806ab0bb1c1fbbf"
+        },
+        {
+          "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\cpu_prefill.py",
+          "sha256": "dae214c95c871dae1d4ae068b30718e2ea55efe80bf1209d0b9dd7db3f23cb71"
+        },
+        {
+          "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\server.py",
+          "sha256": "6db0402857c81369147f4a15df9c1a3abecd603915a2c4c4ce44837e29126484"
+        }
+      ]
+    },
+    "mirrored": {
+      "ctx_token_ids_sha256": "ed0eaa13cf3b4abe69a8dfb81b034593575369314e39f8df026251e806e0924a",
+      "decoded_context_sha256": "a12a7fc4555962261c6e9c599387f4ad3f825f50e44d3e2b0bd22afe7cd5f218",
+      "ctx_token_count": 13000,
+      "files": [
+        {
+          "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\fused_core.py",
+          "sha256": "3fb4f9d8ee41361611372478fb1a316277dd371defed710506bd1b59102add09"
+        },
+        {
+          "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\harmony_render.py",
+          "sha256": "27fdce7bf26d36cee32049ca3ed046cb9baf6e4e8e25f10fc806ab0bb1c1fbbf"
+        },
+        {
+          "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\cpu_prefill.py",
+          "sha256": "dae214c95c871dae1d4ae068b30718e2ea55efe80bf1209d0b9dd7db3f23cb71"
+        },
+        {
+          "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\server.py",
+          "sha256": "6db0402857c81369147f4a15df9c1a3abecd603915a2c4c4ce44837e29126484"
+        }
+      ]
+    },
+    "llama_comparison": {
+      "ctx_token_ids_sha256": "ed0eaa13cf3b4abe69a8dfb81b034593575369314e39f8df026251e806e0924a",
+      "decoded_context_sha256": "a12a7fc4555962261c6e9c599387f4ad3f825f50e44d3e2b0bd22afe7cd5f218",
+      "ctx_token_count": 13000,
+      "files": [
+        {
+          "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\fused_core.py",
+          "sha256": "3fb4f9d8ee41361611372478fb1a316277dd371defed710506bd1b59102add09"
+        },
+        {
+          "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\harmony_render.py",
+          "sha256": "27fdce7bf26d36cee32049ca3ed046cb9baf6e4e8e25f10fc806ab0bb1c1fbbf"
+        },
+        {
+          "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\cpu_prefill.py",
+          "sha256": "dae214c95c871dae1d4ae068b30718e2ea55efe80bf1209d0b9dd7db3f23cb71"
+        },
+        {
+          "path": "F:\\AI\\Neural\\experiments\\neuralserver-base\\server.py",
+          "sha256": "6db0402857c81369147f4a15df9c1a3abecd603915a2c4c4ce44837e29126484"
+        }
+      ]
+    }
+  },
+  "effective_opt_decode_dll": {
+    "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\gptoss_cpu_persistent.dll",
+    "size": 432830,
+    "mtime_ns": 1790845922742736400,
+    "sha256": "c1221ecfacbeb56ccf14b54ba2f0b3a7c1e95ddec15d971a9f53b733dfb8d2ca"
+  },
+  "candidate_decode_dlls": {
+    "frozen_cpu": {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\gptoss_cpu_persistent.dll",
+      "size": 432830,
+      "mtime_ns": 1790845922742736400,
+      "sha256": "c1221ecfacbeb56ccf14b54ba2f0b3a7c1e95ddec15d971a9f53b733dfb8d2ca"
+    },
+    "mirrored_cpu": {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\gptoss_cpu_persistent.dll",
+      "size": 432830,
+      "mtime_ns": 1790845922742736400,
+      "sha256": "c1221ecfacbeb56ccf14b54ba2f0b3a7c1e95ddec15d971a9f53b733dfb8d2ca"
+    },
+    "mirrored_opt": {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\gptoss_cpu_persistent.dll",
+      "size": 432830,
+      "mtime_ns": 1790845922742736400,
+      "sha256": "c1221ecfacbeb56ccf14b54ba2f0b3a7c1e95ddec15d971a9f53b733dfb8d2ca"
+    },
+    "fresh_opt": {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\gptoss_cpu_persistent.dll",
+      "size": 432830,
+      "mtime_ns": 1790845922742736400,
+      "sha256": "c1221ecfacbeb56ccf14b54ba2f0b3a7c1e95ddec15d971a9f53b733dfb8d2ca"
+    }
+  },
+  "control_decode_dlls": {
+    "frozen_off": {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\gptoss_cpu_cap2.dll",
+      "size": 413085,
+      "mtime_ns": 1790804180839050200,
+      "sha256": "84a8c5af304e5f1c20b4ee12c8708f0494c7b580be31aff6df95481772b40b44"
+    },
+    "mirrored_off": {
+      "path": "F:\\AI\\Neural\\experiments\\neuralserver-opt\\gptoss_cpu_cap2.dll",
+      "size": 413085,
+      "mtime_ns": 1790804180839050200,
+      "sha256": "84a8c5af304e5f1c20b4ee12c8708f0494c7b580be31aff6df95481772b40b44"
+    }
+  },
+  "llama_requested_args": "-ngl 99 -ncmoe 31 -t 8 -c 16384 -fa on --jinja",
+  "configured_llama_directory_label": "G:\\Tools\\llama-b10361",
+  "llama_server_executable": {
+    "path": "G:\\Tools\\llama-b10361\\llama-server.exe",
+    "size": 9216,
+    "sha256": "c65955724e82ae7c166c71dc448b6bf54637057eb1e677f2087fdac4adf32f11",
+    "sha256_in_mirrored_trial": "c65955724e82ae7c166c71dc448b6bf54637057eb1e677f2087fdac4adf32f11",
+    "same_nonempty_sha256_as_mirrored_trial": true
+  },
+  "llama_version_claim": "none; the directory label is not a version claim, and the hash is only an executable identity",
+  "quality_caveat": "Exact request-body hashes establish matched API inputs. Backend-internal prompt token IDs are not reported for llama; generated-ID equality is checked only between the two opt sessions. Cross-backend quality equality is not established.",
+  "review_bench_integrity": {
+    "frozen": {
+      "request_archive_integrity": true,
+      "response_archive_integrity": true,
+      "result_archive_link_integrity": true,
+      "archive_capture_state": {
+        "complete": 16,
+        "failed": 0,
+        "pending": 0,
+        "legacy_unknown": 0
+      },
+      "request_match_across_sessions_by_turn": [
+        {
+          "turn": 0,
+          "distinct_hashes": 1,
+          "matched": true
+        },
+        {
+          "turn": 1,
+          "distinct_hashes": 1,
+          "matched": true
+        },
+        {
+          "turn": 2,
+          "distinct_hashes": 1,
+          "matched": true
+        },
+        {
+          "turn": 3,
+          "distinct_hashes": 1,
+          "matched": true
+        }
+      ],
+      "prompt_token_ids_match_by_turn": [
+        {
+          "turn": 0,
+          "samples": 4,
+          "hashes_present": 4,
+          "missing_hash_count": 0,
+          "distinct_hashes": 1,
+          "matched": true,
+          "matched_among_known": true
+        },
+        {
+          "turn": 1,
+          "samples": 4,
+          "hashes_present": 4,
+          "missing_hash_count": 0,
+          "distinct_hashes": 1,
+          "matched": true,
+          "matched_among_known": true
+        },
+        {
+          "turn": 2,
+          "samples": 4,
+          "hashes_present": 4,
+          "missing_hash_count": 0,
+          "distinct_hashes": 1,
+          "matched": true,
+          "matched_among_known": true
+        },
+        {
+          "turn": 3,
+          "samples": 4,
+          "hashes_present": 4,
+          "missing_hash_count": 0,
+          "distinct_hashes": 1,
+          "matched": true,
+          "matched_among_known": true
+        }
+      ]
+    },
+    "mirrored": {
+      "request_archive_integrity": true,
+      "response_archive_integrity": true,
+      "result_archive_link_integrity": true,
+      "archive_capture_state": {
+        "complete": 24,
+        "failed": 0,
+        "pending": 0,
+        "legacy_unknown": 0
+      },
+      "request_match_across_sessions_by_turn": [
+        {
+          "turn": 0,
+          "distinct_hashes": 1,
+          "matched": true
+        },
+        {
+          "turn": 1,
+          "distinct_hashes": 1,
+          "matched": true
+        },
+        {
+          "turn": 2,
+          "distinct_hashes": 1,
+          "matched": true
+        },
+        {
+          "turn": 3,
+          "distinct_hashes": 1,
+          "matched": true
+        }
+      ],
+      "prompt_token_ids_match_by_turn": [
+        {
+          "turn": 0,
+          "samples": 6,
+          "hashes_present": 6,
+          "missing_hash_count": 0,
+          "distinct_hashes": 1,
+          "matched": true,
+          "matched_among_known": true
+        },
+        {
+          "turn": 1,
+          "samples": 6,
+          "hashes_present": 6,
+          "missing_hash_count": 0,
+          "distinct_hashes": 1,
+          "matched": true,
+          "matched_among_known": true
+        },
+        {
+          "turn": 2,
+          "samples": 6,
+          "hashes_present": 6,
+          "missing_hash_count": 0,
+          "distinct_hashes": 1,
+          "matched": true,
+          "matched_among_known": true
+        },
+        {
+          "turn": 3,
+          "samples": 6,
+          "hashes_present": 6,
+          "missing_hash_count": 0,
+          "distinct_hashes": 1,
+          "matched": true,
+          "matched_among_known": true
+        }
+      ]
+    },
+    "llama": {
+      "request_archive_integrity": true,
+      "response_archive_integrity": true,
+      "result_archive_link_integrity": true,
+      "archive_capture_state": {
+        "complete": 16,
+        "failed": 0,
+        "pending": 0,
+        "legacy_unknown": 0
+      },
+      "request_match_across_sessions_by_turn": [
+        {
+          "turn": 0,
+          "distinct_hashes": 1,
+          "matched": true
+        },
+        {
+          "turn": 1,
+          "distinct_hashes": 1,
+          "matched": true
+        },
+        {
+          "turn": 2,
+          "distinct_hashes": 1,
+          "matched": true
+        },
+        {
+          "turn": 3,
+          "distinct_hashes": 1,
+          "matched": true
+        }
+      ],
+      "prompt_token_ids_match_by_turn": [
+        {
+          "turn": 0,
+          "samples": 4,
+          "hashes_present": 2,
+          "missing_hash_count": 2,
+          "distinct_hashes": 1,
+          "matched": null,
+          "matched_among_known": true
+        },
+        {
+          "turn": 1,
+          "samples": 4,
+          "hashes_present": 2,
+          "missing_hash_count": 2,
+          "distinct_hashes": 1,
+          "matched": null,
+          "matched_among_known": true
+        },
+        {
+          "turn": 2,
+          "samples": 4,
+          "hashes_present": 2,
+          "missing_hash_count": 2,
+          "distinct_hashes": 1,
+          "matched": null,
+          "matched_among_known": true
+        },
+        {
+          "turn": 3,
+          "samples": 4,
+          "hashes_present": 2,
+          "missing_hash_count": 2,
+          "distinct_hashes": 1,
+          "matched": null,
+          "matched_among_known": true
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,111 @@
+{
+ "config": {
+  "out": "step5conv_02_llama.json",
+  "rounds": 2,
+  "schedule": "llama",
+  "kinds": [
+   "llama",
+   "neural=--kv-ring 256 --scratch 6 --pool 6.05 --kernel-fuse 1"
+  ],
+  "workload": "conversation",
+  "ctx_tokens": 13000,
+  "max_tokens": 512,
+  "effort": "low",
+  "llama_dir": "G:\\Tools\\llama-b10361",
+  "gguf": "G:\\Models\\gpt-oss-120b-gguf\\gpt-oss-120b-MXFP4.gguf",
+  "llama_args": "-ngl 99 -ncmoe 31 -t 8 -c 16384 -fa on --jinja",
+  "neural_args": "--pool 5.5 --smax 16384 --threads 8 --hotset hotset_code.json --refresh-every 8 --refresh-m 32 --capbufs 16 --prefill-m 64 --early-every 4 --early-tokens 32 --static 250 --skip-quality",
+  "python": null,
+  "log_dir": "(session scratchpad)",
+  "server_roots": [
+   "main=F:\\AI\\NeuralServer_main"
+  ],
+  "ctx_root": "F:\\AI\\NeuralServer_decode-levers"
+ },
+ "sessions": [
+  {
+   "kind": "llama",
+   "args": "",
+   "tag": "s0",
+   "free_ram_gib_at_start": 55.34,
+   "turns": [
+    {
+     "prompt_tokens": 13107,
+     "cached_tokens": 0,
+     "prompt_s": 136.017417,
+     "completion_tokens": 512,
+     "decode_tok_s": 13.402207416854878,
+     "wall_s": 174.28,
+     "turn": 0,
+     "content_sha1": "f9e6b14ecec342b61f794113b40be485a20b7acd",
+     "free_ram_gib": 0.39
+    },
+    {
+     "prompt_tokens": 13629,
+     "cached_tokens": 13108,
+     "prompt_s": 5.2722039999999994,
+     "completion_tokens": 512,
+     "decode_tok_s": 14.623359663187468,
+     "wall_s": 40.39,
+     "turn": 1,
+     "content_sha1": "566e3fbd178d4a6e757f77dd71d64d2b143ceeb2",
+     "free_ram_gib": 0.4
+    },
+    {
+     "prompt_tokens": 14148,
+     "cached_tokens": 13630,
+     "prompt_s": 5.039178,
+     "completion_tokens": 512,
+     "decode_tok_s": 14.587259060575388,
+     "wall_s": 40.17,
+     "turn": 2,
+     "content_sha1": "d3d8d67e56fab36de4eb9d5952d7375f7f3b7469",
+     "free_ram_gib": 0.42
+    },
+    {
+     "prompt_tokens": 14671,
+     "cached_tokens": 14149,
+     "prompt_s": 5.039276,
+     "completion_tokens": 512,
+     "decode_tok_s": 14.266726880427747,
+     "wall_s": 40.96,
+     "turn": 3,
+     "content_sha1": "0f5d79d7035eda56c0cb0ff488e5ab677e0afb6c",
+     "free_ram_gib": 0.42
+    }
+   ],
+   "startup_s": 27.7,
+   "free_ram_gib_ready": 41.08
+  }
+ ],
+ "summary": {
+  "llama": {
+   "prompt_s_median": 136.017417,
+   "first_decode_median": 13.402207416854878,
+   "first_decode_all": [
+    13.402207416854878
+   ],
+   "followup_decode_median": 14.587259060575388,
+   "followup_decode_all": [
+    14.623359663187468,
+    14.587259060575388,
+    14.266726880427747
+   ],
+   "first_vram_hit_median": null,
+   "followup_vram_hit_median": null,
+   "first_cpu_ms_median": null,
+   "followup_prompt_s_median": 5.039276
+  },
+  "neural": {
+   "prompt_s_median": null,
+   "first_decode_median": null,
+   "first_decode_all": [],
+   "followup_decode_median": null,
+   "followup_decode_all": [],
+   "first_vram_hit_median": null,
+   "followup_vram_hit_median": null,
+   "first_cpu_ms_median": null,
+   "followup_prompt_s_median": null
+  }
+ }
+}

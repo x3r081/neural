@@ -1,0 +1,382 @@
+{
+  "status": "passed",
+  "scope": "One bounded code-generation request; response is validated before isolated execution; this is not a model-quality suite.",
+  "prompt": "Write only one Python code block containing a function named `merge_intervals(intervals)`.\nIt must return a new list of sorted [start, end] pairs, merging overlapping and touching intervals.\nHandle an empty list and nested intervals. Preserve the input list and its elements unchanged.\nOutput pairs must be new lists, with no aliases into the input.\nUse no imports, no other top-level statements, and only ordinary Python list/loop/condition code.",
+  "request": {
+    "model": "qwen3.6-35b-a3b-neural",
+    "endpoint": "http://127.0.0.1:8001/v1/chat/completions",
+    "request": {
+      "model": "qwen3.6-35b-a3b-neural",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Write only one Python code block containing a function named `merge_intervals(intervals)`.\nIt must return a new list of sorted [start, end] pairs, merging overlapping and touching intervals.\nHandle an empty list and nested intervals. Preserve the input list and its elements unchanged.\nOutput pairs must be new lists, with no aliases into the input.\nUse no imports, no other top-level statements, and only ordinary Python list/loop/condition code."
+        }
+      ],
+      "temperature": 0,
+      "max_tokens": 512,
+      "stream": false,
+      "chat_template_kwargs": {
+        "enable_thinking": false,
+        "preserve_thinking": false
+      }
+    }
+  },
+  "test_cases": [
+    {
+      "input": [],
+      "expected": []
+    },
+    {
+      "input": [
+        [
+          5,
+          7
+        ],
+        [
+          1,
+          2
+        ],
+        [
+          9,
+          10
+        ]
+      ],
+      "expected": [
+        [
+          1,
+          2
+        ],
+        [
+          5,
+          7
+        ],
+        [
+          9,
+          10
+        ]
+      ]
+    },
+    {
+      "input": [
+        [
+          1,
+          3
+        ],
+        [
+          2,
+          6
+        ],
+        [
+          8,
+          10
+        ]
+      ],
+      "expected": [
+        [
+          1,
+          6
+        ],
+        [
+          8,
+          10
+        ]
+      ]
+    },
+    {
+      "input": [
+        [
+          1,
+          2
+        ],
+        [
+          2,
+          4
+        ],
+        [
+          5,
+          6
+        ]
+      ],
+      "expected": [
+        [
+          1,
+          4
+        ],
+        [
+          5,
+          6
+        ]
+      ]
+    },
+    {
+      "input": [
+        [
+          1,
+          10
+        ],
+        [
+          2,
+          3
+        ],
+        [
+          4,
+          8
+        ]
+      ],
+      "expected": [
+        [
+          1,
+          10
+        ]
+      ]
+    }
+  ],
+  "raw_http_response": {
+    "status_code": 200,
+    "headers": {
+      "Server": "BaseHTTP/0.6 Python/3.12.10",
+      "Date": "Fri, 02 Oct 2026 18:05:40 GMT",
+      "Content-Type": "application/json; charset=utf-8",
+      "Content-Length": "1540"
+    },
+    "body_utf8": "{\"id\": \"chatcmpl-5af0d5208130473d933d0e2e12163c6a\", \"object\": \"chat.completion\", \"created\": 1790964287, \"model\": \"qwen3.6-35b-a3b-neural\", \"choices\": [{\"index\": 0, \"message\": {\"role\": \"assistant\", \"content\": \"```python\\ndef merge_intervals(intervals):\\n    if not intervals:\\n        return []\\n    \\n    # Create a copy of intervals to avoid modifying the input\\n    sorted_intervals = sorted(intervals, key=lambda x: x[0])\\n    \\n    merged = []\\n    for interval in sorted_intervals:\\n        if not merged:\\n            merged.append([interval[0], interval[1]])\\n        else:\\n            last = merged[-1]\\n            if interval[0] <= last[1]:\\n                # Overlapping or touching intervals, merge them\\n                last[1] = max(last[1], interval[1])\\n            else:\\n                merged.append([interval[0], interval[1]])\\n    \\n    return merged\\n```\", \"reasoning_content\": \"\"}, \"finish_reason\": \"stop\"}], \"usage\": {\"prompt_tokens\": 106, \"completion_tokens\": 159, \"total_tokens\": 265}, \"neural\": {\"prompt_n\": 106, \"prompt_ms\": 6918.543199997657, \"prompt_per_second\": 15.321144486029356, \"predicted_n\": 159, \"decode_calls\": 158, \"predicted_ms\": 40836.95350000198, \"predicted_per_second\": 3.869044736649915, \"first_token_s\": 6.918787899998279, \"wall_s\": 47.75549669999964, \"generation_tokens_per_wall_s\": 3.329459664064204, \"clock\": \"request prefill through generation, including sampling, detokenization and streaming callback; excludes startup\", \"decode_tok_s\": 3.869044736649915, \"prefill_s\": 6.918543199997657}}",
+    "body_base64": "eyJpZCI6ICJjaGF0Y21wbC01YWYwZDUyMDgxMzA0NzNkOTMzZDBlMmUxMjE2M2M2YSIsICJvYmplY3QiOiAiY2hhdC5jb21wbGV0aW9uIiwgImNyZWF0ZWQiOiAxNzkwOTY0Mjg3LCAibW9kZWwiOiAicXdlbjMuNi0zNWItYTNiLW5ldXJhbCIsICJjaG9pY2VzIjogW3siaW5kZXgiOiAwLCAibWVzc2FnZSI6IHsicm9sZSI6ICJhc3Npc3RhbnQiLCAiY29udGVudCI6ICJgYGBweXRob25cbmRlZiBtZXJnZV9pbnRlcnZhbHMoaW50ZXJ2YWxzKTpcbiAgICBpZiBub3QgaW50ZXJ2YWxzOlxuICAgICAgICByZXR1cm4gW11cbiAgICBcbiAgICAjIENyZWF0ZSBhIGNvcHkgb2YgaW50ZXJ2YWxzIHRvIGF2b2lkIG1vZGlmeWluZyB0aGUgaW5wdXRcbiAgICBzb3J0ZWRfaW50ZXJ2YWxzID0gc29ydGVkKGludGVydmFscywga2V5PWxhbWJkYSB4OiB4WzBdKVxuICAgIFxuICAgIG1lcmdlZCA9IFtdXG4gICAgZm9yIGludGVydmFsIGluIHNvcnRlZF9pbnRlcnZhbHM6XG4gICAgICAgIGlmIG5vdCBtZXJnZWQ6XG4gICAgICAgICAgICBtZXJnZWQuYXBwZW5kKFtpbnRlcnZhbFswXSwgaW50ZXJ2YWxbMV1dKVxuICAgICAgICBlbHNlOlxuICAgICAgICAgICAgbGFzdCA9IG1lcmdlZFstMV1cbiAgICAgICAgICAgIGlmIGludGVydmFsWzBdIDw9IGxhc3RbMV06XG4gICAgICAgICAgICAgICAgIyBPdmVybGFwcGluZyBvciB0b3VjaGluZyBpbnRlcnZhbHMsIG1lcmdlIHRoZW1cbiAgICAgICAgICAgICAgICBsYXN0WzFdID0gbWF4KGxhc3RbMV0sIGludGVydmFsWzFdKVxuICAgICAgICAgICAgZWxzZTpcbiAgICAgICAgICAgICAgICBtZXJnZWQuYXBwZW5kKFtpbnRlcnZhbFswXSwgaW50ZXJ2YWxbMV1dKVxuICAgIFxuICAgIHJldHVybiBtZXJnZWRcbmBgYCIsICJyZWFzb25pbmdfY29udGVudCI6ICIifSwgImZpbmlzaF9yZWFzb24iOiAic3RvcCJ9XSwgInVzYWdlIjogeyJwcm9tcHRfdG9rZW5zIjogMTA2LCAiY29tcGxldGlvbl90b2tlbnMiOiAxNTksICJ0b3RhbF90b2tlbnMiOiAyNjV9LCAibmV1cmFsIjogeyJwcm9tcHRfbiI6IDEwNiwgInByb21wdF9tcyI6IDY5MTguNTQzMTk5OTk3NjU3LCAicHJvbXB0X3Blcl9zZWNvbmQiOiAxNS4zMjExNDQ0ODYwMjkzNTYsICJwcmVkaWN0ZWRfbiI6IDE1OSwgImRlY29kZV9jYWxscyI6IDE1OCwgInByZWRpY3RlZF9tcyI6IDQwODM2Ljk1MzUwMDAwMTk4LCAicHJlZGljdGVkX3Blcl9zZWNvbmQiOiAzLjg2OTA0NDczNjY0OTkxNSwgImZpcnN0X3Rva2VuX3MiOiA2LjkxODc4Nzg5OTk5ODI3OSwgIndhbGxfcyI6IDQ3Ljc1NTQ5NjY5OTk5OTY0LCAiZ2VuZXJhdGlvbl90b2tlbnNfcGVyX3dhbGxfcyI6IDMuMzI5NDU5NjY0MDY0MjA0LCAiY2xvY2siOiAicmVxdWVzdCBwcmVmaWxsIHRocm91Z2ggZ2VuZXJhdGlvbiwgaW5jbHVkaW5nIHNhbXBsaW5nLCBkZXRva2VuaXphdGlvbiBhbmQgc3RyZWFtaW5nIGNhbGxiYWNrOyBleGNsdWRlcyBzdGFydHVwIiwgImRlY29kZV90b2tfcyI6IDMuODY5MDQ0NzM2NjQ5OTE1LCAicHJlZmlsbF9zIjogNi45MTg1NDMxOTk5OTc2NTd9fQ==",
+    "json": {
+      "id": "chatcmpl-5af0d5208130473d933d0e2e12163c6a",
+      "object": "chat.completion",
+      "created": 1790964287,
+      "model": "qwen3.6-35b-a3b-neural",
+      "choices": [
+        {
+          "index": 0,
+          "message": {
+            "role": "assistant",
+            "content": "```python\ndef merge_intervals(intervals):\n    if not intervals:\n        return []\n    \n    # Create a copy of intervals to avoid modifying the input\n    sorted_intervals = sorted(intervals, key=lambda x: x[0])\n    \n    merged = []\n    for interval in sorted_intervals:\n        if not merged:\n            merged.append([interval[0], interval[1]])\n        else:\n            last = merged[-1]\n            if interval[0] <= last[1]:\n                # Overlapping or touching intervals, merge them\n                last[1] = max(last[1], interval[1])\n            else:\n                merged.append([interval[0], interval[1]])\n    \n    return merged\n```",
+            "reasoning_content": ""
+          },
+          "finish_reason": "stop"
+        }
+      ],
+      "usage": {
+        "prompt_tokens": 106,
+        "completion_tokens": 159,
+        "total_tokens": 265
+      },
+      "neural": {
+        "prompt_n": 106,
+        "prompt_ms": 6918.543199997657,
+        "prompt_per_second": 15.321144486029356,
+        "predicted_n": 159,
+        "decode_calls": 158,
+        "predicted_ms": 40836.95350000198,
+        "predicted_per_second": 3.869044736649915,
+        "first_token_s": 6.918787899998279,
+        "wall_s": 47.75549669999964,
+        "generation_tokens_per_wall_s": 3.329459664064204,
+        "clock": "request prefill through generation, including sampling, detokenization and streaming callback; excludes startup",
+        "decode_tok_s": 3.869044736649915,
+        "prefill_s": 6.918543199997657
+      }
+    },
+    "client_wall_s": 53.1855859999996
+  },
+  "timing": {
+    "client_wall_s": 53.1855859999996,
+    "server_neural": {
+      "prompt_n": 106,
+      "prompt_ms": 6918.543199997657,
+      "prompt_per_second": 15.321144486029356,
+      "predicted_n": 159,
+      "decode_calls": 158,
+      "predicted_ms": 40836.95350000198,
+      "predicted_per_second": 3.869044736649915,
+      "first_token_s": 6.918787899998279,
+      "wall_s": 47.75549669999964,
+      "generation_tokens_per_wall_s": 3.329459664064204,
+      "clock": "request prefill through generation, including sampling, detokenization and streaming callback; excludes startup",
+      "decode_tok_s": 3.869044736649915,
+      "prefill_s": 6.918543199997657
+    }
+  },
+  "usage": {
+    "prompt_tokens": 106,
+    "completion_tokens": 159,
+    "total_tokens": 265
+  },
+  "finish_reason": "stop",
+  "emitted_content": "```python\ndef merge_intervals(intervals):\n    if not intervals:\n        return []\n    \n    # Create a copy of intervals to avoid modifying the input\n    sorted_intervals = sorted(intervals, key=lambda x: x[0])\n    \n    merged = []\n    for interval in sorted_intervals:\n        if not merged:\n            merged.append([interval[0], interval[1]])\n        else:\n            last = merged[-1]\n            if interval[0] <= last[1]:\n                # Overlapping or touching intervals, merge them\n                last[1] = max(last[1], interval[1])\n            else:\n                merged.append([interval[0], interval[1]])\n    \n    return merged\n```",
+  "emitted_code": "def merge_intervals(intervals):\n    if not intervals:\n        return []\n    \n    # Create a copy of intervals to avoid modifying the input\n    sorted_intervals = sorted(intervals, key=lambda x: x[0])\n    \n    merged = []\n    for interval in sorted_intervals:\n        if not merged:\n            merged.append([interval[0], interval[1]])\n        else:\n            last = merged[-1]\n            if interval[0] <= last[1]:\n                # Overlapping or touching intervals, merge them\n                last[1] = max(last[1], interval[1])\n            else:\n                merged.append([interval[0], interval[1]])\n    \n    return merged\n",
+  "ast_validation": {
+    "status": "passed",
+    "policy": "single merge_intervals function; no imports/dunders; allowlisted syntax and calls only"
+  },
+  "sandbox_execution": {
+    "return_code": 0,
+    "stdout": "{\"status\": \"passed\", \"tests\": [{\"input\": [], \"actual\": [], \"expected\": [], \"input_unchanged\": true, \"passed\": true}, {\"input\": [[5, 7], [1, 2], [9, 10]], \"actual\": [[1, 2], [5, 7], [9, 10]], \"expected\": [[1, 2], [5, 7], [9, 10]], \"input_unchanged\": true, \"passed\": true}, {\"input\": [[1, 3], [2, 6], [8, 10]], \"actual\": [[1, 6], [8, 10]], \"expected\": [[1, 6], [8, 10]], \"input_unchanged\": true, \"passed\": true}, {\"input\": [[1, 2], [2, 4], [5, 6]], \"actual\": [[1, 4], [5, 6]], \"expected\": [[1, 4], [5, 6]], \"input_unchanged\": true, \"passed\": true}, {\"input\": [[1, 10], [2, 3], [4, 8]], \"actual\": [[1, 10]], \"expected\": [[1, 10]], \"input_unchanged\": true, \"passed\": true}]}\n",
+    "stderr": "",
+    "timeout_s": 2.0,
+    "status": "passed",
+    "tests": [
+      {
+        "input": [],
+        "actual": [],
+        "expected": [],
+        "input_unchanged": true,
+        "passed": true
+      },
+      {
+        "input": [
+          [
+            5,
+            7
+          ],
+          [
+            1,
+            2
+          ],
+          [
+            9,
+            10
+          ]
+        ],
+        "actual": [
+          [
+            1,
+            2
+          ],
+          [
+            5,
+            7
+          ],
+          [
+            9,
+            10
+          ]
+        ],
+        "expected": [
+          [
+            1,
+            2
+          ],
+          [
+            5,
+            7
+          ],
+          [
+            9,
+            10
+          ]
+        ],
+        "input_unchanged": true,
+        "passed": true
+      },
+      {
+        "input": [
+          [
+            1,
+            3
+          ],
+          [
+            2,
+            6
+          ],
+          [
+            8,
+            10
+          ]
+        ],
+        "actual": [
+          [
+            1,
+            6
+          ],
+          [
+            8,
+            10
+          ]
+        ],
+        "expected": [
+          [
+            1,
+            6
+          ],
+          [
+            8,
+            10
+          ]
+        ],
+        "input_unchanged": true,
+        "passed": true
+      },
+      {
+        "input": [
+          [
+            1,
+            2
+          ],
+          [
+            2,
+            4
+          ],
+          [
+            5,
+            6
+          ]
+        ],
+        "actual": [
+          [
+            1,
+            4
+          ],
+          [
+            5,
+            6
+          ]
+        ],
+        "expected": [
+          [
+            1,
+            4
+          ],
+          [
+            5,
+            6
+          ]
+        ],
+        "input_unchanged": true,
+        "passed": true
+      },
+      {
+        "input": [
+          [
+            1,
+            10
+          ],
+          [
+            2,
+            3
+          ],
+          [
+            4,
+            8
+          ]
+        ],
+        "actual": [
+          [
+            1,
+            10
+          ]
+        ],
+        "expected": [
+          [
+            1,
+            10
+          ]
+        ],
+        "input_unchanged": true,
+        "passed": true
+      }
+    ]
+  }
+}

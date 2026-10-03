@@ -1,0 +1,46 @@
+[transformers] The fast path is not available because one of the required library is not installed. Falling back to torch implementation. To install follow https://github.com/fla-org/flash-linear-attention#installation and https://github.com/Dao-AILab/causal-conv1d
+READY: qwen3.6-35b-a3b-neural at http://127.0.0.1:8001/v1
+127.0.0.1 - - [02/Oct/2026 19:40:36] "GET /health HTTP/1.1" 200 -
+127.0.0.1 - - [02/Oct/2026 19:40:55] "POST /completion HTTP/1.1" 200 -
+127.0.0.1 - - [02/Oct/2026 19:40:56] "POST /tokenize HTTP/1.1" 200 -
+127.0.0.1 - - [02/Oct/2026 19:43:24] "POST /completion HTTP/1.1" 200 -
+127.0.0.1 - - [02/Oct/2026 19:43:24] "POST /tokenize HTTP/1.1" 200 -
+127.0.0.1 - - [02/Oct/2026 19:46:17] "POST /completion HTTP/1.1" 200 -
+127.0.0.1 - - [02/Oct/2026 19:46:17] "POST /tokenize HTTP/1.1" 200 -
+127.0.0.1 - - [02/Oct/2026 19:48:43] "POST /completion HTTP/1.1" 200 -
+127.0.0.1 - - [02/Oct/2026 19:48:44] "GET /health HTTP/1.1" 200 -
+127.0.0.1 - - [02/Oct/2026 19:48:44] "GET /v1/models HTTP/1.1" 200 -
+Traceback (most recent call last):
+  File "F:\AI\NeuralQwen36\qwen_server.py", line 83, in do_POST
+    raise ValueError("request body must be an object")
+ValueError: request body must be an object
+127.0.0.1 - - [02/Oct/2026 19:48:44] "POST /v1/chat/completions HTTP/1.1" 400 -
+Traceback (most recent call last):
+  File "F:\AI\NeuralQwen36\qwen_server.py", line 110, in do_POST
+    prompt, thinking = render_prompt(backend.tokenizer, request) if chat else (request["prompt"], False)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\AI\NeuralQwen36\qwen_neural\generation.py", line 72, in render_prompt
+    normalize_messages(request["messages"]), tools=request.get("tools"),
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\AI\NeuralQwen36\qwen_neural\generation.py", line 20, in normalize_messages
+    raise ValueError("each message must be an object")
+ValueError: each message must be an object
+127.0.0.1 - - [02/Oct/2026 19:48:44] "POST /v1/chat/completions HTTP/1.1" 400 -
+Traceback (most recent call last):
+  File "F:\AI\NeuralQwen36\qwen_server.py", line 86, in do_POST
+    raise ValueError(f"{field} must be a boolean")
+ValueError: stream must be a boolean
+127.0.0.1 - - [02/Oct/2026 19:48:44] "POST /v1/chat/completions HTTP/1.1" 400 -
+127.0.0.1 - - [02/Oct/2026 19:48:49] "POST /v1/chat/completions HTTP/1.1" 200 -
+127.0.0.1 - - [02/Oct/2026 19:48:49] "POST /v1/chat/completions HTTP/1.1" 200 -
+127.0.0.1 - - [02/Oct/2026 19:49:49] "POST /v1/chat/completions HTTP/1.1" 200 -
+127.0.0.1 - - [02/Oct/2026 19:50:04] "POST /v1/chat/completions HTTP/1.1" 200 -
+Traceback (most recent call last):
+  File "F:\AI\NeuralQwen36\qwen_server.py", line 110, in do_POST
+    prompt, thinking = render_prompt(backend.tokenizer, request) if chat else (request["prompt"], False)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "F:\AI\NeuralQwen36\qwen_neural\generation.py", line 72, in render_prompt
+    normalize_messages(request["messages"]), tools=request.get("tools"),
+                       ~~~~~~~^^^^^^^^^^^^
+KeyError: 'messages'
+127.0.0.1 - - [02/Oct/2026 19:50:05] "POST /v1/chat/completions HTTP/1.1" 400 -

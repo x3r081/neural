@@ -1,0 +1,74 @@
+{
+ "config": {
+  "out": "step5rw_03_llama.json",
+  "rounds": 2,
+  "schedule": "llama",
+  "kinds": [
+   "llama",
+   "neural=--kv-ring 256 --scratch 6 --pool 6.05 --kernel-fuse 1"
+  ],
+  "workload": "rewrite",
+  "ctx_tokens": 3000,
+  "max_tokens": 1536,
+  "effort": "low",
+  "llama_dir": "G:\\Tools\\llama-b10361",
+  "gguf": "G:\\Models\\gpt-oss-120b-gguf\\gpt-oss-120b-MXFP4.gguf",
+  "llama_args": "-ngl 99 -ncmoe 31 -t 8 -c 16384 -fa on --jinja",
+  "neural_args": "--pool 5.5 --smax 16384 --threads 8 --hotset hotset_code.json --refresh-every 8 --refresh-m 32 --capbufs 16 --prefill-m 64 --early-every 4 --early-tokens 32 --static 250 --skip-quality",
+  "python": null,
+  "log_dir": "(session scratchpad)",
+  "server_roots": [
+   "main=F:\\AI\\NeuralServer_main"
+  ],
+  "ctx_root": "F:\\AI\\NeuralServer_decode-levers"
+ },
+ "sessions": [
+  {
+   "kind": "llama",
+   "args": "",
+   "tag": "s0",
+   "free_ram_gib_at_start": 55.71,
+   "turns": [
+    {
+     "prompt_tokens": 3111,
+     "cached_tokens": 0,
+     "prompt_s": 63.226618,
+     "completion_tokens": 171,
+     "decode_tok_s": 14.51070784166289,
+     "wall_s": 75.06,
+     "turn": 0,
+     "content_sha1": "efa0deb17ef825d99dac255469f274074f8b0d0a",
+     "free_ram_gib": 0.78
+    }
+   ],
+   "startup_s": 27.6,
+   "free_ram_gib_ready": 41.49
+  }
+ ],
+ "summary": {
+  "llama": {
+   "prompt_s_median": 63.226618,
+   "first_decode_median": 14.51070784166289,
+   "first_decode_all": [
+    14.51070784166289
+   ],
+   "followup_decode_median": null,
+   "followup_decode_all": [],
+   "first_vram_hit_median": null,
+   "followup_vram_hit_median": null,
+   "first_cpu_ms_median": null,
+   "followup_prompt_s_median": null
+  },
+  "neural": {
+   "prompt_s_median": null,
+   "first_decode_median": null,
+   "first_decode_all": [],
+   "followup_decode_median": null,
+   "followup_decode_all": [],
+   "first_vram_hit_median": null,
+   "followup_vram_hit_median": null,
+   "first_cpu_ms_median": null,
+   "followup_prompt_s_median": null
+  }
+ }
+}

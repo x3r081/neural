@@ -1,0 +1,2021 @@
+{
+  "label": "MEASURED",
+  "gpu": "NVIDIA GeForce RTX 3080 Ti",
+  "torch": "2.10.0+cu130",
+  "triton": "3.7.1",
+  "pid": 32032,
+  "cases": [
+    {
+      "K": 128,
+      "N": 160,
+      "BM": 16,
+      "BN": 128,
+      "M": [
+        1,
+        15,
+        16,
+        17,
+        31
+      ],
+      "layout": "raw",
+      "aligned": false,
+      "tiles": 7,
+      "equal": true,
+      "finite": true,
+      "guard_intact": true,
+      "deterministic": true,
+      "graph_equal": true
+    },
+    {
+      "K": 128,
+      "N": 160,
+      "BM": 16,
+      "BN": 128,
+      "M": [
+        1,
+        15,
+        16,
+        17,
+        31
+      ],
+      "layout": "packed",
+      "aligned": false,
+      "tiles": 7,
+      "equal": true,
+      "finite": true,
+      "guard_intact": true,
+      "deterministic": true,
+      "graph_equal": true
+    },
+    {
+      "K": 128,
+      "N": 160,
+      "BM": 64,
+      "BN": 128,
+      "M": [
+        0,
+        1,
+        63,
+        64,
+        65,
+        129
+      ],
+      "layout": "raw",
+      "aligned": false,
+      "tiles": 8,
+      "equal": true,
+      "finite": true,
+      "guard_intact": true,
+      "deterministic": true,
+      "graph_equal": true,
+      "timing": {
+        "label": "MEASURED",
+        "iterations": 30,
+        "legs": [
+          {
+            "round": 0,
+            "kind": "stock",
+            "gpu_ms": 0.10690560340881347,
+            "host_ms": 0.10619333334034309
+          },
+          {
+            "round": 0,
+            "kind": "grouped_reuse",
+            "gpu_ms": 0.02846506635348002,
+            "host_ms": 0.027736666682661355
+          },
+          {
+            "round": 0,
+            "kind": "grouped_build",
+            "gpu_ms": 0.3779242515563965,
+            "host_ms": 0.37686666667771834
+          },
+          {
+            "round": 1,
+            "kind": "grouped_build",
+            "gpu_ms": 0.12223146756490072,
+            "host_ms": 0.1215533333379426
+          },
+          {
+            "round": 1,
+            "kind": "grouped_reuse",
+            "gpu_ms": 0.03495253324508667,
+            "host_ms": 0.03405333333527475
+          },
+          {
+            "round": 1,
+            "kind": "stock",
+            "gpu_ms": 0.1167359987894694,
+            "host_ms": 0.11565333334146999
+          },
+          {
+            "round": 2,
+            "kind": "stock",
+            "gpu_ms": 0.10035200119018554,
+            "host_ms": 0.09976999999707914
+          },
+          {
+            "round": 2,
+            "kind": "grouped_reuse",
+            "gpu_ms": 0.02624853253364563,
+            "host_ms": 0.02566666665491842
+          },
+          {
+            "round": 2,
+            "kind": "grouped_build",
+            "gpu_ms": 0.12526933352152506,
+            "host_ms": 0.12461333332491147
+          },
+          {
+            "round": 3,
+            "kind": "grouped_build",
+            "gpu_ms": 0.12397226492563883,
+            "host_ms": 0.12337999999848155
+          },
+          {
+            "round": 3,
+            "kind": "grouped_reuse",
+            "gpu_ms": 0.026178133487701417,
+            "host_ms": 0.025596666667600704
+          },
+          {
+            "round": 3,
+            "kind": "stock",
+            "gpu_ms": 0.10806186993916829,
+            "host_ms": 0.1071833333298855
+          }
+        ],
+        "medians": {
+          "stock": {
+            "gpu_ms": 0.10748373667399089,
+            "host_ms": 0.1066883333351143
+          },
+          "grouped_reuse": {
+            "gpu_ms": 0.027356799443562826,
+            "host_ms": 0.026701666668789887
+          },
+          "grouped_build": {
+            "gpu_ms": 0.12462079922358194,
+            "host_ms": 0.12399666666169651
+          }
+        },
+        "gpu_ratio_stock_over_grouped_build": 0.8624863373019661
+      }
+    },
+    {
+      "K": 128,
+      "N": 160,
+      "BM": 64,
+      "BN": 128,
+      "M": [
+        0,
+        1,
+        63,
+        64,
+        65,
+        129
+      ],
+      "layout": "packed",
+      "aligned": false,
+      "tiles": 8,
+      "equal": true,
+      "finite": true,
+      "guard_intact": true,
+      "deterministic": true,
+      "graph_equal": true,
+      "timing": {
+        "label": "MEASURED",
+        "iterations": 30,
+        "legs": [
+          {
+            "round": 0,
+            "kind": "stock",
+            "gpu_ms": 0.09939626852671306,
+            "host_ms": 0.09874666666291887
+          },
+          {
+            "round": 0,
+            "kind": "grouped_reuse",
+            "gpu_ms": 0.025497599442799886,
+            "host_ms": 0.024909999986751547
+          },
+          {
+            "round": 0,
+            "kind": "grouped_build",
+            "gpu_ms": 0.15076692899068198,
+            "host_ms": 0.14236666668997108
+          },
+          {
+            "round": 1,
+            "kind": "grouped_build",
+            "gpu_ms": 0.12328960100809733,
+            "host_ms": 0.12256999998498941
+          },
+          {
+            "round": 1,
+            "kind": "grouped_reuse",
+            "gpu_ms": 0.02600746750831604,
+            "host_ms": 0.025410000004436977
+          },
+          {
+            "round": 1,
+            "kind": "stock",
+            "gpu_ms": 0.10141013463338217,
+            "host_ms": 0.10080000001835288
+          },
+          {
+            "round": 2,
+            "kind": "stock",
+            "gpu_ms": 0.10007893244425456,
+            "host_ms": 0.09950999998788272
+          },
+          {
+            "round": 2,
+            "kind": "grouped_reuse",
+            "gpu_ms": 0.026589866479237875,
+            "host_ms": 0.026026666667651927
+          },
+          {
+            "round": 2,
+            "kind": "grouped_build",
+            "gpu_ms": 0.12829866409301757,
+            "host_ms": 0.12709999997847868
+          },
+          {
+            "round": 3,
+            "kind": "grouped_build",
+            "gpu_ms": 0.1314506689707438,
+            "host_ms": 0.1302633333276996
+          },
+          {
+            "round": 3,
+            "kind": "grouped_reuse",
+            "gpu_ms": 0.024780799945195515,
+            "host_ms": 0.024213333320706926
+          },
+          {
+            "round": 3,
+            "kind": "stock",
+            "gpu_ms": 0.09775786399841309,
+            "host_ms": 0.09718333333997482
+          }
+        ],
+        "medians": {
+          "stock": {
+            "gpu_ms": 0.0997376004854838,
+            "host_ms": 0.0991283333254008
+          },
+          "grouped_reuse": {
+            "gpu_ms": 0.025752533475557962,
+            "host_ms": 0.025159999995594262
+          },
+          "grouped_build": {
+            "gpu_ms": 0.12987466653188068,
+            "host_ms": 0.12868166665308914
+          }
+        },
+        "gpu_ratio_stock_over_grouped_build": 0.7679526973876846
+      }
+    },
+    {
+      "K": 128,
+      "N": 160,
+      "BM": 64,
+      "BN": 128,
+      "M": [
+        0,
+        1,
+        63,
+        64,
+        65,
+        129
+      ],
+      "layout": "raw",
+      "aligned": true,
+      "tiles": 8,
+      "equal": true,
+      "finite": true,
+      "guard_intact": true,
+      "deterministic": true,
+      "graph_equal": true,
+      "timing": {
+        "label": "MEASURED",
+        "iterations": 30,
+        "legs": [
+          {
+            "round": 0,
+            "kind": "stock",
+            "gpu_ms": 0.12373332977294922,
+            "host_ms": 0.12241333333804505
+          },
+          {
+            "round": 0,
+            "kind": "grouped_reuse",
+            "gpu_ms": 0.031820799907048544,
+            "host_ms": 0.03091000001707774
+          },
+          {
+            "round": 0,
+            "kind": "grouped_build",
+            "gpu_ms": 0.12809600035349528,
+            "host_ms": 0.127386666675496
+          },
+          {
+            "round": 1,
+            "kind": "grouped_build",
+            "gpu_ms": 0.12557653586069742,
+            "host_ms": 0.1249166666639212
+          },
+          {
+            "round": 1,
+            "kind": "grouped_reuse",
+            "gpu_ms": 0.02594133416811625,
+            "host_ms": 0.025380000018534094
+          },
+          {
+            "round": 1,
+            "kind": "stock",
+            "gpu_ms": 0.09956693649291992,
+            "host_ms": 0.09899666665660334
+          },
+          {
+            "round": 2,
+            "kind": "stock",
+            "gpu_ms": 0.11960319677988689,
+            "host_ms": 0.11834000000211138
+          },
+          {
+            "round": 2,
+            "kind": "grouped_reuse",
+            "gpu_ms": 0.027267199754714967,
+            "host_ms": 0.026623333330159465
+          },
+          {
+            "round": 2,
+            "kind": "grouped_build",
+            "gpu_ms": 0.12769280274709066,
+            "host_ms": 0.12703333331955946
+          },
+          {
+            "round": 3,
+            "kind": "grouped_build",
+            "gpu_ms": 0.1257472038269043,
+            "host_ms": 0.12512666665619085
+          },
+          {
+            "round": 3,
+            "kind": "grouped_reuse",
+            "gpu_ms": 0.025874133904774985,
+            "host_ms": 0.025296666656989448
+          },
+          {
+            "round": 3,
+            "kind": "stock",
+            "gpu_ms": 0.09892053604125976,
+            "host_ms": 0.09835666666428249
+          }
+        ],
+        "medians": {
+          "stock": {
+            "gpu_ms": 0.10958506663640341,
+            "host_ms": 0.10866833332935735
+          },
+          "grouped_reuse": {
+            "gpu_ms": 0.026604266961415608,
+            "host_ms": 0.02600166667434678
+          },
+          "grouped_build": {
+            "gpu_ms": 0.12672000328699748,
+            "host_ms": 0.12607999998787517
+          }
+        },
+        "gpu_ratio_stock_over_grouped_build": 0.8647811221107169
+      }
+    },
+    {
+      "K": 128,
+      "N": 160,
+      "BM": 64,
+      "BN": 128,
+      "M": [
+        0,
+        1,
+        63,
+        64,
+        65,
+        129
+      ],
+      "layout": "packed",
+      "aligned": true,
+      "tiles": 8,
+      "equal": true,
+      "finite": true,
+      "guard_intact": true,
+      "deterministic": true,
+      "graph_equal": true,
+      "timing": {
+        "label": "MEASURED",
+        "iterations": 30,
+        "legs": [
+          {
+            "round": 0,
+            "kind": "stock",
+            "gpu_ms": 0.1234602689743042,
+            "host_ms": 0.1162100000025627
+          },
+          {
+            "round": 0,
+            "kind": "grouped_reuse",
+            "gpu_ms": 0.02665813366572062,
+            "host_ms": 0.02606999999746525
+          },
+          {
+            "round": 0,
+            "kind": "grouped_build",
+            "gpu_ms": 0.1314133326212565,
+            "host_ms": 0.1305066666645871
+          },
+          {
+            "round": 1,
+            "kind": "grouped_build",
+            "gpu_ms": 0.12558293342590332,
+            "host_ms": 0.1249433333214256
+          },
+          {
+            "round": 1,
+            "kind": "grouped_reuse",
+            "gpu_ms": 0.029593600829442342,
+            "host_ms": 0.028930000007676426
+          },
+          {
+            "round": 1,
+            "kind": "stock",
+            "gpu_ms": 0.11008000373840332,
+            "host_ms": 0.10948666664868749
+          },
+          {
+            "round": 2,
+            "kind": "stock",
+            "gpu_ms": 0.11629227002461752,
+            "host_ms": 0.1114633333600068
+          },
+          {
+            "round": 2,
+            "kind": "grouped_reuse",
+            "gpu_ms": 0.026966400941212974,
+            "host_ms": 0.026363333351279532
+          },
+          {
+            "round": 2,
+            "kind": "grouped_build",
+            "gpu_ms": 0.12892159620920818,
+            "host_ms": 0.12826666667630585
+          },
+          {
+            "round": 3,
+            "kind": "grouped_build",
+            "gpu_ms": 0.13014826774597169,
+            "host_ms": 0.12925666666584826
+          },
+          {
+            "round": 3,
+            "kind": "grouped_reuse",
+            "gpu_ms": 0.026075732707977296,
+            "host_ms": 0.02546666664784425
+          },
+          {
+            "round": 3,
+            "kind": "stock",
+            "gpu_ms": 0.10126399993896484,
+            "host_ms": 0.10066666667019793
+          }
+        ],
+        "medians": {
+          "stock": {
+            "gpu_ms": 0.11318613688151041,
+            "host_ms": 0.11047500000434715
+          },
+          "grouped_reuse": {
+            "gpu_ms": 0.026812267303466798,
+            "host_ms": 0.02621666667437239
+          },
+          "grouped_build": {
+            "gpu_ms": 0.12953493197758992,
+            "host_ms": 0.12876166667107705
+          }
+        },
+        "gpu_ratio_stock_over_grouped_build": 0.87378852293752
+      }
+    },
+    {
+      "K": 128,
+      "N": 128,
+      "BM": 16,
+      "BN": 128,
+      "M": [
+        1,
+        15,
+        16,
+        17,
+        31
+      ],
+      "layout": "raw",
+      "aligned": false,
+      "tiles": 7,
+      "equal": true,
+      "finite": true,
+      "guard_intact": true,
+      "deterministic": true,
+      "graph_equal": true
+    },
+    {
+      "K": 128,
+      "N": 128,
+      "BM": 16,
+      "BN": 128,
+      "M": [
+        1,
+        15,
+        16,
+        17,
+        31
+      ],
+      "layout": "packed",
+      "aligned": false,
+      "tiles": 7,
+      "equal": true,
+      "finite": true,
+      "guard_intact": true,
+      "deterministic": true,
+      "graph_equal": true
+    },
+    {
+      "K": 128,
+      "N": 128,
+      "BM": 64,
+      "BN": 128,
+      "M": [
+        0,
+        1,
+        63,
+        64,
+        65,
+        129
+      ],
+      "layout": "raw",
+      "aligned": false,
+      "tiles": 8,
+      "equal": true,
+      "finite": true,
+      "guard_intact": true,
+      "deterministic": true,
+      "graph_equal": true,
+      "timing": {
+        "label": "MEASURED",
+        "iterations": 30,
+        "legs": [
+          {
+            "round": 0,
+            "kind": "stock",
+            "gpu_ms": 0.1163968006769816,
+            "host_ms": 0.11541333333298098
+          },
+          {
+            "round": 0,
+            "kind": "grouped_reuse",
+            "gpu_ms": 0.03059200048446655,
+            "host_ms": 0.029953333341836696
+          },
+          {
+            "round": 0,
+            "kind": "grouped_build",
+            "gpu_ms": 0.13933226267496746,
+            "host_ms": 0.138393333327258
+          },
+          {
+            "round": 1,
+            "kind": "grouped_build",
+            "gpu_ms": 0.12840960025787354,
+            "host_ms": 0.1276733333421968
+          },
+          {
+            "round": 1,
+            "kind": "grouped_reuse",
+            "gpu_ms": 0.026282666126887004,
+            "host_ms": 0.0256700000136334
+          },
+          {
+            "round": 1,
+            "kind": "stock",
+            "gpu_ms": 0.10557440121968588,
+            "host_ms": 0.10453999999905743
+          },
+          {
+            "round": 2,
+            "kind": "stock",
+            "gpu_ms": 0.11332266330718994,
+            "host_ms": 0.11233666667370319
+          },
+          {
+            "round": 2,
+            "kind": "grouped_reuse",
+            "gpu_ms": 0.02686293323834737,
+            "host_ms": 0.026236666659921564
+          },
+          {
+            "round": 2,
+            "kind": "grouped_build",
+            "gpu_ms": 0.12745386759440105,
+            "host_ms": 0.12679333334138695
+          },
+          {
+            "round": 3,
+            "kind": "grouped_build",
+            "gpu_ms": 0.13011626402537027,
+            "host_ms": 0.1292233333515469
+          },
+          {
+            "round": 3,
+            "kind": "grouped_reuse",
+            "gpu_ms": 0.026013867060343424,
+            "host_ms": 0.025423333318030927
+          },
+          {
+            "round": 3,
+            "kind": "stock",
+            "gpu_ms": 0.10168320337931315,
+            "host_ms": 0.10104333332492388
+          }
+        ],
+        "medians": {
+          "stock": {
+            "gpu_ms": 0.10944853226343791,
+            "host_ms": 0.10843833333638031
+          },
+          "grouped_reuse": {
+            "gpu_ms": 0.026572799682617186,
+            "host_ms": 0.025953333336777483
+          },
+          "grouped_build": {
+            "gpu_ms": 0.1292629321416219,
+            "host_ms": 0.12844833334687183
+          }
+        },
+        "gpu_ratio_stock_over_grouped_build": 0.8467124368146383
+      }
+    },
+    {
+      "K": 128,
+      "N": 128,
+      "BM": 64,
+      "BN": 128,
+      "M": [
+        0,
+        1,
+        63,
+        64,
+        65,
+        129
+      ],
+      "layout": "packed",
+      "aligned": false,
+      "tiles": 8,
+      "equal": true,
+      "finite": true,
+      "guard_intact": true,
+      "deterministic": true,
+      "graph_equal": true,
+      "timing": {
+        "label": "MEASURED",
+        "iterations": 30,
+        "legs": [
+          {
+            "round": 0,
+            "kind": "stock",
+            "gpu_ms": 0.14817280769348146,
+            "host_ms": 0.10173333333417152
+          },
+          {
+            "round": 0,
+            "kind": "grouped_reuse",
+            "gpu_ms": 0.03321173389752706,
+            "host_ms": 0.026463333324500127
+          },
+          {
+            "round": 0,
+            "kind": "grouped_build",
+            "gpu_ms": 0.14308692614237467,
+            "host_ms": 0.1375233333419601
+          },
+          {
+            "round": 1,
+            "kind": "grouped_build",
+            "gpu_ms": 0.11994453271230061,
+            "host_ms": 0.11920333336092881
+          },
+          {
+            "round": 1,
+            "kind": "grouped_reuse",
+            "gpu_ms": 0.031914667288462324,
+            "host_ms": 0.024729999980384793
+          },
+          {
+            "round": 1,
+            "kind": "stock",
+            "gpu_ms": 0.14537386894226073,
+            "host_ms": 0.10124999998879503
+          },
+          {
+            "round": 2,
+            "kind": "stock",
+            "gpu_ms": 0.1869823932647705,
+            "host_ms": 0.09043333332859523
+          },
+          {
+            "round": 2,
+            "kind": "grouped_reuse",
+            "gpu_ms": 0.03314346671104431,
+            "host_ms": 0.02589999997629396
+          },
+          {
+            "round": 2,
+            "kind": "grouped_build",
+            "gpu_ms": 0.1221290667851766,
+            "host_ms": 0.12142666667690112
+          },
+          {
+            "round": 3,
+            "kind": "grouped_build",
+            "gpu_ms": 0.12393813133239746,
+            "host_ms": 0.12323000000833417
+          },
+          {
+            "round": 3,
+            "kind": "grouped_reuse",
+            "gpu_ms": 0.03160746693611145,
+            "host_ms": 0.024376666685081243
+          },
+          {
+            "round": 3,
+            "kind": "stock",
+            "gpu_ms": 0.1439743995666504,
+            "host_ms": 0.09045666668801762
+          }
+        ],
+        "medians": {
+          "stock": {
+            "gpu_ms": 0.1467733383178711,
+            "host_ms": 0.09585333333840632
+          },
+          "grouped_reuse": {
+            "gpu_ms": 0.03252906699975332,
+            "host_ms": 0.025314999978339376
+          },
+          "grouped_build": {
+            "gpu_ms": 0.12303359905878702,
+            "host_ms": 0.12232833334261764
+          }
+        },
+        "gpu_ratio_stock_over_grouped_build": 1.192953302518127
+      }
+    },
+    {
+      "K": 128,
+      "N": 128,
+      "BM": 64,
+      "BN": 128,
+      "M": [
+        0,
+        1,
+        63,
+        64,
+        65,
+        129
+      ],
+      "layout": "raw",
+      "aligned": true,
+      "tiles": 8,
+      "equal": true,
+      "finite": true,
+      "guard_intact": true,
+      "deterministic": true,
+      "graph_equal": true,
+      "timing": {
+        "label": "MEASURED",
+        "iterations": 30,
+        "legs": [
+          {
+            "round": 0,
+            "kind": "stock",
+            "gpu_ms": 0.2631338596343994,
+            "host_ms": 0.26201999999102554
+          },
+          {
+            "round": 0,
+            "kind": "grouped_reuse",
+            "gpu_ms": 0.051712000370025636,
+            "host_ms": 0.024916666643548524
+          },
+          {
+            "round": 0,
+            "kind": "grouped_build",
+            "gpu_ms": 0.2063701311747233,
+            "host_ms": 0.13570333333821813
+          },
+          {
+            "round": 1,
+            "kind": "grouped_build",
+            "gpu_ms": 0.12270932992299398,
+            "host_ms": 0.12131999998625058
+          },
+          {
+            "round": 1,
+            "kind": "grouped_reuse",
+            "gpu_ms": 0.051234134038289386,
+            "host_ms": 0.02388333332419279
+          },
+          {
+            "round": 1,
+            "kind": "stock",
+            "gpu_ms": 0.22200320561726888,
+            "host_ms": 0.09224666664522374
+          },
+          {
+            "round": 2,
+            "kind": "stock",
+            "gpu_ms": 0.2205695947011312,
+            "host_ms": 0.097383333347049
+          },
+          {
+            "round": 2,
+            "kind": "grouped_reuse",
+            "gpu_ms": 0.052019198735555015,
+            "host_ms": 0.024733333308783283
+          },
+          {
+            "round": 2,
+            "kind": "grouped_build",
+            "gpu_ms": 0.13052586714426676,
+            "host_ms": 0.12930666665245857
+          },
+          {
+            "round": 3,
+            "kind": "grouped_build",
+            "gpu_ms": 0.1947989304860433,
+            "host_ms": 0.12862999998712135
+          },
+          {
+            "round": 3,
+            "kind": "grouped_reuse",
+            "gpu_ms": 0.051268267631530764,
+            "host_ms": 0.023793333305851167
+          },
+          {
+            "round": 3,
+            "kind": "stock",
+            "gpu_ms": 0.22097919782002767,
+            "host_ms": 0.09326666668130201
+          }
+        ],
+        "medians": {
+          "stock": {
+            "gpu_ms": 0.22149120171864828,
+            "host_ms": 0.09532500001417551
+          },
+          "grouped_reuse": {
+            "gpu_ms": 0.051490134000778204,
+            "host_ms": 0.02430833331648804
+          },
+          "grouped_build": {
+            "gpu_ms": 0.16266239881515504,
+            "host_ms": 0.12896833331978996
+          }
+        },
+        "gpu_ratio_stock_over_grouped_build": 1.3616619657155347
+      }
+    },
+    {
+      "K": 128,
+      "N": 128,
+      "BM": 64,
+      "BN": 128,
+      "M": [
+        0,
+        1,
+        63,
+        64,
+        65,
+        129
+      ],
+      "layout": "packed",
+      "aligned": true,
+      "tiles": 8,
+      "equal": true,
+      "finite": true,
+      "guard_intact": true,
+      "deterministic": true,
+      "graph_equal": true,
+      "timing": {
+        "label": "MEASURED",
+        "iterations": 30,
+        "legs": [
+          {
+            "round": 0,
+            "kind": "stock",
+            "gpu_ms": 0.28071254094441733,
+            "host_ms": 0.26141666667172103
+          },
+          {
+            "round": 0,
+            "kind": "grouped_reuse",
+            "gpu_ms": 0.0718506654103597,
+            "host_ms": 0.024929999987458967
+          },
+          {
+            "round": 0,
+            "kind": "grouped_build",
+            "gpu_ms": 0.24804693857828777,
+            "host_ms": 0.13357333330835294
+          },
+          {
+            "round": 1,
+            "kind": "grouped_build",
+            "gpu_ms": 0.14755840301513673,
+            "host_ms": 0.12529666664704564
+          },
+          {
+            "round": 1,
+            "kind": "grouped_reuse",
+            "gpu_ms": 0.07133866945902506,
+            "host_ms": 0.023536666655369725
+          },
+          {
+            "round": 1,
+            "kind": "stock",
+            "gpu_ms": 0.3618133227030436,
+            "host_ms": 0.0924466666522979
+          },
+          {
+            "round": 2,
+            "kind": "stock",
+            "gpu_ms": 0.2805760065714518,
+            "host_ms": 0.09418666665321022
+          },
+          {
+            "round": 2,
+            "kind": "grouped_reuse",
+            "gpu_ms": 0.15517013867696125,
+            "host_ms": 0.03211999998408525
+          },
+          {
+            "round": 2,
+            "kind": "grouped_build",
+            "gpu_ms": 0.1466368039449056,
+            "host_ms": 0.12443666667725968
+          },
+          {
+            "round": 3,
+            "kind": "grouped_build",
+            "gpu_ms": 0.14506667455037434,
+            "host_ms": 0.1195433333426384
+          },
+          {
+            "round": 3,
+            "kind": "grouped_reuse",
+            "gpu_ms": 0.07082666556040446,
+            "host_ms": 0.023690000004232086
+          },
+          {
+            "round": 3,
+            "kind": "stock",
+            "gpu_ms": 0.3631786664326986,
+            "host_ms": 0.1009666666504927
+          }
+        ],
+        "medians": {
+          "stock": {
+            "gpu_ms": 0.32126293182373045,
+            "host_ms": 0.09757666665185147
+          },
+          "grouped_reuse": {
+            "gpu_ms": 0.07159466743469238,
+            "host_ms": 0.024309999995845526
+          },
+          "grouped_build": {
+            "gpu_ms": 0.14709760348002116,
+            "host_ms": 0.12486666666215265
+          }
+        },
+        "gpu_ratio_stock_over_grouped_build": 2.1840120044332636
+      }
+    },
+    {
+      "K": 2880,
+      "N": 5760,
+      "BM": 16,
+      "BN": 128,
+      "M": [
+        1,
+        15,
+        16,
+        17,
+        31
+      ],
+      "layout": "raw",
+      "aligned": false,
+      "tiles": 7,
+      "equal": true,
+      "finite": true,
+      "guard_intact": true,
+      "deterministic": true,
+      "graph_equal": true
+    },
+    {
+      "K": 2880,
+      "N": 5760,
+      "BM": 16,
+      "BN": 128,
+      "M": [
+        1,
+        15,
+        16,
+        17,
+        31
+      ],
+      "layout": "packed",
+      "aligned": false,
+      "tiles": 7,
+      "equal": true,
+      "finite": true,
+      "guard_intact": true,
+      "deterministic": true,
+      "graph_equal": true
+    },
+    {
+      "K": 2880,
+      "N": 5760,
+      "BM": 64,
+      "BN": 128,
+      "M": [
+        0,
+        1,
+        63,
+        64,
+        65,
+        129
+      ],
+      "layout": "raw",
+      "aligned": false,
+      "tiles": 8,
+      "equal": true,
+      "finite": true,
+      "guard_intact": true,
+      "deterministic": true,
+      "graph_equal": true,
+      "timing": {
+        "label": "MEASURED",
+        "iterations": 30,
+        "legs": [
+          {
+            "round": 0,
+            "kind": "stock",
+            "gpu_ms": 6.488507588704427,
+            "host_ms": 0.10750333334120417
+          },
+          {
+            "round": 0,
+            "kind": "grouped_reuse",
+            "gpu_ms": 3.744085439046224,
+            "host_ms": 0.025989999994635582
+          },
+          {
+            "round": 0,
+            "kind": "grouped_build",
+            "gpu_ms": 0.7124309539794922,
+            "host_ms": 0.129436666672215
+          },
+          {
+            "round": 1,
+            "kind": "grouped_build",
+            "gpu_ms": 0.6900320053100586,
+            "host_ms": 0.12325000000904159
+          },
+          {
+            "round": 1,
+            "kind": "grouped_reuse",
+            "gpu_ms": 0.6200938542683919,
+            "host_ms": 0.028693333327585908
+          },
+          {
+            "round": 1,
+            "kind": "stock",
+            "gpu_ms": 0.8528213500976562,
+            "host_ms": 0.09987000000061623
+          },
+          {
+            "round": 2,
+            "kind": "stock",
+            "gpu_ms": 0.876032002766927,
+            "host_ms": 0.09258000000045286
+          },
+          {
+            "round": 2,
+            "kind": "grouped_reuse",
+            "gpu_ms": 0.6192469278971354,
+            "host_ms": 0.026066666669066763
+          },
+          {
+            "round": 2,
+            "kind": "grouped_build",
+            "gpu_ms": 0.682598368326823,
+            "host_ms": 0.1236600000083854
+          },
+          {
+            "round": 3,
+            "kind": "grouped_build",
+            "gpu_ms": 0.688162104288737,
+            "host_ms": 0.12775999997150697
+          },
+          {
+            "round": 3,
+            "kind": "grouped_reuse",
+            "gpu_ms": 0.5771263758341472,
+            "host_ms": 0.026036666683163883
+          },
+          {
+            "round": 3,
+            "kind": "stock",
+            "gpu_ms": 0.7761237462361653,
+            "host_ms": 0.09480333334674167
+          }
+        ],
+        "medians": {
+          "stock": {
+            "gpu_ms": 0.8644266764322917,
+            "host_ms": 0.09733666667367895
+          },
+          "grouped_reuse": {
+            "gpu_ms": 0.6196703910827637,
+            "host_ms": 0.026051666676115325
+          },
+          "grouped_build": {
+            "gpu_ms": 0.6890970547993978,
+            "host_ms": 0.1257099999899462
+          }
+        },
+        "gpu_ratio_stock_over_grouped_build": 1.2544338571929232
+      }
+    },
+    {
+      "K": 2880,
+      "N": 5760,
+      "BM": 64,
+      "BN": 128,
+      "M": [
+        0,
+        1,
+        63,
+        64,
+        65,
+        129
+      ],
+      "layout": "packed",
+      "aligned": false,
+      "tiles": 8,
+      "equal": true,
+      "finite": true,
+      "guard_intact": true,
+      "deterministic": true,
+      "graph_equal": true,
+      "timing": {
+        "label": "MEASURED",
+        "iterations": 30,
+        "legs": [
+          {
+            "round": 0,
+            "kind": "stock",
+            "gpu_ms": 0.8524117151896159,
+            "host_ms": 0.13015666666736556
+          },
+          {
+            "round": 0,
+            "kind": "grouped_reuse",
+            "gpu_ms": 0.6242645263671875,
+            "host_ms": 0.027183333349967143
+          },
+          {
+            "round": 0,
+            "kind": "grouped_build",
+            "gpu_ms": 0.6995520273844401,
+            "host_ms": 0.13177666666403334
+          },
+          {
+            "round": 1,
+            "kind": "grouped_build",
+            "gpu_ms": 0.6968661626180013,
+            "host_ms": 0.1189666666505218
+          },
+          {
+            "round": 1,
+            "kind": "grouped_reuse",
+            "gpu_ms": 0.643174425760905,
+            "host_ms": 0.03169999999954598
+          },
+          {
+            "round": 1,
+            "kind": "stock",
+            "gpu_ms": 0.8349354426066081,
+            "host_ms": 0.09306000001743087
+          },
+          {
+            "round": 2,
+            "kind": "stock",
+            "gpu_ms": 0.8479743957519531,
+            "host_ms": 0.09065000000797833
+          },
+          {
+            "round": 2,
+            "kind": "grouped_reuse",
+            "gpu_ms": 0.6185610453287761,
+            "host_ms": 0.028049999976550073
+          },
+          {
+            "round": 2,
+            "kind": "grouped_build",
+            "gpu_ms": 0.6898346583048502,
+            "host_ms": 0.1413433333558108
+          },
+          {
+            "round": 3,
+            "kind": "grouped_build",
+            "gpu_ms": 0.7002453486124675,
+            "host_ms": 0.11898333332283073
+          },
+          {
+            "round": 3,
+            "kind": "grouped_reuse",
+            "gpu_ms": 0.6321151733398438,
+            "host_ms": 0.026950000028591603
+          },
+          {
+            "round": 3,
+            "kind": "stock",
+            "gpu_ms": 0.8623445510864258,
+            "host_ms": 0.10951000000810988
+          }
+        ],
+        "medians": {
+          "stock": {
+            "gpu_ms": 0.8501930554707845,
+            "host_ms": 0.10128500001277038
+          },
+          "grouped_reuse": {
+            "gpu_ms": 0.6281898498535157,
+            "host_ms": 0.027616666663258606
+          },
+          "grouped_build": {
+            "gpu_ms": 0.6982090950012207,
+            "host_ms": 0.12537999999343202
+          }
+        },
+        "gpu_ratio_stock_over_grouped_build": 1.2176768557695428
+      }
+    },
+    {
+      "K": 2880,
+      "N": 5760,
+      "BM": 64,
+      "BN": 128,
+      "M": [
+        0,
+        1,
+        63,
+        64,
+        65,
+        129
+      ],
+      "layout": "raw",
+      "aligned": true,
+      "tiles": 8,
+      "equal": true,
+      "finite": true,
+      "guard_intact": true,
+      "deterministic": true,
+      "graph_equal": true,
+      "timing": {
+        "label": "MEASURED",
+        "iterations": 30,
+        "legs": [
+          {
+            "round": 0,
+            "kind": "stock",
+            "gpu_ms": 0.7109621047973633,
+            "host_ms": 0.11009333335702347
+          },
+          {
+            "round": 0,
+            "kind": "grouped_reuse",
+            "gpu_ms": 0.534664535522461,
+            "host_ms": 0.03948000000188282
+          },
+          {
+            "round": 0,
+            "kind": "grouped_build",
+            "gpu_ms": 0.612659200032552,
+            "host_ms": 0.12797666668120655
+          },
+          {
+            "round": 1,
+            "kind": "grouped_build",
+            "gpu_ms": 0.6011903762817383,
+            "host_ms": 0.12754666665083883
+          },
+          {
+            "round": 1,
+            "kind": "grouped_reuse",
+            "gpu_ms": 0.5430271784464519,
+            "host_ms": 0.025736666672552626
+          },
+          {
+            "round": 1,
+            "kind": "stock",
+            "gpu_ms": 0.6971658706665039,
+            "host_ms": 0.09042000001500128
+          },
+          {
+            "round": 2,
+            "kind": "stock",
+            "gpu_ms": 0.6942357381184896,
+            "host_ms": 0.09060666664784851
+          },
+          {
+            "round": 2,
+            "kind": "grouped_reuse",
+            "gpu_ms": 0.5340842564900716,
+            "host_ms": 0.031346666643609446
+          },
+          {
+            "round": 2,
+            "kind": "grouped_build",
+            "gpu_ms": 0.6019754409790039,
+            "host_ms": 0.1351533333339224
+          },
+          {
+            "round": 3,
+            "kind": "grouped_build",
+            "gpu_ms": 0.6042282740275066,
+            "host_ms": 0.17138333332695765
+          },
+          {
+            "round": 3,
+            "kind": "grouped_reuse",
+            "gpu_ms": 0.5222058614095052,
+            "host_ms": 0.02962333334532256
+          },
+          {
+            "round": 3,
+            "kind": "stock",
+            "gpu_ms": 0.7208277384440104,
+            "host_ms": 0.09933999999702792
+          }
+        ],
+        "medians": {
+          "stock": {
+            "gpu_ms": 0.7040639877319337,
+            "host_ms": 0.09497333332243821
+          },
+          "grouped_reuse": {
+            "gpu_ms": 0.5343743960062664,
+            "host_ms": 0.030484999994466
+          },
+          "grouped_build": {
+            "gpu_ms": 0.6031018575032552,
+            "host_ms": 0.1315650000075645
+          }
+        },
+        "gpu_ratio_stock_over_grouped_build": 1.1674047741233056
+      }
+    },
+    {
+      "K": 2880,
+      "N": 5760,
+      "BM": 64,
+      "BN": 128,
+      "M": [
+        0,
+        1,
+        63,
+        64,
+        65,
+        129
+      ],
+      "layout": "packed",
+      "aligned": true,
+      "tiles": 8,
+      "equal": true,
+      "finite": true,
+      "guard_intact": true,
+      "deterministic": true,
+      "graph_equal": true,
+      "timing": {
+        "label": "MEASURED",
+        "iterations": 30,
+        "legs": [
+          {
+            "round": 0,
+            "kind": "stock",
+            "gpu_ms": 0.7230016072591146,
+            "host_ms": 0.10982333333231509
+          },
+          {
+            "round": 0,
+            "kind": "grouped_reuse",
+            "gpu_ms": 0.6197247823079427,
+            "host_ms": 0.02538666667533107
+          },
+          {
+            "round": 0,
+            "kind": "grouped_build",
+            "gpu_ms": 0.6966559727986653,
+            "host_ms": 0.13402666666782656
+          },
+          {
+            "round": 1,
+            "kind": "grouped_build",
+            "gpu_ms": 0.6977504094441732,
+            "host_ms": 0.13849666665919358
+          },
+          {
+            "round": 1,
+            "kind": "grouped_reuse",
+            "gpu_ms": 0.6226154963175455,
+            "host_ms": 0.025623333325105097
+          },
+          {
+            "round": 1,
+            "kind": "stock",
+            "gpu_ms": 0.7247530619303385,
+            "host_ms": 0.10470666666151374
+          },
+          {
+            "round": 2,
+            "kind": "stock",
+            "gpu_ms": 0.7062527974446614,
+            "host_ms": 0.098959999983587
+          },
+          {
+            "round": 2,
+            "kind": "grouped_reuse",
+            "gpu_ms": 0.6214656194051107,
+            "host_ms": 0.02540333334764
+          },
+          {
+            "round": 2,
+            "kind": "grouped_build",
+            "gpu_ms": 0.715878423055013,
+            "host_ms": 0.134640000002643
+          },
+          {
+            "round": 3,
+            "kind": "grouped_build",
+            "gpu_ms": 0.7254997253417969,
+            "host_ms": 0.13607666666454557
+          },
+          {
+            "round": 3,
+            "kind": "grouped_reuse",
+            "gpu_ms": 0.6235370635986328,
+            "host_ms": 0.02472333335390431
+          },
+          {
+            "round": 3,
+            "kind": "stock",
+            "gpu_ms": 0.7106901168823242,
+            "host_ms": 0.09758333335412317
+          }
+        ],
+        "medians": {
+          "stock": {
+            "gpu_ms": 0.7168458620707194,
+            "host_ms": 0.10183333332255037
+          },
+          "grouped_reuse": {
+            "gpu_ms": 0.6220405578613282,
+            "host_ms": 0.025395000011485536
+          },
+          "grouped_build": {
+            "gpu_ms": 0.7068144162495931,
+            "host_ms": 0.1353583333335943
+          }
+        },
+        "gpu_ratio_stock_over_grouped_build": 1.0141924748427655
+      }
+    },
+    {
+      "K": 2880,
+      "N": 2880,
+      "BM": 16,
+      "BN": 128,
+      "M": [
+        1,
+        15,
+        16,
+        17,
+        31
+      ],
+      "layout": "raw",
+      "aligned": false,
+      "tiles": 7,
+      "equal": true,
+      "finite": true,
+      "guard_intact": true,
+      "deterministic": true,
+      "graph_equal": true
+    },
+    {
+      "K": 2880,
+      "N": 2880,
+      "BM": 16,
+      "BN": 128,
+      "M": [
+        1,
+        15,
+        16,
+        17,
+        31
+      ],
+      "layout": "packed",
+      "aligned": false,
+      "tiles": 7,
+      "equal": true,
+      "finite": true,
+      "guard_intact": true,
+      "deterministic": true,
+      "graph_equal": true
+    },
+    {
+      "K": 2880,
+      "N": 2880,
+      "BM": 64,
+      "BN": 128,
+      "M": [
+        0,
+        1,
+        63,
+        64,
+        65,
+        129
+      ],
+      "layout": "raw",
+      "aligned": false,
+      "tiles": 8,
+      "equal": true,
+      "finite": true,
+      "guard_intact": true,
+      "deterministic": true,
+      "graph_equal": true,
+      "timing": {
+        "label": "MEASURED",
+        "iterations": 30,
+        "legs": [
+          {
+            "round": 0,
+            "kind": "stock",
+            "gpu_ms": 0.7206506729125977,
+            "host_ms": 0.109480000022207
+          },
+          {
+            "round": 0,
+            "kind": "grouped_reuse",
+            "gpu_ms": 0.3314688046773275,
+            "host_ms": 0.02774333333945833
+          },
+          {
+            "round": 0,
+            "kind": "grouped_build",
+            "gpu_ms": 0.4158752123514811,
+            "host_ms": 0.13917666665292927
+          },
+          {
+            "round": 1,
+            "kind": "grouped_build",
+            "gpu_ms": 0.4233557383219401,
+            "host_ms": 0.12880000000829264
+          },
+          {
+            "round": 1,
+            "kind": "grouped_reuse",
+            "gpu_ms": 0.3312287966410319,
+            "host_ms": 0.026216666659214145
+          },
+          {
+            "round": 1,
+            "kind": "stock",
+            "gpu_ms": 0.7186986923217773,
+            "host_ms": 0.10634000000209198
+          },
+          {
+            "round": 2,
+            "kind": "stock",
+            "gpu_ms": 0.7004426956176758,
+            "host_ms": 0.09179666667478159
+          },
+          {
+            "round": 2,
+            "kind": "grouped_reuse",
+            "gpu_ms": 0.35075413386027016,
+            "host_ms": 0.027429999984936632
+          },
+          {
+            "round": 2,
+            "kind": "grouped_build",
+            "gpu_ms": 0.4073472023010254,
+            "host_ms": 0.13373333334432877
+          },
+          {
+            "round": 3,
+            "kind": "grouped_build",
+            "gpu_ms": 0.41809921264648436,
+            "host_ms": 0.12754666668115533
+          },
+          {
+            "round": 3,
+            "kind": "grouped_reuse",
+            "gpu_ms": 0.3556693394978841,
+            "host_ms": 0.036413333358116994
+          },
+          {
+            "round": 3,
+            "kind": "stock",
+            "gpu_ms": 0.7038272221883138,
+            "host_ms": 0.10400666666707063
+          }
+        ],
+        "medians": {
+          "stock": {
+            "gpu_ms": 0.7112629572550455,
+            "host_ms": 0.10517333333458131
+          },
+          "grouped_reuse": {
+            "gpu_ms": 0.3411114692687988,
+            "host_ms": 0.02758666666219748
+          },
+          "grouped_build": {
+            "gpu_ms": 0.41698721249898274,
+            "host_ms": 0.1312666666763107
+          }
+        },
+        "gpu_ratio_stock_over_grouped_build": 1.705718870831754
+      }
+    },
+    {
+      "K": 2880,
+      "N": 2880,
+      "BM": 64,
+      "BN": 128,
+      "M": [
+        0,
+        1,
+        63,
+        64,
+        65,
+        129
+      ],
+      "layout": "packed",
+      "aligned": false,
+      "tiles": 8,
+      "equal": true,
+      "finite": true,
+      "guard_intact": true,
+      "deterministic": true,
+      "graph_equal": true,
+      "timing": {
+        "label": "MEASURED",
+        "iterations": 30,
+        "legs": [
+          {
+            "round": 0,
+            "kind": "stock",
+            "gpu_ms": 0.8055125554402669,
+            "host_ms": 0.09468999999929413
+          },
+          {
+            "round": 0,
+            "kind": "grouped_reuse",
+            "gpu_ms": 0.387993590037028,
+            "host_ms": 0.02777333332536121
+          },
+          {
+            "round": 0,
+            "kind": "grouped_build",
+            "gpu_ms": 0.47461652755737305,
+            "host_ms": 0.12377333332551643
+          },
+          {
+            "round": 1,
+            "kind": "grouped_build",
+            "gpu_ms": 0.4776960055033366,
+            "host_ms": 0.1227166666467383
+          },
+          {
+            "round": 1,
+            "kind": "grouped_reuse",
+            "gpu_ms": 0.40939413706461586,
+            "host_ms": 0.02495666667527985
+          },
+          {
+            "round": 1,
+            "kind": "stock",
+            "gpu_ms": 0.8023381551106771,
+            "host_ms": 0.09059666666265305
+          },
+          {
+            "round": 2,
+            "kind": "stock",
+            "gpu_ms": 0.8201173146565756,
+            "host_ms": 0.0899300000128278
+          },
+          {
+            "round": 2,
+            "kind": "grouped_reuse",
+            "gpu_ms": 0.39109652837117515,
+            "host_ms": 0.02489000001636062
+          },
+          {
+            "round": 2,
+            "kind": "grouped_build",
+            "gpu_ms": 0.47208960851033527,
+            "host_ms": 0.13530666665246827
+          },
+          {
+            "round": 3,
+            "kind": "grouped_build",
+            "gpu_ms": 0.47237119674682615,
+            "host_ms": 0.12196000000888792
+          },
+          {
+            "round": 3,
+            "kind": "grouped_reuse",
+            "gpu_ms": 0.4100778579711914,
+            "host_ms": 0.02434666666886187
+          },
+          {
+            "round": 3,
+            "kind": "stock",
+            "gpu_ms": 0.8014752070109049,
+            "host_ms": 0.0934899999871656
+          }
+        ],
+        "medians": {
+          "stock": {
+            "gpu_ms": 0.8039253552754719,
+            "host_ms": 0.09204333332490933
+          },
+          "grouped_reuse": {
+            "gpu_ms": 0.40024533271789553,
+            "host_ms": 0.024923333345820232
+          },
+          "grouped_build": {
+            "gpu_ms": 0.4734938621520996,
+            "host_ms": 0.12324499998612737
+          }
+        },
+        "gpu_ratio_stock_over_grouped_build": 1.6978580284473221
+      }
+    },
+    {
+      "K": 2880,
+      "N": 2880,
+      "BM": 64,
+      "BN": 128,
+      "M": [
+        0,
+        1,
+        63,
+        64,
+        65,
+        129
+      ],
+      "layout": "raw",
+      "aligned": true,
+      "tiles": 8,
+      "equal": true,
+      "finite": true,
+      "guard_intact": true,
+      "deterministic": true,
+      "graph_equal": true,
+      "timing": {
+        "label": "MEASURED",
+        "iterations": 30,
+        "legs": [
+          {
+            "round": 0,
+            "kind": "stock",
+            "gpu_ms": 0.615662956237793,
+            "host_ms": 0.15352000000348198
+          },
+          {
+            "round": 0,
+            "kind": "grouped_reuse",
+            "gpu_ms": 0.3484671910603841,
+            "host_ms": 0.030360000012782013
+          },
+          {
+            "round": 0,
+            "kind": "grouped_build",
+            "gpu_ms": 0.4177802721659342,
+            "host_ms": 0.12864666665943028
+          },
+          {
+            "round": 1,
+            "kind": "grouped_build",
+            "gpu_ms": 0.4088149388631185,
+            "host_ms": 0.1244833333354715
+          },
+          {
+            "round": 1,
+            "kind": "grouped_reuse",
+            "gpu_ms": 0.3300352096557617,
+            "host_ms": 0.0251866666682569
+          },
+          {
+            "round": 1,
+            "kind": "stock",
+            "gpu_ms": 0.6166869481404622,
+            "host_ms": 0.09067666669579921
+          },
+          {
+            "round": 2,
+            "kind": "stock",
+            "gpu_ms": 0.6185301462809245,
+            "host_ms": 0.09579333333628408
+          },
+          {
+            "round": 2,
+            "kind": "grouped_reuse",
+            "gpu_ms": 0.35118827819824217,
+            "host_ms": 0.028236666670030292
+          },
+          {
+            "round": 2,
+            "kind": "grouped_build",
+            "gpu_ms": 0.4164608001708984,
+            "host_ms": 0.13005999999222695
+          },
+          {
+            "round": 3,
+            "kind": "grouped_build",
+            "gpu_ms": 0.41437867482503254,
+            "host_ms": 0.12376000001192249
+          },
+          {
+            "round": 3,
+            "kind": "grouped_reuse",
+            "gpu_ms": 0.3298645337422689,
+            "host_ms": 0.024206666663909953
+          },
+          {
+            "round": 3,
+            "kind": "stock",
+            "gpu_ms": 0.6189397176106771,
+            "host_ms": 0.08916666668786395
+          }
+        ],
+        "medians": {
+          "stock": {
+            "gpu_ms": 0.6176085472106934,
+            "host_ms": 0.09323500001604165
+          },
+          "grouped_reuse": {
+            "gpu_ms": 0.3392512003580729,
+            "host_ms": 0.026711666669143597
+          },
+          "grouped_build": {
+            "gpu_ms": 0.41541973749796546,
+            "host_ms": 0.12656499999745088
+          }
+        },
+        "gpu_ratio_stock_over_grouped_build": 1.4867096853184982
+      }
+    },
+    {
+      "K": 2880,
+      "N": 2880,
+      "BM": 64,
+      "BN": 128,
+      "M": [
+        0,
+        1,
+        63,
+        64,
+        65,
+        129
+      ],
+      "layout": "packed",
+      "aligned": true,
+      "tiles": 8,
+      "equal": true,
+      "finite": true,
+      "guard_intact": true,
+      "deterministic": true,
+      "graph_equal": true,
+      "timing": {
+        "label": "MEASURED",
+        "iterations": 30,
+        "legs": [
+          {
+            "round": 0,
+            "kind": "stock",
+            "gpu_ms": 0.6476458867390951,
+            "host_ms": 0.10182666665059514
+          },
+          {
+            "round": 0,
+            "kind": "grouped_reuse",
+            "gpu_ms": 0.38874454498291017,
+            "host_ms": 0.029503333341078058
+          },
+          {
+            "round": 0,
+            "kind": "grouped_build",
+            "gpu_ms": 0.47005014419555663,
+            "host_ms": 0.1337266666572153
+          },
+          {
+            "round": 1,
+            "kind": "grouped_build",
+            "gpu_ms": 0.4900767962137858,
+            "host_ms": 0.12275999997655163
+          },
+          {
+            "round": 1,
+            "kind": "grouped_reuse",
+            "gpu_ms": 0.4148223876953125,
+            "host_ms": 0.02731333333940711
+          },
+          {
+            "round": 1,
+            "kind": "stock",
+            "gpu_ms": 0.6520832061767579,
+            "host_ms": 0.09481333333193713
+          },
+          {
+            "round": 2,
+            "kind": "stock",
+            "gpu_ms": 0.6493450800577799,
+            "host_ms": 0.09142999997493462
+          },
+          {
+            "round": 2,
+            "kind": "grouped_reuse",
+            "gpu_ms": 0.4106239954630534,
+            "host_ms": 0.026336666663458647
+          },
+          {
+            "round": 2,
+            "kind": "grouped_build",
+            "gpu_ms": 0.47984107335408527,
+            "host_ms": 0.1279433333365887
+          },
+          {
+            "round": 3,
+            "kind": "grouped_build",
+            "gpu_ms": 0.4795392036437988,
+            "host_ms": 0.1312833333334614
+          },
+          {
+            "round": 3,
+            "kind": "grouped_reuse",
+            "gpu_ms": 0.3910549481709798,
+            "host_ms": 0.02453666666042409
+          },
+          {
+            "round": 3,
+            "kind": "stock",
+            "gpu_ms": 0.6468522389729817,
+            "host_ms": 0.1055399999737953
+          }
+        ],
+        "medians": {
+          "stock": {
+            "gpu_ms": 0.6484954833984375,
+            "host_ms": 0.09831999999126614
+          },
+          "grouped_reuse": {
+            "gpu_ms": 0.4008394718170166,
+            "host_ms": 0.026825000001432876
+          },
+          "grouped_build": {
+            "gpu_ms": 0.47969013849894204,
+            "host_ms": 0.12961333333502506
+          }
+        },
+        "gpu_ratio_stock_over_grouped_build": 1.3519049722967524
+      }
+    }
+  ],
+  "checks": 120,
+  "negative_control": true,
+  "all_equal": true,
+  "peak_allocated_mib": 50.068359375
+}

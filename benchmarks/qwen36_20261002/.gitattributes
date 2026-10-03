@@ -1,0 +1,4 @@
+# Runtime evidence digests cover original file bytes.
+* -text whitespace=cr-at-eol
+# Preserve terminal logs verbatim, including pytest traceback indentation.
+*.log -whitespace

@@ -1,0 +1,24 @@
+CPU kernel tuning: prefetch 0 B, pair 0, affinity stride 0, fuse 1, cold-prefetch 0
+runtime package: F:\AI\Neural\experiments\neuralserver-opt\neural
+expert store: G:\NeuralStores\gptoss120b_ps4 (mxfp4_g32_ps4, 12,839,040 B/slot, scale layout 1); decode kernel gptoss_cpu_cap2.dll
+free RAM at start: 54.67 GiB
+embedding: read-only memmap of the checkpoint tensor (6 rows verified bit-equal); CPU copy freed
+fused graphs captured; usable slots=499; vram_reserved=9.71 GiB
+doorbell: off (classic sequence: CPU kernel -> bookkeeping -> launch next graph)
+hot set loaded from hotset_code.json: 499
+static core: 250 slots protected; 499 VRAM-resident experts' store pages released from RAM in 0.57s; WS 1.78 GiB, private commit 12.93 GiB, free RAM 53.34 GiB
+RAM cache warmed: 49.1 GiB of experts in 23 s
+working set: soft minimum 51.6 GiB set
+
+==============================================================================
+ Neural OpenAI-compatible server  |  model id: gpt-oss-120b-neural
+ base URL : http://127.0.0.1:8000/v1
+ API key  : not checked - any value works (e.g. 'local')
+ context  : 16384 tokens | reasoning effort default: medium | default temperature: 1.0
+ runtime  : gpt-oss-120B MXFP4 (packed scales), H8 hybrid (static core 250, VRAM pool 499 experts)
+ splicing : 512 calls / 4194304 tokens | after final answer: drop | reserve 1024 tokens
+==============================================================================
+[11:41:06] prompt 13108 tok (0 cached) processed in 8.3 s | 512 tok at 19.0 tok/s | VRAM hit 16% | length | prefill: memcpy 0.0 s, ring-wait 0.0 s, stage-wait 0.0 s (thread: copy 3.4 s, ring-wait 0.5 s), cpu-wait 0.1 s, count-sync 1.0 s, attn 1.0 s, moe-host 7.1 s, gemm-launch 5.0 s, tail 0.0 s
+[11:41:35] prompt 13630 tok (13109 cached) processed in 2.3 s | 512 tok at 19.7 tok/s | VRAM hit 18% | length | prefill: memcpy 0.0 s, ring-wait 0.0 s, stage-wait 0.3 s (thread: copy 1.6 s, ring-wait 0.0 s), cpu-wait 0.3 s, count-sync 0.1 s, attn 0.1 s, moe-host 2.2 s, gemm-launch 1.3 s, tail 0.0 s
+[11:42:02] prompt 14149 tok (13631 cached) processed in 2.3 s | 512 tok at 20.8 tok/s | VRAM hit 23% | length | prefill: memcpy 0.0 s, ring-wait 0.0 s, stage-wait 0.3 s (thread: copy 1.5 s, ring-wait 0.0 s), cpu-wait 0.5 s, count-sync 0.1 s, attn 0.0 s, moe-host 2.2 s, gemm-launch 1.1 s, tail 0.0 s
+[11:42:29] prompt 14671 tok (14150 cached) processed in 2.2 s | 512 tok at 20.4 tok/s | VRAM hit 21% | length | prefill: memcpy 0.0 s, ring-wait 0.0 s, stage-wait 0.2 s (thread: copy 1.4 s, ring-wait 0.0 s), cpu-wait 0.5 s, count-sync 0.1 s, attn 0.0 s, moe-host 2.1 s, gemm-launch 1.0 s, tail 0.0 s

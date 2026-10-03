@@ -1,0 +1,4 @@
+[transformers] The fast path is not available because one of the required library is not installed. Falling back to torch implementation. To install follow https://github.com/fla-org/flash-linear-attention#installation and https://github.com/Dao-AILab/causal-conv1d
+Captured reasoning_short 25 positions
+Captured coding_short 25 positions
+Captured coding_context 25 positions
